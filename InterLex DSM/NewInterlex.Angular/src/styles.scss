@@ -1,0 +1,367 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~vis/dist/vis.css';
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/nova-light/theme.css';
+@import '~primeng/resources/primeng.min.css';
+@import '~primeflex/primeflex.css';
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.snow.css';
+
+
+body {
+  margin: 0;
+  padding: 0;
+ // background:#f4f4f4;
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+
+  .body-div{
+    min-height: 780px;
+    margin: 0em auto;
+    width: 100%;
+  }
+
+  // ADMIN
+
+  .admin_home{
+    width: 80%;
+    margin: 0 auto;
+  }
+
+ .center-box,
+ .diagram_box {
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  .f_italic{
+    font-style: italic;
+  }
+
+  .pad-0{
+   padding: 0;
+  }
+
+  //MENUBAR
+  .ui-menubar{
+    background-color: #104eb6;//#5994A4;
+    color:#fff;
+    border-color: #104eb6;
+    border: 1px solid #104eb6;
+    border-radius: 0;
+
+    .ui-menuitem-link{
+
+     .ui-menuitem-text{
+      color:#fff;
+      
+      }
+      .ui-menuitem-icon {
+        color:#fff;
+      }
+    }
+
+    .ui-menuitem-link:hover{
+
+    .ui-menuitem-text{
+      color: #104eb6;//rgb(4, 173, 162) !important;
+       }  
+
+     .ui-menuitem-icon {
+        color:#104eb6;//rgb(4, 173, 162) !important;
+      }
+    }
+    
+    .ui-menubar-root-list > .ui-menuitem > .ui-menuitem-link:hover{
+        background-color: #fff;
+    }
+  }
+  // body .ui-menu .ui-menuitem-link:hover .ui-menuitem-text, 
+  // body .ui-menubar .ui-menuitem-link:hover .ui-menuitem-text, 
+  // body .ui-tieredmenu .ui-menuitem-link:hover .ui-menuitem-text,
+  // body .ui-contextmenu .ui-menuitem-link:hover .ui-menuitem-text,
+  // body .ui-megamenu .ui-menuitem-link:hover .ui-menuitem-text, 
+  // body .ui-slidemenu .ui-menuitem-link:hover .ui-menuitem-text 
+
+
+  //Question
+  .question_page{
+    width: 80%;
+    margin:30px auto; 
+    flex-wrap: wrap;
+  }
+
+  // PANEL
+  .ui-panel{
+     
+    .ui-panel-titlebar{
+    background-color: #e6f3ff;// #B4DEDF;
+    text-align: center;
+    border: 1px solid #e6f3ff; 
+    padding: 0.571em 1em;
+    border-radius: 0 !important; 
+      .ui-panel-title{
+        background-color: #e6f3ff;
+        color: #4B6485;  
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        text-align: center;
+        font-size: 1.3em;
+        }
+    }
+
+    .ui-panel-content {
+    padding: 0.571em 1em;
+    border: 1px solid #eaeaea;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 0.571em 1em;
+    border-top: 0 none;
+    }
+  }
+
+
+ 
+//Dropdown
+  .ui-dropdown {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    min-width: 9.5em;
+    color: #404040;
+    background: #fff;
+    border: 1px solid #c8c8c8;
+    
+    .ui-dropdown-trigger {
+      color:#104eb6;// #5994A4;
+       .ui-dropdown-trigger-icon:before {
+        content: '';
+      }
+    }
+///***************//
+   // .ui-dropdown:not(.ui-state-disabled):hover {
+  //   border-color: #212121;
+  // }
+
+  // .ui-dropdown:not(.ui-state-disabled).ui-state-focus {
+  //   border-color: #c8c8c8;
+  //   outline: 0 none;
+  //   -webkit-box-shadow: none;
+  //   -moz-box-shadow: none;
+  //   box-shadow: none;
+  // }
+
+  .ui-dropdown-panel {
+    padding: 0;
+    border: 1px solid #c8c8c8;
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+    .ui-dropdown-filter-container {
+      padding: 0.429em 0.857em 0.429em 0.857em;
+      border-bottom: 1px solid #eaeaea;
+      color: #111111;
+      background-color: #ffffff;
+      margin: 0;
+
+      .ui-dropdown-filter {
+        width: 100%;
+        padding-right: 2em;
+      }
+      .ui-dropdown-filter-icon {
+        top: 50%;
+        margin-top: -0.5em;
+        right: 1.357em;
+        color: #111111;
+      }
+    }
+
+    .ui-dropdown-items {
+      padding: 0;
+
+      .ui-dropdown-item,
+      .ui-dropdown-item-group {
+        margin: 0;
+        padding: 0.429em 0.857em;
+        border: 0 none;
+        color: #111111;
+        background-color: transparent;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 3px;
+      }
+      .ui-dropdown-item.ui-state-highlight,
+      .ui-dropdown-item-group.ui-state-highlight {
+        color: #104eb6;//#14afa4 !important;
+        background-color: #dedede !important;
+        font-weight: bold;
+      }
+        .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover,
+        .ui-dropdown-item-group:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+          color: #111111;
+          background-color: #eaeaea;
+        }
+      }
+    }
+
+    .ui-inputtext {
+      color: #404040;
+      background: #fff;
+      
+    }
+  } 
+  
+  .ui-dropdown:not(.ui-state-disabled):hover{
+      border-color: #486585;
+  }
+//BTNS
+  .ui-button{
+    background-color: #e6f3ff;//#acd6fb;//15B9AE;
+    border: 1px solid #e6f3ff;//#acd6fb;//#15B9AE;
+    color: #104eb6;  
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+    transition: none !important;
+  }
+
+  .ui-button:enabled:active {
+    background-color: #104eb6;// #486585;
+    color: #ffffff;
+    border-color:#104eb6;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.02), 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+    transition: none !important;
+  }
+
+ .ui-button:enabled:hover {
+    background-color: #104eb6;//#4b6485;
+    color: #ffffff;
+    border-color: #104eb6;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.02), 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+    transition: none !important;
+ }
+
+  .ui-state-default.ui-button-secondary{
+    background-color:#E4E4E4 !important;
+    border: 1px solid lightgrey !important;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.02), 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+    transition: none !important;
+  } 
+
+  .ui-button-icon-only .ui-button-icon-left,
+  .ui-button-text-icon-left .ui-button-icon-left, 
+  .ui-button-text-icon-right .ui-button-icon-right {
+      position: absolute;
+      top: 55%;
+      height: 1em;
+      font-size: 1.15em;
+       box-shadow: none !important;
+     transition: none !important;
+  }
+
+
+    //RADIO BTNS
+  .ui-radiobutton {
+    .ui-radiobutton-box.ui-state-active {
+      outline: none !important;
+      border-color: #acd6fb;//#159CA1;
+      background-color: #fff;
+    
+        .ui-radiobutton-icon{
+          background-color:#4d769e;// #159CA1;
+          width: 10px;
+          height: 10px;
+        //   display: inline-block;
+        //   position: absolute;
+        //   left: 50%;
+        //   top: 50%;
+        //   margin-left: -4.5px;
+        //   margin-top: -4.5px;
+        //   border-radius: 50%;
+        }
+    }
+
+   .ui-radiobutton-box.ui-state-active:not(.ui-state-disabled){
+      background-color:  #fff;
+      border-color:#acd6fb;
+       outline: none !important;
+    }
+
+    .ui-radiobutton-box.ui-state-active:not(.ui-state-disabled):hover{
+     border-color: #acd6fb;
+     background-color: #fff;
+      outline: none !important;
+    } 
+  }
+
+   //CARD
+
+  .ui-card{
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.12), 0 1px 1px -1px rgba(0, 0, 0, 0.1);
+  
+  .ui-card-body{
+    padding: 0;
+  }
+
+  .ui-card-title{
+      background-color:#e6f3ff;// #B4DEDF;
+      border: 1px solid #acd6fb;//#15B9AE;
+      color: #4B6485;  
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      text-align: center;
+      font-size: 1.3em;
+  }
+
+    .ui-card-header{
+      background-color: #e6f3ff;
+      border: 1px solid #acd6fb;//#15B9AE;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+      text-align: center;
+      p-header{
+        color: #4B6485;  
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-bottom: .5em;
+        }
+    } 
+
+  .ui-card-content{
+    padding: 1em;
+  }
+
+  .ui-card-footer{
+    padding: 1em;
+  }
+}
+
+  // DIALOG
+  .ui-dialog{
+        min-width: 500px;
+      
+        .ui-dialog-content{
+          min-height: 150px;
+        }
+  }
+
+  //TABLE
+  .ui-table{
+
+     .ui-table-thead > tr > th {
+      padding: 0.571em 0.857em;
+      border: 1px solid #dbdbdb;
+      font-weight: 700;
+      color: #333333;
+      background-color: #f4f4f4;
+    }
+     .ui-table-tbody > tr > td {
+      background-color: inherit;
+      border: 1px solid #dbdbdb;
+    }
+  }
+}
+
+
+

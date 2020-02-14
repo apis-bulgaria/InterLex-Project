@@ -1,0 +1,28 @@
+<div class="header_box">
+   
+
+    <p-menubar [model]="items">
+       
+       
+        <div>
+            <app-language-switcher></app-language-switcher>
+        </div>
+
+    </p-menubar>
+
+    <div class="p-grid header_info">
+         
+         <div class="p-col-1 logo_box">
+            <a [routerLink]="['home']" >
+                <div class="logo"></div>
+            </a>
+        </div>
+
+        <div class="p-col  info_scope"> 
+            
+            <span class="demo" style="text-transform: capitalize;"> {{ 'HEADER.BETA' | translate}}</span><h3 class="header_title"> {{ 'HEADER.TITLE' | translate}}</h3>
+            <p [innerHtml]=" 'HEADER.HEADERINFO' | translate" class="f_italic">
+            </p>
+        </div>
+    </div>
+</div>

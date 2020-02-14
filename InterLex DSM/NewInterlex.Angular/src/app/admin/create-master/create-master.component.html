@@ -1,0 +1,36 @@
+<div class="center-box create-master-box">
+  <p-panel [toggleable]="false" header="{{'MASTER.CREATE' | translate}}" class="p-grid panel_box">
+
+    <div class="p-grid input_box">
+      <div class="p-col-6">
+        <h4 translate>HOME.TITLE</h4>
+        <input class="p-xl-10 p-md-12" pInputText size="50" [(ngModel)]="model.title" />
+      </div>
+
+      <div class="p-col-6">
+        <h4 translate>HOME.ORDER</h4>
+        <input class="p-xl-10 p-md-12" pInputText size="50" pKeyFilter="int" [(ngModel)]="model.order">
+      </div>
+    </div>
+
+
+    <div class="p-grid diagram_btn_box">
+      <div class=" p-col-6 graph_categories">
+        <h4 translate>HOME.CATEGORY</h4>
+        <div  class="p-xl-10 p-md-12 pad-0">
+        <p-dropdown [options]="masterGraphCategories"
+          [(ngModel)]="selectedGraphCategory" optionLabel="name"
+         >
+          <!-- [style]="{'width':'300px'}"> -->
+        </p-dropdown>
+        </div>
+      </div>
+
+      <div class="p-col-6 btns p-grid p-align-end">
+        <button pButton type="button" label="{{'HOME.CANCEL' | translate}}" class="btn_reject ui-button-secondary" (click)="cancel()"></button>
+        <button pButton type="button" label="{{'MASTER.CONFIRM-BUTTON' | translate}}" (click)="create()" class="btn_confirm"></button>
+      </div>
+    </div>
+
+  </p-panel>
+</div>

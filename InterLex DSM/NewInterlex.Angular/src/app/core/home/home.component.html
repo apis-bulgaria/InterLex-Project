@@ -1,0 +1,41 @@
+<section class="home_section">
+    <div class="p-grid home_box">
+        <div class="disclaimer">
+            <div [innerHTML]=" 'HOMEPAGE.DISCLAIMER' | translate"></div>
+
+        </div>
+        <!-- <div class="p-col-3 left_img">
+            <img src="./assets/img/jigsaw_L_green.svg" class="left_jig">
+        </div> -->
+        <div class="p-col-9 about">
+            <p [innerHtml]=" 'HOMEPAGE.ABOUT' | translate"></p>
+        </div>
+        <div class="p-col-3 right_img">
+            <img src="./assets/img/jigsaws-gradient.svg" class="right_jig">
+        </div>
+
+<!-- where this button leads is now defined in presentation component !!-->
+        <div class="home-btn">
+            <a routerLink="/cases" routerLinkActive="active" type="button"
+                class="start_btn">{{ 'HOMEPAGE.STARTBTN' | translate}}</a>
+        </div>
+
+        <!-- <p-card header="{{'HOMEPAGE.SCOPETITLE' | translate}}"
+        class="module_area_info"> -->
+        <div class="module_area_info">
+            <h3 [innerHtml]="'HOMEPAGE.SCOPETITLE' | translate "></h3>
+
+            <div [innerHtml]=" 'HOMEPAGE.PROJECTSCOPE' | translate"></div>
+
+            <!-- <div [ngClass]="allText === false ? 'visibleFilter' : 'hiddenFilter'">-->
+                <div [innerHTML]=" 'HOMEPAGE.MATERIALSCOPE' | translate"></div>
+                <div [innerHTML]=" 'HOMEPAGE.TEMPORALSCOPE' | translate"></div>
+            <!-- </div> -->
+
+            <!-- <p-toggleButton (click)="expandCollapse()" id="btn_arrow" offIcon='pi pi-angle-double-right'
+                onIcon='pi pi-angle-double-left' offLabel="{{'HOMEPAGE.SEEMORE' | translate}}"
+                onLabel="{{'HOMEPAGE.SEELESS' | translate}}">
+            </p-toggleButton> -->
+        </div>
+    </div>
+</section>

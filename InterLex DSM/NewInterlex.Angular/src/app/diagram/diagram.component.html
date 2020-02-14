@@ -1,0 +1,191 @@
+<p-dialog header="{{'DIAGRAM.ADD.NODE' | translate}}" [(visible)]="showAddNode" [modal]="true"
+          [contentStyle]="{'overflow':'visible'}"
+          [style]="{width: '300px'}">
+  <label for=""></label>
+  <div>
+    <p-dropdown [options]="nodeTypes" optionLabel="name" [(ngModel)]="selectedNodeType"></p-dropdown>
+    <br>
+    <input pInputText [(ngModel)]="name" placeholder="Name">
+  </div>
+  <br>
+  <div>
+    <p-button label="{{'HOME.ADD'|translate}}" (click)="addNode()"></p-button>
+    <p-button label="{{'HOME.CANCEL'|translate}}" (click)="cancelAddNode()"></p-button>
+  </div>
+</p-dialog>
+<p-dialog header="Export data" [(visible)]="showExportData" [modal]="true" [contentStyle]="{'overflow':'visible'}"
+          [style]="{width: '300px'}">
+  <div>
+    <div>
+      <input pInputText [(ngModel)]="exportName" placeholder="Name for export">
+    </div>
+    <br>
+    <p-button label="Export" (click)="exportNodes()"></p-button>
+    <p-button label="Cancel" (click)="cancelExport()" class="my-button"></p-button>
+  </div>
+</p-dialog>
+<p-dialog header="Import data" [(visible)]="showImportData" [modal]="true" [contentStyle]="{'overflow':'visible'}"
+          [style]="{width: '300px'}">
+  <div>
+    <div>
+      <p-dropdown [options]="exportedNames" optionLabel="name" [(ngModel)]="selectedExportName"></p-dropdown>
+    </div>
+    <br>
+    <p-button label="Import" (click)="importNodes()"></p-button>
+    <p-button label="Cancel" (click)="cancelImport()" class="my-button"></p-button>
+  </div>
+</p-dialog>
+<p-dialog header="{{'DIAGRAM.ADD.EDGE' | translate}}" [(visible)]="showAddEdge" [modal]="true"
+          [contentStyle]="{'overflow':'visible'}"
+          [style]="{width: '300px'}">
+  <label for="edgeType" translate>DIAGRAM.ADD.YESNO</label>
+  <div>
+    <p-checkbox id="edgeType" name="edgeType" [(ngModel)]="edgeType" binary="true"></p-checkbox>
+  </div>
+  <br>
+  <div>
+    <p-button label="{{'HOME.ADD'|translate}}" (click)="addEdge()"></p-button>
+    <p-button label="{{'HOME.CANCEL' | translate}}" (click)="showAddEdge = false"></p-button>
+  </div>
+</p-dialog>
+<p-dialog header="{{'DIAGRAM.ADD.DEPENDENCY' | translate}}" [(visible)]="showAddDependency" [modal]="true"
+          [contentStyle]="{'overflow':'visible'}"
+          [style]="{width: '300px'}">
+  <label for="edgeType" translate>DIAGRAM.ADD.CONDITIONAL</label>
+  <div>
+    <p-checkbox id="dependency" name="dependency" [(ngModel)]="conditionalConnection" binary="true"></p-checkbox>
+  </div>
+  <br>
+  <div>
+    <p-button label="{{'HOME.ADD'|translate}}" (click)="addConditional()"></p-button>
+    <p-button label="{{'HOME.CANCEL' | translate}}" (click)="showAddDependency = false"></p-button>
+  </div>
+</p-dialog>
+
+<p-dialog header="{{'DIAGRAM.EDIT.NODE' | translate}}" [(visible)]="showEditNode" [modal]="true"
+          [contentStyle]="{'overflow' : 'visible'}"
+          [style]="{width: '800px'}" [closable]="false">
+  <div class="p-grid">
+    <div class="p-col">
+      <label for="language" translate>DIAGRAM.EDIT.LANGUAGE</label>
+      <div>
+        <p-dropdown id="language" [options]="languages" optionLabel="shortLang" [(ngModel)]="nodeForEdit.language"
+                    (ngModelChange)="editLangChange($event)">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="p-col">
+      <label for="group" translate>DIAGRAM.TYPE</label>
+      <div>
+        <p-dropdown id="group" [options]="nodeTypes" optionLabel="name" [(ngModel)]="selectedNodeType">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="p-col">
+      <label for="hidden" translate>DIAGRAM.EDIT.HIDE</label>
+      <div>
+        <p-inputSwitch id="hidden" [(ngModel)]="nodeForEdit.isHidden"></p-inputSwitch>
+      </div>
+    </div>
+    <div class="p-col">
+      <button pButton type="button" label="{{'DIAGRAM.EDIT.CLOSE' | translate}}" (click)="cancelEditNode()"></button>
+      <button pButton type="button" label="{{'DIAGRAM.EDIT.SAVE' | translate}}" (click)="saveEditNode(false)"></button>
+      <button pButton type="button" label="{{'DIAGRAM.EDIT.SAVECLOSE' | translate}}" class="ui-button-secondary"
+              (click)="saveEditNode(true)"></button>
+    </div>
+  </div>
+  <p-tabView [(activeIndex)]="tabViewIndex" *ngIf="nodeForEdit?.translations && nodeForEdit.translations[currentLang]">
+    <!-- TODO: hack to prevent errors   -->
+    <p-tabPanel header="{{'HOME.TITLE' | translate}}">
+      <label for="heading" translate>HOME.TITLE</label>
+
+      <div>
+        <input id="heading" type="text" pInputText [(ngModel)]="nodeForEdit.translations[currentLang].title"
+               [size]="80"/>
+      </div>
+      <label for="titleFormat" translate>DIAGRAM.EDIT.FORMATTITLE</label>
+      <div>
+        <p-editor id="titleFormat" [(ngModel)]="nodeForEdit.translations[currentLang].titleFormat"
+                  [style]="{'height':'320px'}"></p-editor>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'DIAGRAM.EDIT.TEXTNAVIGATOR' | translate}}">
+      <label for="navigator" translate="">DIAGRAM.EDIT.TEXTNAVIGATOR</label>
+      <div>
+        <input id="navigator" type="text" pInputText [(ngModel)]="nodeForEdit.translations[currentLang].textNavigator"
+               [size]="80"/>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'DIAGRAM.EDIT.CONTENT' | translate}}">
+      <label for="content" translate>DIAGRAM.EDIT.CONTENT</label>
+      <div>
+        <p-editor id="content" [(ngModel)]="nodeForEdit.translations[currentLang].content"
+                  [style]="{'height':'320px'}"></p-editor>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'DIAGRAM.EDIT.CONTENTLINKED' | translate}}">
+      <label for="contentLinked" translate>DIAGRAM.EDIT.CONTENTLINKED</label>
+      <div>
+        <p-editor id="contentLinked" [(ngModel)]="nodeForEdit.translations[currentLang].linkedContent" [readonly]="true"
+                  [style]="{'height':'320px'}"></p-editor>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'DIAGRAM.EDIT.LINKSKEYWORDS' | translate}}">
+      <div>
+        <p translate="">DIAGRAM.EDIT.KEYWORDS</p>
+        <div
+          *ngFor="let keyword of nodeForEdit.translations[currentLang].keywords; let i = index; trackBy:trackByIndex">
+          <input type="text" [(ngModel)]="nodeForEdit.translations[currentLang].keywords[i]" pInputText
+                 placeholder="Enter Keyword" [size]="80">
+          <button pButton type="button" icon="pi pi-times" class="ui-button-danger" (click)="removeKeyword(i)"></button>
+        </div>
+        <button pButton type="button" label="{{'DIAGRAM.EDIT.ADDKEYWORD' | translate}}" (click)="addKeyword()"></button>
+      </div>
+
+      <div>
+        <p translate>DIAGRAM.EDIT.LINKTYPE</p>
+        <p-dropdown [options]="linkTypes" optionLabel="fullName" [(ngModel)]="selectedLinkType"></p-dropdown>
+      </div>
+      <div>
+        <p translate>DIAGRAM.EDIT.LINKS</p>
+        <div *ngFor="let link of nodeForEdit.translations[currentLang].links; let i = index" class="p-grid">
+          <div class="p-col-6 ui-inputgroup">
+            <span class="ui-inputgroup-addon">{{link.linkType}}</span>
+            <input type="text" pInputText placeholder="Name"
+                   [(ngModel)]="nodeForEdit.translations[currentLang].links[i].name" [size]="35">
+          </div>
+          <div class="p-col-6 ui-inputgroup">
+            <span class="ui-inputgroup-addon">Href</span>
+            <input type="text" pInputText placeholder="Href"
+                   [(ngModel)]="nodeForEdit.translations[currentLang].links[i].url" [size]="35">
+            <button pButton type="button" icon="pi pi-times" class="ui-button-danger" (click)="removeLink(i)"></button>
+          </div>
+        </div>
+        <button pButton type="button" label="Добави линк" (click)="addLink()"></button>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="{{'DIAGRAM.EDIT.OTHER'|translate}}">
+      <p translate>DIAGRAM.EDIT.ORDER</p>
+      <input type="text" pInputText [(ngModel)]="nodeForEdit.order" pKeyFilter="pnum"/>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>
+
+<div class="diagram_box">
+  <div #visContainer class="big"></div>
+  <app-progress [showProgress]="linkingInProgress"></app-progress>
+  <div class="btn_box">
+    <button pButton [disabled]="linkingInProgress" (click)="saveDiagram()" label="{{'DIAGRAM.SAVE-BUTTON' | translate}}"
+            class="my-button"></button>
+    <button pButton [disabled]="linkingInProgress" (click)="insertLinks()"
+            label="{{'DIAGRAM.INSERTLINKS-BUTTON' | translate}}" class="my-button"></button>
+    <button pButton [disabled]="linkingInProgress" (click)="copyNodes(false)"
+            label="{{'DIAGRAM.COPY-NODES' | translate}}" class="my-button"></button>
+    <button pButton [disabled]="linkingInProgress" (click)="copyNodes()"
+            label="{{'DIAGRAM.COPY-NODES-TEXT' | translate}}" class="my-button"></button>
+    <button pButton [disabled]="linkingInProgress" (click)="showExportData = true"
+            label="{{'DIAGRAM.EXPORT' | translate}}" class="my-button"></button>
+    <button pButton [disabled]="linkingInProgress" (click)="showImport()" label="{{'DIAGRAM.IMPORT' | translate}}"
+            class="my-button"></button>
+  </div>
+</div>

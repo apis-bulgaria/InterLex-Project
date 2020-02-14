@@ -1,0 +1,7 @@
+<app-alert></app-alert>
+<!--The content below is only a placeholder and can be replaced.-->
+<app-header *ngIf="(router.url.indexOf('/admin') < 0) && (router.url.indexOf('/login') < 0)"></app-header>
+    <div class="body-div">
+        <router-outlet></router-outlet>
+    </div>
+<app-footer></app-footer>

@@ -1,0 +1,160 @@
+<p-overlayPanel #op [showCloseIcon]="true">
+  <div class="hint-width"
+       [innerHTML]="linkHint | safeHtml"></div>
+</p-overlayPanel>
+
+<div class="question_page">
+  <div class="p-grid" *ngIf="selectedNode">
+    <div class="p-col">
+      <p-card header="{{'SOLVE.FACTS' | translate}}">
+        <div class="card-height">
+
+          <div *ngIf="showSelection; else simple" class="card_box">
+            <div *ngIf="selectedNode.translations[currentLang].titleFormat; else justTitle"
+                 [innerHTML]="selectedNode.translations[currentLang].titleFormat">
+            </div>
+            <ng-template #justTitle>
+              <div class="question_title">
+                {{selectedNode.translations[currentLang].title}}
+              </div>
+            </ng-template>
+            <div *ngIf="limitedAdmin" style="margin-bottom: 25px">Current node id: {{selectedNode.id}}</div>
+            <div *ngFor="let option of radioOptions" class="option_answer">
+              <p-radioButton name="pathSelection" [value]="option.id"
+                             [label]="option.name"
+                             [disabled]="(option.id === jurMainNodeId || option.id === lawMainNodeId) && !isOfficialPresentation"
+                             [(ngModel)]="selectedOptionId"></p-radioButton>
+              <span *ngIf="limitedAdmin" style="margin-left: 25px">{{option.id}}</span>
+            </div>
+          </div>
+          <ng-template #simple>
+            <div
+              [innerHTML]="selectedNode.translations[currentLang].titleFormat || selectedNode.translations[currentLang].title">
+              <!--              {{selectedNode.label}}-->
+            </div>
+            <div *ngIf="limitedAdmin" style="margin-bottom: 25px">Current node id: {{selectedNode.id}}</div>
+          </ng-template>
+
+          <div *ngIf="selectedNode.group === 'decisionNode'">
+            <div>
+              <p-radioButton name="choice" value="Yes" label="Да" [(ngModel)]="radioYesNo"></p-radioButton>
+            </div>
+            <div>
+              <p-radioButton name="choice" value="No" label="Не" [(ngModel)]="radioYesNo"></p-radioButton>
+            </div>
+          </div>
+        </div>
+
+        <p-footer>
+          <button pButton type="button" label="{{'SOLVE.PREV' | translate}}" icon="pi pi-arrow-left"
+                  class="ui-button-secondary" (click)="movePrevNode()" [disabled]="prevButtonDisabled"></button>
+          <button pButton type="button" label="{{'SOLVE.NEXT' | translate}}" icon="pi pi-arrow-right"
+                  class="float-right" iconPos="right" (click)="moveNextNode()" [disabled]="nextButtonDisabled"></button>
+        </p-footer>
+      </p-card>
+
+
+      <!-- References -->
+      <div class="references_box">
+        <p-card class="reference_list">
+          <p-header>
+            {{'SOLVE.REFERENCE' | translate}}
+            <button type="button" (click)="showDialogReferences()" pButton icon="pi pi-pencil"
+                    class="edit-btn" *ngIf="loggedIn && !limitedAdmin"></button>
+          </p-header>
+          <!-- <label for="" *ngIf="selectedNode.translations[currentLang].links?.length">Manual</label>-->
+          <div *ngFor="let link of selectedNode.translations[currentLang].links">
+            <a href="{{link.url}}" target="_blank">{{link.name}}</a>
+          </div>
+          <label for="" *ngIf="(selectedNode.translations[currentLang].autoLinks | autolinkfilter:1)?.length">Legislation</label>
+          <div *ngFor="let autolink of selectedNode.translations[currentLang].autoLinks | autolinkfilter:1">
+            <a href="{{autolink.url}}" target="_blank" (mouseenter)="getLinkHint(autolink, op, $event)">
+              {{autolink.text}}</a>
+          </div>
+          <label for="" *ngIf="(selectedNode.translations[currentLang].autoLinks | autolinkfilter:2)?.length">Case
+            law</label>
+          <div *ngFor="let autolink of selectedNode.translations[currentLang].autoLinks | autolinkfilter:2">
+            <a href="{{autolink.url}}" target="_blank" (mouseenter)="getLinkHint(autolink, op, $event)">
+              {{autolink.text}}</a>
+          </div>
+        </p-card>
+      </div>
+      <p-dialog [(visible)]="displayReference" [modal]="true" [responsive]="true" [minY]="70" [baseZIndex]="10000"
+                class="ref_dialog_box">
+
+        <p-header> Edit references</p-header>
+        <div class="dialog-div">
+          <p>Вид линк</p>
+          <p-dropdown [options]="linkTypes" optionLabel="fullName" [(ngModel)]="selectedLinkType"></p-dropdown>
+        </div>
+
+        <div class="dialog-div">
+          <p>Links</p>
+          <div *ngFor="let link of editedLinks; let i = index" class="p-grid">
+            <div class="p-col-6 ui-inputgroup">
+              <span class="ui-inputgroup-addon">{{link.linkType}}</span>
+              <input type="text" pInputText placeholder="Name" [(ngModel)]="editedLinks[i].name" [size]="35">
+            </div>
+            <div class="p-col-6 ui-inputgroup">
+              <span class="ui-inputgroup-addon link_href">Href</span>
+              <input type="text" pInputText placeholder="Href" [(ngModel)]="editedLinks[i].url" [size]="35">
+              <button pButton type="button" icon="pi pi-times" class="ui-button-danger"
+                      (click)="removeLink(i)"></button>
+            </div>
+          </div>
+          <button pButton type="button" label="Добави линк" (click)="addLink()"></button>
+        </div>
+
+        <p-footer class="foot_ref">
+          <button type="button" pButton icon="pi pi-check" (click)="saveLinksAndClose()" label="Save"></button>
+          <button type="button" pButton icon="pi pi-times" (click)="displayReference=false" label="Cancel"
+                  class="ui-button-secondary"></button>
+        </p-footer>
+      </p-dialog>
+    </div>
+
+    <!-- Comments -->
+    <div class="p-col">
+      <div class="comments_box">
+        <p-card class="comment_text">
+          <p-header>
+            {{'SOLVE.COMMENTS' | translate}}
+            <button type="button" (click)="showDialogComment()" pButton icon="pi pi-pencil" class="edit-btn"
+                    *ngIf="loggedIn && !limitedAdmin"></button>
+          </p-header>
+
+          <div *ngIf="loggedIn;else notLogged" [innerHTML]="selectedNode.translations[currentLang].content"></div>
+          <ng-template #notLogged>
+            <div [innerHTML]="selectedNode.translations[currentLang].linkedContent
+             || selectedNode.translations[currentLang].content || '' | safeHtml"
+                 (mouseover)="contentHint($event, op)"></div>
+          </ng-template>
+        </p-card>
+      </div>
+      <p-dialog [(visible)]="displayComment" [modal]="true" [responsive]="true" [minY]="70" [baseZIndex]="10000">
+        <p-header> Edit comment</p-header>
+        <p-editor [(ngModel)]="commentStr" [style]="{'height':'320px'}"></p-editor>
+        <p-footer>
+          <button type="button" pButton icon="pi pi-check" (click)="saveCommentAndClose()" label="Save"></button>
+          <button type="button" pButton icon="pi pi-times" (click)="displayComment=false" label="Cancel"
+                  class="ui-button-secondary"></button>
+        </p-footer>
+      </p-dialog>
+    </div>
+  </div>
+
+
+  <div class="navigator-box">
+    <app-breadcrumbs [nodes]="nodesHistory" [histChanged]="histNodesChanged"
+                     (clickId)="breadcrumbClick($event)"></app-breadcrumbs>
+    <!-- <p-card header="{{'SOLVE.NAVIGATOR' | translate}}">
+        <div [innerHTML]="selectedNode.textNavigator">
+        </div>
+      </p-card> -->
+  </div>
+
+  <!--  <div class="p-col" style="display:none">-->
+  <!--    <div #visContainer class="big"></div>-->
+  <!--  </div>-->
+
+</div>

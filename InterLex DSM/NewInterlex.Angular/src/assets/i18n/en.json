@@ -1,0 +1,93 @@
+{
+  "HOME": {
+    "DIAGRAMS": "Diagrams",
+    "TITLE": "Title",
+    "CATEGORY": "Category",
+    "ORDER": "Order",
+    "ACTION": "Action",
+    "CANCEL": "Cancel",
+    "ADD": "Add"
+  },
+  "SOLVE": {
+    "FACTS": "Tell us about your case",
+    "COMMENTS": "Comments",
+    "REFERENCE": "References",
+    "NEXT": "Next",
+    "PREV": "Previous",
+    "NAVIGATOR": "Text navigator"
+  },
+  "MASTER": {
+    "CREATE": "Create master graph",
+    "CONFIRM-BUTTON": "Create diagram"
+  },
+  "DIAGRAM": {
+    "TITLE": "Diagram title",
+    "TYPE": "Type",
+    "COUNTRIES": "Countries",
+    "SAVE-BUTTON": "Save diagram",
+    "INSERTLINKS-BUTTON": "Insert links",
+    "COPY-NODES": "Copy nodes",
+    "COPY-NODES-TEXT": "Copy nodes and text",
+    "EXPORT": "Export nodes",
+    "IMPORT": "Import nodes",
+    "ADD": {
+      "DEPENDENCY": "Add dependency",
+      "CONDITIONAL": "Conditional connection",
+      "EDGE": "Add edge",
+      "NODE": "Add node",
+      "YESNO": "Is \"No\" node?"
+    },
+    "EDIT": {
+      "NODE": "Edit node",
+      "LANGUAGE": "Language",
+      "HIDE": "Hide for navigation",
+      "FORMATTITLE": "Formatted title",
+      "TEXTNAVIGATOR": "Text navigator",
+      "CONTENT": "Content",
+      "CONTENTLINKED": "Linked Content",
+      "LINKSKEYWORDS": "Links/Keywords",
+      "OTHER": "Other",
+      "ORDER": "Order",
+      "KEYWORDS": "Keywords",
+      "LINKTYPE": "Link type",
+      "LINKS": "Links",
+      "ADDKEYWORD": "Add Keyword",
+      "ADDLINK": "Add Link",
+      "SAVE": "Save",
+      "CLOSE": "Close",
+      "SAVECLOSE": "Save and close"
+    }
+  },
+  "HEADER": {
+    "DEMO": "Demo",
+    "BETA": "Beta",
+    "HOME": "Home",
+    "SOLVE": "Solve case",
+    "CREATE": "Create master",
+    "MANAGE": "Manage diagrams",
+    "TITLE": "DECISION SUPPORT MODULE ",
+    "ADMIN": "Admin",
+    "HEADERINFO": "<p class=\"f_italic\">The present module of the InterLex System is designed to help the user to find a reasoned answer to the questions the courts of which EU Member State have jurisdiction to settle a dispute in civil or commercial matters and the substantive law of which country shall be applied by the court in making a decision on the substance of the matter. These issues are governed by the rules of EU law in the field of private international law and, in particular, by <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32012R1215&topar=&lastcons=true\" target=\"_blank\"> Brussels Ia</a></span>, <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32008R0593&topar=&lastcons=true\" target=\"_blank\"> Rome I</a></span> and <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32007R0864&topar=&lastcons=true\" target=\"_blank\"> Rome II</a></span> regulations.</p>"
+  },
+  "HOMEPAGE": {
+    "ABOUT": "In order to get an answer regarding jurisdiction and applicable law in relation to a specific case, you need to answer a series of questions. For each question, a brief expert analysis of the relevant legal framework and case law of the Court of Justice of the EU, as well as explanations necessary for a proper understanding of the question or legal terms contained therein, are presented in the “Comments” panel. The “References” panel provides useful links to applicable instruments and more relevant case law of the Court of Justice of the EU, as well as to recommended help or expert materials. Once the necessary information has been gathered, the system will give you a short answer about jurisdiction and applicable law.<p>Before you start answering questions, make sure that your case actually concerns a dispute in civil or commercial matters falling within the scope of this Module as defined below.</p>",
+    "DISCLAIMER": "The information on this site is subject to a <span><a href=\"https://interlex-portal.eu/en/legal.html#disclaimer\" target=\"_blank\">disclaimer</a></span> and a <span><a href=\"https://interlex-portal.eu/en/legal.html#copyright-notice\" target=\"_blank\">copyright notice</a></span>. If you do not agree to these conditions, do not proceed further and exit the web site now.",
+    "SCOPETITLE": "Scope of application of the Module",
+    "PROJECTSCOPE": "<p>The scope of application of InterLex Decision support module coincides with the territorial, material and temporal scope of application of the instruments of European Union law related to jurisdiction, recognition and enforcement in civil and commercial matters (<span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32012R1215&topar=&lastcons=true\" target=\"_blank\">Brussels Ia Regulation</a></span>) and law applicable to contractual (<span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32008R0593&topar=&lastcons=true\" target=\"_blank\">Rome I Regulation</a></span>) and non-contractual obligations in civil and commercial matters (<span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32007R0864&topar=&lastcons=true\" target=\"_blank\">Rome II Regulation</a></span>). </p> ",
+    "MATERIALSCOPE": "<p> With regard to the <strong>territorial scope </strong>, all EU Member States are covered, with the exception of Denmark, which does not take part in judicial cooperation policy under Title V of the Treaty on the functioning of the EU. However, between Denmark and the other EU Member States there is an agreement (concluded on 19 October 2005; entered into force on 1 July 2007), which basically extends the provisions of the <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32001R0044&topar=&lastcons=true\" target=\"_blank\">Brussels I Regulation</a></span> to Denmark. Under Article 3 of that agreement Denmark will be implementing any amendments to the <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32001R0044&topar=&lastcons=true\" target=\"_blank\">Brussels I Regulation</a></span>, thus also the amendments brought about by the <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32012R1215&topar=&lastcons=true\" target=\"_blank\">Brussels Ia </a></span> (Recast) Regulation.</p><p>The <strong>material scope</strong> covers civil and commercial matters in general. However, the jurisdictional rules of <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32012R1215&topar=&lastcons=true\" target=\"_blank\">Brussels Ia Regulation </a></span> do not apply to certain areas of civil law, such as the status or legal capacity of natural persons, matrimonial matters, wills and succession, bankruptcy, social security, arbitration or maintenance obligations. Explicitly excluded are revenue, customs and administrative matters as well as matters, which relate to the liability of the State for acts and omissions in the exercise of State authority (acta iure imperii). When it comes to contractual and non-contractual obligations, <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32008R0593&topar=&lastcons=true\" target=\"_blank\">Rome I</a></span> and <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32007R0864&topar=&lastcons=true\" target=\"_blank\">Rome II </a></span>regulations introduce some additional exceptions. For instance, <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32008R0593&topar=&lastcons=true\" target=\"_blank\">Rome I</a></span> excludes from its scope all contractual issues relating to family law and status of individuals, arbitration, company law, trusts and succession and agency. Comparably, <span><a href=\"https://interlex-portal.eu/FindLaw/doc/act?docPrefLangId=4&docnumber=32007R0864&topar=&lastcons=true\" target=\"_blank\">Rome II Regulation</a></span> excludes non-contractual obligations arising out of family or similar relationships, matrimonial property regimes and trusts and succession. Also excluded are such obligations arising out of various commercial relationships such as those in relation to bills of exchange and other negotiable instruments and company law matters, obligations arising out of nuclear damage as well as defamation and violation of rights of privacy and personality.</p>",
+    "TEMPORALSCOPE": "The <strong>temporal scope</strong> of application of the Module covers different situations depending on the date on which the respective instrument of EU law became applicable:<ul><li>10 January 2015 – for cases involving determining jurisdiction in civil and commercial matters</li><li>17 December 2009 – for cases involving determining of law applicable to contractual obligations</li><li>11 January 2009 – for cases involving determining of law applicable to non-contractual obligations.</li></ul>",
+    "STARTBTN": "TELL US ABOUT YOUR CASE",
+    "SEEMORE": "Learn More",
+    "SEELESS": "See Less"
+  },
+  "FOOTER": {
+    "EU": "Thе InterLex project is co-funded by the Justice Programme of the European Union (2014-2020)",
+    "PROJECT": "The content of this website represents the views of the partners of the InterLex project and is their sole responsibility. The European Commission does not accept any responsibility for use that may be made of the information it contains.",
+    "ABOUT-INTERLEX": "About InterLex project",
+    "PORTAL": "InterLex portal website",
+    "PRIVACY-POLICE": "Privacy policy",
+    "DISCLAIMER-LINK": "Disclaimer",
+    "LEGAL-NOTICE": "Copyright notice",
+    "LANGUAGE": "en"
+  }
+}

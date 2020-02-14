@@ -1,0 +1,22 @@
+<div class="center-box">
+  <p-panel [toggleable]="false" header="{{'HEADER.MANAGE' | translate}}">
+    <p-table [value]="data">
+      <ng-template pTemplate="header">
+        <tr>
+          <th translate>HOME.TITLE</th>
+          <th translate>HOME.CATEGORY</th>
+          <th translate>HOME.ORDER</th>
+          <th translate>HOME.ACTION</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-graph>
+        <tr>
+          <td><a [routerLink]="['/admin','master-graph', graph.id]">{{graph.title}}</a></td>
+          <td>{{graph.masterGraphCategory | masterCategory}}</td>
+          <td>{{graph.order}}</td>
+          <td>Action</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+</div>

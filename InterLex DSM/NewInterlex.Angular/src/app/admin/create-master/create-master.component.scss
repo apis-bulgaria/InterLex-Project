@@ -1,0 +1,23 @@
+.graph_categories, .btns{
+    margin: 7px 0;
+}
+.panel_box,
+.input_box,
+.diagram_btn_box{
+    justify-content: center;
+}
+.btn_reject{
+ margin-right: 10px;
+}
+
+.btn_confirm{
+  margin-left: 10px;
+}
+
+.create-master-box{
+  margin-top: 1.5em;
+}
+
+::ng-deep p-dropdown .ui-dropdown{
+ width: 99.5%;
+}

@@ -1,0 +1,126 @@
+.big {
+  height: 300px;
+  width: 100%;
+  border: 1px solid lightgray;
+}
+
+label {
+  font-weight: bold;
+}
+
+.float-right {
+  float: right;
+}
+
+.card-height {
+  height: 230px;
+  padding: 1em 0.5em;
+
+  .card_box {
+    overflow-y: auto;
+    max-height: 230px;
+    margin-left: 5px;
+
+    .question_title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #707070;
+    }
+  }
+
+  .option_answer {
+    margin: 5px;
+  }
+}
+
+.navigator-box {
+  margin-top: 15px;
+}
+
+::ng-deep .references_box {
+  margin-top: 15px;
+
+  .reference_list {
+
+    .ui-card {
+      height: 255px;
+
+
+      .ui-card-body {
+        max-height: 250px;
+
+        .ui-card-content {
+          max-height: 245px;
+          height: 230px;
+          overflow-y: auto;
+          padding: 0.5em 1em 0;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .comments_box {
+  //height: 650px;
+
+    .comment_text{
+    .ui-card{
+      height: 624px;
+
+      .ui-card-body {
+        // overflow-y: auto;
+        max-height: 624px;
+
+        .ui-card-title {
+          margin-bottom: 0;
+        }
+
+        .ui-card-content {
+          overflow-y: auto;
+          height: 595px;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .edit-btn {
+  float: right;
+  height: 1.75em;
+  width: 2em;
+  border-bottom-right-radius: 0 !important;
+  box-shadow: none !important;
+
+  span.ui-button-icon-left {
+    font-size: 1.6em !important;
+  }
+}
+
+.link_href {
+  width: 90px;
+}
+
+::ng-deep .ref_dialog_box {
+
+  .ui-dialog .ui-dialog-footer {
+    padding: .5em !important;
+  }
+
+  .dialog-div {
+    margin: 0.5em 0;
+
+    p {
+      margin: 0.5em 0;
+    }
+  }
+}
+
+.hint-width {
+  width: 600px;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+::ng-deep .ui-label-disabled {
+  color: darkgray;
+}
