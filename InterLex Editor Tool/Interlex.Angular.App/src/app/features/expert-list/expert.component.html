@@ -1,0 +1,617 @@
+<p-confirmDialog></p-confirmDialog>
+<p-dialog header="Author" [(visible)]="showAddAuthor" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="authorOv" class="bold">Author name</label>
+  <input type="text" pInputText class="form-control" id="authorOv" [(ngModel)]="author">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addAuthor()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Corporate Author" [(visible)]="showAddCorpAuthor" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="corpAuthorOv" class="bold">Corporate Author name</label>
+  <input type="text" pInputText class="form-control" id="corpAuthorOv" [(ngModel)]="corpAuthor">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addCorpAuthor()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Publisher" [(visible)]="showAddPublisher" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="publisherOv" class="bold">Publisher name</label>
+  <input type="text" pInputText class="form-control" id="publisherOv" [(ngModel)]="publisher">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addPublisher()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Source" [(visible)]="showAddSource" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="sourceName" class="bold">Source Name</label>
+  <input type="text" pInputText class="form-control" required id="sourceName" [(ngModel)]="source.name">
+  <label for="sourceUrl" class="bold">Source Url</label>
+  <input type="text" pInputText class="form-control" required id="sourceUrl" [(ngModel)]="source.url">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addSource()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Keyword" [(visible)]="showAddKeyword" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="keywordOv" class="bold">Keyword</label>
+  <input type="text" pInputText class="form-control" id="keywordOv" [(ngModel)]="keyword">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addKeyword()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="ISSN" [(visible)]="showAddIssn" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="issnOv" class="bold">ISSN</label>
+  <input type="text" pInputText class="form-control" id="issnOv" [(ngModel)]="issn">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addIssn()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="ISBN" [(visible)]="showAddIsbn" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="isbnOv" class="bold">ISBN</label>
+  <input type="text" pInputText class="form-control" id="isbnOv" [(ngModel)]="isbn">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addIsbn()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="DOI" [(visible)]="showAddDoi" [style]="{width: '400px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <label for="doiOv" class="bold">DOI</label>
+  <input type="text" pInputText class="form-control" id="doiOv" [(ngModel)]="doi">
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addDoi()"
+            label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Language" [(visible)]="showAddLanguage" [modal]="true" [style]="{width: '750px'}"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <div class="form-group">
+    <label>Languages</label>
+    <div class="row">
+      <div class="col-sm">
+        <div *ngFor="let lang of languages | slice:0:10">
+          <p-checkbox name="{{lang.nameEn}}" value="{{lang.nameEn}}" label="{{lang.nameEn}}"
+                      [(ngModel)]="tempLanguages"></p-checkbox>
+        </div>
+      </div>
+      <div class="col-sm">
+        <div *ngFor="let lang of languages | slice:10:20">
+          <p-checkbox name="{{lang.nameEn}}" value="{{lang.nameEn}}" label="{{lang.nameEn}}"
+                      [(ngModel)]="tempLanguages"></p-checkbox>
+        </div>
+      </div>
+      <div class="col-sm">
+        <div *ngFor="let lang of languages | slice:20">
+          <p-checkbox name="{{lang.nameEn}}" value="{{lang.nameEn}}" label="{{lang.nameEn}}"
+                      [(ngModel)]="tempLanguages"></p-checkbox>
+        </div>
+        <br>
+        <div>
+          <strong>
+            <p-checkbox label="Check All" (onChange)="checkAllFunc($event)"></p-checkbox>
+          </strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addLanguage()" label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Format" [(visible)]="showAddFormat" [modal]="true" [style]="{width: '500px'}"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <div>
+    <div class="row">
+      <div class="col-sm form-group">
+        <label>Format</label>
+        <div *ngFor="let format of formats">
+          <p-checkbox name="{{format}}" value="{{format}}" label="{{format}}"
+                      [(ngModel)]="tempFormats"></p-checkbox>
+        </div>
+      </div>
+      <div class="col-sm form-group">
+        <label for="otherFormat">Other</label>
+        <input type="text" id="otherFormat" name="otherFormat" pInputText class="form-control"
+               [(ngModel)]="otherFormat">
+      </div>
+    </div>
+
+
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addFormat()" label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+
+<p-dialog header="Add document" [(visible)]="showAddFile" [style]="{width: '500px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'500px', 'max-height':'700px'}">
+  <div class="row">
+    <div class="col-sm">
+      <p-fileUpload [showCancelButton]="false" [showUploadButton]="false"
+                    [customUpload]="true" [disabled]="!editable" (uploadHandler)="onUpload($event)"
+                    [auto]="true">
+        <ng-template pTemplate="file">
+          <div class="ui-fileupload-row">
+            <div (click)="undefined">{{currentFile?.filename}}</div>
+            <!--                <div>-->
+            <!--                  <button type="button" icon="pi pi-times" pButton (click)="removeFile($event)" *ngIf="editable"></button>-->
+            <!--                </div>-->
+          </div>
+        </ng-template>
+      </p-fileUpload>
+    </div>
+    <div class="col-sm"><label for="file-language">Language<span class="star-red">*</span></label>
+      <p-dropdown [options]="languages" id="file-language" placeholder="Language" name="file-language"
+                  [(ngModel)]="fileLanguage" optionLabel="nameEn" [style]="{'width':'200px'}"
+                  #category="ngModel" [readonly]="!editable"
+                  required="true"></p-dropdown>
+      <div *ngIf="submitted && category.invalid" class="alert alert-danger">
+        <div *ngIf="category.errors.required">
+          Language is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="addFile()"
+            label="Save"></button>
+  </p-footer>
+
+</p-dialog>
+
+<div class="container">
+  <form #f="ngForm" (ngSubmit)="f.form.valid && submitForm(false)" novalidate>
+    <!-- " -->
+    <p></p>
+    <div class="form-group" style="border-bottom: 1px solid gray;" *ngIf="editable">
+      <span style="padding:10px 20px 0px 0px;">
+        <p-button type="button" icon="pi pi-save" label="Save"
+                  (click)="submitForm(false)"></p-button>
+      </span>
+      <span style="padding:10px 20px 0px 100px;">
+        <p-button type="button" icon="pi pi-check" label="Save and close"
+                  (click)="submitForm(true)"></p-button>
+      </span>
+      <p></p>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm">
+        <label for="category">Category<span class="star-red">*</span></label>
+        <p-dropdown [options]="categories" id="category" placeholder="Category" name="category"
+                    [(ngModel)]="model.category" optionLabel="label" [style]="{'width':'300px'}"
+                    #category="ngModel" [readonly]="!editable"
+                    required="true"></p-dropdown>
+        <div *ngIf="submitted && category.invalid" class="alert alert-danger">
+          <div *ngIf="category.errors.required">
+            Category is required.
+          </div>
+        </div>
+      </div>
+      <div class="col-sm form-group" *ngIf="model.category?.label === 'Articles'">
+        <label for="journal" class="bold">Journal</label>
+        <input type="text" id="journal" name="journal" pInputText class="form-control" [(ngModel)]="model.journal">
+      </div>
+      <div class="col-sm form-group" *ngIf="model.category?.label === 'Articles'">
+        <label for="issue" class="bold">Issue</label>
+        <input type="text" id="issue" name="issue" pInputText class="form-control" [(ngModel)]="model.issue">
+      </div>
+      <div class="col-sm form-group" *ngIf="model.category?.label === 'Articles'">
+        <label for="pages" class="bold">Pages</label>
+        <input type="text" id="pages" name="pages" pInputText class="form-control" [(ngModel)]="model.pages">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="title">
+        Title<span class="star-red">*</span>
+      </label>
+      <input type="text" pInputText id="title" name="title" [(ngModel)]="model.title" required class="form-control"
+             #title="ngModel" autocomplete="off" [readOnly]="!editable">
+      <div *ngIf="submitted && title.invalid" class="alert alert-danger">
+        <div *ngIf="title.errors.required">
+          Title is required.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm">
+        <label for="author">
+          Author
+          <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addAuthorClick()"
+                  iconPos="left" label="Add author" *ngIf="editable"></button>
+        </label>
+        <p-chips [(ngModel)]="model.author" id="author" name="author" [disabled]="!editable"
+                 [allowDuplicate]="false" addOnBlur="true" required>
+        </p-chips>
+      </div>
+      <div class="form-group col-sm">
+        <label for="corporate-author">
+          Corporate Author
+          <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addCorpAuthorClick()"
+                  iconPos="left" label="Add corporate author" *ngIf="editable"></button>
+        </label>
+        <p-chips [(ngModel)]="model.corporateAuthor" id="corporate-author" name="corporate-author"
+                 [disabled]="!editable"
+                 [allowDuplicate]="false" addOnBlur="true" required>
+        </p-chips>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4 form-group">
+        <label for="publisher">
+          Publisher
+          <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addPublisherClick()"
+                  iconPos="left" label="Add publisher" *ngIf="editable"></button>
+        </label>
+        <p-chips [(ngModel)]="model.publisher" id="publisher" name="publisher" [disabled]="!editable"
+                 [allowDuplicate]="false" addOnBlur="true" required>
+        </p-chips>
+      </div>
+      <div class="col-sm-8 form-group">
+        <label for="publicationDate">Published</label>
+        <div class="row">
+          <div class="col-sm-4">
+            <p-calendar id="publicationDate" name="dateOfDocument" [(ngModel)]="model.publicationDate"
+                        dateFormat="dd.mm.yy"
+                        [style]="{'width':'350px'}" [yearNavigator]="true"
+                        yearRange="1950:2025" [showIcon]="true" [showButtonBar]="true"
+                        [monthNavigator]="true" [disabled]="!editable"></p-calendar>
+          </div>
+          <div class="col-sm-4">
+            <p-dropdown [options]="yearsRange" id="publYear" placeholder="Publication year" name="publYear"
+                        [(ngModel)]="model.publicationYear" [style]="{'width':'200px'}" [showClear]="true"
+                        [readonly]="!editable"></p-dropdown>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label>
+        Sources
+        <button type="button" class="ui-button-rounded" pButton icon="pi pi-plus"
+                (click)="addSourceClick()" *ngIf="editable"
+                iconPos="left" label="Add source"></button>
+      </label>
+      <table>
+        <tr *ngFor="let source of model.sources; index as i" class="t-eu-link">
+          <td>
+            <a target="_blank" [attr.href]="source.url">{{source.name}}</a>
+          </td>
+          <td>
+            &nbsp;<button pButton class="ui-button-rounded" type="button" icon="pi pi-bars"
+                          (click)="editSource(i)" *ngIf="editable"
+                          title="Edit Source"></button>
+            &nbsp;<button pButton class="ui-button-rounded ui-button-danger" type="button" icon="pi pi-times"
+                          *ngIf="editable"
+                          (click)="removeSource(source)" title="Remove Source"></button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="form-group">
+      <label for="abstract">Abstract</label>
+      <p-editor id="abstract" name="abstract" [(ngModel)]="model.abstract" [style]="{'height':'320px'}"
+                [readonly]="!editable"></p-editor>
+    </div>
+    <div class="form-group">
+      <label for="keywords">
+        Keywords
+        <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addKeywordClick()"
+                iconPos="left" label="Add keyword" *ngIf="editable"></button>
+      </label>
+      <p-chips [(ngModel)]="model.keywords" id="keywords" name="keywords"
+               [disabled]="!editable" [allowDuplicate]="false" placeholder="">
+      </p-chips>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm">
+        <label for="issn">
+          ISSN
+          <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addIssnClick()"
+                  iconPos="left" label="Add ISSN" *ngIf="editable"></button>
+        </label>
+        <p-chips [(ngModel)]="model.issn" id="issn" name="issn"
+                 [disabled]="!editable" [allowDuplicate]="false" placeholder="">
+        </p-chips>
+      </div>
+      <div class="form-group col-sm">
+        <label for="isbn">
+          ISBN
+          <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addIsbnClick()"
+                  iconPos="left" label="Add ISBN" *ngIf="editable"></button>
+        </label>
+        <p-chips [(ngModel)]="model.isbn" id="isbn" name="isbn"
+                 [disabled]="!editable" [allowDuplicate]="false" placeholder="">
+        </p-chips>
+      </div>
+      <div class="form-group col-sm">
+        <label for="doi">
+          DOI
+          <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addDoiClick()"
+                  iconPos="left" label="Add DOI" *ngIf="editable"></button>
+        </label>
+        <p-chips [(ngModel)]="model.doi" id="doi" name="doi"
+                 [disabled]="!editable" [allowDuplicate]="false" placeholder="">
+        </p-chips>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="fileList">
+        Document upload
+      </label>
+      <!--      <p-fileUpload name="fileList" [showCancelButton]="false" [showUploadButton]="false"-->
+      <!--                    (onRemove)="removeFile($event)" [files]="files"-->
+      <!--                    [disabled]="!editable">-->
+      <!--        <ng-template pTemplate="file" let-file>-->
+      <div class="ui-fileupload-row" *ngFor="let file of files">
+        <div (click)="getFile(file)" class="link">{{file.filename}} ({{file.language.twoLetter | uppercase}})</div>
+        <div>
+          <button type="button" icon="pi pi-times" pButton (click)="removeFile(file)" *ngIf="editable"></button>
+        </div>
+      </div>
+      <!--        </ng-template>-->
+      <!--      </p-fileUpload>-->
+      <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addFileClick()"
+              iconPos="left" label="Add document" *ngIf="editable"></button>
+    </div>
+
+    <div class="form-group">
+      <label for="languages">
+        Language
+        <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addLanguageClick()"
+                iconPos="left" label="Add language" *ngIf="editable"></button>
+      </label>
+      <p-chips [(ngModel)]="model.languages" id="languages" name="languages" [disabled]="!editable"
+               [allowDuplicate]="false" addOnBlur="true" required>
+      </p-chips>
+    </div>
+    <div class="form-group">
+      <label for="formats">
+        Format
+        <button class="ui-button-rounded" type="button" pButton icon="pi pi-plus" (click)="addFormatClick()"
+                iconPos="left" label="Add format" *ngIf="editable"></button>
+      </label>
+      <p-chips [(ngModel)]="model.formats" id="formats" name="formats" [disabled]="!editable"
+               [allowDuplicate]="false" addOnBlur="true" required>
+      </p-chips>
+    </div>
+    <div class="form-group">
+      <label for="license">License</label>
+      <div class="row">
+        <div class="col-sm-4">
+          <p-dropdown [options]="licenses" id="license" placeholder="Choose license" name="license"
+                      [(ngModel)]="model.license" optionLabel="label" [style]="{'width':'300px'}"
+                      (onChange)="licenseChange($event)" [showClear]="true"
+                      [readonly]="!editable"></p-dropdown>
+        </div>
+        <div class="col-sm-4">
+          <p *ngIf="model?.license?.title !== 'Other';else altLicense"><a href="{{model?.license?.value}}"
+                                                                          target="_blank">{{model?.license?.title}}</a>
+          </p>
+          <ng-template #altLicense>
+            <input type="text" name="altLicense" pInputText class="form-control" [(ngModel)]="model.license.value">
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="text">Text</label>
+      <p-editor id="text" name="text" [(ngModel)]="model.text" [style]="{'height':'320px'}"
+                [readonly]="!editable"></p-editor>
+    </div>
+
+    <!--    <div class="form-group">-->
+    <!--      <label for="eli">-->
+    <!--        ELI (European Legislation Identifier)-->
+    <!--      </label>-->
+    <!--      <input type="text" pInputText id="eli" name="eli" [(ngModel)]="model.eli" class="form-control"-->
+    <!--             #eli="ngModel" autocomplete="off" [readOnly]="!editable">-->
+    <!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--      <label for="publReference">-->
+    <!--        Publication reference<span class="star-red">*</span>-->
+    <!--      </label>-->
+    <!--      <input type="text" pInputText id="publReference" name="publReference" [(ngModel)]="model.publReference"-->
+    <!--             class="form-control" [readOnly]="!editable"-->
+    <!--             #publReference="ngModel" autocomplete="off">-->
+    <!--      <div *ngIf="submitted && publReference.invalid" class="alert alert-danger">-->
+    <!--        <div *ngIf="publReference.errors.required">-->
+    <!--          Publication reference is required.-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--    <div class="row">-->
+    <!--      <div class="col-sm-3 form-group">-->
+    <!--        <label for="dateOfDocument">Date of document<span class="star-red">*</span></label>-->
+    <!--        <p-calendar id="dateOfDocument" name="dateOfDocument" [(ngModel)]="model.dateOfDocument" dateFormat="dd.mm.yy"-->
+    <!--                    [style]="{'width':'350px'}" #dateOfDocument="ngModel" required [yearNavigator]="true"-->
+    <!--                    yearRange="1950:2025" [showIcon]="true"-->
+    <!--                    [monthNavigator]="true" [disabled]="!editable"></p-calendar>-->
+    <!--        <div *ngIf="submitted && dateOfDocument.invalid" class="alert alert-danger">-->
+    <!--          <div *ngIf="dateOfDocument.errors.required">-->
+    <!--            Date of document is required.-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col-sm-3 form-group">-->
+    <!--        <label for="dateOfPublication">Date of publication<span class="star-red">*</span></label>-->
+    <!--        <p-calendar id="dateOfPublication" name="dateOfPublication" [(ngModel)]="model.dateOfPublication"-->
+    <!--                    dateFormat="dd.mm.yy" [showIcon]="true"-->
+    <!--                    [style]="{'width':'350px'}" #dateOfPublication="ngModel" required [yearNavigator]="true"-->
+    <!--                    yearRange="1950:2025" [disabled]="!editable"-->
+    <!--                    [monthNavigator]="true"></p-calendar>-->
+    <!--        <div *ngIf="submitted && dateOfPublication.invalid" class="alert alert-danger">-->
+    <!--          <div *ngIf="dateOfPublication.errors.required">-->
+    <!--            Date of publication is required.-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col-sm-3 form-group">-->
+    <!--        <label for="dateOfEffect">Date of effect<span class="star-red">*</span></label>-->
+    <!--        <p-calendar id="dateOfEffect" name="dateOfEffect" [(ngModel)]="model.dateOfEffect" dateFormat="dd.mm.yy"-->
+    <!--                    [style]="{'width':'350px'}" #dateOfEffect="ngModel" required [yearNavigator]="true"-->
+    <!--                    yearRange="1950:2025" [showIcon]="true" [disabled]="!editable"-->
+    <!--                    [monthNavigator]="true"></p-calendar>-->
+    <!--        <div *ngIf="submitted && dateOfEffect.invalid" class="alert alert-danger">-->
+    <!--          <div *ngIf="dateOfEffect.errors.required">-->
+    <!--            Date of effect is required.-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col-sm-3 form-group">-->
+    <!--        <label for="dateEndValidity">Date of end of validity</label>-->
+    <!--        <p-calendar id="dateEndValidity" name="dateEndValidity" [(ngModel)]="model.dateEndValidity"-->
+    <!--                    dateFormat="dd.mm.yy" [disabled]="!editable"-->
+    <!--                    [style]="{'width':'350px'}" #dateEndValidity="ngModel" required [yearNavigator]="true"-->
+    <!--                    yearRange="1950:2025" [showIcon]="true"-->
+    <!--                    [monthNavigator]="true"></p-calendar>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--    <div class="row">-->
+    <!--      <div class="form-group col-sm-4">-->
+    <!--        <label for="actType">-->
+    <!--          Version<span class="star-red">*</span>-->
+    <!--        </label>-->
+    <!--        <p-dropdown [options]="versions" id="version" name="version" [(ngModel)]="model.version"-->
+    <!--                    placeholder="Select version" optionLabel="label" [showClear]="false"-->
+    <!--                    [style]="{'width':'300px'}" [readonly]="!editable"-->
+    <!--                    required="true" #version="ngModel"></p-dropdown>-->
+    <!--        <div *ngIf="submitted && version.invalid" class="alert alert-danger">-->
+    <!--          <div *ngIf="version.errors.required">-->
+    <!--            Version is required.-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--      <div class="col-sm-3 form-group">-->
+    <!--        <label for="versionDateOfEffect">Date of effect of this version</label>-->
+    <!--        <p-calendar id="versionDateOfEffect" name="versionDateOfEffect" [(ngModel)]="model.versionDateOfEffect"-->
+    <!--                    dateFormat="dd.mm.yy"-->
+    <!--                    [style]="{'width':'350px'}" #versionDateOfEffect="ngModel" required [yearNavigator]="true"-->
+    <!--                    yearRange="1950:2025" [showIcon]="true" [disabled]="!editable || model.version?.code !== 'L'"-->
+    <!--                    [monthNavigator]="true"></p-calendar>-->
+    <!--      </div>-->
+    <!--      <div class="col-sm-3 form-group">-->
+    <!--        <label for="subseqAmmendments">Subsequent ammendments</label>-->
+    <!--        <p-dropdown [options]="yesNoRule" id="subseqAmmendments" name="subseqAmmendments"-->
+    <!--                    [(ngModel)]="model.subsequentAmmendments"-->
+    <!--                    placeholder="Select" optionLabel="label" [showClear]="editable" [style]="{'width':'150px'}"-->
+    <!--                    #subseqAmmendments="ngModel" [readonly]="!editable"></p-dropdown>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--      <label for="actFile">-->
+    <!--        Act file-->
+    <!--      </label>-->
+    <!--      <p-fileUpload name="actFile" [showCancelButton]="false" [showUploadButton]="false" (onRemove)="removeFile($event)"-->
+    <!--                    maxFileSize="10000000" [customUpload]="true" (uploadHandler)="onUpload($event, false)" auto="auto"-->
+    <!--                    [files]="files" [disabled]="!editable">-->
+    <!--        <ng-template pTemplate="file">-->
+    <!--          <div class="ui-fileupload-row" *ngIf="model.actFile">-->
+    <!--            <div (click)="getFile(false)" class="link">{{model.actFile}}</div>-->
+    <!--            <div>-->
+    <!--              <button type="button" icon="pi pi-times" pButton (click)="removeFile($event)" *ngIf="editable"></button>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </ng-template>-->
+    <!--      </p-fileUpload>-->
+    <!--    </div>-->
+    <!--    <div class="form-group">-->
+    <!--      <label for="">Translation in English</label>-->
+    <!--      <p-card>-->
+    <!--        <div class="form-group">-->
+    <!--          <label for="translatedSourceUrl">-->
+    <!--            Translated act URL-->
+    <!--          </label>-->
+    <!--          <div class="ui-inputgroup">-->
+    <!--            <input type="text" pInputText class="form-control" id="translatedSourceUrl" name="translatedSourceUrl"-->
+    <!--                   [(ngModel)]="model.translatedActUrl"-->
+    <!--                   required autocomplete="off" [readOnly]="!editable">-->
+    <!--            <button pButton type="button" (click)="previewUrl(model.translatedActUrl)" label="Open"></button>-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--        <div class="form-group">-->
+    <!--          <label for="translatedActFile">-->
+    <!--            Translated act file-->
+    <!--          </label>-->
+    <!--          <p-fileUpload name="translatedActFile" [showCancelButton]="false" [showUploadButton]="false"-->
+    <!--                        (onRemove)="removeTranslatedFile($event)"-->
+    <!--                        maxFileSize="10000000" [customUpload]="true" (uploadHandler)="onUpload($event, true)"-->
+    <!--                        auto="auto"-->
+    <!--                        [files]="translatedFiles" [disabled]="!editable">-->
+    <!--            <ng-template pTemplate="file">-->
+    <!--              <div class="ui-fileupload-row" *ngIf="model.translatedActFile">-->
+    <!--                <div (click)="getFile(true)" class="link">{{model.translatedActFile}}</div>-->
+    <!--                <div>-->
+    <!--                  <button type="button" icon="pi pi-times" pButton (click)="removeTranslatedFile($event)"-->
+    <!--                          *ngIf="editable"></button>-->
+    <!--                </div>-->
+    <!--              </div>-->
+    <!--            </ng-template>-->
+    <!--          </p-fileUpload>-->
+    <!--        </div>-->
+    <!--      </p-card>-->
+    <!--    </div>-->
+
+
+    <!--    <div class="form-group">-->
+    <!--      <label>-->
+    <!--        Information about consolidated versions-->
+    <!--        <button type="button" class="ui-button-rounded" pButton icon="pi pi-plus"-->
+    <!--                (click)="addConsolidatedLink(link)" *ngIf="editable"-->
+    <!--                iconPos="left" label="Add citation"></button>-->
+    <!--      </label>-->
+    <!--      <table>-->
+    <!--        <tr *ngFor="let nat of model.infoConsolidatedVersions; index as i" class="t-eu-link">-->
+    <!--          <td>-->
+    <!--            <a target="_blank" [attr.href]="nat">{{nat}}</a>-->
+    <!--          </td>-->
+    <!--          <td>-->
+    <!--            &nbsp;<button pButton class="ui-button-rounded" type="button" icon="pi pi-bars"-->
+    <!--                          (click)="editConsolidatedLink(link, i)" *ngIf="editable"-->
+    <!--                          title="Edit citation"></button>-->
+    <!--            &nbsp;<button pButton class="ui-button-rounded ui-button-danger" type="button" icon="pi pi-times"-->
+    <!--                          *ngIf="editable"-->
+    <!--                          (click)="removeConsolidatedLink(i)" title="Remove record"></button>-->
+    <!--          </td>-->
+    <!--        </tr>-->
+    <!--      </table>-->
+    <!--    </div>-->
+    <div class="form-group" style="border-top: 1px solid gray;" *ngIf="editable">
+      <p></p>
+      <span style="padding:10px 20px 0px 0px;">
+        <p-button type="button" icon="pi pi-save" label="Save"
+                  (click)="submitForm(false)"></p-button>
+      </span>
+      <span style="padding:10px 20px 0px 100px;">
+        <p-button type="button" icon="pi pi-check" label="Save and close"
+                  (click)="submitForm(true)"></p-button>
+      </span>
+    </div>
+    <p></p>
+  </form>
+</div>

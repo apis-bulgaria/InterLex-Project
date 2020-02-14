@@ -1,0 +1,11 @@
+div {
+  text-align: right;
+}
+img {
+  width: 100px;
+}
+
+.fix-width {
+  width: 120px !important;
+  text-align: center;
+}
