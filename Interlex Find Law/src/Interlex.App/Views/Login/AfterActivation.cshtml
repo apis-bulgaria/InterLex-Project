@@ -1,0 +1,17 @@
+﻿@using Interlex.App.Resources;
+
+@model Boolean
+
+@{
+    ViewBag.Title = "AfterActivation";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@if (Model)
+{
+    @Html.Raw(Resources.UI_Registration_ActivationMsg)
+}
+else
+{
+    @: Failed to activate your account.
+}

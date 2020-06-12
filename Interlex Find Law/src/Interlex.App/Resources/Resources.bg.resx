@@ -1,0 +1,1992 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UI_FinsChainedVolumes" xml:space="preserve">
+    <value>Верижни обеми</value>
+  </data>
+  <data name="Hint_CaseLawProcedureType" xml:space="preserve">
+    <value>Видът на процедурата, до който търсенето трябва да се ограничи.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-proceduretype" onclick="hintExampleProcedureType()"&gt;Пример: Завеждане на дело за нанесени щети&lt;/a&gt;</value>
+  </data>
+  <data name="UI_FinsPerCapita" xml:space="preserve">
+    <value>на глава от населението</value>
+  </data>
+  <data name="UI_Cases_HudocArticleViolation" xml:space="preserve">
+    <value>Нарушeние / Липсва нарушение</value>
+  </data>
+  <data name="UI_MyDocuments_Upper" xml:space="preserve">
+    <value>Моите документи</value>
+  </data>
+  <data name="Notify_DocumentAddSuccessTitle" xml:space="preserve">
+    <value>Документът беше успешно добавен</value>
+  </data>
+  <data name="UI_OJ" xml:space="preserve">
+    <value>Публикация в ОВ</value>
+    <comment>Journal</comment>
+  </data>
+  <data name="UI_inNatCL" xml:space="preserve">
+    <value>в националната съдебна практика</value>
+  </data>
+  <data name="UI_SelectedFilters" xml:space="preserve">
+    <value>Избрани филтри</value>
+  </data>
+  <data name="UI_Cases_RulesOfTheCourt" xml:space="preserve">
+    <value>Правилник на Съда</value>
+  </data>
+  <data name="UI_SearchByEnactmentProvision" xml:space="preserve">
+    <value>Търсене на съдебна практика по цитиран акт / разпоредба</value>
+  </data>
+  <data name="UI_IpNotAllowed" xml:space="preserve">
+    <value>Не можете да достъпите страницата от този IP адрес</value>
+  </data>
+  <data name="UI_FinsCurrPricesMilionStandards" xml:space="preserve">
+    <value>Текущи цени, милион стандарти...</value>
+  </data>
+  <data name="UI_FinancesOLP" xml:space="preserve">
+    <value>ОЛП</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_FinsTotal" xml:space="preserve">
+    <value>Общо</value>
+  </data>
+  <data name="UI_FinsChainedVolumes2010" xml:space="preserve">
+    <value>Верижни обеми (2010 г.)</value>
+  </data>
+  <data name="UI_OpenDate" xml:space="preserve">
+    <value>Дата на отваряне</value>
+  </data>
+  <data name="UI_Country_NL" xml:space="preserve">
+    <value>Нидерландия</value>
+  </data>
+  <data name="UI_Finances_SearchInKeywords" xml:space="preserve">
+    <value>В ключови думи</value>
+  </data>
+  <data name="UI_Country_IS" xml:space="preserve">
+    <value>Исландия</value>
+  </data>
+  <data name="UI_JS_MyDocuments" xml:space="preserve">
+    <value>Моите документи</value>
+  </data>
+  <data name="UI_fins_eurostat_notavailable" xml:space="preserve">
+    <value>:= не е налично</value>
+  </data>
+  <data name="UI_Status" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="UI_FinsStatGDPCapitaPPS" xml:space="preserve">
+    <value>БВП в стандарти на покупателната способност</value>
+  </data>
+  <data name="Hint_LegislationDateType" xml:space="preserve">
+    <value>Типът на датата, до която търсенето трябва да бъде ограничено.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-datetype" onclick="hintExampleLegislationDateType()"&gt;Пример: дата на влизане в сила&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Country_LV" xml:space="preserve">
+    <value>Латвия</value>
+  </data>
+  <data name="UI_To_Lower" xml:space="preserve">
+    <value>до</value>
+    <comment>Контекст - от [дата] до [дата]</comment>
+  </data>
+  <data name="Notify_DocumentDeletionSuccessMessage" xml:space="preserve">
+    <value>Документът беше изтрит от вашия списък.</value>
+  </data>
+  <data name="UI_FreeTour" xml:space="preserve">
+    <value>Демо</value>
+  </data>
+  <data name="UI_QuickSearch" xml:space="preserve">
+    <value>Бързо търсене</value>
+  </data>
+  <data name="UI_BackToIndex" xml:space="preserve">
+    <value>Обратно към 'Вход'</value>
+  </data>
+  <data name="UI_Home" xml:space="preserve">
+    <value>Начална страница</value>
+  </data>
+  <data name="UI_NoAvailableInfo" xml:space="preserve">
+    <value>Няма информация за този документ</value>
+  </data>
+  <data name="UI_SearchOnlyInActualActs" xml:space="preserve">
+    <value>Само действащо законодателство</value>
+  </data>
+  <data name="UI_Celex_Number" xml:space="preserve">
+    <value>Celex №</value>
+  </data>
+  <data name="UI_FinsMen" xml:space="preserve">
+    <value>Мъже</value>
+  </data>
+  <data name="UI_ConsolidatedVersion" xml:space="preserve">
+    <value>Консолидирани версии</value>
+  </data>
+  <data name="UI_DeleteAllSearchesConfirm" xml:space="preserve">
+    <value>Сигурни ли сте, че искате да изтриете всички търсения?</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_RecentDocuments" xml:space="preserve">
+    <value>Отваряни документи</value>
+  </data>
+  <data name="UI_Country" xml:space="preserve">
+    <value>Държава</value>
+  </data>
+  <data name="UI_Provision" xml:space="preserve">
+    <value>Разпоредба</value>
+  </data>
+  <data name="UI_JS_NationalCaseLaw" xml:space="preserve">
+    <value>Национална съдебна практика</value>
+  </data>
+  <data name="UI_Versions" xml:space="preserve">
+    <value>Версии</value>
+  </data>
+  <data name="UI_FinsStatGovernmentGrossDebt" xml:space="preserve">
+    <value>Брутен държавен дълг</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_Languages" xml:space="preserve">
+    <value>Езици</value>
+  </data>
+  <data name="UI_ShowFullDirectoryCaseLaw" xml:space="preserve">
+    <value>Показване на класификациите преди и след Договора от Лисабон</value>
+  </data>
+  <data name="UI_For" xml:space="preserve">
+    <value>За</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_ContactUsSiteLink" xml:space="preserve">
+    <value>Линк към сайта</value>
+  </data>
+  <data name="UI_JS_AllProvisions" xml:space="preserve">
+    <value>Всички разпоредби</value>
+  </data>
+  <data name="UI_Finances_TaxInformation_EvolutionVat" xml:space="preserve">
+    <value>Еволюция на ставките на ДДС</value>
+  </data>
+  <data name="UI_Select" xml:space="preserve">
+    <value>Избери</value>
+  </data>
+  <data name="UI_Fins_Month" xml:space="preserve">
+    <value>месец</value>
+  </data>
+  <data name="Notify_DocumentDeletionFailTitle" xml:space="preserve">
+    <value>Изтриването на документа от вашия списък беше неуспешно.</value>
+  </data>
+  <data name="UI_Type" xml:space="preserve">
+    <value>Вид</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Country_UK" xml:space="preserve">
+    <value>Обединеното Кралство</value>
+  </data>
+  <data name="UI_OJSeries" xml:space="preserve">
+    <value>Серия на OB</value>
+  </data>
+  <data name="UI_ListFirstDocsDesc" xml:space="preserve">
+    <value>Можете да разгледате само първите {limit} документи в резултатите от търсенето</value>
+  </data>
+  <data name="UI_Enactment" xml:space="preserve">
+    <value>Нормативен акт</value>
+  </data>
+  <data name="UI_Summary_Upper" xml:space="preserve">
+    <value>Резюме</value>
+  </data>
+  <data name="UI_FinsStatHarmonizedIndicesConsumerPrices" xml:space="preserve">
+    <value>Общ ХИПЦ</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_LongText2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UI_Eurovoc" xml:space="preserve">
+    <value>Тезаурус EuroVoc</value>
+  </data>
+  <data name="UI_IndexType" xml:space="preserve">
+    <value>Вид индекс</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_MySearches_Upper" xml:space="preserve">
+    <value>Моите търсения</value>
+  </data>
+  <data name="UI_BasicAct" xml:space="preserve">
+    <value>Основен акт</value>
+  </data>
+  <data name="UI_Settings" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="UI_MaxUserLoginCountReached" xml:space="preserve">
+    <value>Превишен брой потребителски сесии</value>
+  </data>
+  <data name="UI_Finances" xml:space="preserve">
+    <value>Финансова статистика</value>
+  </data>
+  <data name="UI_FinsCorrespondingMonthPrevYearPercent" xml:space="preserve">
+    <value>Съответният месец от предходната година=100, проценти</value>
+  </data>
+  <data name="UI_Sor_Desc" xml:space="preserve">
+    <value>Низходящ ред</value>
+  </data>
+  <data name="Hint_CaseLawSubjectMatter" xml:space="preserve">
+    <value>Класифицира  по предмети, към които се отнасят правните документи.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-subjectmatter" onclick="hintExampleCaseLawSubjectMatter()"&gt;Пример: Недискриминация (DISC)&lt;/a&gt;</value>
+  </data>
+  <data name="UI_InitialPage" xml:space="preserve">
+    <value>Начална стр.</value>
+  </data>
+  <data name="UI_JS_ExpandKeywords" xml:space="preserve">
+    <value>Разпъни ключовите думи</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_SimpleSearch" xml:space="preserve">
+    <value>Опростено търсене</value>
+  </data>
+  <data name="Hint_LegislationEurovoc" xml:space="preserve">
+    <value>Многоезичен, мултидисциплинарен тезаурус относно дейността на ЕС.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-eurovoc" onclick="hintExampleLegislationEurovoc()"&gt;Пример: работа и условия на труда &lt;/a&gt;</value>
+  </data>
+  <data name="UI_Italy" xml:space="preserve">
+    <value>Италия</value>
+  </data>
+  <data name="Notify_DocumentAddSuccessMessage" xml:space="preserve">
+    <value>Документът беше добавен към вашия списък</value>
+  </data>
+  <data name="UI_JS_SearchErrorText" xml:space="preserve">
+    <value>Възникна грешка при опит за търсене. Моля, опитайте отново по-късно.</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_FinsStatHarmonizedUnemploymentRateBySex" xml:space="preserve">
+    <value>Коефициент на безработица</value>
+  </data>
+  <data name="UI_First" xml:space="preserve">
+    <value>Първи</value>
+  </data>
+  <data name="UI_UsesCookies" xml:space="preserve">
+    <value>Сайтът използва 'бисквитки' за Вашите преференции</value>
+  </data>
+  <data name="UI_EuLegislation" xml:space="preserve">
+    <value>Законодателство на ЕС</value>
+  </data>
+  <data name="UI_JS_ECHRCaseLaw" xml:space="preserve">
+    <value>Европейски съд по правата на човека</value>
+  </data>
+  <data name="UI_Alpaberical" xml:space="preserve">
+    <value>Азбучен</value>
+  </data>
+  <data name="UI_MoveDocsError" xml:space="preserve">
+    <value>Получи се грешка при преместването на документите</value>
+  </data>
+  <data name="UI_AvailableFilters" xml:space="preserve">
+    <value>Налични филтри</value>
+  </data>
+  <data name="UI_Currency" xml:space="preserve">
+    <value>Валута</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_DeleteAllDocuments" xml:space="preserve">
+    <value>Изтрий всички документи</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Cases_EuroCases" xml:space="preserve">
+    <value>Тематичен класификатор</value>
+  </data>
+  <data name="UI_FinsAnnualAverageInflation" xml:space="preserve">
+    <value>Средногодишна инфлация</value>
+  </data>
+  <data name="UI_DocumentReference" xml:space="preserve">
+    <value>Данни за документа</value>
+  </data>
+  <data name="UI_JS_IAgree" xml:space="preserve">
+    <value>Съгласен съм</value>
+    <comment>??</comment>
+  </data>
+  <data name="UI_inEUCL" xml:space="preserve">
+    <value>в съдебната практика на ЕС</value>
+  </data>
+  <data name="UI_Page_Lower" xml:space="preserve">
+    <value>страница</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Country_SE" xml:space="preserve">
+    <value>Швеция</value>
+  </data>
+  <data name="UI_NotAvaiableFeature" xml:space="preserve">
+    <value>Тази функционалност е достъпна само за регистрирани потребители.</value>
+  </data>
+  <data name="UI_JS_Name" xml:space="preserve">
+    <value>Име</value>
+  </data>
+  <data name="Hint_Help" xml:space="preserve">
+    <value>Съдържа потребителско ръководство.</value>
+  </data>
+  <data name="UI_LegalInformation_Upper" xml:space="preserve">
+    <value>Правна информация</value>
+  </data>
+  <data name="UI_AllReferencesToDocument" xml:space="preserve">
+    <value>Всички препратки към документа</value>
+  </data>
+  <data name="UI_Sort" xml:space="preserve">
+    <value>Подреди</value>
+  </data>
+  <data name="UI_LastMonth" xml:space="preserve">
+    <value>Последен месец</value>
+  </data>
+  <data name="UI_Month" xml:space="preserve">
+    <value>Месец</value>
+  </data>
+  <data name="UI_SearchArea" xml:space="preserve">
+    <value>Област на търсене</value>
+  </data>
+  <data name="UI_Password_Upper" xml:space="preserve">
+    <value>ПАРОЛА</value>
+  </data>
+  <data name="UI_FinStandarts" xml:space="preserve">
+    <value>Стандарти</value>
+  </data>
+  <data name="UI_NumbersNational" xml:space="preserve">
+    <value>Дело № / Акт № / ECLI</value>
+  </data>
+  <data name="UI_ExportUnmarkAll" xml:space="preserve">
+    <value>Размаркиране на документите</value>
+  </data>
+  <data name="UI_FinsStatGrossDomesticProduct" xml:space="preserve">
+    <value>БВП по пазарни цени</value>
+  </data>
+  <data name="Hint_NavigationHide" xml:space="preserve">
+    <value>Скрий навигационния панел</value>
+  </data>
+  <data name="UI_ECHRCaseLaw" xml:space="preserve">
+    <value>Практика на ЕСПЧ </value>
+  </data>
+  <data name="UI_JS_NotEnoughDocumentsSelectedFull" xml:space="preserve">
+    <value>Моля, изберете два документа за сравнение</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_ChangePassword" xml:space="preserve">
+    <value>Промени парола</value>
+  </data>
+  <data name="UI_Case" xml:space="preserve">
+    <value>Дело</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_TFST_Practice" xml:space="preserve">
+    <value>T&amp;FSt Практика</value>
+  </data>
+  <data name="UI_ExampleDocument" xml:space="preserve">
+    <value>Примерен документ</value>
+  </data>
+  <data name="UI_Remove" xml:space="preserve">
+    <value>Премахни</value>
+  </data>
+  <data name="UI_Syllabus" xml:space="preserve">
+    <value>Онтология Syllabus</value>
+  </data>
+  <data name="UI_No_IncomingLinks" xml:space="preserve">
+    <value>Няма препратки от други документи</value>
+  </data>
+  <data name="UI_Country_LT" xml:space="preserve">
+    <value>Литва</value>
+  </data>
+  <data name="UI_Logout_Upper" xml:space="preserve">
+    <value>Изход</value>
+  </data>
+  <data name="UI_UnitedKingdom" xml:space="preserve">
+    <value>Обединеното Кралство</value>
+  </data>
+  <data name="UI_FinsStatGDPCGT" xml:space="preserve">
+    <value>БВП на човек и темп на прираст</value>
+  </data>
+  <data name="UI_LocalSearch" xml:space="preserve">
+    <value>Локално търсене</value>
+    <comment>Не се използва</comment>
+  </data>
+  <data name="UI_FinancesPragove" xml:space="preserve">
+    <value>Прагове за регистрация по ДДС</value>
+  </data>
+  <data name="UI_PreferedLanguages" xml:space="preserve">
+    <value>Предпочитани езици</value>
+  </data>
+  <data name="UI_Cases_HudocArticles" xml:space="preserve">
+    <value>Конвенция и протоколи</value>
+  </data>
+  <data name="UI_DocumentsCount" xml:space="preserve">
+    <value>Брой документи</value>
+  </data>
+  <data name="UI_OpenedOn" xml:space="preserve">
+    <value>Отворен на</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Cases_ProcedureType" xml:space="preserve">
+    <value>Вид на процедурата</value>
+  </data>
+  <data name="UI_BackToLogin" xml:space="preserve">
+    <value>Обратно към 'Вход'</value>
+  </data>
+  <data name="UI_FinsWomen" xml:space="preserve">
+    <value>Жени</value>
+  </data>
+  <data name="UI_NationalCaseLaw" xml:space="preserve">
+    <value>Национална съдебна практика</value>
+  </data>
+  <data name="UI_TypeDocProcedure" xml:space="preserve">
+    <value>Вид на документа и процедура</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Notify_DocumentAddExistingMessage" xml:space="preserve">
+    <value>Избраният документ вече съществува във Вашия списък</value>
+  </data>
+  <data name="Hint_LegislationCelexNumber" xml:space="preserve">
+    <value>Celex е уникален идентификатор, който се използва в официалната електронна платформа на ЕС EUR-Lex. ELI е уникален номер на нормативен акт, който позволява да се обозначат европейските и национални законодателни документи по хармонизиран и стабилен начин.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-celex"&gt;Пример: 32015R1733&lt;/a&gt;</value>
+  </data>
+  <data name="UI_FinancesEuriborType" xml:space="preserve">
+    <value>&lt;b&gt;Тип ЕВРИБОР&lt;/b&gt;: EUR - Средномесечни стойности</value>
+  </data>
+  <data name="UI_IncomingLinks" xml:space="preserve">
+    <value>Препратки от други документи</value>
+  </data>
+  <data name="UI_FinsMilionsEuro" xml:space="preserve">
+    <value>Милиони евро</value>
+  </data>
+  <data name="UI_Delete" xml:space="preserve">
+    <value>Изтрий</value>
+  </data>
+  <data name="UI_JS_MyDocumentsAdd" xml:space="preserve">
+    <value>Добави към Моите документи</value>
+  </data>
+  <data name="UI_Country_CZ" xml:space="preserve">
+    <value>Чешка република</value>
+  </data>
+  <data name="Hint_LegislationSearchArea" xml:space="preserve">
+    <value>Oграничава областта на търсене само с действащото законодателство (не отменено) или до основни актове от първичното право (ограничено до основни актове).</value>
+  </data>
+  <data name="UI_JS_AllCaseLaw" xml:space="preserve">
+    <value>Всички</value>
+  </data>
+  <data name="UI_JS_Save" xml:space="preserve">
+    <value>Запази</value>
+  </data>
+  <data name="UI_Cases_ReferedAct" xml:space="preserve">
+    <value>Цитиран акт</value>
+  </data>
+  <data name="UI_NoSearchesToDelete" xml:space="preserve">
+    <value>Списъкът Ви с търсения е празен</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_ParTitle_sec" xml:space="preserve">
+    <value>Раздел</value>
+  </data>
+  <data name="UI_CommonSettings" xml:space="preserve">
+    <value>Общи настройки</value>
+  </data>
+  <data name="UI_Country_MT" xml:space="preserve">
+    <value>Малта</value>
+  </data>
+  <data name="UI_From_Lower" xml:space="preserve">
+    <value>от</value>
+    <comment>Контекст - от [дата] до [дата]</comment>
+  </data>
+  <data name="UI_All" xml:space="preserve">
+    <value>Всички</value>
+  </data>
+  <data name="UI_JS_SelectAll" xml:space="preserve">
+    <value>Избери всички</value>
+  </data>
+  <data name="UI_Country_RO" xml:space="preserve">
+    <value>Румъния</value>
+  </data>
+  <data name="Hint_CaseLawDateTimePeriod" xml:space="preserve">
+    <value>Датата или периодът, в който документът е бил създаден.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-datetimeperiod"&gt;Пример: 08/10/2007&lt;/a&gt;</value>
+  </data>
+  <data name="UI_JS_ExpandTitle" xml:space="preserve">
+    <value>Разпъни заглавието</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_LastWeek" xml:space="preserve">
+    <value>Последна седмица</value>
+  </data>
+  <data name="UI_Classifiers" xml:space="preserve">
+    <value>Класификатори</value>
+    <comment>Classificatori</comment>
+  </data>
+  <data name="Hint_RecentDocuments" xml:space="preserve">
+    <value>Автоматично генериран списък на последно отваряните документи.</value>
+  </data>
+  <data name="UI_LawDateType_3" xml:space="preserve">
+    <value>Дата на изтичане на валидността</value>
+    <comment>DateEnd</comment>
+  </data>
+  <data name="Hint_ShowHighlight" xml:space="preserve">
+    <value>Покажи маркираното</value>
+  </data>
+  <data name="UI_JS_CompressTitle" xml:space="preserve">
+    <value>Свий заглавието</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_ContactUs" xml:space="preserve">
+    <value>Свържете се с нас</value>
+  </data>
+  <data name="UI_JS_Rename" xml:space="preserve">
+    <value>Преименувай</value>
+  </data>
+  <data name="UI_EurovocTermNotFound" xml:space="preserve">
+    <value>Търсеният термин не е открит</value>
+  </data>
+  <data name="UI_EuroCases" xml:space="preserve">
+    <value>Тематичен класификатор</value>
+  </data>
+  <data name="UI_EUCases" xml:space="preserve">
+    <value>Класификатор EUCases</value>
+  </data>
+  <data name="UI_OJ_L_Series" xml:space="preserve">
+    <value>L (Законодателство)</value>
+  </data>
+  <data name="UI_RelatedDocuments" xml:space="preserve">
+    <value>Свързани документи</value>
+  </data>
+  <data name="UI_JS_ExpandSummary" xml:space="preserve">
+    <value>Разпъни резюмето</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_Country_CY" xml:space="preserve">
+    <value>Кипър</value>
+  </data>
+  <data name="UI_ParTitle_tit" xml:space="preserve">
+    <value>Дял</value>
+  </data>
+  <data name="UI_JS_Cancel" xml:space="preserve">
+    <value>Отмени</value>
+  </data>
+  <data name="UI_EditSearch" xml:space="preserve">
+    <value>Промяна на търсенето</value>
+  </data>
+  <data name="UI_inEUL" xml:space="preserve">
+    <value>в законодателството на ЕС</value>
+  </data>
+  <data name="UI_LawDateType_2" xml:space="preserve">
+    <value>Дата на влизане в сила</value>
+    <comment>DateOfEffect</comment>
+  </data>
+  <data name="UI_Cases_States" xml:space="preserve">
+    <value>Държава ответник</value>
+  </data>
+  <data name="UI_JS_NewFolder" xml:space="preserve">
+    <value>Нова папка</value>
+  </data>
+  <data name="UI_DocumentFound" xml:space="preserve">
+    <value>Намерени документи</value>
+  </data>
+  <data name="UI_Of_Lower" xml:space="preserve">
+    <value>от</value>
+    <comment>Контекст - напр. 5 от 10</comment>
+  </data>
+  <data name="UI_AdvancedSearch" xml:space="preserve">
+    <value>Разширено търсене</value>
+  </data>
+  <data name="UI_JS_MyDocumentsRemove" xml:space="preserve">
+    <value>Премахни от Моите документи</value>
+  </data>
+  <data name="UI_Finances_EuroFinance" xml:space="preserve">
+    <value>По предмет</value>
+  </data>
+  <data name="UI_Go" xml:space="preserve">
+    <value>Напред</value>
+  </data>
+  <data name="UI_LawDateType_0" xml:space="preserve">
+    <value>Дата на документа</value>
+    <comment>Data del documento</comment>
+  </data>
+  <data name="UI_JS_NotEnoughDocumentsSelected" xml:space="preserve">
+    <value>Не са избрани достатъчно документи</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_Cases_Applicant" xml:space="preserve">
+    <value>Жалбоподател</value>
+  </data>
+  <data name="UI_ResetPassEmailSent" xml:space="preserve">
+    <value>Линк за смяна на паролата е изпратен на посочения имейл адрес. Моля проверете Вашата електронна поща</value>
+  </data>
+  <data name="UI_Clear" xml:space="preserve">
+    <value>Изчисти</value>
+  </data>
+  <data name="UI_SearchFor" xml:space="preserve">
+    <value>Търсене на</value>
+  </data>
+  <data name="UI_Administrator" xml:space="preserve">
+    <value>Администратор</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_FinancesSofiLibor" xml:space="preserve">
+    <value>Софи либори</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_fins_eurostat_revised" xml:space="preserve">
+    <value>r=преразгледано</value>
+  </data>
+  <data name="UI_CurrentEmail" xml:space="preserve">
+    <value>Текущ email</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_Country_HU" xml:space="preserve">
+    <value>Унгария</value>
+  </data>
+  <data name="UI_PeriodPlaceholder" xml:space="preserve">
+    <value>дд/мм/гггг</value>
+  </data>
+  <data name="Hint_PrevMatch" xml:space="preserve">
+    <value>Предишно съвпадение</value>
+  </data>
+  <data name="UI_FinancesStockIndices" xml:space="preserve">
+    <value>Борсови индекси</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_Title_Lower" xml:space="preserve">
+    <value>Заглавие</value>
+  </data>
+  <data name="UI_No" xml:space="preserve">
+    <value>Не</value>
+  </data>
+  <data name="UI_Relevance" xml:space="preserve">
+    <value>Релевантност</value>
+  </data>
+  <data name="UI_Publication" xml:space="preserve">
+    <value>Публикация</value>
+  </data>
+  <data name="UI_SelectFolder" xml:space="preserve">
+    <value>Избери папка</value>
+  </data>
+  <data name="UI_Change" xml:space="preserve">
+    <value>Промени</value>
+  </data>
+  <data name="UI_Filter_Summaries" xml:space="preserve">
+    <value>Резюме</value>
+  </data>
+  <data name="UI_PasswordRecoveryTitle" xml:space="preserve">
+    <value>Възстановяване на парола</value>
+  </data>
+  <data name="UI_LawDateType_6" xml:space="preserve">
+    <value>Дата на подписване</value>
+    <comment>DateSignature</comment>
+  </data>
+  <data name="UI_Finances_SearchInTitles" xml:space="preserve">
+    <value>В заглавие</value>
+  </data>
+  <data name="UI_France" xml:space="preserve">
+    <value>Франция</value>
+  </data>
+  <data name="UI_Settings_Upper" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="UI_Year" xml:space="preserve">
+    <value>Година</value>
+  </data>
+  <data name="UI_LawDateType_4" xml:space="preserve">
+    <value>Дата на нотифициране</value>
+    <comment>DateNotification</comment>
+  </data>
+  <data name="UI_DocumentsFound" xml:space="preserve">
+    <value>Намерени доументи</value>
+  </data>
+  <data name="UI_Legislation" xml:space="preserve">
+    <value>Законодателство</value>
+  </data>
+  <data name="UI_LawDateType_5" xml:space="preserve">
+    <value>Дата на транспониране</value>
+    <comment>DateTransposition</comment>
+  </data>
+  <data name="UI_FinsAnnualInfaltion" xml:space="preserve">
+    <value>Годишна инфлация</value>
+  </data>
+  <data name="UI_Jurisdiction" xml:space="preserve">
+    <value>Юрисдикция</value>
+  </data>
+  <data name="Hint_DelSearch" xml:space="preserve">
+    <value>Изтрий търсенето</value>
+  </data>
+  <data name="UI_Text" xml:space="preserve">
+    <value>Текст</value>
+  </data>
+  <data name="UI_Fins_Value" xml:space="preserve">
+    <value>Стойност</value>
+  </data>
+  <data name="UI_FinsOtherArticlesReferenced" xml:space="preserve">
+    <value>Други цитирани членове</value>
+  </data>
+  <data name="UI_NewDocuments" xml:space="preserve">
+    <value>Нови резюмирани решения</value>
+  </data>
+  <data name="UI_Print" xml:space="preserve">
+    <value>Печат</value>
+  </data>
+  <data name="UI_NonExistingUsername" xml:space="preserve">
+    <value>Потребител с това потребителско име не съществува</value>
+  </data>
+  <data name="UI_fins_eurostat_differs" xml:space="preserve">
+    <value>d=дефиницията се различава</value>
+  </data>
+  <data name="UI_Law_ActJurisdictions" xml:space="preserve">
+    <value>По държава</value>
+  </data>
+  <data name="UI_Publisher" xml:space="preserve">
+    <value>Издател</value>
+  </data>
+  <data name="UI_SearchOnlyInTitles" xml:space="preserve">
+    <value>Търсене само в заглавията</value>
+  </data>
+  <data name="UI_DirectoryLegislation" xml:space="preserve">
+    <value>Регистър на законодателството на ЕС</value>
+  </data>
+  <data name="UI_Country_FR" xml:space="preserve">
+    <value>Франция</value>
+  </data>
+  <data name="UI_UserNotActive" xml:space="preserve">
+    <value>Потребителят е деактивиран</value>
+  </data>
+  <data name="UI_ValidTo" xml:space="preserve">
+    <value>Валиден до</value>
+  </data>
+  <data name="UI_JS_CompressSummary" xml:space="preserve">
+    <value>Свий резюмето</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_FinsEuLinks" xml:space="preserve">
+    <value>Друга свързана практика по настоящия член (EUR-Lex)</value>
+  </data>
+  <data name="UI_JS_AddDocToFolder" xml:space="preserve">
+    <value>Добавяне на документ към папка</value>
+  </data>
+  <data name="Hint_CaseLawEuroCasesClassifier" xml:space="preserve">
+    <value>Йерархичен предметен класификатор на съдебната практика.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-eurocasesclassifier" onclick="hintExampleCaseLawEuroCasesClassifier()"&gt;Пример: Безопасност и здраве при работа&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Country_SK" xml:space="preserve">
+    <value>Словакия</value>
+  </data>
+  <data name="Notify_DocumentDeletionSuccessTitle" xml:space="preserve">
+    <value>Документът е изтрит успешно</value>
+  </data>
+  <data name="UI_Fins_ShowChart" xml:space="preserve">
+    <value>Покажи графика</value>
+  </data>
+  <data name="UI_Country_DE" xml:space="preserve">
+    <value>Германия</value>
+  </data>
+  <data name="UI_UnsuccessfulDirectLogin" xml:space="preserve">
+    <value>Неуспешно влизане</value>
+  </data>
+  <data name="UI_Country_FI" xml:space="preserve">
+    <value>Финландия</value>
+  </data>
+  <data name="UI_Yesterday" xml:space="preserve">
+    <value>Вчера</value>
+  </data>
+  <data name="UI_Value1EUR" xml:space="preserve">
+    <value>Стойност за 1 EUR</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_ChooseEnactment" xml:space="preserve">
+    <value>Избор на нормативен акт</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_AllOJSeries" xml:space="preserve">
+    <value>Всички серии на ОВ</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Country_EU" xml:space="preserve">
+    <value>Европейски съюз</value>
+  </data>
+  <data name="UI_PasswordResetCodeUsed" xml:space="preserve">
+    <value>Кодът за смяна на парола вече е използван</value>
+  </data>
+  <data name="UI_Trial" xml:space="preserve">
+    <value>Безплатен достъп</value>
+  </data>
+  <data name="Hint_CaseLawProvision" xml:space="preserve">
+    <value>Tърсене на специфична разпоредба. &lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-provision" onclick="hintExampleCaseLawProvision('bg')"&gt;Пример: Член 2&lt;/a&gt;</value>
+  </data>
+  <data name="UI_JS_Match" xml:space="preserve">
+    <value>Съвпадение</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_InvalidLogin" xml:space="preserve">
+    <value>Невалиден потребител/парола</value>
+  </data>
+  <data name="UI_CaseNumber" xml:space="preserve">
+    <value>Дело - №</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Cases_AdvocateGeneral" xml:space="preserve">
+    <value>Генерален адвокат</value>
+  </data>
+  <data name="UI_Bulgaria" xml:space="preserve">
+    <value>България</value>
+  </data>
+  <data name="UI_SubscriptionExpired" xml:space="preserve">
+    <value>Изтекъл абонамент</value>
+  </data>
+  <data name="UI_Period" xml:space="preserve">
+    <value>Период</value>
+  </data>
+  <data name="UI_Country_DK" xml:space="preserve">
+    <value>Дания</value>
+  </data>
+  <data name="UI_CommonSearches" xml:space="preserve">
+    <value>Чести търсения</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_FinsPrevMonthPercent" xml:space="preserve">
+    <value>Предходният месец=100, проценти</value>
+  </data>
+  <data name="UI_Law_DocumentTypes" xml:space="preserve">
+    <value>Вид на документа</value>
+  </data>
+  <data name="UI_Fins_LiborFor" xml:space="preserve">
+    <value>Либор за</value>
+  </data>
+  <data name="UI_JS_AtLeastOneDocumentToExport" xml:space="preserve">
+    <value>Моля, изберете поне един документ за експорт</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_RecoverPasswordEmailNotFound" xml:space="preserve">
+    <value>Email-ът не е намерен</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_JS_PalNoActChoosen" xml:space="preserve">
+    <value>Първо изберете нормативен акт</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Notify_FolderNameEmpty" xml:space="preserve">
+    <value>Необходимо е да наименувате папката.</value>
+  </data>
+  <data name="UI_JS_EUCaseLaw" xml:space="preserve">
+    <value>Съдебна практика на ЕС</value>
+  </data>
+  <data name="UI_PageNumber" xml:space="preserve">
+    <value>Номер на страницата</value>
+  </data>
+  <data name="UI_fins_eurostat_estimated" xml:space="preserve">
+    <value>e=оценка</value>
+  </data>
+  <data name="UI_Dates" xml:space="preserve">
+    <value>Търсене по дата</value>
+  </data>
+  <data name="UI_Today" xml:space="preserve">
+    <value>Днес</value>
+  </data>
+  <data name="UI_DateType" xml:space="preserve">
+    <value>Тип на дата</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_DirectLoginForbidden" xml:space="preserve">
+    <value>Вашият потребителски профил няма права за директно влизане в системата. За да влезете моля използвайте линка по-долу.</value>
+  </data>
+  <data name="UI_Country_GR" xml:space="preserve">
+    <value>Гърция</value>
+  </data>
+  <data name="UI_ReferedEUActProvision" xml:space="preserve">
+    <value>Цитиран акт / разпоредба</value>
+  </data>
+  <data name="UI_Law_DirectoryLegislation" xml:space="preserve">
+    <value>Регистър на законодателството на ЕС</value>
+  </data>
+  <data name="UI_Subjectmatter" xml:space="preserve">
+    <value>Указател по предмет</value>
+  </data>
+  <data name="UI_SearchByTerm" xml:space="preserve">
+    <value>Документи, индексирани с термина</value>
+    <comment>Контекст - използва се в EULinksChecker като заглавие на списък с документи, индексирани по даден термин</comment>
+  </data>
+  <data name="UI_MoveAllDocs" xml:space="preserve">
+    <value>Премести всички документи</value>
+  </data>
+  <data name="UI_FinsCurrPricesEuro" xml:space="preserve">
+    <value>Текущи цени, евро...</value>
+  </data>
+  <data name="UI_Country_IE" xml:space="preserve">
+    <value>Иpлaндия</value>
+  </data>
+  <data name="UI_GeneralLawyer" xml:space="preserve">
+    <value>Генерален адвокат</value>
+  </data>
+  <data name="Notify_NoSuchPageTitle" xml:space="preserve">
+    <value>Няма такава страница</value>
+  </data>
+  <data name="UI_LegalDoctrineArticles" xml:space="preserve">
+    <value>Правна доктрина - статии</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_fins_eurostat_HICP_I2005" xml:space="preserve">
+    <value>Индекс, 2005=100</value>
+  </data>
+  <data name="Notify_EmailChangeError" xml:space="preserve">
+    <value>Промяната е неуспешна</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Recover" xml:space="preserve">
+    <value>Възстанови</value>
+  </data>
+  <data name="UI_DirectoryCaseLaw" xml:space="preserve">
+    <value>Регистър на съдебната практика на ЕС</value>
+  </data>
+  <data name="Notify_PasswordChangeSuccess" xml:space="preserve">
+    <value>Паролата е сменена успешно</value>
+  </data>
+  <data name="UI_JS_SiteUsesCookies" xml:space="preserve">
+    <value>Сайтът използва 'бисквитки' за Вашите преференции</value>
+  </data>
+  <data name="UI_UnavaiableProduct" xml:space="preserve">
+    <value>Неналичен продукт</value>
+  </data>
+  <data name="UI_Load" xml:space="preserve">
+    <value>Зареди</value>
+  </data>
+  <data name="Hint_MySearches" xml:space="preserve">
+    <value>Списък със заявките за търсене на потребителя.</value>
+  </data>
+  <data name="UI_LocalUser" xml:space="preserve">
+    <value>Локален потребител</value>
+  </data>
+  <data name="UI_Value1GBP" xml:space="preserve">
+    <value>Стойност за 1 GBP</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_Edit" xml:space="preserve">
+    <value>Редакция</value>
+  </data>
+  <data name="UI_PasswordChanged" xml:space="preserve">
+    <value>Паролата е сменена успешно</value>
+  </data>
+  <data name="UI_YourSearches" xml:space="preserve">
+    <value>Ваши търсения</value>
+    <comment>Учтива форма</comment>
+  </data>
+  <data name="UI_Client" xml:space="preserve">
+    <value>Клиент</value>
+  </data>
+  <data name="UI_FinsPrevTwelveMonthsPercent" xml:space="preserve">
+    <value>Предходните 12 месеца=100, проценти</value>
+  </data>
+  <data name="UI_JS_NewName" xml:space="preserve">
+    <value>Ново име</value>
+  </data>
+  <data name="UI_OrGoToPage" xml:space="preserve">
+    <value>страница</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Country_PT" xml:space="preserve">
+    <value>Португалия</value>
+  </data>
+  <data name="UI_ExportTo" xml:space="preserve">
+    <value>Експорт към</value>
+  </data>
+  <data name="UI_SearchText" xml:space="preserve">
+    <value>Търси текст</value>
+    <comment>Не се използва</comment>
+  </data>
+  <data name="UI_PasswordResetCodeExpired" xml:space="preserve">
+    <value>Кодът за смяна на парола е изтекъл. Моля, заявете смяна на парола отново</value>
+  </data>
+  <data name="UI_EUCaseLaw" xml:space="preserve">
+    <value>Съдебна практика на ЕС</value>
+  </data>
+  <data name="UI_NumbersEU" xml:space="preserve">
+    <value>Celex № / ECLI</value>
+  </data>
+  <data name="UI_Country_LI" xml:space="preserve">
+    <value>Лихтенщайн</value>
+  </data>
+  <data name="UI_EnableCookies" xml:space="preserve">
+    <value>Моля включете 'бисквитките' на браузъра Ви, за да използвате сайта без проблеми</value>
+  </data>
+  <data name="UI_500_Title" xml:space="preserve">
+    <value>Възникна грешка, съжаляваме за неудобството</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_JS_OneSearchDetail" xml:space="preserve">
+    <value>Моля, въведете поне един критерий за търсене</value>
+  </data>
+  <data name="Hint_LegislationDateTimePeriod" xml:space="preserve">
+    <value>Датата или периодът, в който документът е бил създаден.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-datetimeperiod"&gt;Пример: 08/10/2007&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Austria" xml:space="preserve">
+    <value>Австрия</value>
+  </data>
+  <data name="UI_Results_Lower" xml:space="preserve">
+    <value>Резултати</value>
+  </data>
+  <data name="UI_Law_Eurovoc" xml:space="preserve">
+    <value>Тезаурус Eurovoc</value>
+  </data>
+  <data name="Hint_RemoveFavourite" xml:space="preserve">
+    <value>Премахни от Моите документи</value>
+  </data>
+  <data name="UI_Contacts_Upper" xml:space="preserve">
+    <value>Контакти</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Full" xml:space="preserve">
+    <value>Бързо търсене</value>
+  </data>
+  <data name="UI_LastConsVersion" xml:space="preserve">
+    <value>Последна консолидирана версия</value>
+  </data>
+  <data name="UI_Previous" xml:space="preserve">
+    <value>Предишен</value>
+  </data>
+  <data name="UI_LicensesCount" xml:space="preserve">
+    <value>Брой лицензи</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_TopBarLinks" xml:space="preserve">
+    <value>Препратки</value>
+  </data>
+  <data name="UI_Cases" xml:space="preserve">
+    <value>Съдебна практика</value>
+  </data>
+  <data name="UI_Value" xml:space="preserve">
+    <value>Стойност</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_Ok" xml:space="preserve">
+    <value>Потвърди</value>
+  </data>
+  <data name="UI_RepeatEmail" xml:space="preserve">
+    <value>Повтори email</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Cases_DirectoryCaseLaw" xml:space="preserve">
+    <value>Регистър на съдебната практика на ЕС</value>
+  </data>
+  <data name="UI_RemoveAllFilters" xml:space="preserve">
+    <value>Премахни всички филтри</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Notify_FolderNotFoundError" xml:space="preserve">
+    <value>Папката не е намерена.</value>
+  </data>
+  <data name="UI_FullFeaturesMessage" xml:space="preserve">
+    <value>Вие достигнахте максималния брой от 5 документа, които могат да бъдат отворени свободно в рамките на безплатния демонстрационен достъп. &lt;br/&gt;&lt;br/&gt;С настоящата безплатна обиколка Вие продължавате да имате достъп до пълния текст на всички решения на Съда на Европейския Съюз, както и до решенията на национални съдилища, публикувани на сайта на  &lt;a href="http://eurocaselaw.eu" target="_blank" class="f-orange"&gt; European Case-law Blog. &lt;/a&gt; &lt;br/&gt;&lt;br/&gt;За да получите достъп до пълния текст на други документи, моля използвайте бутона по-долу и се  регистрирайте за безплатен пробен период. В рамките на 5-дневния безплатен пробен период вие ще имате достъп до пълното съдържание и всички функционалности на продукта EuroCases.</value>
+  </data>
+  <data name="UI_Germany" xml:space="preserve">
+    <value>Германия</value>
+  </data>
+  <data name="UI_SessionExpired" xml:space="preserve">
+    <value>Сесията изтече</value>
+  </data>
+  <data name="UI_DocumentType" xml:space="preserve">
+    <value>Вид на документа</value>
+  </data>
+  <data name="UI_PasswordsNotMatch" xml:space="preserve">
+    <value>Въведените пароли не съвпадат</value>
+  </data>
+  <data name="UI_Law_Jurisdicion" xml:space="preserve">
+    <value>Юрисдикция</value>
+  </data>
+  <data name="UI_Reglaments" xml:space="preserve">
+    <value>Регламенти</value>
+  </data>
+  <data name="UI_Username_Upper" xml:space="preserve">
+    <value>ПОТРЕБИТЕЛСКО ИМЕ</value>
+  </data>
+  <data name="UI_Finances_SearchInConceptsAndDefinitions" xml:space="preserve">
+    <value>В понятия и дефиниции</value>
+  </data>
+  <data name="Hint_CaseLawCelexNumber" xml:space="preserve">
+    <value>Celex е уникален идентификатор, който се използва в официалната електронна платформа на ЕС EUR-Lex. Национален идентификатор ECLI е единен идентификатор с един и същ разпознаваем формат за съдебна практика на всички държави членки и съдилища на ЕС.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-celex" onclick="hintExampleCaseLawCelex()"&gt;Пример: 62014CJ0032&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Filters" xml:space="preserve">
+    <value>Филтри</value>
+  </data>
+  <data name="UI_ViewImage" xml:space="preserve">
+    <value>Преглед на изображението</value>
+  </data>
+  <data name="UI_Finances_TaxInformation" xml:space="preserve">
+    <value>Данъчна информация</value>
+  </data>
+  <data name="Hint_CaseLawAdvocateGeneral" xml:space="preserve">
+    <value>Избор на име на специфичен &lt;span class="f-orange"&gt;Генерален Адвокат&lt;/span&gt;.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-advocategeneral onclick="hintExampleCaseLawAdvocateGeneral()"&gt;Пример: Fennelly&lt;/a&gt;</value>
+  </data>
+  <data name="UI_FinsArchive" xml:space="preserve">
+    <value>Архив</value>
+  </data>
+  <data name="UI_NoSearchText" xml:space="preserve">
+    <value>Без текст за търсене</value>
+  </data>
+  <data name="UI_DeleteAllSearches" xml:space="preserve">
+    <value>Изтрий всички търсения</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_JS_MaxExportCountMessage" xml:space="preserve">
+    <value>Максимум документи за експорт:</value>
+  </data>
+  <data name="UI_Fins_Months" xml:space="preserve">
+    <value>месеца</value>
+  </data>
+  <data name="UI_EuroCasesMainSite" xml:space="preserve">
+    <value>EuroCases - официален сайт</value>
+  </data>
+  <data name="UI_EmailNotValidated" xml:space="preserve">
+    <value>Регистрацията не е активирана</value>
+  </data>
+  <data name="UI_TranslateSearchText" xml:space="preserve">
+    <value>Междуезиково търсене</value>
+  </data>
+  <data name="UI_Law_SubjectMatter" xml:space="preserve">
+    <value>Указател по предмет</value>
+  </data>
+  <data name="UI_DemoUser" xml:space="preserve">
+    <value>Демо потребител</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Fins_Year" xml:space="preserve">
+    <value>година</value>
+  </data>
+  <data name="UI_EuroStat" xml:space="preserve">
+    <value>Евростат</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_NatIdOrEli" xml:space="preserve">
+    <value>Celex номер / ELI</value>
+  </data>
+  <data name="UI_FinsMonthlyInflation" xml:space="preserve">
+    <value>Месечна инфлация</value>
+  </data>
+  <data name="UI_OJ_C_Series" xml:space="preserve">
+    <value>C (Информация и известия)</value>
+  </data>
+  <data name="UI_Cases_HudocApplicability" xml:space="preserve">
+    <value>Приложимост</value>
+  </data>
+  <data name="UI_FinancesExchangeRates" xml:space="preserve">
+    <value>Валутни курсове</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_Navigation" xml:space="preserve">
+    <value>Навигация</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_JS_CreateFolderIn" xml:space="preserve">
+    <value>Създай папка в</value>
+  </data>
+  <data name="UI_Found_In_ConsVersion" xml:space="preserve">
+    <value>Намерено и в конс. версии</value>
+  </data>
+  <data name="UI_Help" xml:space="preserve">
+    <value>Помощ</value>
+  </data>
+  <data name="UI_Caselaw" xml:space="preserve">
+    <value>Съдебна практика</value>
+  </data>
+  <data name="UI_OpenDocumentsInNewTab" xml:space="preserve">
+    <value>Отваряне на документи в нов подпрозорец</value>
+  </data>
+  <data name="UI_DemoVersion" xml:space="preserve">
+    <value>Демо версия</value>
+  </data>
+  <data name="UI_Pages_Lower" xml:space="preserve">
+    <value>страници</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Date" xml:space="preserve">
+    <value>Дата</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Finances_TaxInformation_ZeroRate" xml:space="preserve">
+    <value>Прилагане на нулева ставка</value>
+  </data>
+  <data name="UI_Keywords_Upper" xml:space="preserve">
+    <value>Ключови думи</value>
+  </data>
+  <data name="UI_JS_MaxExportCountTitle" xml:space="preserve">
+    <value>Достигнат е максималният брой документи за експорт</value>
+  </data>
+  <data name="Hint_CaseLawDirectoryLaw" xml:space="preserve">
+    <value>Йерархичен класификатор на съдебната практика на Съда на ЕС.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-directorylaw" onclick="hintExampleCaseLawDirectoryLaw('bg')"&gt;Пример: Съдебни спорове&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Fins_FullFeaturesMessage" xml:space="preserve">
+    <value>В настоящата Демо версия на &lt;strong&gt;Tax&amp;Financial Standards&lt;/strong&gt;, можете да получите безплатен достъп до актуалните консолидирани текстове на Финансово Право и практика на ЕС:&lt;ul&gt;&lt;li&gt;Регламенти&lt;/li&gt;&lt;li&gt;Директиви&lt;/li&gt;&lt;li&gt;Международни стандарти (МСС, МСФО и КРМСФО)&lt;/li&gt;&lt;li&gt;Европейска съдебна практика&lt;/li&gt;&lt;li&gt;Справочна финансова информация&lt;/li&gt;&lt;li&gt;Статистическа информация &lt;/li&gt;&lt;li&gt;Данъчна информация &lt;/li&gt;&lt;li&gt;Икономически речник &lt;/li&gt;&lt;li&gt;Валутни курсове и лихви &lt;/li&gt;&lt;/ul&gt;До 30.06.2016 ще имате допълнително свободен достъп до всички решения на на Съда на ЕС.&lt;br/&gt;&lt;br/&gt;За да получите достъп до текстовете на други документи, както и да използвате пълната функционалност на продукта &lt;strong&gt;Tax&amp;Financial Standards&lt;/strong&gt;, моля, кликнете върху бутона по-долу и се регистрирайте, за да получите безплатен пробен период. По време на 5-дневния пробен период ще имате достъп до пълното съдържание и функционалност на продукта.</value>
+  </data>
+  <data name="UI_NewEmail" xml:space="preserve">
+    <value>Нов email</value>
+  </data>
+  <data name="UI_JS_Delete" xml:space="preserve">
+    <value>Изтрий</value>
+  </data>
+  <data name="UI_Country_NO" xml:space="preserve">
+    <value>Норвегия</value>
+  </data>
+  <data name="UI_Cases_Eurovoc" xml:space="preserve">
+    <value>Тезаурус Eurovoc</value>
+  </data>
+  <data name="UI_Court" xml:space="preserve">
+    <value>Съд</value>
+  </data>
+  <data name="UI_TopBarMachineTranslation" xml:space="preserve">
+    <value>Превод</value>
+  </data>
+  <data name="UI_Parties" xml:space="preserve">
+    <value>Страни</value>
+  </data>
+  <data name="UI_Fins_Change" xml:space="preserve">
+    <value>Промяна</value>
+  </data>
+  <data name="UI_Close_Lower" xml:space="preserve">
+    <value>Затвори</value>
+  </data>
+  <data name="Hint_HideHighlight" xml:space="preserve">
+    <value>Изчисти маркирането</value>
+  </data>
+  <data name="Hint_LegislationDocumentType" xml:space="preserve">
+    <value>Видът на документа, до който търсенето трябва да бъде ограничено.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-documenttype" onclick="hintExampleLegislationDocumentType()"&gt;Пример: Договори&lt;/a&gt;</value>
+  </data>
+  <data name="Hint_CaseLaw" xml:space="preserve">
+    <value>Документи от съда на ЕС и съдилища на държавите-членки, или специализираните юрисдикции, с изключение на всички документи с нормативен характер.</value>
+  </data>
+  <data name="UI_Product" xml:space="preserve">
+    <value>Продукт</value>
+  </data>
+  <data name="UI_Country_AT" xml:space="preserve">
+    <value>Австрия</value>
+  </data>
+  <data name="UI_CurrentPassword" xml:space="preserve">
+    <value>Текуща парола</value>
+  </data>
+  <data name="UI_Fins_LastExtraction" xml:space="preserve">
+    <value>Последно извличане</value>
+  </data>
+  <data name="UI_License" xml:space="preserve">
+    <value>Лиценз</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Hint_LegislationDirectoryLegislation" xml:space="preserve">
+    <value>Йерархичен класификатор на законодателството в ЕС.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-directorylegislation" onclick="hintExampleLegislationDirectory()"&gt;Пример: Политика на конкуренция&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Country_SI" xml:space="preserve">
+    <value>Словения</value>
+  </data>
+  <data name="Hint_LegislationOJSeries" xml:space="preserve">
+    <value>Специална серия на Официален вестник.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-ojseries" onclick="hintExampleLegislationOJSeries()"&gt;Пример: L (Законодателство)&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Value1USD" xml:space="preserve">
+    <value>Стойност за 1 USD</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_FinancesEuroLibor" xml:space="preserve">
+    <value>Евро либори</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_404_Title" xml:space="preserve">
+    <value>Страницата не е намерена</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_FinancesLibor" xml:space="preserve">
+    <value>ЛИБОР</value>
+  </data>
+  <data name="Notify_DocumentAddMaxCountTitle" xml:space="preserve">
+    <value>Достигнат е максималният брой документи</value>
+  </data>
+  <data name="UI_EU_Act_Legal_Notice" xml:space="preserve">
+    <value>Важна правна информация: Съгласно Регламент (ЕС) № 216/2013 само законодателството на Европейските общности, публикувано в книжното издание до 1 юли 2013 г. и в електронната версия на Официален вестник на Европейския съюз след 1 юли 2013 г. (включително), се счита за автентично и има правна сила.</value>
+  </data>
+  <data name="UI_NewPasswrd" xml:space="preserve">
+    <value>Нова парола</value>
+  </data>
+  <data name="UI_SearchInDocument" xml:space="preserve">
+    <value>Търсене в документа</value>
+  </data>
+  <data name="UI_Fins_NewDocuments" xml:space="preserve">
+    <value>Нови документи</value>
+  </data>
+  <data name="UI_Cases_DocumentTypes" xml:space="preserve">
+    <value>Вид на документа</value>
+  </data>
+  <data name="UI_FinsLinksVatOld" xml:space="preserve">
+    <value>Шеста Директива 77/388 ЕИО (консолидирана)</value>
+  </data>
+  <data name="UI_Cases_JudgeRapporteur" xml:space="preserve">
+    <value>Съдия-докладчик</value>
+  </data>
+  <data name="Notify_DocumentAddFailTitle" xml:space="preserve">
+    <value>Неуспешно добавяне на документа към вашия списък.</value>
+  </data>
+  <data name="UI_ShowHints" xml:space="preserve">
+    <value>Показване на подсказки</value>
+  </data>
+  <data name="UI_fins_eurostat_HICP" xml:space="preserve">
+    <value>Хармонизирани индекси на потребителските цени (ХИПЦ)</value>
+  </data>
+  <data name="UI_BuyNow" xml:space="preserve">
+    <value>Купи сега</value>
+  </data>
+  <data name="UI_Next" xml:space="preserve">
+    <value>Следващ</value>
+  </data>
+  <data name="UI_NoProducts" xml:space="preserve">
+    <value>Няма налични продукти</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_JudgeRapporteur" xml:space="preserve">
+    <value>Съдия-докладчик</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Notify_PasswordChangeError" xml:space="preserve">
+    <value>Промяната е неуспешна</value>
+  </data>
+  <data name="UI_FinsPercentGDP" xml:space="preserve">
+    <value>Процент от брутния вътрешен продукт(БВП)</value>
+  </data>
+  <data name="UI_CaseLawType" xml:space="preserve">
+    <value>Вид юрисдикция</value>
+    <comment>Контекст - в Моите търсения посочва дали е било избрано търсене само  Национална съдебна практика, в Съдебна практика на ЕС или във Всички</comment>
+  </data>
+  <data name="UI_Help_Upper" xml:space="preserve">
+    <value>Помощ</value>
+  </data>
+  <data name="UI_Trial_Long_line2" xml:space="preserve">
+    <value>пълнофункционална версия</value>
+  </data>
+  <data name="UI_JS_Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="UI_Source" xml:space="preserve">
+    <value>Източник</value>
+  </data>
+  <data name="UI_SettingsUpdatedError" xml:space="preserve">
+    <value>Възникна грешка при актуализирането на настройките</value>
+  </data>
+  <data name="UI_JS_RenameFolder" xml:space="preserve">
+    <value>Преименувай папка</value>
+  </data>
+  <data name="Notify_DocumentDeletionFailMessage" xml:space="preserve">
+    <value>Възникна грешка при изтриването на документа. Моля опитайте по-късно.</value>
+  </data>
+  <data name="UI_JS_CompressKeywords" xml:space="preserve">
+    <value>Свий ключовите думи</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="Notify_FolderCreationError" xml:space="preserve">
+    <value>Грешка при създаването на папка.</value>
+  </data>
+  <data name="UI_Fins_DocTypeSummaries" xml:space="preserve">
+    <value>Резюмета на европейската финансова практика</value>
+  </data>
+  <data name="UI_RecentDocuments_Upper" xml:space="preserve">
+    <value>Отваряни документи</value>
+  </data>
+  <data name="UI_JS_SearchError" xml:space="preserve">
+    <value>Грешка при търсене</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Notify_LangPreferencesSuccess" xml:space="preserve">
+    <value>Предпочитанията са актуализирани</value>
+  </data>
+  <data name="Notify_NoSuchPageMessage" xml:space="preserve">
+    <value>Желаната от Вас страница не съществува. Бяхте препратени към последната намерена.</value>
+  </data>
+  <data name="UI_Cases_Hudoc" xml:space="preserve">
+    <value>Класификатор по ключови думи</value>
+  </data>
+  <data name="UI_NumbersECHR" xml:space="preserve">
+    <value>ECLI</value>
+  </data>
+  <data name="Hint_CaseLawDocumentType" xml:space="preserve">
+    <value>Видът на документа, до който търсенето трябва да се ограничи.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-documenttype" onclick="hintExampleDocumentType()"&gt;Пример: Становище&lt;/a&gt;</value>
+  </data>
+  <data name="Notify_EmailChangeSuccess" xml:space="preserve">
+    <value>Email-ът е променен успешно</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_RecoveryEmailText" xml:space="preserve">
+    <value>&lt;h2&gt;Здравейте, &lt;strong&gt;{0}&lt;/strong&gt;&lt;/h2&gt;&lt;/br&gt;&lt;h3&gt;Моля, последвайте следния линк, за да смените Вашата парола: &lt;a href="{1}"&gt;{2}&lt;/a&gt;&lt;/h3&gt;&lt;/br&gt;</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_ShowLess_Lower" xml:space="preserve">
+    <value>Покажи по-малко</value>
+  </data>
+  <data name="UI_Save" xml:space="preserve">
+    <value>Запази</value>
+  </data>
+  <data name="UI_MultilingualDictionary" xml:space="preserve">
+    <value>Многоезичен речник</value>
+  </data>
+  <data name="UI_SearchOnlyInBasicActs" xml:space="preserve">
+    <value>Само основни актове</value>
+  </data>
+  <data name="UI_Compare" xml:space="preserve">
+    <value>Сравни</value>
+  </data>
+  <data name="UI_PAL_NoProvisionsFound" xml:space="preserve">
+    <value>Няма намерени резултати за избрания нормативен акт</value>
+  </data>
+  <data name="UI_Login_Upper" xml:space="preserve">
+    <value>ВХОД</value>
+  </data>
+  <data name="Notify_FolderDeleteError" xml:space="preserve">
+    <value>Грешка при изтриването на папка.</value>
+  </data>
+  <data name="UI_JS_NoDocumentsFound" xml:space="preserve">
+    <value>Няма намерени документи</value>
+  </data>
+  <data name="UI_ProcedureType" xml:space="preserve">
+    <value>Вид на процедурата</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Country_LU" xml:space="preserve">
+    <value>Люксембург</value>
+  </data>
+  <data name="Hint_DoSearch" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="UI_500_Message" xml:space="preserve">
+    <value>Ако тази страница продължи да се показва, моля свържете се с Вашия търговски посредник или администратор.</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Fins_Years" xml:space="preserve">
+    <value>години</value>
+  </data>
+  <data name="UI_ResetCode" xml:space="preserve">
+    <value>Код за смяна на паролата</value>
+  </data>
+  <data name="UI_FinsPurchasingPower" xml:space="preserve">
+    <value>на покупателна способност</value>
+  </data>
+  <data name="UI_Country_PL" xml:space="preserve">
+    <value>Полша</value>
+  </data>
+  <data name="UI_DocumentDate" xml:space="preserve">
+    <value>Дата на документа</value>
+  </data>
+  <data name="UI_Cancel" xml:space="preserve">
+    <value>Отмени</value>
+  </data>
+  <data name="UI_PasswordResetCodeInvalid" xml:space="preserve">
+    <value>Невалиден код за смяна на парола</value>
+  </data>
+  <data name="UI_FinancesLiborAll" xml:space="preserve">
+    <value>Либор, евролибор</value>
+  </data>
+  <data name="UI_NationalLegislation" xml:space="preserve">
+    <value>Национално законодателство</value>
+  </data>
+  <data name="UI_LostPasswrd_Upper" xml:space="preserve">
+    <value>Забравена парола</value>
+  </data>
+  <data name="UI_UnavaiableProductEuroFinsMessage" xml:space="preserve">
+    <value>Тази страница е част от продукта "EuroFins". Можете да закупите продукта от следния адрес:</value>
+  </data>
+  <data name="UI_SettingsUpdated" xml:space="preserve">
+    <value>Настройките са актуализирани</value>
+  </data>
+  <data name="BuyNow_Btn" xml:space="preserve">
+    <value>Купи сега</value>
+  </data>
+  <data name="UI_JS_Loading" xml:space="preserve">
+    <value>Зареждане</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Hint_CaseLawEurovoc" xml:space="preserve">
+    <value>Многоезичен, мултидисциплинарен тезаурус относно дейността на ЕС.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-eurovoc" onclick="hintExampleCaseLawEurovoc('bg')"&gt;Пример: работа и условия на труда &lt;/a&gt;</value>
+  </data>
+  <data name="UI_User" xml:space="preserve">
+    <value>Потребител</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_ParTitle_part" xml:space="preserve">
+    <value>Част</value>
+  </data>
+  <data name="UI_RecoverPasswordUserNotForEmail" xml:space="preserve">
+    <value>Посоченият потребител не е собственик на email-а</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Hint_LastMatch" xml:space="preserve">
+    <value>Последно съвпадение</value>
+  </data>
+  <data name="UI_MultilingualDictionaryInitialMessage" xml:space="preserve">
+    <value>Извърши търсене или избери буква от речника. Можеш да промениш изходният език. </value>
+  </data>
+  <data name="UI_FinancesAdvanced" xml:space="preserve">
+    <value>Разширено финансово търсене</value>
+  </data>
+  <data name="UI_MyDocuments" xml:space="preserve">
+    <value>Моите документи</value>
+  </data>
+  <data name="UI_FinsIndexHICP2005" xml:space="preserve">
+    <value>Индекс 2005=100</value>
+  </data>
+  <data name="UI_ShowMore_Lower" xml:space="preserve">
+    <value>Покажи повече</value>
+  </data>
+  <data name="UI_ChooseProvision" xml:space="preserve">
+    <value>Избор на разпоредба</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_JS_Pal_NoSearchCriteria" xml:space="preserve">
+    <value>Не е избран критерий за търсене</value>
+  </data>
+  <data name="UI_Sort_Asc" xml:space="preserve">
+    <value>Възходящ ред</value>
+  </data>
+  <data name="UI_Fins_LiborType" xml:space="preserve">
+    <value>Тип либор</value>
+  </data>
+  <data name="UI_Fins_NationalBanks" xml:space="preserve">
+    <value>Национални банки</value>
+  </data>
+  <data name="UI_Day" xml:space="preserve">
+    <value>Ден</value>
+  </data>
+  <data name="UI_Country_PO" xml:space="preserve">
+    <value>Полша</value>
+  </data>
+  <data name="UI_Country_CA" xml:space="preserve">
+    <value>Канада</value>
+  </data>
+  <data name="UI_Cases_Syllabus" xml:space="preserve">
+    <value>Онтология Syllabus</value>
+  </data>
+  <data name="UI_Contents" xml:space="preserve">
+    <value>Съдържание</value>
+  </data>
+  <data name="Hint_LogicalExpressions" xml:space="preserve">
+    <value>Използвайте оператор &lt;span class="f-orange"&gt;AND&lt;/span&gt; за намиране на документи, съдържащи всички търсени термини; използвайте оператор &lt;span class="f-orange"&gt;OR&lt;/span&gt; за намиране на документи, съдържащи поне един от търсените термини; използвайте оператор &lt;span class="f-orange"&gt;NOT&lt;/span&gt; за намиране на документи, съдържащи търсените термини, но без специфично посочените; използвайте оператор &lt;span class="f-orange"&gt;NEAR&lt;/span&gt; за намиране на документи, съдържащи две думи на близко разстояние (измерено в брой думи помежду им).&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-logical-expressions" onclick="hintExampleLogicalExpressions('bg')"&gt;Пример: данъчен [AND] кредит [NOT] корпоративен&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Cases_ApplicationNumber" xml:space="preserve">
+    <value>№ на жалбата</value>
+  </data>
+  <data name="UI_JS_Add" xml:space="preserve">
+    <value>Добави</value>
+  </data>
+  <data name="UI_Cases_SubjectMatter" xml:space="preserve">
+    <value>Указател по предмет</value>
+  </data>
+  <data name="UI_DeleteAllDocumentsConfirm" xml:space="preserve">
+    <value>Сигурни ли сте, че искате да изтриете всички документи?</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Hint_CaseLawJudgeRapporteur" xml:space="preserve">
+    <value>Избор на име на специфичен &lt;span class="f-orange"&gt;Съдия-докладчик&lt;/span&gt;.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-judgerapporteur" onclick="hintExampleCaseLawJudgeRapporteur()"&gt;Пример: Berger&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Language" xml:space="preserve">
+    <value>Език</value>
+  </data>
+  <data name="UI_AddedOn" xml:space="preserve">
+    <value>Добавен на</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_TopBarMachineTranslationHint" xml:space="preserve">
+    <value>Научи как могат да се превеждат решения в EuroCases с помощта на безплатни онлайн услуги за машинен превод</value>
+  </data>
+  <data name="UI_JS_NoMatchesFound" xml:space="preserve">
+    <value>Няма намерени съвпадения</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_FinsLinksVatNew" xml:space="preserve">
+    <value>Директива 2006/112 ЕО</value>
+  </data>
+  <data name="Notify_DocumentAddFailMessage" xml:space="preserve">
+    <value>Възникна грешка при добавянето на документа. Моля опитайте по-късно.</value>
+  </data>
+  <data name="UI_Products" xml:space="preserve">
+    <value>Продукти</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="Notify_FolderRenameError" xml:space="preserve">
+    <value>Грешка при преименуването на папка.</value>
+  </data>
+  <data name="UI_AboutFreeTour" xml:space="preserve">
+    <value>Относно безплатната обиколка</value>
+  </data>
+  <data name="Hint_CaseLawLegalAct" xml:space="preserve">
+    <value>Търсене на специфичен нормативен акт.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-legalact" onclick="hintExampleCaseLawLegalAct('bg')"&gt;Пример: 31977L0489: Council Directive 77/489/EEC of 18 July 1977 on the protection of animals during international transport&lt;/a&gt;</value>
+  </data>
+  <data name="UI_OJNumber" xml:space="preserve">
+    <value>Брой</value>
+  </data>
+  <data name="UI_MultilingualDictionaryFindTerm" xml:space="preserve">
+    <value>Потърси термин</value>
+  </data>
+  <data name="UI_SearchType" xml:space="preserve">
+    <value>Вид търсене</value>
+  </data>
+  <data name="UI_OutgoingLinks" xml:space="preserve">
+    <value>Препратки към други документи</value>
+  </data>
+  <data name="Notify_LangPreferencesError" xml:space="preserve">
+    <value>Предпочитанията не бяха актуализирани успешно</value>
+  </data>
+  <data name="UI_LongText1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UI_FInances_TaxInformation_ReducedVatRates" xml:space="preserve">
+    <value>Намалени ставки на ДДС</value>
+  </data>
+  <data name="UI_Trial_Long" xml:space="preserve">
+    <value>Вземи 5-дневен безплатен достъп</value>
+  </data>
+  <data name="UI_Yes" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="UI_Finances_FinancialCrisis" xml:space="preserve">
+    <value>Икономически речник на финансовата криза</value>
+  </data>
+  <data name="UI_DateAdded" xml:space="preserve">
+    <value>Дата на добавяне</value>
+  </data>
+  <data name="UI_404_Message" xml:space="preserve">
+    <value>За съжаление страницата {0} не може да бъде намерена</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_Fins_Ecb" xml:space="preserve">
+    <value>Европейска централна банка (ЕЦБ)</value>
+  </data>
+  <data name="Hint_MarkExport" xml:space="preserve">
+    <value>Маркирай за експорт</value>
+  </data>
+  <data name="UI_Country_EE" xml:space="preserve">
+    <value>Естония</value>
+  </data>
+  <data name="UI_FinsPercentageChangePreviousPeriodPerCapita" xml:space="preserve">
+    <value>Процентна промяна спрямо предходен период, на глава от населението</value>
+  </data>
+  <data name="Hint_LegislationSubjectMatter" xml:space="preserve">
+    <value>Kласифицира  по предмети, към които се отнасят правните документи.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-subjectmatter" onclick="hintExampleLegislationSubjectMatter()"&gt;Пример: Недискриминация (DISC)&lt;/a&gt;</value>
+  </data>
+  <data name="UI_ChangeEmail" xml:space="preserve">
+    <value>Промени email</value>
+    <comment>For translation</comment>
+  </data>
+  <data name="UI_Fins_Update" xml:space="preserve">
+    <value>Системата се обновява. Моля, опитайте по-късно.</value>
+  </data>
+  <data name="Hint_LoadSearch" xml:space="preserve">
+    <value>Зареди заявката за търсене</value>
+  </data>
+  <data name="UI_FinancesEuribor" xml:space="preserve">
+    <value>ЕВРИБОР</value>
+  </data>
+  <data name="UI_Finances_SearchInSummaries" xml:space="preserve">
+    <value>В резюмета</value>
+  </data>
+  <data name="UI_Country_IT" xml:space="preserve">
+    <value>Италия</value>
+  </data>
+  <data name="UI_ContactUsInformation" xml:space="preserve">
+    <value>&lt;span class="f-bold"&gt;&lt;span class="fa fa-users"&gt;&lt;/span&gt; Поддръжка клиенти:&lt;/span&gt; (+359 2) 40 801 40 &lt;span class="f-bold"&gt;&lt;span class="fa fa-envelope"&gt;&lt;/span&gt; &lt;span class="f-bold"&gt;e-mail:&lt;/span&gt; &lt;a href="mailto:office@eurocases.eu" target="_top" class="f-blue"&gt;office@eurocases.eu&lt;/a&gt; &lt;span class="f-bold"&gt;&lt;span class="fa fa-globe"&gt;&lt;/span&gt; Уеб сайт: &lt;/span&gt;&lt;a href="http://eurocases.eu" class="f-blue" target="_blank"&gt;eurocases.eu&lt;/a&gt;</value>
+  </data>
+  <data name="UI_Search" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="UI_LawDateType_1" xml:space="preserve">
+    <value>Дата на публикуване</value>
+    <comment>DatePublication</comment>
+  </data>
+  <data name="UI_Cases_CourtsFolders" xml:space="preserve">
+    <value>Юрисдикция</value>
+  </data>
+  <data name="UI_Country_BG" xml:space="preserve">
+    <value>България</value>
+  </data>
+  <data name="UI_Law_Syllabus" xml:space="preserve">
+    <value>Онтология Syllabus</value>
+  </data>
+  <data name="UI_Country_BE" xml:space="preserve">
+    <value>Белгия</value>
+  </data>
+  <data name="Notify_EmailChangeWrongPassword" xml:space="preserve">
+    <value>Въведената парола е грешна</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_ParTitle_chap" xml:space="preserve">
+    <value>Глава</value>
+  </data>
+  <data name="Hint_Legislation" xml:space="preserve">
+    <value>Отнася се само до документи с нормативен характер от европейското законодателство  (договори, регламенти, директиви и др.).</value>
+  </data>
+  <data name="UI_Cases_Courts" xml:space="preserve">
+    <value>Решаващ орган</value>
+  </data>
+  <data name="UI_Finances_SearchKeywords" xml:space="preserve">
+    <value>Търсене само в ключови думи</value>
+  </data>
+  <data name="UI_Seller" xml:space="preserve">
+    <value>Търговец</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_NatIdOrEcli" xml:space="preserve">
+    <value>Celex номер / ECLI</value>
+  </data>
+  <data name="UI_Country_CH" xml:space="preserve">
+    <value>Швейцария</value>
+  </data>
+  <data name="UI_MultilingualDictionarySearchLanguage" xml:space="preserve">
+    <value>Изходен език</value>
+  </data>
+  <data name="Notify_DocumentAddExistingTitle" xml:space="preserve">
+    <value>Документът вече е добавен във вашия списък</value>
+  </data>
+  <data name="Hint_FirstMatch" xml:space="preserve">
+    <value>Първо съвпадение</value>
+  </data>
+  <data name="UI_SearchExactMatch" xml:space="preserve">
+    <value>Точно срещане</value>
+  </data>
+  <data name="UI_Title" xml:space="preserve">
+    <value>Заглавие</value>
+  </data>
+  <data name="Hint_NextMatch" xml:space="preserve">
+    <value>Следващо съвпадение</value>
+  </data>
+  <data name="UI_Directives" xml:space="preserve">
+    <value>Директиви</value>
+  </data>
+  <data name="Hint_MyDocuments" xml:space="preserve">
+    <value>Списък със специално отбелязани документи.</value>
+  </data>
+  <data name="UI_NumbersAll" xml:space="preserve">
+    <value>Celex № / Дело № / Акт № / ECLI</value>
+  </data>
+  <data name="UI_Country_ES" xml:space="preserve">
+    <value>Испания</value>
+  </data>
+  <data name="UI_JS_DeleteFolder" xml:space="preserve">
+    <value>Изтрий папка</value>
+  </data>
+  <data name="UI_Fins_All" xml:space="preserve">
+    <value>Всички</value>
+  </data>
+  <data name="UI_NumberFormated" xml:space="preserve">
+    <value>№</value>
+  </data>
+  <data name="UI_FinsFinancialLinks" xml:space="preserve">
+    <value>Свързана финансова практика по съответния член (Tax&amp;Fst)</value>
+  </data>
+  <data name="UI_SearchEuAndNationalLegislation" xml:space="preserve">
+    <value>Въведете текст за търсене</value>
+  </data>
+  <data name="UI_FeatureDocDesc1" xml:space="preserve">
+    <value>&lt;p style="text-align:left;"&gt;Click on the links below to see examples of the following types of documents:&lt;/p&gt;&lt;p&gt;&lt;menu style="text-align:left;font-color:white;"&gt;&lt;ul style="list-style-type:circle;"&gt;&lt;li&gt;&lt;a href="/Doc/CourtAct/1274737" target="_blank" class="white-link"&gt;National case&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/Doc/Act/{langId}/61964CJ0006" target="_blank" class="white-link"&gt;EU case&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/Doc/Act/{langId}/HUDOC-39954_08" target="_blank" class="white-link"&gt;ECtHR case&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/Doc/Act/{langId}/32001R0044" target="_blank" class="white-link"&gt;EU legislative instrument&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/menu&gt;&lt;/p&gt;</value>
+  </data>
+  <data name="UI_Last" xml:space="preserve">
+    <value>Последен</value>
+  </data>
+  <data name="UI_ParTitle_art" xml:space="preserve">
+    <value>Член</value>
+  </data>
+  <data name="UI_SearchBarText" xml:space="preserve">
+    <value>Бързо търсене</value>
+  </data>
+  <data name="UI_Licenses" xml:space="preserve">
+    <value>Лиценза</value>
+    <comment>For Translation</comment>
+  </data>
+  <data name="UI_FinsEuroPerCapita" xml:space="preserve">
+    <value>Евро на глава от населението</value>
+  </data>
+  <data name="UI_Cases_HudocImportance" xml:space="preserve">
+    <value>Степен на значимост</value>
+  </data>
+  <data name="UI_FinsCurrPricesMillionsEuro" xml:space="preserve">
+    <value>Текущи цени, милиона евро</value>
+  </data>
+  <data name="Hint_CaseLaw_Parties" xml:space="preserve">
+    <value>Имената на страните по делото.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-parties" onclick="hintExampleCaseLawParties()"&gt;Пример: Smith&lt;/a&gt;</value>
+  </data>
+  <data name="UI_fins_eurostat_HICP_PchMV12" xml:space="preserve">
+    <value>Процентна промяна - 12 месеца средно</value>
+  </data>
+  <data name="UI_Finances_TaxInformation_ParkingRate" xml:space="preserve">
+    <value>"Паркингова" (преференциална) ставка</value>
+  </data>
+  <data name="Hint_CaseLawJurisdiction" xml:space="preserve">
+    <value>Държава-членка или специфичен съд.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-jurisdiction" onclick="hintExampleCaseLawJurisdiction('bg')"&gt;Пример: България&lt;/a&gt;</value>
+  </data>
+  <data name="UI_RepeatPassword" xml:space="preserve">
+    <value>Повтори паролата</value>
+  </data>
+  <data name="UI_FreeDocsTrigger_Show" xml:space="preserve">
+    <value>Покажи само документи с препратки към Правото на ЕС</value>
+  </data>
+  <data name="UI_Chart" xml:space="preserve">
+    <value>Инфографика</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="UI_FinancesLinks" xml:space="preserve">
+    <value>Линкове</value>
+    <comment>For translation - new</comment>
+  </data>
+  <data name="Notify_DocumentAddMaxCountMessage" xml:space="preserve">
+    <value>Достигнали сте максималният брой документи. Моля изтрийте един или повече, за да добавите избраният документ.</value>
+  </data>
+  <data name="UI_Number" xml:space="preserve">
+    <value>Номер</value>
+  </data>
+  <data name="UI_inNatL" xml:space="preserve">
+    <value>в националното законодателство</value>
+  </data>
+  <data name="UI_Registation_ActivationMailSent" xml:space="preserve">
+    <value>&lt;p&gt;Изпратен е имейл с линк за активиране на регистрацията. Моля, отворете линка, за да завършите регистрацията.&lt;/p&gt;&lt;p&gt;Ако не получавате активационно писмо, моля проверете Вашата "Спам" папка, за да се уверите, че не е филтрирано там.&lt;/p&gt;&lt;p&gt;Ако срещате затруднения, моля кликнете &lt;a href="/en/FAQ" target="_blank"&gt;тук&lt;/a&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="UI_Registration" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="UI_Registration_ActivationMsg" xml:space="preserve">
+    <value>&lt;p&gt;Вашата регистрация е активирана.&lt;/p&gt;</value>
+  </data>
+  <data name="UI_Registration_MailBody" xml:space="preserve">
+    <value>Здравейте {fullname},&lt;p&gt;Благодарим Ви за регистрацията в Interlex.&lt;/p&gt;&lt;p&gt;За да активирате регистрацията отворете линка:&lt;br/&gt;{activation_link}&lt;/p&gt;&lt;p&gt;Поздрави,&lt;br/&gt; Екипът на Interlex.&lt;/p&gt;</value>
+  </data>
+  <data name="UI_FooterFundedProject" xml:space="preserve">
+    <value>Проектът InterLex е съфинансиран от Програма „Правосъдие“ на Европейския съюз (2014-2020)</value>
+  </data>
+  <data name="UI_FooterInfoProject" xml:space="preserve">
+    <value>Съдържанието на този сайт отразява единствено вижданията на партньорите по проекта InterLex и те са изцяло отговорни за него. Европейската комисия не носи отговорност за използването на съдържащата се в него информация.</value>
+  </data>
+  <data name="UI_PILCases" xml:space="preserve">
+    <value>МЧП казуси свързани с интернет</value>
+  </data>
+  <data name="UI_ABOUT_INTERLEX" xml:space="preserve">
+    <value>За проекта InterLex</value>
+  </data>
+  <data name="UI_DISCLAIMER_LINK" xml:space="preserve">
+    <value>Отказ от отговорност</value>
+  </data>
+  <data name="UI_LEGAL_NOTICE" xml:space="preserve">
+    <value>Информация относно авторското право</value>
+  </data>
+  <data name="UI_Portal" xml:space="preserve">
+    <value>Уебсайт на InterLex портала</value>
+  </data>
+  <data name="UI_PRIVACY_POLICE" xml:space="preserve">
+    <value>Политика за поверителност</value>
+  </data>
+  <data name="UI_Countries" xml:space="preserve">
+    <value>Държави</value>
+  </data>
+  <data name="UI_ExpertMaterials" xml:space="preserve">
+    <value>Експертни материали</value>
+  </data>
+  <data name="UI_AccountDeletion" xml:space="preserve">
+    <value>Изтриване на акаунт</value>
+  </data>
+  <data name="UI_WrongPassword" xml:space="preserve">
+    <value>Грешна парола</value>
+  </data>
+  <data name="UI_Country_EM" xml:space="preserve">
+    <value>Експертни материали</value>
+  </data>
+  <data name="UI_Register" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="UI_InterlexAccountActivationTitle" xml:space="preserve">
+    <value>Interlex - активация на акаунт</value>
+  </data>
+  <data name="UI_TranslateSearchText_Hint" xml:space="preserve">
+    <value>Това е прототип на функционалност за междуезиково търсене. 
+За да я използвате, поставете отметка в полето "Междуезиково търсене" и напишете и изпълнете заявка за търсене на езика на интерфейса. Вашата заявка ще бъде автоматично преведена чрез машинен превод. Поддържат се следните езикови двойки и в двете посоки за превод: BG - IT и BG - EN. Резултатът от търсенето е списък с документи, съдържащи в своя текст срещания на оригиналната заявка или на нейния машинен превод.</value>
+  </data>
+</root>

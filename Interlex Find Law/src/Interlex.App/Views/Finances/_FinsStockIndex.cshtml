@@ -1,0 +1,209 @@
+﻿@using Interlex.BusinessLayer.Models;
+@model Interlex.BusinessLayer.Models.EuFins.FinsStockIndex
+@using Interlex.App.Resources
+
+<h3 class="f-blue" style="margin-top: -6px;">@Resources.UI_FinancesStockIndices</h3>
+
+<div id="stock-index-options" class="f-0-8">
+    <div class="width-33 left">
+        <p>
+            @Resources.UI_IndexType:
+            <select id="stockindex-type-picker" class="form-control">
+                @foreach (var item in Model.StockIndexes)
+                {
+                    <option value="@item.Name" data-last-date="@Model.LastDates[item.Name]">@item.Name</option>
+                }
+            </select>
+        </p>
+    </div>
+    <div class="width-33 left">
+        @Html.HiddenFor(m => m.DateAsString, new { id = "datepicker-model", @class = "form-control" })
+        <p>@Resources.UI_Period: <input type="text" id="datepicker-from" class="form-control"></p>
+    </div>
+    <div class="width-33 left padding-top-15">
+        <a href="javascript:void(0)" class="text-right f-white text-decoration-none" id="link-show-chart" onclick="financesScrollToChart()">
+            <span class="fa fa-line-chart"></span> @Resources.UI_Fins_ShowChart
+        </a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+
+<div>
+    <div class="col-md-12">
+        <table id="example" class="display dataTable-helper table-fins" style="width:100%;border:s-0; text-align: center;">
+            <thead>
+                <tr>
+                    <th class="text-center">@Resources.UI_Date</th>
+                    <th class="text-center" id="th-stockindex-for">@Resources.UI_Value</th>
+                    <th class="text-center" id="th-stockindex-change">@Resources.UI_Fins_Change</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var currentDate = new Date();
+        try {
+            var dateModel = $('#datepicker-model').val();
+            currentDate = new Date(dateModel);
+        } catch (err) { }
+
+        var name = 'DAX';
+
+        $('#datepicker-from').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: 'MM yy',
+            closeText: "@Resources.UI_Select",
+            maxDate: currentDate,
+            monthNamesShort: GlobalizationHandler.getMonths(getCookie('sitelang')),
+            onChangeMonthYear: function (dateText, inst) {
+                var month = inst;
+                var year = dateText;
+                currentDate = new Date(year, month - 1, 1);
+                $('#datepicker-from').val(currentDate.getMonthName(getCookie('sitelang')) + " " + currentDate.getFullYear());
+                initTable(name, currentDate);
+            },
+            beforeShow: function (e, t) {
+                $(this).datepicker("hide");
+                $("#ui-datepicker-div").addClass("hide-calendar");
+            },
+            onClose: function (dateText, inst) {
+                setTimeout(function () {
+                    $("#ui-datepicker-div").removeClass("hide-calendar")
+                }, 200);
+            }
+        });
+
+        var dataTable = null;
+
+        $('#datepicker-from').datepicker("setDate", currentDate);
+        var globalizedDateLabel = currentDate.getMonthName(getCookie(['sitelang'])) + ' ' + currentDate.getFullYear();
+        $('#datepicker-from').val(globalizedDateLabel);
+
+        $('#stockindex-type-picker').on('change', function () {
+            name = $('#stockindex-type-picker :selected').val();
+
+            var curMaxDate = $('#stockindex-type-picker :selected').attr('data-last-date');
+            var dateObject = new Date(curMaxDate);
+            $('#datepicker-from').datepicker('option', 'maxDate', dateObject);
+
+            globalizedDateLabel = dateObject.getMonthName(getCookie(['sitelang'])) + ' ' + dateObject.getFullYear();
+            $('#datepicker-from').val(globalizedDateLabel);
+
+            initTable(name, dateObject);
+        });
+
+        var chartOptions = {
+            xaxis: {
+                mode: "time",
+                monthNames: GlobalizationHandler.getMonthsShort(getCookie('sitelang'))
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: false,
+                    lineWidth: 3
+                },
+                points: {
+                    show: true,
+                    radius: 3,
+                    fill: true,
+                    fillColor: "#ffffff",
+                    lineWidth: 2
+                }
+            },
+            grid: {
+                hoverable: true,
+                clickable: false,
+                borderWidth: 0
+            },
+            legend: {
+                show: false
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: '%x: <b>%y</b>'
+            },
+            colors: ['#148dd4']
+        }
+
+        var holderStockindex = $('#line-chart-stockindex');
+        var jsonData, hasLoadedNewData;
+        $(window).resize(function () {
+            populatePlots(jsonData);
+        });
+
+        function initTable(name, currentDate) {
+            if (dataTable != null) {
+                $('#example tbody').remove();
+                dataTable.fnDestroy();
+                dataTable = null;
+            }
+            if (dataTable == null) {
+                var dtoptions = {
+                    "processing": true,
+                    "serverSide": true,
+                    "bPaginate": false,
+                    "autoWidth": false,
+                    "ajax": {
+                        "url": '/Finances/Data/GetStockIndex',
+                        "type": 'POST',
+                        "data": {
+                            "name": name,
+                            "year": currentDate.getFullYear(),
+                            "month": currentDate.getMonth(),
+                            "readerType": "StockIndexDataRow"
+                        },
+                        "dataSrc": function (json) {
+                            jsonData = json;
+                            hasLoadedNewData = true;
+                            return json.data;
+                        }
+                    },
+                    "columns": [
+                        { "data": "dateTable", "orderable": false, },
+                        { "data": "value", "orderable": false, "targets": -1 },
+                        { "data": "valueChangeTable", "orderable": false, "targets": -1 },
+                    ],
+                    "bFilter": false,
+                    "bInfo": false
+                };
+
+                dataTable = $('#example')
+                    .dataTable(dtoptions)
+                    .on('draw.dt', function (ev, options) {
+                        if (!$('#example').find('tbody').is(':empty') && hasLoadedNewData) {
+                            hasLoadedNewData = false;
+                            $('#line-chart-stockindex').css('display', 'block');
+                            populatePlots(jsonData);
+                        }
+                    })
+                    .on('destroy.dt', function (ev, options) {
+                        $('#line-chart-stockindex').css('display', 'none');
+                    });
+                //  new $.fn.dataTable.Responsive(dataTable);
+            }
+        };
+
+        function populatePlots(result) {
+            var stockindexes = [];
+            $(result.data).each(function (index, element) {
+                stockindexes.push([Date.parse(element.date), element.value]);
+            });
+
+            var plotDataEur = [{
+                label: "Indexes",
+                data: stockindexes
+            }];
+
+            $.plot(holderStockindex, plotDataEur, chartOptions);
+        };
+
+        initTable(name, currentDate);
+    });
+</script>

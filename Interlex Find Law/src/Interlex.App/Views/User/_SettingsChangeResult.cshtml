@@ -1,0 +1,22 @@
+﻿<div class="row" id="settings-changeResult-body">
+    <div class="col-md-12 text-primary text-center">
+        @if (ViewBag.Msg != null)
+        {
+            if (!(String.IsNullOrEmpty(ViewBag.Status)))
+            {
+                if (ViewBag.Status == "Success")
+                {
+                    <span class="f-blue">@ViewBag.Msg</span>
+                }
+                else
+                {
+                    <span class="f-orange">@ViewBag.Msg</span>
+                }
+            }
+            else
+            {
+                <span>@ViewBag.Msg</span>
+            }
+        }
+    </div>
+</div>

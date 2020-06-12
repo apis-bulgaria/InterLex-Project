@@ -1,0 +1,212 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+@using System.Web.Configuration;
+
+<form id="formFinances">
+    <div class="search-items-wrapper">
+        <div class="width-80 margin-top-5">
+            <div class="left width-70 text-left">
+                <label for="ExactMatch">
+                    @Html.CheckBoxFor(m => m.ExactMatch, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                    <span class="label-after-checkbox">@Resources.UI_SearchExactMatch</span>
+                </label>
+            </div>
+            @*<div class="left width-30 text-right container-logical-operators">
+                <span class="fa fa-info-circle icon-hint tooltip f-blue-important" title="@Resources.Hint_LogicalExpressions"></span>
+                <button id="cases-btn-tags-and" type="button" class="btn btn-small btn-lgrey f-blue btn-tag" onclick="insertAtCaret('SearchText',' [AND] '); return false;">AND</button>
+                <button id="cases-btn-tags-or" type="button" class="btn btn-small btn-lgrey f-blue btn-tag" onclick="insertAtCaret('SearchText',' [OR] '); return false;">OR</button>
+                <button id="cases-btn-tags-not" type="button" class="btn btn-small btn-lgrey f-blue btn-tag" onclick="insertAtCaret('SearchText',' [NOT]'); return false;">NOT</button>
+            </div>*@
+            <div class="clearfix"></div>
+        </div>
+
+        <fieldset class="width-80 margin-top-5">
+            <legend>@Resources.UI_SearchArea</legend>
+            <div class="left width-33 text-center">
+                <label for="Finances_OnlyInTitles" class="block">
+                    @Html.CheckBoxFor(m => m.Finances.OnlyInTitles, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                    <span class="label-after-checkbox">@Resources.UI_Finances_SearchInTitles</span>
+                </label>
+            </div>
+            <div class="left width-33 text-center">
+                <label for="Finances_Keywords" class="block">
+                    @Html.CheckBoxFor(m => m.Finances.Keywords, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                    <span class="label-after-checkbox">@Resources.UI_Finances_SearchInKeywords</span>
+                </label>
+            </div>
+            <div class="left width-33 text-center">
+                <label for="Finances_SearchInSummaries" class="block">
+                    @Html.CheckBoxFor(m => m.Finances.SearchInSummaries, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                    <span class="label-after-checkbox">@Resources.UI_Finances_SearchInSummaries</span>
+                </label>
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+
+        <fieldset class="width-80 margin-top-5">
+            <legend>@Resources.UI_DocumentReference</legend>
+            <div class="left width-50">
+                <div id="finances-document-type" class="container-form">
+                    <div>
+                        @Resources.UI_DocumentType
+                    </div>
+                    <div>
+                        @*  @Html.CheckTreeViewFor(m => m.Finances.DocumentTypes) <span class="btn fa fa-pencil-square-o btn-edit-search-field left"></span>*@
+                        <input type="text" readonly="readonly" class="width-70 cursor-pointer left" id="finances-document-type-tb" />
+                        <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="finances-document-type-pencil"></span>
+                        @Html.EUCSClear(SearchBoxClearType.FinancesDocumentTypes, "finances-document-type-tb")
+                    </div>
+                </div>
+            </div>
+            <div class="left width-50">
+                <div>
+                    @*    <input type="hidden" id="Finances_FinancesDateType" name="Law.LawDateType" value="0" />*@
+                    <label for="Finances.DatePeriodType">
+                        <input type="radio" name="Finances.DatePeriodType" id="Finances.DatePeriodType_Date" @((Model.Finances == null || Model.Finances.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Date) ? "checked=checked" : "") value="date" style="vertical-align: middle;  margin-top: -2px;" />
+                        <span style="padding-top: 0;">@Resources.UI_Date</span>
+                    </label>
+
+                    <label for="Finances.DatePeriodType">
+                        <input style="vertical-align: middle;  margin-top: -2px;" type="radio" @((Model.Finances != null && Model.Finances.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Period) ? "checked=checked" : "") name="Finances.DatePeriodType" id="Finances.DatePeriodType_Period" value="period" />
+                        <span>@Resources.UI_Period <span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span></span>
+                    </label>
+                </div>
+                <span>@Html.TextBoxFor(m => m.Finances.DateFrom, new { @Value = (Model.Finances != null && Model.Finances.DateFrom.HasValue && Model.Finances.DateFrom.Value.Year > 1) ? Model.Finances.DateFrom.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder })</span>
+                <span>&nbsp;-&nbsp;</span>
+                <span>@Html.TextBoxFor(m => m.Finances.DateTo, new { @Value = (Model.Finances != null && Model.Finances.DateTo.HasValue && Model.Finances.DateTo.Value.Year > 1) ? Model.Finances.DateTo.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder, @disabled = "disabled" })</span>
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+
+        <fieldset class="width-80">
+            <legend>@Resources.UI_ReferedEUActProvision</legend>
+
+            <div class="left width-50" id="cases-all-enactment">
+                <div id="templates-cases-enactment" class="container-form">
+                    <div>
+                        @Resources.UI_Enactment
+                        <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawLegalAct"></span>
+                    </div>
+                    @Html.TextBoxFor(m => m.Finances.EnactmentText, new { @class = "btn text_field clearable-enactment width-70 left", @readonly = "readonly", @onclick = "$('#link-choose-enactment').trigger('click'); return false;" })
+                    <span data-index-search="0" class="btn fa fa-pencil-square-o btn-edit-search-field left" id="link-choose-enactment"></span>
+                    @Html.EUCSClear(SearchBoxClearType.Enactment, "Finances_EnactmentText")
+                    @Html.HiddenFor(m => m.Finances.EnactmentDocLangId)
+                    @Html.HiddenFor(m => m.Finances.EnactmentCelex)
+                </div>
+            </div>  
+
+            <div class="left width-50" id="cases-all-provision">
+                <div id="templates-cases-provision" class="container-form">
+                    <div>
+                        @Resources.UI_Provision
+                        <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawProvision"></span>
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(m => m.Finances.ProvisionText, new { @class = "btn text_field clearable-provision width-70 left", @readonly = "readonly", @onclick = "showProvisionDlg();return false;" })
+                        <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="link-choose-provision"></span>
+                        @Html.EUCSClear(SearchBoxClearType.Provision, "Finances_ProvisionText")
+                        @Html.HiddenFor(m => m.Finances.ProvisionId)
+                        @Html.HiddenFor(m => m.Finances.ProvisionParOriginal)
+                    </div>
+                </div>
+            </div> 
+            <div class="clearfix"></div>
+        </fieldset>
+        <div class="clearfix"></div>
+
+        <fieldset class="width-80 margin-top-5">
+            <legend>@Resources.UI_Classifiers</legend>
+            <div class="width-50">
+                <div>
+                    @Resources.UI_Finances_EuroFinance
+                    <span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span>
+                </div>
+                <div>
+                    @Html.CheckTreeViewFor(m => m.Finances.EuroFinance)
+                </div>
+            </div>
+        </fieldset>
+
+        <div id="finances-document-type-container" class="display-none f-0-8">
+            <label class="block">
+                @Html.CheckBoxFor(m => m.Finances.DocTypeStandarts)<span>@Resources.UI_JS_FinStandarts</span>
+            </label>
+            <label class="block">
+                @Html.CheckBoxFor(m => m.Finances.DocTypeReglaments)<span>@Resources.UI_JS_Reglaments</span>
+            </label>
+            <label class="block">
+                @Html.CheckBoxFor(m => m.Finances.DocTypeDirectives)<span>@Resources.UI_JS_Directives</span>
+            </label>
+            <label class="block">
+                @Html.CheckBoxFor(m => m.Finances.DocTypeEuCaseLaw)<span>@Resources.UI_EUCaseLaw</span>
+            </label>
+            <label class="block">
+                @Html.CheckBoxFor(m => m.Finances.DocTypeNationalCaseLaw)<span>@Resources.UI_NationalCaseLaw</span>
+            </label>
+            <label class="block">
+                @Html.CheckBoxFor(m => m.Finances.DocTypeSummaries)<span>@Resources.UI_Fins_DocTypeSummaries</span>
+            </label>
+        </div>
+
+        <div class="form-group adv-search-buttons clearfix">
+            <input type="button" class="btn btn-large btn-blue f-white f-bold" value="@Resources.UI_Search" onclick="DoSearch('tabFinances', false);">
+            <input type="button" class="btn btn-large btn-lgrey f-blue f-bold" value="@Resources.UI_Clear" onclick="clearAdvSearchFilters('tabFinances', false);">
+            <button class="btn btn-large btn-lgrey f-blue adv-search-close f-bold" type="button">@Resources.UI_Close_Lower</button>
+        </div>
+    </div>
+</form>
+
+@Html.Partial("~/Views/Shared/_SearchBoxFormEnactmentModals.cshtml")
+
+<script>
+    $().ready(function () {
+        clearFinancesFilters();
+
+        var selectedFinsDocTypes = [];
+
+        $("#finances-document-type-tb").click(function () {
+            $('#finances-document-type-container').dialog({
+                modal: true, title: '@(Resources.UI_Finances_DocumentTypes)', zIndex: 10000, autoOpen: true,
+                width: 'auto',
+                resizable: false,
+                draggable: true,
+                open: function () {
+                    currentlySelectedFinsDocTypeBoxes = $('#finances-document-type-container label input[type="checkbox"]:checked'); // memoryzing currently selected
+                    isAModalOpened = true;
+                },
+                buttons: [
+                    {
+                        text: '@Resources.UI_Yes', click: function () {
+                            $(this).dialog("close");
+                        }, class: 'btn-large btn-blue f-white f-bold f-0-7-important'
+                    },
+                    {
+                        text: '@Resources.UI_Cancel', click: function () {
+                            $('#finances-document-type-container label input[type="checkbox"]').prop('checked', false);
+                            currentlySelectedFinsDocTypeBoxes.prop('checked', true);
+
+                            $(this).dialog('close');
+                        }, class: 'btn-large btn-lgrey f-blue f-bold f-0-7-important'
+                    }
+                ],
+                close: function (event, ui) {
+                    populateFinsDocTypeBoxTitles();
+
+                    setTimeout(function () {
+                        isAModalOpened = false;
+                    }, 200);
+                }
+            });
+        });
+
+        $('#finances-document-type-pencil').on('click', function () {
+            $('#finances-document-type-tb').trigger('click');
+        });
+
+        $('#finances-document-type-tb').euClear({ // refered act (only for ECHR)
+            top: '4px',
+            type: 'finances-documents-type'
+        });
+    });
+</script>

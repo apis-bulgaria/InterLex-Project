@@ -1,0 +1,73 @@
+﻿@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Models
+
+<div class="margin-top-10" id="settings-body-container" style="border: 1px solid #acacac">
+    <label for="cb-docs-in-new-tab" class="f-0-8" style="display:block; padding-left: 15px; text-indent: -2px; text-align: left;">
+        @if ((Session["UserData"] as UserData).OpenDocumentsInNewTab)
+        {
+            <input type="checkbox" id="cb-docs-in-new-tab" checked="checked" />
+        }
+        else
+        {
+            <input type="checkbox" id="cb-docs-in-new-tab" />
+        }
+
+        <span style="vertical-align: top; margin-top: -1px; display: inline-block;">@Resources.UI_OpenDocumentsInNewTab</span>
+</label>
+
+    @*<label for="cb-show-free-docs" class="f-0-8" style="display: block; padding-left: 15px; text-indent: -2px;  text-align: left; margin-top: 10px;">
+        @if ((Session["UserData"] as UserData).ShowFreeDocuments)
+        {
+            <input type="checkbox" id="cb-show-free-docs" style="vertical-align: central" />
+        }
+        else
+        {
+            <input type="checkbox" id="cb-show-free-docs" style="vertical-align: bottom; margin-top: -1px;" checked="checked" />
+        }
+
+        <span style="vertical-align: top; margin-top: -1px; display: inline-block;">@Resources.UI_FreeDocsTrigger_Show</span>
+    </label>*@
+  @*  <label for="cb-show-hints" class="f-0-8" style="display: block; padding-left: 15px; text-indent: -15px;">
+        @if (((Session["UserData"] as Interlex.BusinessLayer.Models.UserData).ShowHints == true))
+        {
+        <input type="checkbox" id="cb-show-hints" checked="checked" />
+        }
+        else
+        {
+            <input type="checkbox" id="cb-show-hints" />
+        }
+        @Resources.UI_ShowHints
+    </label>*@
+    <div id="change-settings-result" class="f-bold f-grey absolute f-0-8" style="right: 110px; top: 90px;">
+    </div>
+    <input class="btn btn-large btn-blue f-white f-bold" type="button" value=@Resources.UI_Save id="save-common-settings-button" style="font-size: 0.8em; margin-left: 10px; margin-top: 210px;" />
+</div>
+
+<script>
+    $('#save-common-settings-button').click(function (e) {
+        e.preventDefault();
+
+        var linksInNewTab = $('#cb-docs-in-new-tab').prop('checked'),
+            showFreeDocuments = $('#cb-show-free-docs').prop('checked');
+        
+        $.ajax({
+            url: '@(Url.Action("UpdateCommonSettings", "User"))',
+            method: 'POST',
+            traditional: true,
+            data: {
+                linksInNewTab: linksInNewTab,
+                showFreeDocuments
+            }
+        }).done(function (data) {
+            $('#change-settings-result').html(data);
+            setTimeout(function () {
+                $('#change-settings-result').fadeOut(1500, function () {
+                    $('#change-settings-result').html('');
+                    $('#change-settings-result').show();
+                });
+
+                window.location.reload();
+            }, 500);
+        });
+    });
+</script>

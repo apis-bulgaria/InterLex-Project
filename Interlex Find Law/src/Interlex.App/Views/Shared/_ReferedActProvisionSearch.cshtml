@@ -1,0 +1,64 @@
+﻿@using Interlex.App.Resources
+@using Interlex.App.Helpers
+@using Interlex.BusinessLayer.Models
+
+@*@if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+    {
+        <div style="margin-left: 23px;" class="banner-container banner-container-wide">
+            <!-- Httpool Block -->
+            <script type="text/javascript">
+                AdPlatformZone = {
+                    id: "2f73fc142",
+                    format: "728x90"
+                };
+            </script>
+            <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>
+            <!-- /Httpool Block -->
+        </div>
+    }*@
+
+
+@*<span class="f-blue f-bold page-main-title" style="font-size:0.9em;margin-left: 10px">@Resources.UI_SearchByEnactmentProvision</span> *@
+
+<fieldset id="fieldset-home-enactment-provision" class="f-0-8">
+
+    <div id="home-enactment-provision-inner-container" class="width-75">
+        @* Enactment *@
+        <div style="display:none;" id="templates-cases-enactment-index" class="container-form left width-45">
+            <div>
+                @Resources.UI_Enactment
+                <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawLegalAct"></span>
+            </div>
+            <input class="btn text_field clearable-enactment width-85 left" id="Cases_EnactmentText_Index" name="Cases.EnactmentText_Index"
+                   onclick="$('#link-choose-enactment-index').trigger('click'); return false;" readonly="readonly" type="text" value="">
+            <span data-index-search="1" class="btn fa fa-pencil-square-o btn-edit-search-field left" style="font-size: 1.4em !important;"></span>
+            @Html.EUCSClear(SearchBoxClearType.EnactmentIndex, "Cases_EnactmentText_Index")
+            <input type="hidden" id="Cases_EnactmentDocLangId_Index" name="Cases.EnactmentDocLangId_Index" />
+            <input type="hidden" id="Cases_EnactmentCelex_Index" name="Cases.EnactmentCelex_Index" />
+        </div>
+
+        @* Provision *@
+        <div style="display:none;" id="templates-cases-provision-index" class="container-form left width-45">
+            <div>
+                @Resources.UI_Provision
+                <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawProvision"></span>
+            </div>
+            <div>
+                <input class="btn text_field clearable-provision width-85 left" id="Cases_ProvisionText_Index" name="Cases.ProvisionText_Index"
+                       onclick="showProvisionDlg(true);return false;" value="" readonly="readonly" type="text">
+                <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="link-choose-provision-index" style="font-size: 1.4em !important;"></span>
+                @Html.EUCSClear(SearchBoxClearType.ProvisionIndex, "Cases_ProvisionText_Index")
+                <input type="hidden" id="Cases_ProvisionId_Index" name="Cases.ProvisionId_Index" />
+                <input type="hidden" id="Cases_ProvisionParOriginal_Index" name="Cases.ProvisionParOriginal_Index" />
+            </div>
+        </div>
+
+        <div id="enactment-provision-search-button-holder" class="left padding-top-15 text-right">
+            @*<button type="button" class="btn" id="link-choose-enactment-index" data-index-search="1"> @* onclick="DoSearch('enactmentIndex'); 
+                <span id="enactment-provision-button-label-mobile"><span class="fa fa-search f-white"></span></span>
+                <span id="enactment-provision-button-label-desktop">@Resources.UI_SearchByEnactmentProvision</span>
+            </button>*@
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</fieldset>

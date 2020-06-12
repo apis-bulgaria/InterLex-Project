@@ -1,0 +1,287 @@
+﻿@model Interlex.BusinessLayer.Models.Document
+
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer
+@using Interlex.BusinessLayer.Models;
+@using Interlex.App.Helpers;
+
+<div class="container-fluid main-content @Model.HtmlModel.PublisherId">
+    <div id="doc-view-container" @if (!String.IsNullOrEmpty(ViewBag.IsForExport)) { @: style="width: 100%;margin-left: 0"
+         } } data-langid="@Model.LangId" data-docnumber="@Model.DocNumber">
+
+        @{
+            Language interfaceLanguage = InterfaceLanguages.GetLanguageById(int.Parse(Session["LanguageId"].ToString()));
+        }
+
+        @ActHelper.DisplayTitle(this.Model, this.Html)
+        @ActHelper.DisplaySubTitle(this.Model, this.Html)
+        @if (this.Model.IsEuFins())
+        {
+            @ActHelper.DispalyEuFinsSubTitle(this.Model, this.Html)
+        }
+        @ActHelper.DisplayMetaSourceIfAny(this.Model, this.Html)
+        @ActHelper.DisplayPublicationReferences(this.Model, this.Html, interfaceLanguage.Id)
+        @ActHelper.DisplayLanguageFormats(this.Model, this.Html)
+        @ActHelper.DisplayIconomicalScope(this.Model, this.Html)
+        @ActHelper.DisplayAbstract(this.Model, this.Html, interfaceLanguage.ShortCode)
+        @ActHelper.DisplayDecisionOfTheCourt(this.Model, this.Html, interfaceLanguage.ShortCode)
+        @if (this.Model.IsEuFins())
+        {
+            @ActHelper.DisplayKeywordsAndConcepts(this.Model, this.Html)
+        }
+        else
+        {
+            @ActHelper.DisplayKeywords(this.Model, this.Html, interfaceLanguage.ShortCode)
+        }
+        @ActHelper.DisplaySummaries(this.Model, this.Html, interfaceLanguage.ShortCode)
+        @ActHelper.DisplayCuriaSummaries(this.Model, this.Html, interfaceLanguage.ShortCode)
+        @ActHelper.DisplayEconomicalBackgroud(this.Model, this.Html)
+        @if (this.Model.IsEurlex())
+        {
+            // @ActHelper.DisplayPressRelease(this.Model, this.Html)
+        }
+        @ActHelper.DisplayInterlexBiblNotice(this.Model, this.Html)
+        @ActHelper.DisplayBiblNotice(this.Model, this.Html)
+        @ActHelper.DisplayDocumentContent(this.Model, this.Html)
+        @ActHelper.DisplayApplication(this.Model, this.Html)
+
+    </div>
+    </div>
+    <div class="mobile-filters-show-button" id="mobile-filters-show-button-act" data-page="act"><span class="fa fa-tasks"></span></div>
+
+    <script type="text/javascript">
+        $().ready(function () {
+
+            @{
+                var openedDocsList = Session["opened_docs-" + Session["SelectedProductId"]] as HashSet<int>;
+                openedDocsList.Add(Model.DocLangId);
+                Session["opened_docs-" + Session["SelectedProductId"]] = openedDocsList;
+            }
+
+            if ($(location).attr('hash').length > 1) {
+                eid = $(location).attr('hash').substring(1);
+                navigateToEId(eid);
+            }
+
+            var searchedText = '@Model.SearchedText';
+            searchedText = searchedText.replace(/&quot;/g, '');
+
+            //highlight after text search
+            $('#searchInDocumentInput').val('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.SearchedText))');
+            $('#searchInDocumentInput').data('exactmatch', '@Model.ExactMatch');
+            //populating input box and removing quotes if they are used
+            currentMatch = 0;
+            matches = $('.highlight');
+            resultCount = matches.length;
+
+            if (resultCount > 0) {
+                for (var i = 0, len = matches.length; i < len; i++) {
+                    var currentMatch = $(matches[i]);
+                    var curEl = currentMatch;
+                    curEl.addClass('highlight-memoryze');
+
+                    if (curEl.parents('.expanding-section').length > 0) {
+                        curEl = curEl.parent('.expanding-section').first();
+
+                        //expand section content if not expanded
+                        var sectionContent = curEl.children('div').first();
+                        if (sectionContent.css('display') === 'none') {
+                            sectionContent.show();
+                        }
+                    }
+
+                    //reaching basic parent section container
+                    /*   while (true) {
+                           curEl = curEl.parent();
+                           if (curEl.hasClass('expanding-section')) {
+                               break;
+                           }
+                       }*/
+                }
+
+                //showNextMatch(0);
+                showFirstMatch();
+                // $('#span-matches-count-out').text(Resources.storage['UI_JS_Match']);
+                $('#span-matches-count').text(Resources.storage['UI_JS_Match'] + ': ' + 1 + '/' + $('.highlight-memoryze').length);
+            }
+            else if (searchedText !== "" && searchedText !== null && searchedText !== undefined) {
+                console.log(searchedText);
+                // $('#span-matches-count').addClass('f-orange');
+                $('#span-matches-count').text(Resources.storage['UI_JS_NoMatchesFound']);
+                $('#span-matches-count').addClass('f-red');
+            }
+
+            showContent = function (obj, selector, visibleClass, hiddenClass, cookieKey) {
+                var el = $(selector);
+                if (el.css('display') === 'none') {
+                    el.slideDown(0);
+                    $(obj).removeClass(hiddenClass);
+                    $(obj).addClass(visibleClass);
+
+                    setCookie('section-opened-' + cookieKey, '1', 365);
+
+                    console.log(getCookie('section-opened-' + cookieKey));
+                }
+                else {
+                    el.slideUp(0);
+                    $(obj).removeClass(visibleClass);
+                    $(obj).addClass(hiddenClass);
+
+                    setCookie('section-opened-' + cookieKey, '0', 365);
+
+                    console.log(getCookie('section-opened-' + cookieKey));
+                }
+            }
+
+            showTabContent = function (obj, ev, selector, tabContentsClass, tabBtnsClass) {
+                var el = $(selector);
+                ev.stopPropagation();
+
+                var sibls = $(tabContentsClass);
+                for (var i = 0; i < sibls.length; i++) {
+                    $(sibls[i]).slideUp(0);
+                }
+
+                var chil = $(obj).parent().children(tabBtnsClass);
+                var btns = chil;//$(tabBtnsClass);
+                for (var i = 0; i < btns.length; i++) {
+                    $(btns[i]).removeClass('selected');
+                }
+
+                if (el.css('display') === 'none') {
+                    el.slideDown(0);
+                    el.css('display', 'block');
+                    //obj.className = 'chevron-blue2-down';
+
+                    // expands any additinal sub tabs like lang tabs for keywords or summaries
+                    var subButton = el.find('.langs-tab > .btn-lang-summaryLang ')[0];
+                    if (!subButton) {
+                        subButton = el.find('.langs-tab > .btn-lang-keywordLang')[0]
+                    }
+
+                    if (subButton) {
+                        subButton.click();
+                    }
+                }
+                else {
+                    el.slideUp(0);
+                    el.css('display', 'none');
+                    //obj.className = 'chevron-blue2-right';
+                }
+
+                $(obj).addClass('selected');
+            }
+
+            prepairInlineLinks(@((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+
+            addSourcesHints(); // attaches hints to the base sources [to the official site of the document]
+            addSourceDirectHints(); // attaches hints to the direct sources [to the document source]
+            addKeywordSoruceHints(); // attches hitns to the keyword sources
+            addSummarySourceHints(); // attaches hints to the summay sources
+            attachEuFinsSimliarCasesTabHanlders(); // attaches handlers to the eufins similiar cases tabs
+            attachInternalReferenceHandlers(); // attaches handlers for all internal anchors (href='#....')
+            attachFitVideo(); // stylisation for documents with embeded video -> example docId: 5819569 (gdpr related)
+
+            loadDocContents(@Model.DocLangId);
+
+            //Search in text
+            $('.match-navigate').css('visibility', 'hidden');
+
+            $('#searchInDocumentInput').keypress(function (e) {
+                if (e.which == 13) {
+                    $('#search-in-document-find-button').trigger('click');
+                }
+            });
+
+            var timedFunc = function (elId) {
+                var oldCol = $(elId).css('color');
+                var fontWeight = $(elId).css('font-weight');
+                $(elId).css('color', 'red');
+                $(elId).css('font-weight', 'bold');
+                var tf = setTimeout(function () {
+                    console.log('Color return!');
+                    $(elId).css('color', oldCol);
+                    $(elId).css('font-weight', fontWeight);
+                    clearTimeout(tf);
+                }, 2000);
+            }
+
+            var footNotes = $('.d-footnote').click(
+                function () {
+                    var refersto = $(this).attr('refersto');
+                    $(refersto).ScrollTo();
+                    timedFunc(refersto);
+                }
+            );
+        });
+    </script>
+
+    <script>
+        $(window).load(function () {
+            var allImages = $('img', $('#doc-view-container'));
+
+            var largeImages = allImages.filter(function () {
+                return ($(this).width() > 800);
+            });
+
+            largeImages.each(function () {
+                $(this).width(800);
+            });
+        });
+
+        $().ready(function () {
+            $('.par-in-link').each(function () {
+                var $that = $(this),
+                    eid = $that.next().attr('eid'),
+                    toParId = $that.attr('data-docparid'),
+                    docLangId = $that.attr('data-doclangid'),
+                    docNumber = '@Model.DocNumber';
+
+                if (docLangId === undefined || docLangId === null || docLangId === -1 || docLangId === '') {
+                    docLangId = '@Model.DocLangId';
+                }
+
+                $that.qtip({
+                    content: {
+                        text: '<div class="width-100 article-provisions-list-header"><span class="fa fa-chain"></span> @Resources.UI_IncomingLinks</div><div class="article-provisions-list-content"><span style="font-size: 1.3em;"><i class="fa fa-spinner fa-pulse fa-fw margin-bottom"></i> @Resources.UI_JS_Loading...</span></div>',
+                        ajax: {
+                            url: appRootFolder + '/Search/GetDocArticleProvisions',
+                            data: {
+                                docLangId: docLangId,
+                                eid: eid,
+                                toParId: toParId,
+                                toDocNumber: docNumber
+                            },
+                            @* success: function(data) {
+                                if(!data || !data.length) { this.destroy(); }
+                            },*@
+                            method: 'POST'
+                        }
+                    },
+                    position: {
+                        corner: {
+                            target: 'topRight',
+                            tooltip: 'bottomLeft'
+                        },
+                    },
+                    style: {
+                        classes: 'qtip-inline-hint',
+                        def: true
+                    },
+                    show: {
+                        effect: false,
+                        delay: 200,
+                        solo: true
+                    },
+                    hide: {
+                        fixed: true,
+                        delay: 300,
+                        effect: false
+                    },
+                });
+            });
+        });
+    </script>
+
+
+

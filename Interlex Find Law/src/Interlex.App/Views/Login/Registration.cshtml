@@ -1,0 +1,151 @@
+﻿@model Interlex.BusinessLayer.Models.RegisterUserData
+@using Interlex.App.Resources
+@using Interlex.App.Helpers;
+
+<style>
+    .body-container {
+        overflow-x: hidden;
+    }
+
+
+    /*(for input fields)*/
+    .input-validation-error {
+        border: 1px solid red;
+    }
+
+    /*(for label messages)*/
+    .field-validation-invalid {
+        font-size: 12px;
+        color: red;
+    }
+
+    /*(for captcha error message)*/
+    .validation-summary-valid {
+        font-size: 12px;
+        color: red;
+    }
+</style>
+
+<header class="masthead text-center text-white d-flex" style="        height: calc(100vh - 57px) !important;">
+    <div class="container my-auto">
+        <div class="row header-row">
+            <div class="col-md-12">
+
+                <div class="register-frame relative">
+                    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+                    @{
+                        ViewBag.Title = " - Registration";
+                        Layout = "~/Views/Shared/_LayoutPage.cshtml";
+                    }
+
+
+
+                    <h2>@Resources.UI_Registration</h2>
+                    @using (Html.BeginForm("AddRegistration", "Login"))
+                    {
+                        <table class="regForm_table">
+                            <tr>
+                                @*<td class="regForm_label">Email: </td>*@
+
+                                <td class="regForm-td">
+                                    <span><label class="regForm_label">Email:</label></span>
+                                    @Html.TextBoxFor(m => m.Mail, new { @class = "inp-txt" })
+                                    @Html.ValidationMessageFor(m => m.Mail)
+                                </td>
+                            </tr>
+
+                            <tr>
+                                @*<td class="regForm_label">Password: </td>*@
+                                <td class="regForm-td">
+                                    <span><label class="regForm_label">@Resources.UI_Password_Upper.ToLower().CapitalizeFirstLetter():</label></span>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "inp-txt" })
+                                    @Html.ValidationMessageFor(m => m.Password)
+                                </td>
+                            </tr>
+
+                            <tr>
+                                @*<td class="regForm_label">Confirm Password: </td>*@
+                                <td class="regForm-td">
+                                    <span><label class="regForm_label">@Resources.UI_RepeatPassword:  </label></span>
+                                    @Html.PasswordFor(m => m.Password2, new { @class = "inp-txt" })
+                                    @Html.ValidationMessageFor(m => m.Password2)
+                                </td>
+                            </tr>
+
+                            @*<tr>
+                                    @*<td class="regForm_label">Fullname: </td>
+                                    <td class="regForm-td">
+                                        <span><label class="regForm_label">Full Name:</label></span>
+                                        @Html.TextBoxFor(m => m.Fullname, new { @class = "inp-txt" })
+                                        @Html.ValidationMessageFor(m => m.Fullname)
+                                    </td>
+                                </tr>*@
+                            <tr>
+                                <td colspan="2">
+                                    <div class="g-recaptcha" data-sitekey="@System.Configuration.ConfigurationManager.AppSettings["RecaptchaClient"]"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @Html.ValidationSummary()
+                                </td>
+                            </tr>
+                        </table>
+
+                        <input type="submit" value="@Resources.UI_Register" class="btn btn-blue btn-medium-wide f-white f-bold" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<script>
+    $(document).ready(function () {
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+        });
+
+        $('input[type="submit"]').on('click', function () {
+        //    $('form').validate();
+//
+         //   let formValid = $('form').valid();
+           let formData = $('form').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: appRootFolder + '/Login/AddRegistration',
+                data: formData
+            }).done(function (response) {
+                grecaptcha.reset();
+
+                if(typeof response.Data === 'undefined') {
+                    $('.register-frame').html(response);
+                }
+                else {
+                    $('.input-validation-error').removeClass('input-validation-error');
+                    $('.field-validation-invalid').removeClass('field-validation-invalid');
+                    $('.validation-summary-valid').html('');
+
+                    for (let data of response.Data) {
+                        let key = data.key,
+                            errors = data.errors;
+
+                        if (key !== '') {
+                            let targetInput = $('[name="' + key + '"]');
+                            targetInput.addClass('input-validation-error');
+                            targetInput.next().html(data.errors[0]).addClass('field-validation-invalid');
+                        }
+                        else {
+                            $('.validation-summary-valid').html(data.errors[0]);
+                        }
+                    }
+                }
+            });
+
+            return false;
+        });
+    });
+</script>

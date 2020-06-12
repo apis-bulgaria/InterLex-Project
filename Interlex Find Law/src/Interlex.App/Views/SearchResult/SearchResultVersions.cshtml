@@ -1,0 +1,26 @@
+﻿@model Interlex.BusinessLayer.Models.SearchResult
+<script type="text/javascript">
+    function Compare() {
+        var cbs = $('input[id^="cbCompare_"]:checked');
+
+        if (cbs.length != 2) {
+            alert("Please select 2 documents to compare");
+            return;
+        }
+        document.location = "/comparedocuments/comparedocuments?doc1Id=" + cbs[0].name + "&doc2Id=" + cbs[1].name;
+    }
+</script>
+<ul class="list-unstyled" style="font-family: Roboto Condensed, Times New Roman, Tahoma;font-size:14px;">
+    @foreach (var item in Model.SearchList)
+    {
+        <li>
+            <label>
+                <input type="checkbox" id="cbCompare_"@Html.Raw(item.DocumentId) name="@Html.Raw(item.DocumentId)" class="checkbox-inline"/>
+                <a href='~/DocText/DocText?documentId='@Html.Raw(item.DocumentId)>@Html.Raw(item.Date.ToShortDateString())</a>
+            </label>
+        </li>
+    }
+</ul>
+@*<input type="button" onclick="Compare()" value="Compare"/>*@
+<a href="javascript:void();" class="btn btn-blue iconed" onclick="Compare()"><span class="icon-updown"></span> Compare</a>
+

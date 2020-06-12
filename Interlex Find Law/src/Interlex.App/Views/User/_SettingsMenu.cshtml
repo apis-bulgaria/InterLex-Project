@@ -1,0 +1,9 @@
+﻿@using Interlex.App.Resources
+
+<div id="settings-menu-list" class="margin-top-10" role="group" aria-label="settings-menu-list">
+    <button class="btn btn-gray-large f-blue f-bold text-left settings-tab-border" id="settings-common" data-url="@Url.Action("CommonSettings", "User")" style="font-size: 0.8em"><span class="fa fa-cog"></span> @Resources.UI_CommonSettings</button>
+    <button class="btn btn-transparent-large f-grey f-bold text-left" id="settings-password" data-url="@Url.Action("ChangePassword","User", null)" style="font-size: 0.8em;"><span class="fa fa-lock"></span> @Resources.UI_ChangePassword</button>
+    @* <button class="btn btn-transparent-large f-grey f-bold text-left" id="settings-email" data-url="@Url.Action("ChangeEmail","User", null)" style="font-size: 0.8em;"><span class="fa fa-envelope"></span> @Resources.UI_ChangeEmail</button>*@
+    <button class="btn btn-transparent-large f-grey f-bold text-left" id="settings-languages" data-url="@Url.Action("PreferedLanguages","User", null)" style="font-size: 0.8em;"><span class="fa fa-globe"></span> @Resources.UI_PreferedLanguages</button>
+    <button class="btn btn-transparent-large f-grey f-bold text-left" id="settings-account-deletion" data-url="@Url.Action("AccountDeletion","User", null)" style="font-size: 0.8em;"><span class="fa fa-times"></span> @Resources.UI_AccountDeletion</button>
+</div>

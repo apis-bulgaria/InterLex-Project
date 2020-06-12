@@ -1,0 +1,1539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Hint_CaseLawProcedureType" xml:space="preserve">
+    <value>O tipo do procedimento a que a pesquisa deve ser limitada.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-proceduretype" onclick="hintExampleProcedureType()"&gt;Exemplo: Instauração de processo por danos causados&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Cases_HudocArticleViolation" xml:space="preserve">
+    <value>Violação / Não violação</value>
+  </data>
+  <data name="UI_MyDocuments_Upper" xml:space="preserve">
+    <value>Os meus documentos</value>
+  </data>
+  <data name="Notify_DocumentAddSuccessTitle" xml:space="preserve">
+    <value>O documento foi adicionado com sucesso</value>
+  </data>
+  <data name="UI_OJ" xml:space="preserve">
+    <value>Publicação no JO</value>
+  </data>
+  <data name="UI_inNatCL" xml:space="preserve">
+    <value>na jurisprudência nacional</value>
+  </data>
+  <data name="UI_SelectedFilters" xml:space="preserve">
+    <value>Filtros selecionados</value>
+  </data>
+  <data name="UI_Cases_RulesOfTheCourt" xml:space="preserve">
+    <value>Regulamento do Tribunal</value>
+  </data>
+  <data name="UI_IpNotAllowed" xml:space="preserve">
+    <value>Não pode aceder ao site através deste endereço IP</value>
+  </data>
+  <data name="UI_FinancesOLP" xml:space="preserve">
+    <value>OLP</value>
+  </data>
+  <data name="UI_OpenDate" xml:space="preserve">
+    <value>Data de abertura</value>
+  </data>
+  <data name="UI_Country_NL" xml:space="preserve">
+    <value>Países Baixos</value>
+  </data>
+  <data name="UI_Country_IS" xml:space="preserve">
+    <value>Islândia</value>
+  </data>
+  <data name="UI_JS_MyDocuments" xml:space="preserve">
+    <value>Os meus documentos</value>
+  </data>
+  <data name="UI_Status" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="UI_FinsStatGDPCapitaPPS" xml:space="preserve">
+    <value>PIB per capita nos padrões do poder de compra</value>
+  </data>
+  <data name="Hint_LegislationDateType" xml:space="preserve">
+    <value>O tipo da data a que a pesquisa deve ser limitada.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-datetype" onclick="hintExampleLegislationDateType()"&gt;Exemplo: a data da transição em julgado&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Country_LV" xml:space="preserve">
+    <value>Letónia</value>
+  </data>
+  <data name="UI_To_Lower" xml:space="preserve">
+    <value>até</value>
+  </data>
+  <data name="Notify_DocumentDeletionSuccessMessage" xml:space="preserve">
+    <value>O documento foi removido da sua lista</value>
+  </data>
+  <data name="UI_FreeTour" xml:space="preserve">
+    <value>Percurso gratuito</value>
+  </data>
+  <data name="UI_QuickSearch" xml:space="preserve">
+    <value>Pesquisa rápida</value>
+  </data>
+  <data name="UI_BackToIndex" xml:space="preserve">
+    <value>Voltar para a Entrada</value>
+  </data>
+  <data name="UI_Home" xml:space="preserve">
+    <value>Página Inicial</value>
+  </data>
+  <data name="UI_NoAvailableInfo" xml:space="preserve">
+    <value>Não há informação sobre este documento</value>
+  </data>
+  <data name="UI_SearchOnlyInActualActs" xml:space="preserve">
+    <value>Apenas a legislação em vigor</value>
+  </data>
+  <data name="UI_ConsolidatedVersion" xml:space="preserve">
+    <value>Versões consolidadas</value>
+  </data>
+  <data name="UI_DeleteAllSearchesConfirm" xml:space="preserve">
+    <value>Tem certeza que quer suprimir todos os pesquisas?</value>
+  </data>
+  <data name="UI_RecentDocuments" xml:space="preserve">
+    <value>Últimos documentos abertos</value>
+  </data>
+  <data name="UI_Country" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="UI_Provision" xml:space="preserve">
+    <value>Disposição</value>
+  </data>
+  <data name="UI_JS_NationalCaseLaw" xml:space="preserve">
+    <value>Jurisprudência nacional</value>
+  </data>
+  <data name="UI_Versions" xml:space="preserve">
+    <value>Versões</value>
+  </data>
+  <data name="UI_FinsStatGovernmentGrossDebt" xml:space="preserve">
+    <value>Dívida pública bruta</value>
+  </data>
+  <data name="UI_Languages" xml:space="preserve">
+    <value>Idiomas</value>
+  </data>
+  <data name="UI_ShowFullDirectoryCaseLaw" xml:space="preserve">
+    <value>Mostrar as classificações antes e depois do Tratado de Lisboa</value>
+  </data>
+  <data name="UI_For" xml:space="preserve">
+    <value>Por</value>
+  </data>
+  <data name="UI_ContactUsSiteLink" xml:space="preserve">
+    <value>Link para o site</value>
+  </data>
+  <data name="UI_Select" xml:space="preserve">
+    <value>Selecionar</value>
+  </data>
+  <data name="Notify_DocumentDeletionFailTitle" xml:space="preserve">
+    <value>Impossível remover o documento à sua lista.</value>
+  </data>
+  <data name="UI_Type" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="UI_Country_UK" xml:space="preserve">
+    <value>Reino Unido</value>
+  </data>
+  <data name="UI_OJSeries" xml:space="preserve">
+    <value>Série do JO</value>
+  </data>
+  <data name="UI_ListFirstDocsDesc" xml:space="preserve">
+    <value>Só pode ver os primeiros {limit} documentos dos resultados da pesquisa</value>
+  </data>
+  <data name="UI_Enactment" xml:space="preserve">
+    <value>Ato jurídico</value>
+  </data>
+  <data name="UI_Summary_Upper" xml:space="preserve">
+    <value>Resumo</value>
+  </data>
+  <data name="UI_FinsStatHarmonizedIndicesConsumerPrices" xml:space="preserve">
+    <value>IHPC global</value>
+  </data>
+  <data name="UI_LongText2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UI_Eurovoc" xml:space="preserve">
+    <value>Tesauro EuroVoc</value>
+  </data>
+  <data name="UI_IndexType" xml:space="preserve">
+    <value>Tipo de índice</value>
+  </data>
+  <data name="UI_MySearches_Upper" xml:space="preserve">
+    <value>As minhas pesquisas</value>
+  </data>
+  <data name="UI_BasicAct" xml:space="preserve">
+    <value>Ato básico</value>
+  </data>
+  <data name="UI_Settings" xml:space="preserve">
+    <value>Definições</value>
+  </data>
+  <data name="UI_MaxUserLoginCountReached" xml:space="preserve">
+    <value>Número excedido de sessões de usuário</value>
+  </data>
+  <data name="UI_Sor_Desc" xml:space="preserve">
+    <value>Ordem decrescente</value>
+  </data>
+  <data name="Hint_CaseLawSubjectMatter" xml:space="preserve">
+    <value>Classifica por termos a que se referem os documentos jurídicos.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-subjectmatter" onclick="hintExampleCaseLawSubjectMatter()"&gt;Exemplo: Naõ-discriminação (DISC)&lt;/a&gt; </value>
+  </data>
+  <data name="UI_InitialPage" xml:space="preserve">
+    <value>Pág. inicial</value>
+  </data>
+  <data name="UI_JS_ExpandKeywords" xml:space="preserve">
+    <value>Expandir as palavras-chave</value>
+  </data>
+  <data name="UI_SimpleSearch" xml:space="preserve">
+    <value>Pesquisa simples</value>
+  </data>
+  <data name="Hint_LegislationEurovoc" xml:space="preserve">
+    <value>Um tesauro multilingue e multidisciplinar sobre a atividade da UE.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-eurovoc" onclick="hintExampleLegislationEurovoc()"&gt;Exemplo: Emprego e condições de trabalho&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Italy" xml:space="preserve">
+    <value>Itália</value>
+  </data>
+  <data name="Notify_DocumentAddSuccessMessage" xml:space="preserve">
+    <value>O documento foi adicionado à sua lista</value>
+  </data>
+  <data name="UI_JS_SearchErrorText" xml:space="preserve">
+    <value>Ocorreu um erro ao tentar pesquisar. Por favor, tente outra vez mais tarde.</value>
+  </data>
+  <data name="UI_FinsStatHarmonizedUnemploymentRateBySex" xml:space="preserve">
+    <value>Coeficiente harmonizado de desemprego por sexo</value>
+  </data>
+  <data name="UI_First" xml:space="preserve">
+    <value>Primeiro</value>
+  </data>
+  <data name="UI_UsesCookies" xml:space="preserve">
+    <value>O site usa “cookies” para as suas preferências</value>
+  </data>
+  <data name="UI_EuLegislation" xml:space="preserve">
+    <value>Legislação da UE</value>
+  </data>
+  <data name="UI_JS_ECHRCaseLaw" xml:space="preserve">
+    <value>Tribunal Europeu dos Direitos do Homem</value>
+  </data>
+  <data name="UI_Alpaberical" xml:space="preserve">
+    <value>Alfabético</value>
+  </data>
+  <data name="UI_MoveDocsError" xml:space="preserve">
+    <value>Apareceu um erro na deslocação dos documentos</value>
+  </data>
+  <data name="UI_AvailableFilters" xml:space="preserve">
+    <value>Filtros disponíveis</value>
+  </data>
+  <data name="UI_Currency" xml:space="preserve">
+    <value>Moeda</value>
+  </data>
+  <data name="UI_DeleteAllDocuments" xml:space="preserve">
+    <value>Suprima todos os documentos</value>
+  </data>
+  <data name="UI_Cases_EuroCases" xml:space="preserve">
+    <value>Classificador EuroCases</value>
+  </data>
+  <data name="UI_DocumentReference" xml:space="preserve">
+    <value>Detalhes sobre o documento</value>
+  </data>
+  <data name="UI_JS_IAgree" xml:space="preserve">
+    <value>Concordo</value>
+  </data>
+  <data name="UI_inEUCL" xml:space="preserve">
+    <value>na jurisprudência da UE</value>
+  </data>
+  <data name="UI_Page_Lower" xml:space="preserve">
+    <value>página</value>
+  </data>
+  <data name="UI_Country_SE" xml:space="preserve">
+    <value>Suécia</value>
+  </data>
+  <data name="UI_NotAvaiableFeature" xml:space="preserve">
+    <value>Esta função só está disponível na versão completa do serviço</value>
+  </data>
+  <data name="UI_JS_Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Hint_Help" xml:space="preserve">
+    <value>Consta de instuções para o usuário.</value>
+  </data>
+  <data name="UI_LegalInformation_Upper" xml:space="preserve">
+    <value>Informação jurídica</value>
+  </data>
+  <data name="UI_AllReferencesToDocument" xml:space="preserve">
+    <value>Todas as referências ao documento </value>
+  </data>
+  <data name="UI_Sort" xml:space="preserve">
+    <value>Ordenar</value>
+  </data>
+  <data name="UI_LastMonth" xml:space="preserve">
+    <value>Último mês</value>
+  </data>
+  <data name="UI_Month" xml:space="preserve">
+    <value>Mês</value>
+  </data>
+  <data name="UI_SearchArea" xml:space="preserve">
+    <value>Área da pesquisa</value>
+  </data>
+  <data name="UI_Password_Upper" xml:space="preserve">
+    <value>SENHA</value>
+  </data>
+  <data name="UI_NumbersNational" xml:space="preserve">
+    <value>Processo nº / Ato nº / ECLI</value>
+  </data>
+  <data name="UI_ExportUnmarkAll" xml:space="preserve">
+    <value>Desmarcar os documentos</value>
+  </data>
+  <data name="UI_FinsStatGrossDomesticProduct" xml:space="preserve">
+    <value>Produto interno bruto em preços de mercado</value>
+  </data>
+  <data name="Hint_NavigationHide" xml:space="preserve">
+    <value>Esconder o Painel da Navegação</value>
+  </data>
+  <data name="UI_ECHRCaseLaw" xml:space="preserve">
+    <value>Jurisprudência do TEDH</value>
+  </data>
+  <data name="UI_JS_NotEnoughDocumentsSelectedFull" xml:space="preserve">
+    <value>Por favor, escolha dois documentos para comparação</value>
+  </data>
+  <data name="UI_ChangePassword" xml:space="preserve">
+    <value>Alterar a senha</value>
+  </data>
+  <data name="UI_Case" xml:space="preserve">
+    <value>Processo</value>
+  </data>
+  <data name="UI_ExampleDocument" xml:space="preserve">
+    <value>Documento modelo</value>
+  </data>
+  <data name="UI_Remove" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="UI_Syllabus" xml:space="preserve">
+    <value>Ontologia Syllabus</value>
+  </data>
+  <data name="UI_No_IncomingLinks" xml:space="preserve">
+    <value>Nenhum link proveniente de outros documentos</value>
+  </data>
+  <data name="UI_Country_LT" xml:space="preserve">
+    <value>Lituânia</value>
+  </data>
+  <data name="UI_Logout_Upper" xml:space="preserve">
+    <value>Saída</value>
+  </data>
+  <data name="UI_UnitedKingdom" xml:space="preserve">
+    <value>Reino Unido</value>
+  </data>
+  <data name="UI_FinsStatGDPCGT" xml:space="preserve">
+    <value>PIB real per capita e taxa de crescimento</value>
+  </data>
+  <data name="UI_LocalSearch" xml:space="preserve">
+    <value>Pesquisa local</value>
+  </data>
+  <data name="UI_PreferedLanguages" xml:space="preserve">
+    <value>Idiomas preferidos</value>
+  </data>
+  <data name="UI_Cases_HudocArticles" xml:space="preserve">
+    <value>Convenção e Protocolos</value>
+  </data>
+  <data name="UI_DocumentsCount" xml:space="preserve">
+    <value>Número de documentos</value>
+  </data>
+  <data name="UI_OpenedOn" xml:space="preserve">
+    <value>Aberto em</value>
+  </data>
+  <data name="UI_BackToLogin" xml:space="preserve">
+    <value>Voltar para a Entrada</value>
+  </data>
+  <data name="UI_NationalCaseLaw" xml:space="preserve">
+    <value>Jurisprudência nacional</value>
+  </data>
+  <data name="UI_TypeDocProcedure" xml:space="preserve">
+    <value>Tipo do documento e do procedimento</value>
+  </data>
+  <data name="Notify_DocumentAddExistingMessage" xml:space="preserve">
+    <value>O documento selecionado já existe na sua lista</value>
+  </data>
+  <data name="Hint_LegislationCelexNumber" xml:space="preserve">
+    <value>Celex é o identificador único que se usa na plataforma eletrónica oficial da UE EUR-Lex. ELI é o número único do ato normativo que permite identificar os documentos legislativos nacionais e europeus de um modo harmonizado e estável.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-celex"&gt;Exemplo: 32015R1733&lt;/a&gt;</value>
+  </data>
+  <data name="UI_IncomingLinks" xml:space="preserve">
+    <value>Referências de outros documentos</value>
+  </data>
+  <data name="UI_Delete" xml:space="preserve">
+    <value>Suprimir</value>
+  </data>
+  <data name="UI_JS_MyDocumentsAdd" xml:space="preserve">
+    <value>Adicione aos Meus documentos </value>
+  </data>
+  <data name="UI_Country_CZ" xml:space="preserve">
+    <value>República Checa</value>
+  </data>
+  <data name="Hint_LegislationSearchArea" xml:space="preserve">
+    <value>Limita o campo da pesquisa apenas até à legislação em vigor (não revogada) ou até atos básicos do direito primário (limitado até atos básicos).</value>
+  </data>
+  <data name="UI_JS_AllCaseLaw" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="UI_JS_Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="UI_Cases_ReferedAct" xml:space="preserve">
+    <value>Ato citado</value>
+  </data>
+  <data name="UI_NoSearchesToDelete" xml:space="preserve">
+    <value>A sua lista de pesquisas está vazia</value>
+  </data>
+  <data name="UI_ParTitle_sec" xml:space="preserve">
+    <value>Secção</value>
+  </data>
+  <data name="UI_CommonSettings" xml:space="preserve">
+    <value>Definições gerais</value>
+  </data>
+  <data name="UI_Country_MT" xml:space="preserve">
+    <value>Malta</value>
+  </data>
+  <data name="UI_From_Lower" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="UI_All" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="UI_Country_RO" xml:space="preserve">
+    <value>Roménia</value>
+  </data>
+  <data name="Hint_CaseLawDateTimePeriod" xml:space="preserve">
+    <value>A data ou o período em que o documento foi criado. &lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-datetimeperiod"&gt;Exemplo: 08/10/2007&lt;/a&gt; </value>
+  </data>
+  <data name="UI_JS_ExpandTitle" xml:space="preserve">
+    <value>Expandir o título</value>
+  </data>
+  <data name="UI_LastWeek" xml:space="preserve">
+    <value>Última semana</value>
+  </data>
+  <data name="UI_Classifiers" xml:space="preserve">
+    <value>Classificadores </value>
+  </data>
+  <data name="Hint_RecentDocuments" xml:space="preserve">
+    <value>Lista automaticamente gerada dos últimos documentos abertos.</value>
+  </data>
+  <data name="UI_LawDateType_3" xml:space="preserve">
+    <value>Data da expiração da validade</value>
+  </data>
+  <data name="Hint_ShowHighlight" xml:space="preserve">
+    <value>Mostrar o texto selecionado</value>
+  </data>
+  <data name="UI_JS_CompressTitle" xml:space="preserve">
+    <value>Reduzir o título</value>
+  </data>
+  <data name="UI_ContactUs" xml:space="preserve">
+    <value>Contacte-nos</value>
+  </data>
+  <data name="UI_JS_Rename" xml:space="preserve">
+    <value>Renomear</value>
+  </data>
+  <data name="UI_EurovocTermNotFound" xml:space="preserve">
+    <value>O termo procurado não foi encontrado</value>
+  </data>
+  <data name="UI_EuroCases" xml:space="preserve">
+    <value>Classificador EuroCases</value>
+  </data>
+  <data name="UI_EUCases" xml:space="preserve">
+    <value>Classificador EUCases</value>
+  </data>
+  <data name="UI_OJ_L_Series" xml:space="preserve">
+    <value>L (Legislação)</value>
+  </data>
+  <data name="UI_JS_ExpandSummary" xml:space="preserve">
+    <value>Expandir o resumo</value>
+  </data>
+  <data name="UI_Country_CY" xml:space="preserve">
+    <value>Chipre</value>
+  </data>
+  <data name="UI_ParTitle_tit" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="UI_JS_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="UI_EditSearch" xml:space="preserve">
+    <value>Alterar a pesquisa</value>
+  </data>
+  <data name="UI_inEUL" xml:space="preserve">
+    <value>na legislação da UE</value>
+  </data>
+  <data name="UI_LawDateType_2" xml:space="preserve">
+    <value>Data da entrada em vigor</value>
+  </data>
+  <data name="UI_Cases_States" xml:space="preserve">
+    <value>Estado demandado</value>
+  </data>
+  <data name="UI_JS_NewFolder" xml:space="preserve">
+    <value>Nova pasta</value>
+  </data>
+  <data name="UI_DocumentFound" xml:space="preserve">
+    <value>Documentos encontrados</value>
+  </data>
+  <data name="UI_Of_Lower" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="UI_AdvancedSearch" xml:space="preserve">
+    <value>Pesquisa avançada</value>
+  </data>
+  <data name="UI_JS_MyDocumentsRemove" xml:space="preserve">
+    <value>Remover de Meus Documentos</value>
+  </data>
+  <data name="UI_Go" xml:space="preserve">
+    <value>Para frente</value>
+  </data>
+  <data name="UI_LawDateType_0" xml:space="preserve">
+    <value>Data do documento</value>
+  </data>
+  <data name="UI_JS_NotEnoughDocumentsSelected" xml:space="preserve">
+    <value>Não foram selecionados documentos suficientes </value>
+  </data>
+  <data name="UI_Cases_Applicant" xml:space="preserve">
+    <value>Recorrente</value>
+  </data>
+  <data name="UI_ResetPassEmailSent" xml:space="preserve">
+    <value> A hiperligação para a mudança da senha foi enviada ao email indicado. Por favor, consulte o seu email</value>
+  </data>
+  <data name="UI_Clear" xml:space="preserve">
+    <value>Limpar</value>
+  </data>
+  <data name="UI_SearchFor" xml:space="preserve">
+    <value>Pesquisa de</value>
+  </data>
+  <data name="UI_Administrator" xml:space="preserve">
+    <value>Administrador</value>
+  </data>
+  <data name="UI_FinancesSofiLibor" xml:space="preserve">
+    <value>SoFi LIBOR</value>
+  </data>
+  <data name="UI_CurrentEmail" xml:space="preserve">
+    <value>Email atual</value>
+  </data>
+  <data name="UI_Country_HU" xml:space="preserve">
+    <value>Hungria</value>
+  </data>
+  <data name="UI_PeriodPlaceholder" xml:space="preserve">
+    <value>dd/mm/aaaa</value>
+  </data>
+  <data name="Hint_PrevMatch" xml:space="preserve">
+    <value>Resultado da pesquisa precedente</value>
+  </data>
+  <data name="UI_FinancesStockIndices" xml:space="preserve">
+    <value>Índices da bolsa</value>
+  </data>
+  <data name="UI_Title_Lower" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="UI_No" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="UI_Relevance" xml:space="preserve">
+    <value>Relevância</value>
+  </data>
+  <data name="UI_SelectFolder" xml:space="preserve">
+    <value>Selecionar pasta</value>
+  </data>
+  <data name="UI_Change" xml:space="preserve">
+    <value>Alterações</value>
+  </data>
+  <data name="UI_Filter_Summaries" xml:space="preserve">
+    <value>Resumo</value>
+  </data>
+  <data name="UI_PasswordRecoveryTitle" xml:space="preserve">
+    <value>Recuperar a senha</value>
+  </data>
+  <data name="UI_LawDateType_6" xml:space="preserve">
+    <value>Data de assinatura</value>
+  </data>
+  <data name="UI_France" xml:space="preserve">
+    <value>França</value>
+  </data>
+  <data name="UI_Settings_Upper" xml:space="preserve">
+    <value>Definições</value>
+  </data>
+  <data name="UI_Year" xml:space="preserve">
+    <value>Ano</value>
+  </data>
+  <data name="UI_LawDateType_4" xml:space="preserve">
+    <value>Data da notificação</value>
+  </data>
+  <data name="UI_DocumentsFound" xml:space="preserve">
+    <value>Documentos encontrados</value>
+  </data>
+  <data name="UI_Legislation" xml:space="preserve">
+    <value>Legislação</value>
+  </data>
+  <data name="UI_LawDateType_5" xml:space="preserve">
+    <value>Data da transposição</value>
+  </data>
+  <data name="UI_Jurisdiction" xml:space="preserve">
+    <value>Jurisdição</value>
+  </data>
+  <data name="Hint_DelSearch" xml:space="preserve">
+    <value>Suprimir a pesquisa</value>
+  </data>
+  <data name="UI_Text" xml:space="preserve">
+    <value>Texto</value>
+  </data>
+  <data name="UI_NewDocuments" xml:space="preserve">
+    <value>Novos documentos</value>
+  </data>
+  <data name="UI_Print" xml:space="preserve">
+    <value>Imprimir</value>
+  </data>
+  <data name="UI_SearchOnlyInTitles" xml:space="preserve">
+    <value>Pesquisar só nos títulos</value>
+  </data>
+  <data name="UI_DirectoryLegislation" xml:space="preserve">
+    <value>Registo da legislação da UE</value>
+  </data>
+  <data name="UI_Country_FR" xml:space="preserve">
+    <value>França</value>
+  </data>
+  <data name="UI_UserNotActive" xml:space="preserve">
+    <value>O usuário foi desativado</value>
+  </data>
+  <data name="UI_ValidTo" xml:space="preserve">
+    <value>Válido até</value>
+  </data>
+  <data name="UI_JS_CompressSummary" xml:space="preserve">
+    <value>Reduzir o resumo</value>
+  </data>
+  <data name="UI_JS_AddDocToFolder" xml:space="preserve">
+    <value>Juntar documento à pasta</value>
+  </data>
+  <data name="Hint_CaseLawEuroCasesClassifier" xml:space="preserve">
+    <value>Classificador hierárquico de termos da jurisprudência. &lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-eurocasesclassifier" onclick="hintExampleCaseLawEuroCasesClassifier()"&gt;Exemplo: Segurança e saúde no trabalho&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Country_SK" xml:space="preserve">
+    <value>Eslováquia</value>
+  </data>
+  <data name="Notify_DocumentDeletionSuccessTitle" xml:space="preserve">
+    <value>O documento foi removido com sucesso</value>
+  </data>
+  <data name="UI_Country_DE" xml:space="preserve">
+    <value>Alemanha</value>
+  </data>
+  <data name="UI_Country_FI" xml:space="preserve">
+    <value>Finlândia</value>
+  </data>
+  <data name="UI_Yesterday" xml:space="preserve">
+    <value>Ontem</value>
+  </data>
+  <data name="UI_Value1EUR" xml:space="preserve">
+    <value>Valor de 1 EUR</value>
+  </data>
+  <data name="UI_ChooseEnactment" xml:space="preserve">
+    <value>Escolher o ato jurídico</value>
+  </data>
+  <data name="UI_AllOJSeries" xml:space="preserve">
+    <value>Todas as séries do JO</value>
+  </data>
+  <data name="UI_Country_EU" xml:space="preserve">
+    <value>União Europeia</value>
+  </data>
+  <data name="UI_PasswordResetCodeUsed" xml:space="preserve">
+    <value>O código para a mudança da senha já foi usado</value>
+  </data>
+  <data name="UI_Trial" xml:space="preserve">
+    <value>Acesso gratuito</value>
+  </data>
+  <data name="Hint_CaseLawProvision" xml:space="preserve">
+    <value>Pesquisa de uma disposição específica. &lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-provision" onclick="hintExampleCaseLawProvision('bg')"&gt;Exemplo: Artigo 2º&lt;/a&gt;</value>
+  </data>
+  <data name="UI_JS_Match" xml:space="preserve">
+    <value>Coincidência</value>
+  </data>
+  <data name="UI_InvalidLogin" xml:space="preserve">
+    <value>Usuário/senha inválido</value>
+  </data>
+  <data name="UI_CaseNumber" xml:space="preserve">
+    <value>Processo Nº.</value>
+  </data>
+  <data name="UI_Bulgaria" xml:space="preserve">
+    <value>Bulgária  </value>
+  </data>
+  <data name="UI_SubscriptionExpired" xml:space="preserve">
+    <value>Assinatura expirada</value>
+  </data>
+  <data name="UI_Period" xml:space="preserve">
+    <value>Período</value>
+  </data>
+  <data name="UI_Country_DK" xml:space="preserve">
+    <value>Dinamarca</value>
+  </data>
+  <data name="UI_CommonSearches" xml:space="preserve">
+    <value>Pesquisas frequentes</value>
+  </data>
+  <data name="UI_Law_DocumentTypes" xml:space="preserve">
+    <value>Tipos de documentos</value>
+  </data>
+  <data name="UI_JS_AtLeastOneDocumentToExport" xml:space="preserve">
+    <value>Por favor, selecione pelo menos um documento para exportar</value>
+  </data>
+  <data name="UI_RecoverPasswordEmailNotFound" xml:space="preserve">
+    <value>O email não foi encontrado</value>
+  </data>
+  <data name="UI_JS_PalNoActChoosen" xml:space="preserve">
+    <value>Primeiro selecione um ato jurídico</value>
+  </data>
+  <data name="Notify_FolderNameEmpty" xml:space="preserve">
+    <value>O nome da pasta não deve ficar vazio.</value>
+  </data>
+  <data name="UI_JS_EUCaseLaw" xml:space="preserve">
+    <value>Jurisprudência da EU</value>
+  </data>
+  <data name="UI_PageNumber" xml:space="preserve">
+    <value>Número da página</value>
+  </data>
+  <data name="UI_Dates" xml:space="preserve">
+    <value>Pesquisar pela data</value>
+  </data>
+  <data name="UI_Today" xml:space="preserve">
+    <value>Hoje</value>
+  </data>
+  <data name="UI_DateType" xml:space="preserve">
+    <value>Tipo da data</value>
+  </data>
+  <data name="UI_Country_GR" xml:space="preserve">
+    <value>Grécia</value>
+  </data>
+  <data name="UI_ReferedEUActProvision" xml:space="preserve">
+    <value>Ato / disposição mencionado/a</value>
+  </data>
+  <data name="UI_Law_DirectoryLegislation" xml:space="preserve">
+    <value>Registo da legislação da UE</value>
+  </data>
+  <data name="UI_Subjectmatter" xml:space="preserve">
+    <value>Índice de matérias</value>
+  </data>
+  <data name="UI_SearchByTerm" xml:space="preserve">
+    <value>Documentos indexados pelo termo</value>
+  </data>
+  <data name="UI_MoveAllDocs" xml:space="preserve">
+    <value>Remover todos os documentos</value>
+  </data>
+  <data name="UI_Country_IE" xml:space="preserve">
+    <value>Irlanda</value>
+  </data>
+  <data name="UI_GeneralLawyer" xml:space="preserve">
+    <value>Advogado geral</value>
+  </data>
+  <data name="Notify_NoSuchPageTitle" xml:space="preserve">
+    <value>Esta página não existe.</value>
+  </data>
+  <data name="UI_LegalDoctrineArticles" xml:space="preserve">
+    <value>Doutrina jurídica artigos</value>
+  </data>
+  <data name="Notify_EmailChangeError" xml:space="preserve">
+    <value>A alteração falhou</value>
+  </data>
+  <data name="UI_Recover" xml:space="preserve">
+    <value>Restituir</value>
+  </data>
+  <data name="UI_DirectoryCaseLaw" xml:space="preserve">
+    <value>Registo da jurisprudência da UE</value>
+  </data>
+  <data name="Notify_PasswordChangeSuccess" xml:space="preserve">
+    <value>A sua senha foi alterada com sucesso</value>
+  </data>
+  <data name="UI_JS_SiteUsesCookies" xml:space="preserve">
+    <value>O site usa “cookies” para as suas preferências</value>
+  </data>
+  <data name="UI_UnavaiableProduct" xml:space="preserve">
+    <value>Produto não disponível</value>
+  </data>
+  <data name="UI_Load" xml:space="preserve">
+    <value>Carregue</value>
+  </data>
+  <data name="Hint_MySearches" xml:space="preserve">
+    <value>Lista das suas pesquisas recentes</value>
+  </data>
+  <data name="UI_LocalUser" xml:space="preserve">
+    <value>Usuário local</value>
+  </data>
+  <data name="UI_Value1GBP" xml:space="preserve">
+    <value>Valor de 1 GBP</value>
+  </data>
+  <data name="UI_Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+  <data name="UI_PasswordChanged" xml:space="preserve">
+    <value>A sua senha foi alterada com sucesso</value>
+  </data>
+  <data name="UI_YourSearches" xml:space="preserve">
+    <value>As suas pesquisas</value>
+  </data>
+  <data name="UI_Client" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="UI_JS_NewName" xml:space="preserve">
+    <value>Novo nome</value>
+  </data>
+  <data name="UI_OrGoToPage" xml:space="preserve">
+    <value>página</value>
+  </data>
+  <data name="UI_Country_PT" xml:space="preserve">
+    <value>Portugal</value>
+  </data>
+  <data name="UI_ExportTo" xml:space="preserve">
+    <value>Exportar para</value>
+  </data>
+  <data name="UI_SearchText" xml:space="preserve">
+    <value>Pesquisar o texto</value>
+  </data>
+  <data name="UI_PasswordResetCodeExpired" xml:space="preserve">
+    <value>O código para a mudança da senha expirou. Por favor, peça novamente para mudar a senha</value>
+  </data>
+  <data name="UI_EUCaseLaw" xml:space="preserve">
+    <value>Jurisprudência da UE</value>
+  </data>
+  <data name="UI_NumbersEU" xml:space="preserve">
+    <value>Nº Celex / ECLI</value>
+  </data>
+  <data name="UI_Country_LI" xml:space="preserve">
+    <value>Liechtenstein</value>
+  </data>
+  <data name="UI_EnableCookies" xml:space="preserve">
+    <value>Por favor, ligue os cookies do seu navegador para usar o site sem problemas</value>
+  </data>
+  <data name="UI_500_Title" xml:space="preserve">
+    <value>Ocorreu um erro, lamentamos a inconveniência</value>
+  </data>
+  <data name="UI_JS_OneSearchDetail" xml:space="preserve">
+    <value>Por favor, introduza pelo menos um critério de pesquisa</value>
+  </data>
+  <data name="Hint_LegislationDateTimePeriod" xml:space="preserve">
+    <value>A data ou o período em que o documento foi criado.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-datetimeperiod"&gt;Exemplo: 08/10/2007&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Austria" xml:space="preserve">
+    <value>Áustria</value>
+  </data>
+  <data name="UI_Results_Lower" xml:space="preserve">
+    <value>Resultados</value>
+  </data>
+  <data name="UI_Law_Eurovoc" xml:space="preserve">
+    <value>Tesauro Eurovoc</value>
+  </data>
+  <data name="Hint_RemoveFavourite" xml:space="preserve">
+    <value>Remover de Meus Documentos</value>
+  </data>
+  <data name="UI_Contacts_Upper" xml:space="preserve">
+    <value>Contatos</value>
+  </data>
+  <data name="UI_Full" xml:space="preserve">
+    <value>Pesquisa rápida</value>
+  </data>
+  <data name="UI_LastConsVersion" xml:space="preserve">
+    <value>Última versão consolidada</value>
+  </data>
+  <data name="UI_Previous" xml:space="preserve">
+    <value>Precedente</value>
+  </data>
+  <data name="UI_LicensesCount" xml:space="preserve">
+    <value>Número de licenças</value>
+  </data>
+  <data name="UI_Cases" xml:space="preserve">
+    <value>Jurisprudência</value>
+  </data>
+  <data name="UI_Value" xml:space="preserve">
+    <value>Valor</value>
+  </data>
+  <data name="UI_Ok" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
+  <data name="UI_RepeatEmail" xml:space="preserve">
+    <value>Repetir o email</value>
+  </data>
+  <data name="UI_Cases_DirectoryCaseLaw" xml:space="preserve">
+    <value>Registo da jurisprudência da UE</value>
+  </data>
+  <data name="UI_RemoveAllFilters" xml:space="preserve">
+    <value>Remover todos os filtros</value>
+  </data>
+  <data name="Notify_FolderNotFoundError" xml:space="preserve">
+    <value>A pasta não foi encontrada.</value>
+  </data>
+  <data name="UI_FullFeaturesMessage" xml:space="preserve">
+    <value>Poderá receber, na presente Versão Demo, o acesso gratuito ao teor da jurisprudência nacional publicada em &lt;a href="http://eurocaselaw.eu" target="_blank" class="f-orange"&gt; European Case-law Blog. &lt;/a&gt; &lt;br/&gt;&lt;br/&gt; Até 30.06.2016 terá um acesso livre adicional a todos os Acórdãos do Tribunal de Justiça da UE. &lt;br/&gt;&lt;br/&gt; Para receber acesso ao teor de outros diplomas, ou para usar todas as funções do serviço EuroCases, clique, por favor, no botão em baixo e registe-se para receber um período experiamental gratuito. Durante o período experiamental de 5 dias, terá acesso ao teor completo e a todas as funções dos serviço. </value>
+  </data>
+  <data name="UI_Germany" xml:space="preserve">
+    <value>Alemanha</value>
+  </data>
+  <data name="UI_SessionExpired" xml:space="preserve">
+    <value>A sessão expirou</value>
+  </data>
+  <data name="UI_DocumentType" xml:space="preserve">
+    <value>Tipo do documento</value>
+  </data>
+  <data name="UI_PasswordsNotMatch" xml:space="preserve">
+    <value>As senhas introduzidas não coincidem</value>
+  </data>
+  <data name="UI_Law_Jurisdicion" xml:space="preserve">
+    <value>Jurisdição</value>
+  </data>
+  <data name="UI_Reglaments" xml:space="preserve">
+    <value>Regulamentos</value>
+  </data>
+  <data name="UI_Username_Upper" xml:space="preserve">
+    <value>NOME DE USUÁRIO</value>
+  </data>
+  <data name="Hint_CaseLawCelexNumber" xml:space="preserve">
+    <value>Celex é o identificador único que se usa na plataforma eletrónica oficial da UE EUR-Lex. O Identificador Nacional ECLI é um  identificador único com o mesmo fomato reconhecível para a jurisprudência de todos os Estados-membros e tribunais da UE.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-celex" onclick="hintExampleCaseLawCelex()"&gt;Exemplo: 62014CJ0032&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Filters" xml:space="preserve">
+    <value>Filtros</value>
+  </data>
+  <data name="UI_ViewImage" xml:space="preserve">
+    <value>Ver imagem</value>
+  </data>
+  <data name="Hint_CaseLawAdvocateGeneral" xml:space="preserve">
+    <value>Selecionar nome de &lt;span class="f-orange"&gt;Advogado-Geral&lt;/span&gt; específico.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-advocategeneral onclick="hintExampleCaseLawAdvocateGeneral()"&gt;Exemplo: Fennelly&lt;/a&gt; </value>
+  </data>
+  <data name="UI_NoSearchText" xml:space="preserve">
+    <value>Falta texto para a pesquisa</value>
+  </data>
+  <data name="UI_DeleteAllSearches" xml:space="preserve">
+    <value>Suprima todas as pesquisas</value>
+  </data>
+  <data name="UI_JS_MaxExportCountMessage" xml:space="preserve">
+    <value>Número máximo de documentos para exportar</value>
+  </data>
+  <data name="UI_EuroCasesMainSite" xml:space="preserve">
+    <value>EuroCases - site oficial</value>
+  </data>
+  <data name="UI_EmailNotValidated" xml:space="preserve">
+    <value>O registo não foi ativado</value>
+  </data>
+  <data name="UI_TranslateSearchText" xml:space="preserve">
+    <value>Pesquisa multilíngue</value>
+  </data>
+  <data name="UI_Law_SubjectMatter" xml:space="preserve">
+    <value>Índice de matérias</value>
+  </data>
+  <data name="UI_DemoUser" xml:space="preserve">
+    <value>Usuário Demo</value>
+  </data>
+  <data name="UI_EuroStat" xml:space="preserve">
+    <value>Eurostat</value>
+  </data>
+  <data name="UI_NatIdOrEli" xml:space="preserve">
+    <value>Número Celex / ELI</value>
+  </data>
+  <data name="UI_OJ_C_Series" xml:space="preserve">
+    <value>C (Informação e notificações)</value>
+  </data>
+  <data name="UI_Cases_HudocApplicability" xml:space="preserve">
+    <value>Aplicabilidade</value>
+  </data>
+  <data name="UI_FinancesExchangeRates" xml:space="preserve">
+    <value>Taxas de câmbio de moedas </value>
+  </data>
+  <data name="UI_Navigation" xml:space="preserve">
+    <value>Navegação</value>
+  </data>
+  <data name="UI_JS_CreateFolderIn" xml:space="preserve">
+    <value>Criar pasta em</value>
+  </data>
+  <data name="UI_Help" xml:space="preserve">
+    <value>Ajuda</value>
+  </data>
+  <data name="UI_Caselaw" xml:space="preserve">
+    <value>Jurisprudência</value>
+  </data>
+  <data name="UI_OpenDocumentsInNewTab" xml:space="preserve">
+    <value>Abrir documentos em novo separador</value>
+  </data>
+  <data name="UI_DemoVersion" xml:space="preserve">
+    <value>Versão Demo</value>
+  </data>
+  <data name="UI_Pages_Lower" xml:space="preserve">
+    <value>páginas</value>
+  </data>
+  <data name="UI_Date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="UI_Keywords_Upper" xml:space="preserve">
+    <value>Palavras-chave</value>
+  </data>
+  <data name="UI_JS_MaxExportCountTitle" xml:space="preserve">
+    <value>Já alcançou o número máximo de documentos para exportar </value>
+  </data>
+  <data name="Hint_CaseLawDirectoryLaw" xml:space="preserve">
+    <value>Classificador hierárquico da jurisprudência do Tribunal de Justiça da UE.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-directorylaw" onclick="hintExampleCaseLawDirectoryLaw('bg')"&gt;Exemplo: Contencioso&lt;/a&gt; </value>
+  </data>
+  <data name="UI_NewEmail" xml:space="preserve">
+    <value>Novo email</value>
+  </data>
+  <data name="UI_JS_Delete" xml:space="preserve">
+    <value>Suprimir</value>
+  </data>
+  <data name="UI_Country_NO" xml:space="preserve">
+    <value>Noruega</value>
+  </data>
+  <data name="UI_Cases_Eurovoc" xml:space="preserve">
+    <value>Tesauro Eurovoc</value>
+  </data>
+  <data name="UI_Court" xml:space="preserve">
+    <value>Tribunal</value>
+  </data>
+  <data name="UI_Parties" xml:space="preserve">
+    <value>Países</value>
+  </data>
+  <data name="UI_Close_Lower" xml:space="preserve">
+    <value>Fechar</value>
+  </data>
+  <data name="Hint_HideHighlight" xml:space="preserve">
+    <value>Limpar o texto selecionado</value>
+  </data>
+  <data name="Hint_LegislationDocumentType" xml:space="preserve">
+    <value>O tipo do documento a que a pesquisa deve ser limitada.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-documenttype" onclick="hintExampleLegislationDocumentType()"&gt;Exemplo: Tratados&lt;/a&gt; </value>
+  </data>
+  <data name="Hint_CaseLaw" xml:space="preserve">
+    <value>Documentos do Tribunal da UE e dos tribunais dos Estados-membros ou das jurisdições específicas, com exceção de todos os diplomas de natureza normativa.</value>
+  </data>
+  <data name="UI_Product" xml:space="preserve">
+    <value>Serviço</value>
+  </data>
+  <data name="UI_Country_AT" xml:space="preserve">
+    <value>Áustria</value>
+  </data>
+  <data name="UI_CurrentPassword" xml:space="preserve">
+    <value>Senha atual</value>
+  </data>
+  <data name="UI_License" xml:space="preserve">
+    <value>Licença</value>
+  </data>
+  <data name="Hint_LegislationDirectoryLegislation" xml:space="preserve">
+    <value>Classificador hierárquico da legislação da UE.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-directorylegislation" onclick="hintExampleLegislationDirectory()"&gt;Exemplo: Política da concorrência&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Country_SI" xml:space="preserve">
+    <value>Eslovénia</value>
+  </data>
+  <data name="Hint_LegislationOJSeries" xml:space="preserve">
+    <value>Série especial do Jornal Oficial.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-ojseries" onclick="hintExampleLegislationOJSeries()"&gt;Exemplo: L (Legislação)&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Value1USD" xml:space="preserve">
+    <value>Valor de 1 USD</value>
+  </data>
+  <data name="UI_FinancesEuroLibor" xml:space="preserve">
+    <value>Euro LIBOR</value>
+  </data>
+  <data name="UI_404_Title" xml:space="preserve">
+    <value>A página não foi encontrada</value>
+  </data>
+  <data name="Notify_DocumentAddMaxCountTitle" xml:space="preserve">
+    <value>Já alcançou o número máximo de documentos</value>
+  </data>
+  <data name="UI_EU_Act_Legal_Notice" xml:space="preserve">
+    <value>Informação jurídica importante Segundo o Regulamento (UE) nº 216/2013, apenas a legislação das Comunidades Europeias, publicada na edição em papel até 1º de julho de 2013 e na versão eletrónica do Jornal Oficial da União Europeia após 1º de julho de 2013 (inclusive), será considerada autêntica e terá vigor legal.</value>
+  </data>
+  <data name="UI_NewPasswrd" xml:space="preserve">
+    <value>Nova senha</value>
+  </data>
+  <data name="UI_SearchInDocument" xml:space="preserve">
+    <value>Pesquisar no documento</value>
+  </data>
+  <data name="UI_Cases_DocumentTypes" xml:space="preserve">
+    <value>Tipo do documento</value>
+  </data>
+  <data name="Notify_DocumentAddFailTitle" xml:space="preserve">
+    <value>Impossível adicionar o documento à sua lista.</value>
+  </data>
+  <data name="UI_ShowHints" xml:space="preserve">
+    <value>Mostrar sugestões</value>
+  </data>
+  <data name="UI_BuyNow" xml:space="preserve">
+    <value>Comprar agora</value>
+  </data>
+  <data name="UI_Next" xml:space="preserve">
+    <value>Seguinte</value>
+  </data>
+  <data name="UI_NoProducts" xml:space="preserve">
+    <value>Não há produtos disponíveis</value>
+  </data>
+  <data name="UI_JudgeRapporteur" xml:space="preserve">
+    <value>Juiz relator</value>
+  </data>
+  <data name="Notify_PasswordChangeError" xml:space="preserve">
+    <value>A alteração falhou</value>
+  </data>
+  <data name="UI_CaseLawType" xml:space="preserve">
+    <value>Tipo de Jurisdição</value>
+  </data>
+  <data name="UI_Help_Upper" xml:space="preserve">
+    <value>Ajuda</value>
+  </data>
+  <data name="UI_Trial_Long_line2" xml:space="preserve">
+    <value>Versão funcional completa</value>
+  </data>
+  <data name="UI_JS_Yes" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="UI_Source" xml:space="preserve">
+    <value>Fonte</value>
+  </data>
+  <data name="UI_SettingsUpdatedError" xml:space="preserve">
+    <value>Ocorreu um erro na atualização das definições</value>
+  </data>
+  <data name="UI_JS_RenameFolder" xml:space="preserve">
+    <value>Renomear pasta</value>
+  </data>
+  <data name="Notify_DocumentDeletionFailMessage" xml:space="preserve">
+    <value>Ocorreu um erro na remoção do documento. Por favor, tente mais tarde.</value>
+  </data>
+  <data name="UI_JS_CompressKeywords" xml:space="preserve">
+    <value>Reduzir as palavras-chave</value>
+  </data>
+  <data name="Notify_FolderCreationError" xml:space="preserve">
+    <value>Erro na criação da pasta</value>
+  </data>
+  <data name="UI_RecentDocuments_Upper" xml:space="preserve">
+    <value>Últimos documentos abertos</value>
+  </data>
+  <data name="UI_JS_SearchError" xml:space="preserve">
+    <value>Erro na pesquisa</value>
+  </data>
+  <data name="Notify_LangPreferencesSuccess" xml:space="preserve">
+    <value>As suas preferências são atualizadas </value>
+  </data>
+  <data name="Notify_NoSuchPageMessage" xml:space="preserve">
+    <value>A página que procurou não existe. Foi encaminhado para o último resultado.</value>
+  </data>
+  <data name="UI_Cases_Hudoc" xml:space="preserve">
+    <value>Classificador por palavras-chave</value>
+  </data>
+  <data name="UI_NumbersECHR" xml:space="preserve">
+    <value>ECLI</value>
+  </data>
+  <data name="Hint_CaseLawDocumentType" xml:space="preserve">
+    <value>O tipo de documento a que a pesquisa deve ser limitada.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-documenttype" onclick="hintExampleDocumentType()"&gt;Exemplo: Parecer&lt;/a&gt;</value>
+  </data>
+  <data name="Notify_EmailChangeSuccess" xml:space="preserve">
+    <value>O e-mail foi alterado com sucesso</value>
+  </data>
+  <data name="UI_RecoveryEmailText" xml:space="preserve">
+    <value>&lt;h2&gt;Olá, &lt;strong&gt;{0}&lt;/strong&gt;&lt;/h2&gt;&lt;/br&gt;&lt;h3&gt;Por favor, siga a seguinte hiperligação para mudar a sua senha: &lt;a href="{1}"&gt;{2}&lt;/a&gt;&lt;/h3&gt;&lt;/br&gt;&lt;h3&gt;Código para a recuperação: &lt;span style="color: blue; font-weight: bold;"&gt;{3}&lt;/span&gt;&lt;/h3&gt;&lt;/br&gt;&lt;img src="{4}"&gt;</value>
+  </data>
+  <data name="UI_ShowLess_Lower" xml:space="preserve">
+    <value>Mostrar menos</value>
+  </data>
+  <data name="UI_Save" xml:space="preserve">
+    <value>Memorizar</value>
+  </data>
+  <data name="UI_SearchOnlyInBasicActs" xml:space="preserve">
+    <value>Apenas os atos básicos</value>
+  </data>
+  <data name="UI_Compare" xml:space="preserve">
+    <value>Comparar</value>
+  </data>
+  <data name="UI_Login_Upper" xml:space="preserve">
+    <value>ENTRADA</value>
+  </data>
+  <data name="Notify_FolderDeleteError" xml:space="preserve">
+    <value>Erro na supressão da pasta</value>
+  </data>
+  <data name="UI_JS_NoDocumentsFound" xml:space="preserve">
+    <value>Não foram encontrados documentos</value>
+  </data>
+  <data name="UI_ProcedureType" xml:space="preserve">
+    <value>Tipo do procedimento</value>
+  </data>
+  <data name="UI_Country_LU" xml:space="preserve">
+    <value>Luxemburgo</value>
+  </data>
+  <data name="Hint_DoSearch" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="UI_500_Message" xml:space="preserve">
+    <value>Se esta página continuar a ser visualizada, por favor, contate o seu fornecedor ou administrador.</value>
+  </data>
+  <data name="UI_ResetCode" xml:space="preserve">
+    <value>Código para a mudança da senha</value>
+  </data>
+  <data name="UI_Country_PL" xml:space="preserve">
+    <value>Polónia</value>
+  </data>
+  <data name="UI_DocumentDate" xml:space="preserve">
+    <value>Data do documento</value>
+  </data>
+  <data name="UI_Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="UI_PasswordResetCodeInvalid" xml:space="preserve">
+    <value>Código inválido para a mudança da senha</value>
+  </data>
+  <data name="UI_FinancesLiborAll" xml:space="preserve">
+    <value>LIBOR, Euro LIBOR OLP</value>
+  </data>
+  <data name="UI_LostPasswrd_Upper" xml:space="preserve">
+    <value>Senha esquecida</value>
+  </data>
+  <data name="UI_UnavaiableProductEuroFinsMessage" xml:space="preserve">
+    <value>Esta página faz parte do produto EuroFins. Pode comprar o produto do seguinte endereço: {0}</value>
+  </data>
+  <data name="UI_SettingsUpdated" xml:space="preserve">
+    <value>As definições foram atualizadas</value>
+  </data>
+  <data name="UI_JS_Loading" xml:space="preserve">
+    <value>Carregar</value>
+  </data>
+  <data name="Hint_CaseLawEurovoc" xml:space="preserve">
+    <value>Tesauro multilingue e multidisciplinar sobre a atividade da UE.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-eurovoc" onclick="hintExampleCaseLawEurovoc('bg')"&gt;Exemplo: FINANÇAS &lt;/a&gt; </value>
+  </data>
+  <data name="UI_User" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="UI_ParTitle_part" xml:space="preserve">
+    <value>Parte</value>
+  </data>
+  <data name="UI_RecoverPasswordUserNotForEmail" xml:space="preserve">
+    <value>O usuário designado não é o proprietário do email</value>
+  </data>
+  <data name="Hint_LastMatch" xml:space="preserve">
+    <value>Último resultado da pesquisa</value>
+  </data>
+  <data name="UI_MyDocuments" xml:space="preserve">
+    <value>Os meus documentos</value>
+  </data>
+  <data name="UI_ShowMore_Lower" xml:space="preserve">
+    <value>Mostrar mais</value>
+  </data>
+  <data name="UI_ChooseProvision" xml:space="preserve">
+    <value>Escolher a disposição</value>
+  </data>
+  <data name="UI_JS_Pal_NoSearchCriteria" xml:space="preserve">
+    <value>Falta critério de pesquisa</value>
+  </data>
+  <data name="UI_Sort_Asc" xml:space="preserve">
+    <value>Ordem crescente</value>
+  </data>
+  <data name="UI_Day" xml:space="preserve">
+    <value>Dia</value>
+  </data>
+  <data name="UI_Country_PO" xml:space="preserve">
+    <value>Polónia</value>
+  </data>
+  <data name="UI_Country_CA" xml:space="preserve">
+    <value>Canadá</value>
+  </data>
+  <data name="UI_Cases_Syllabus" xml:space="preserve">
+    <value>Ontologia Syllabus</value>
+  </data>
+  <data name="UI_Contents" xml:space="preserve">
+    <value>Sumário</value>
+  </data>
+  <data name="Hint_LogicalExpressions" xml:space="preserve">
+    <value>Use o operador &lt;span class="f-orange"&gt;AND&lt;/span&gt; para encontrar documentos que contêm todos os conceitos pesquisados; use o operador &lt;span class="f-orange"&gt;OR&lt;/span&gt; para encontrar documentos que contêm pelo menos um dos conceitos pesquisados; use o operador &lt;span class="f-orange"&gt;NOT&lt;/span&gt; para encontrar documentos que contêm os conceitos pesquisados mas sem os especificamente indicados; use o operador &lt;span class="f-orange"&gt;NEAR&lt;/span&gt; para encontrar documentos que contêm duas palavras de curta distância (medida em número de palavras entre elas).&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-logical-expressions" onclick="hintExampleLogicalExpressions('bg')"&gt;Exemplo: crédito [AND] fiscal [NOT] empresas&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Cases_ApplicationNumber" xml:space="preserve">
+    <value>Número do recurso</value>
+  </data>
+  <data name="UI_JS_Add" xml:space="preserve">
+    <value>Acrescentar</value>
+  </data>
+  <data name="UI_Cases_SubjectMatter" xml:space="preserve">
+    <value>Índice de matérias</value>
+  </data>
+  <data name="UI_DeleteAllDocumentsConfirm" xml:space="preserve">
+    <value>Tem certeza que quer suprimir todos os documentos?</value>
+  </data>
+  <data name="Hint_CaseLawJudgeRapporteur" xml:space="preserve">
+    <value>Selecionar o nome de &lt;span class="f-orange"&gt;Juiz Relator&lt;/span&gt; específico.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-judgerapporteur" onclick="hintExampleCaseLawJudgeRapporteur()"&gt;Exemplo: Berger&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="UI_AddedOn" xml:space="preserve">
+    <value>Adicionado em</value>
+  </data>
+  <data name="UI_JS_NoMatchesFound" xml:space="preserve">
+    <value>Não foram encontrados resultados da pesquisa</value>
+  </data>
+  <data name="Notify_DocumentAddFailMessage" xml:space="preserve">
+    <value>Ocorreu um erro na adição do documento. Por favor, tente mais tarde.</value>
+  </data>
+  <data name="UI_Products" xml:space="preserve">
+    <value>Produtos</value>
+  </data>
+  <data name="Notify_FolderRenameError" xml:space="preserve">
+    <value>Erro ao renomear a pasta</value>
+  </data>
+  <data name="Hint_CaseLawLegalAct" xml:space="preserve">
+    <value>Pesquisa de um ato jurídico específico.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-legalact" onclick="hintExampleCaseLawLegalAct('bg')"&gt;Exemplo: 31977L0489: Council Directive 77/489/EEC of 18 July 1977 on the protection of animals during international transport&lt;/a&gt; </value>
+  </data>
+  <data name="UI_OJNumber" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="UI_SearchType" xml:space="preserve">
+    <value>Tipo de pesquisa</value>
+  </data>
+  <data name="UI_OutgoingLinks" xml:space="preserve">
+    <value>Referências para outros documentos</value>
+  </data>
+  <data name="Notify_LangPreferencesError" xml:space="preserve">
+    <value>As preferências não foram atualizadas com sucesso</value>
+  </data>
+  <data name="UI_LongText1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UI_Trial_Long" xml:space="preserve">
+    <value>Obter acesso gratuito por 5 dias</value>
+  </data>
+  <data name="UI_Yes" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="UI_DateAdded" xml:space="preserve">
+    <value>Data da adição</value>
+  </data>
+  <data name="UI_404_Message" xml:space="preserve">
+    <value>Infelizmente, a página {0} não pode ser encontrada</value>
+  </data>
+  <data name="Hint_MarkExport" xml:space="preserve">
+    <value>Selecionar para exportação</value>
+  </data>
+  <data name="UI_Country_EE" xml:space="preserve">
+    <value>Estónia</value>
+  </data>
+  <data name="Hint_LegislationSubjectMatter" xml:space="preserve">
+    <value>Classifica por termos a que se referem os documentos jurídicos.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-legislation-subjectmatter" onclick="hintExampleLegislationSubjectMatter()"&gt;Exemplo: Não-discriminção (DISC)&lt;/a&gt; </value>
+  </data>
+  <data name="UI_ChangeEmail" xml:space="preserve">
+    <value>Alterar o email</value>
+  </data>
+  <data name="Hint_LoadSearch" xml:space="preserve">
+    <value>Carregar a pesquisa</value>
+  </data>
+  <data name="UI_Country_IT" xml:space="preserve">
+    <value>Itália</value>
+  </data>
+  <data name="UI_ContactUsInformation" xml:space="preserve">
+    <value>&lt;span class="f-bold"&gt;&lt;span class="fa fa-users"&gt;&lt;/span&gt; Apoio ao Cliente:&lt;/span&gt; (+359 2) 40 801 40 &lt;span class="f-bold"&gt;&lt;span class="fa fa-envelope"&gt;&lt;/span&gt; &lt;span class="f-bold"&gt;e-mail:&lt;/span&gt; &lt;a href="mailto:office@eurocases.eu" target="_top" class="f-blue"&gt;office@eurocases.eu&lt;/a&gt; &lt;span class="f-bold"&gt;&lt;span class="fa fa-globe"&gt;&lt;/span&gt; site web: &lt;/span&gt;&lt;a href="http://eurocases.eu" class="f-blue" target="_blank"&gt;eurocases.eu&lt;/a&gt; </value>
+  </data>
+  <data name="UI_Search" xml:space="preserve">
+    <value>Pesquisar</value>
+  </data>
+  <data name="UI_LawDateType_1" xml:space="preserve">
+    <value>Data de publicação</value>
+  </data>
+  <data name="UI_Cases_CourtsFolders" xml:space="preserve">
+    <value>Jurisdição</value>
+  </data>
+  <data name="UI_Country_BG" xml:space="preserve">
+    <value>Bulgária  </value>
+  </data>
+  <data name="UI_Law_Syllabus" xml:space="preserve">
+    <value>Ontologia Syllabus</value>
+  </data>
+  <data name="UI_Country_BE" xml:space="preserve">
+    <value>Bélgica</value>
+  </data>
+  <data name="Notify_EmailChangeWrongPassword" xml:space="preserve">
+    <value>A senha introduzida está errada</value>
+  </data>
+  <data name="UI_ParTitle_chap" xml:space="preserve">
+    <value>Capítulo</value>
+  </data>
+  <data name="Hint_Legislation" xml:space="preserve">
+    <value>Refere-se apenas a diplomas de natureza normativa da legislação europeia (tratados, regulamentos, diretivas, etc.)</value>
+  </data>
+  <data name="UI_Cases_Courts" xml:space="preserve">
+    <value>Autoridade decisional</value>
+  </data>
+  <data name="UI_Seller" xml:space="preserve">
+    <value>Comerciante</value>
+  </data>
+  <data name="UI_NatIdOrEcli" xml:space="preserve">
+    <value>Número Celex / ECLI</value>
+  </data>
+  <data name="UI_Country_CH" xml:space="preserve">
+    <value>Suíça</value>
+  </data>
+  <data name="Notify_DocumentAddExistingTitle" xml:space="preserve">
+    <value>O documento já está adicionado à sua lista</value>
+  </data>
+  <data name="Hint_FirstMatch" xml:space="preserve">
+    <value>Primeiro resultado da pesquisa</value>
+  </data>
+  <data name="UI_SearchExactMatch" xml:space="preserve">
+    <value>Coincidência certa</value>
+  </data>
+  <data name="UI_Title" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="Hint_NextMatch" xml:space="preserve">
+    <value>Seguinte resultado da pesquisa</value>
+  </data>
+  <data name="UI_Directives" xml:space="preserve">
+    <value>Diretivas</value>
+  </data>
+  <data name="Hint_MyDocuments" xml:space="preserve">
+    <value>Lista dos seus documentos específicos marcados </value>
+  </data>
+  <data name="UI_NumbersAll" xml:space="preserve">
+    <value>Nº Celex / Processo nº / Ato nº / ECLI</value>
+  </data>
+  <data name="UI_Country_ES" xml:space="preserve">
+    <value>Espanha</value>
+  </data>
+  <data name="UI_JS_DeleteFolder" xml:space="preserve">
+    <value>Suprimir pasta</value>
+  </data>
+  <data name="UI_NumberFormated" xml:space="preserve">
+    <value>Nº</value>
+  </data>
+  <data name="UI_SearchEuAndNationalLegislation" xml:space="preserve">
+    <value>Introduza o texto para a pesquisa</value>
+  </data>
+  <data name="UI_FeatureDocDesc1" xml:space="preserve">
+    <value>&lt;p style="text-align:left;"&gt;Clicar sobre os links abaixo para ver exemplos dos tipos de seguintes documentos:&lt;/p&gt;&lt;p&gt;&lt;menu style="text-align:left;font-color:white;"&gt;&lt;ul style="list-style-type:circle;"&gt;&lt;li&gt;&lt;a href="/Doc/CourtAct/1274737" target="_blank" class="white-link"&gt;Jurisprudência nacional&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/Doc/Act/{langId}/61964CJ0006" target="_blank" class="white-link"&gt;Jurisprudência da UE&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href="/Doc/Act/{langId}/32001R0044" target="_blank" class="white-link"&gt;Instrumento legislativo da UE&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/menu&gt;&lt;/p&gt; </value>
+  </data>
+  <data name="UI_Last" xml:space="preserve">
+    <value>Último</value>
+  </data>
+  <data name="UI_ParTitle_art" xml:space="preserve">
+    <value>Artigo</value>
+  </data>
+  <data name="UI_SearchBarText" xml:space="preserve">
+    <value>Pesquisa rápida</value>
+  </data>
+  <data name="UI_Licenses" xml:space="preserve">
+    <value>Licenças</value>
+  </data>
+  <data name="UI_Cases_HudocImportance" xml:space="preserve">
+    <value>Nível de importância</value>
+  </data>
+  <data name="Hint_CaseLaw_Parties" xml:space="preserve">
+    <value>Os nomes das partes no processo.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-parties" onclick="hintExampleCaseLawParties()"&gt;Exemplo: Smith&lt;/a&gt; </value>
+  </data>
+  <data name="Hint_CaseLawJurisdiction" xml:space="preserve">
+    <value>Estado-membro ou tribunal específico.&lt;br/&gt;&lt;br/&gt;&lt;a href="#" class="f-italic btn hint-example" id="hint-example-caselaw-jurisdiction" onclick="hintExampleCaseLawJurisdiction('bg')"&gt;Exemplo: Bulgária&lt;/a&gt;</value>
+  </data>
+  <data name="UI_RepeatPassword" xml:space="preserve">
+    <value>Repetir a senha</value>
+  </data>
+  <data name="UI_Chart" xml:space="preserve">
+    <value>Diagrama Gráfico</value>
+  </data>
+  <data name="UI_FinancesLinks" xml:space="preserve">
+    <value>Hiperligações</value>
+  </data>
+  <data name="Notify_DocumentAddMaxCountMessage" xml:space="preserve">
+    <value>Já alcançou o número máximo de documentos. Por favor, remova um ou mais para adicionar o documento selecionado.</value>
+  </data>
+  <data name="UI_Number" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="UI_inNatL" xml:space="preserve">
+    <value>na legislação nacional</value>
+  </data>
+</root>

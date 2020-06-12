@@ -1,0 +1,296 @@
+﻿@model Interlex.BusinessLayer.Models.CourtAct
+
+@using Interlex.BusinessLayer
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources
+@using Interlex.App.Helpers
+
+<span class="chevron-doc-navigation-closed">
+    <span class="span-doc-navigation-closed">@Resources.UI_Navigation</span>
+</span>
+<div id="doc-view-top-holder" class="filters-container">
+    <div id="doc-view-top-holder-inner">
+        @*  @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+            {
+                <div class="text-center banner-container banner-container-box">
+                    <!-- Httpool Block -->
+                    <script type="text/javascript">
+                        AdPlatformZone = {
+                            id: "2f73fc142",
+                            format: "300x250"
+                        };
+                    </script>
+                    <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>
+                    <!-- /Httpool Block -->
+                </div>
+            }*@
+
+
+        <div class="b-medium f-white" style="padding-left: 18px; font-weight: bold !important; background-color:#3498db; border-radius: 3px;">
+            @Resources.UI_Navigation
+            @* <span class="chevron-doc-navigation right" title="@Resources.Hint_NavigationHide"></span>*@
+            <span class="fa fa-arrow-circle-o-left right chevron-doc-navigation" title="@Resources.Hint_NavigationHide"></span>
+        </div>
+        <div id="doc-navigation-container">
+            <h3 class="doc-nav-category-title">
+                @Resources.UI_Contents<span class="right chevron-doc-navigation-category f-blue relative f-0-7 margin-left-15">&#x25BC;</span>
+            </h3>
+            <div>
+                <ul class="filter-ul-holder" style="width: 100%;">
+                    <li id="docContents">
+                        <ul class="doc-nav-category-items"></ul>
+                    </li>
+                </ul>
+            </div>
+            @{
+                if (Model.DocType == 2) // Legislation. Court act does not have versions
+                {
+                    <!-- Consolidated versions -->
+                    List<ConsVersion> consVersions = Doc.GetDocConsVersionsList(Model.DocLangId);
+                    if (consVersions.Count() > 0)
+                    {
+                        <h3 class="doc-nav-category-title">@Resources.UI_ConsolidatedVersion<span class="right chevron-doc-navigation-category f-blue relative f-0-7 margin-left-15">&#x25BC;</span></h3>
+                        <div>
+                            @if (consVersions.Where(m => m.DocLangId.HasValue).Count() > 1)
+                            {
+                                @*<button class="f-white f-bold btn btn-orange btn-medium-wide margin-left-15 margin-top-10 margin-bottom-5" style="font-size: 0.7em;" id="btn-compare">@Resources.UI_Compare</button>*@
+                            }
+                            <ul class="filter-ul-holder" style="width: 100%;">
+                                <li id="docVersions">
+                                    <ul class="doc-nav-category-items">
+                                        @foreach (ConsVersion item in consVersions)
+                                        {
+                                            <li>
+                                                @{
+                                                    if (Model.DocNumber == item.Celex)
+                                                    {
+                                                        @*<input type="checkbox" class="cb-version" data-doclangid="@item.DocLangId.Value.ToString()" />*@
+                                                        <span class="f-grey f-bold" style="font-size: 1.0em;">@item.Date.Value.ToString("dd.MM.yyyy")</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        string url = "";
+                                                        if (!item.DocLangId.HasValue)
+                                                        {
+                                                            @*<input type="checkbox" class="cb-version" disabled="disabled" title="Consolidated version does not exists is our database" />*@
+                                                            url = Doc.CreateEurLexLink(item.Celex, InterfaceLanguages.GetLanguageById(Model.LangId).ShortCode);
+                                                        }
+                                                        else
+                                                        {
+                                                            @*<input type="checkbox" class="cb-version" data-doclangid="@item.DocLangId.Value" />*@
+                                                            url = WebAppHelper.AppRootFolder + "/Doc/LegalAct/" + item.DocLangId.Value.ToString();
+                                                        }
+                                                        <a href="@url" @((Session["UserData"] as UserData).OpenDocumentsInNewTab == true ? "target=_blank" : "")>@item.Date.Value.ToString("dd.MM.yyyy")@(Html.Raw((!String.IsNullOrEmpty(item.Celex) && item.Celex[0] != '0') ? " <i>(" + Resources.UI_BasicAct + ")</i>" : ""))</a>
+                                                    }
+                                                }
+                                            </li>
+                                        }
+
+                                    </ul>
+
+                                </li>
+                            </ul>
+
+                        </div>
+                    }
+
+                    List<DocVersion> lVersions = Doc.GetDocVersions(Model.DocLangId, Model.LangId);
+                    if (lVersions.Count > 1)
+                    {
+                        <h3 class="doc-nav-category-title">@Resources.UI_Versions<span class="right chevron-doc-navigation-category f-grey relative f-0-7 margin-left-15">&#x25BA;</span></h3>
+                        <div>
+                            @*<button class="f-white f-bold btn btn-orange btn-medium-wide margin-left-15 margin-top-10 margin-bottom-5" style="font-size: 0.7em;" id="btn-compare">@Resources.UI_Compare</button>*@
+                            <ul class="filter-ul-holder" style="width: 100%;">
+                                <li id="docVersions">
+                                    <ul class="doc-nav-category-items">
+                                        @{
+                                            foreach (DocVersion v in lVersions)
+                                            {
+                                                <li class="f-black" style="font-size: 1.0em;">
+                                                    @if (v.PublDate.HasValue)
+                                                    {
+                                                        @*<input type="checkbox" class="cb-version" data-doclangid="@v.DocLangId" />*@
+                                                        if (Model.DocLangId != v.DocLangId)
+                                                        {
+                                                            <a href="~/Doc/CourtAct/@v.DocLangId" @((Session["UserData"] as UserData).OpenDocumentsInNewTab == true ? "target=\"_blank\"" : "")>@v.PublDate.Value.ToString("dd.MM.yyyy")</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="f-grey f-bold" style="font-size: 1.0em;">@v.PublDate.Value.ToString("dd.MM.yyyy")</span>
+                                                        }
+                                                    }
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                }
+
+                else if (Model.DocType == 1)
+                {
+                    List<DocVersion> dJudgments = Doc.GetJudgmentRelatedDocs(Model.DocLangId, Model.LangId);
+                    if (dJudgments.Count > 1)
+                    {
+                        <h3 class="doc-nav-category-title">@Resources.UI_RelatedDocuments<span class="right chevron-doc-navigation-category f-grey relative f-0-7 margin-left-15">&#x25BA;</span></h3>
+                        <div>
+                            @*<button class="f-white f-bold btn btn-orange btn-medium-wide margin-left-15 margin-top-10 margin-bottom-5" style="font-size: 0.7em;" id="btn-compare">@Resources.UI_Compare</button>*@
+                            <ul class="filter-ul-holder" style="width: 100%;">
+                                <li id="docVersions">
+                                    <ul class="doc-nav-category-items">
+                                        @{
+                                            foreach (DocVersion v in dJudgments)
+                                            {
+                                                <li style="font-size: 0.9em;">
+                                                    @if (v.PublDate.HasValue)
+                                                    {
+                                                        @*<input type="checkbox" class="cb-version" data-doclangid="@v.DocLangId" />*@
+                                                        if (Model.DocLangId != v.DocLangId)
+                                                        {
+                                                            <a href="~/Doc/CourtAct/@v.DocLangId" @((Session["UserData"] as UserData).OpenDocumentsInNewTab == true ? "target=\"_blank\"" : "")>@v.DocNumber</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="f-grey f-bold" style="font-size: 1.0em;">@v.DocNumber</span>
+                                                        }
+                                                    }
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+
+                                </li>
+                            </ul>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(window).resize(function () {
+        if (getDeviceWidth() > 780) {
+            if ($('#secAdvSearch').css('display') === 'none') {
+                $('#doc-view-top-holder').show();
+            }
+        }
+        else {
+            $('#doc-view-top-holder').hide();
+        }
+    });
+
+    $().ready(function () {
+        var docsToCompare = [];
+
+        if (getDeviceWidth() > 780) {
+            $('#doc-view-top-holder').show();
+        }
+        else {
+            $('#doc-view-top-holder').hide();
+        }
+
+        $("#doc-navigation-container").accordion({
+            collapsible: true,
+            heightStyle: "fill",
+            icons: false,
+            animate: false,
+            activate: function (event, ui) {
+                var chevronRecogniseExpr = '.chevron-doc-navigation-category';
+                var oldHeaderChevron = ui.oldHeader.find(chevronRecogniseExpr),
+                    newHeaderChevron = ui.newHeader.find(chevronRecogniseExpr),
+                    codeChevronRight = '&#x25BA;',
+                    codeChevronDown = '&#x25BC;';
+
+                oldHeaderChevron.html(codeChevronRight);
+                oldHeaderChevron.addClass('f-grey');
+                oldHeaderChevron.removeClass('f-blue');
+
+                newHeaderChevron.html(codeChevronDown);
+                newHeaderChevron.addClass('f-blue');
+                newHeaderChevron.removeClass('f-grey');
+            }
+        });
+
+        $("h3").focus(function () {
+            $(this).removeClass("ui-state-focus");
+        });
+
+        $('#btn-compare').click(function (e) {
+            e.preventDefault();
+
+            if (docsToCompare.length < 2) {
+                notify(Resources.storage['UI_JS_NotEnoughDocumentsSelected'], Resources.storage['UI_JS_NotEnoughDocumentsSelectedFull'], 'warn');
+            }
+            else {
+                if ((typeof docsToCompare[0] === "number") && Math.floor(docsToCompare[0]) === docsToCompare[0])
+                    window.open(appRootFolder + '/Compare/' + docsToCompare[0] + '/' + docsToCompare[1], '_blank');
+                else
+                    window.open(appRootFolder + '/Compare/ByIdentifier/' + docsToCompare[0] + '/' + docsToCompare[1], '_blank');
+            }
+        });
+
+        $('.chevron-doc-navigation').click(function (e) {
+            e.preventDefault();
+
+            $("#doc-view-top-holder").animate({ width: 'toggle' }, 350);
+
+            setTimeout(function () {
+                $('#doc-view-container').animate({ 'width': '99%', 'margin-left': '1%' }, 350);
+                $('#doc-view-top-bar').animate({ 'width': '100%', 'margin-left': '0' }, 350);
+                $('.chevron-doc-navigation-closed').show();
+            }, 1);
+        });
+
+        $('.chevron-doc-navigation-closed').click(function (e) {
+            e.preventDefault();
+
+            $("#doc-view-top-holder").animate({ width: 'toggle' }, 350);
+
+            setTimeout(function () {
+                var isDemoContext = $('body').hasClass('body-demo');
+                isDemoContext ? $('#doc-view-container').animate({ 'width': '70%', 'margin-left': '30%' }, 350) : $('#doc-view-container').animate({ 'width': '80%', 'margin-left': '20%' }, 350);
+                isDemoContext ? $('#doc-view-top-bar').animate({ 'width': '70%', 'margin-left': '30%' }, 350) : $('#doc-view-top-bar').animate({ 'width': '80%', 'margin-left': '20%' }, 350);
+
+                $('.chevron-doc-navigation-closed').hide();
+            }, 1);
+        });
+
+        $('.cb-version').change(function () {
+            var that = $(this);
+            var docLangId = that.data('doclangid');
+
+            if (that.is(":checked")) {
+                if (docsToCompare.length < 2) {
+                    docsToCompare.push(docLangId);
+                }
+                else {
+                    notify('Maximum elements to compare reached', 'Please select only two documents for comparision.', 'warn');
+                    that.attr('checked', false);
+                }
+            }
+            else {
+                var index = docsToCompare.indexOf(docLangId);
+
+                if (index > -1) {
+                    docsToCompare.splice(index, 1);
+                }
+            }
+        });
+
+        $(window).resize(function () {
+            var winH = window.innerHeight
+                || document.documentElement.clientHeight
+                || document.body.clientHeight;
+
+            var navigationAccordionH = (winH / 5) * 3;
+
+            $('#doc-navigation-container .ui-accordion-content').css('height', navigationAccordionH + 'px');
+        });
+
+        $(window).trigger('resize');
+    });
+</script>

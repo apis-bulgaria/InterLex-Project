@@ -1,0 +1,176 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+
+@* Div that holds all elements that are about to be populated in different containers *@
+<div id="templates-law" style="display: none;">
+    @* Only in actual acts*@
+    <div id="templates-law-actual-acts" class="container-form">
+        <label for="Law_OnlyInActualActs">
+            @Html.CheckBoxFor(m => m.Law.OnlyInActualActs, new { @style = "vertical-align: middle; margin-top: 1px;" })
+            <span class="label-after-checkbox">@Resources.UI_SearchOnlyInActualActs</span>
+        </label>
+    </div>
+
+    @* Only in base acts *@
+    <div id="templates-law-base-acts" class="container-form">
+        <label for="Law_OnlyInBasicActs">
+            @Html.CheckBoxFor(m => m.Law.OnlyInBasicActs, new { @style = "vertical-align: middle; margin-top: 1px;" })
+            <span class="label-after-checkbox">@Resources.UI_SearchOnlyInBasicActs</span>
+        </label>
+    </div>
+
+    @* Document type*@
+    <div id="templates-law-document-type" class="container-form">
+        <div><label class="f-black">@Resources.UI_DocumentType <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDocumentType"></span></label></div>
+        <div>
+            @Html.CheckTreeViewFor(m => m.Law.DocumentTypes)
+        </div>
+    </div>
+
+    @* Doc number *@
+   <div id="templates-law-doc-number" class="container-form">
+       <label for="Law.DocNumber" class="block">@Resources.UI_Number</label>
+       <span>@Html.TextBoxFor(m => m.Law.DocNumber, new { @class = "text_field input-blue width-50 clearable" })</span>
+       @*     @Html.EUCSClear(SearchBoxClearType.Simple, "Law_DocNumber")*@
+   </div>
+
+    @* Year *@
+    <div id="templates-law-year" class="container-form">
+        <label for="Law.Year" class="block">@Resources.UI_Year</label>
+        <span>@Html.TextBoxFor(m => m.Law.Year, new { @class = "text_field input-blue width-50 clearable" })</span>
+        @*     @Html.EUCSClear(SearchBoxClearType.Simple, "Law_Year")*@
+    </div>
+
+    @* NatID / ELI *@
+    <div id="templates-law-natid-eli" class="container-form">
+        <div for="@string.Format("tb{0}Text", Html.IdFor(model => model.Law.NatID_ELI))" class="f-black text-left"><span id="label-natid-eli-text">@Resources.UI_NatIdOrEli</span> <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationCelexNumber"></span></div>
+        <span>@Html.TextBoxFor(m => m.Law.NatID_ELI, new { @class = "ftext_field input-blue  input-search-medium clearable width-70" })</span>
+        @*    @Html.EUCSClear(SearchBoxClearType.Simple, "Law_NatID_ELI")*@
+    </div>
+
+    @* OJ Series *@
+    <div id="templates-law-oj-series" class="container-form">
+        <div>@Resources.UI_OJSeries <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationOJSeries"></span></div>
+        <input type="hidden" id="Law_OJSeries" name="Law.OJSeries" value="-1" />
+        <select class="width-80 input-blue" style="height: 28px;" id="select-oj-series">
+            <option value="-1" selected="selected">@Resources.UI_AllOJSeries</option>
+            <option value="0">@Resources.UI_OJ_L_Series</option>
+            <option value="1">@Resources.UI_OJ_C_Series</option>
+            @*  <option>CA</option>
+            <option>CE</option>*@
+        </select>
+    </div>
+
+    @* OJ Number *@
+    <div id="templates-law-oj-number" class="container-form">
+        <div>@Resources.UI_OJNumber</div>
+        <span>
+            @Html.TextBoxFor(m => m.Law.Number, new
+                   {
+                       @class = "text_field input-blue clearable width-50", @*@placeholder = Resources.UI_Number*@ })
+        </span>
+        @*  @Html.EUCSClear(SearchBoxClearType.Simple, "Law_Number")*@
+    </div>
+
+    @* OJ Year *@
+    <div id="templates-law-oj-year" class="container-form">
+        <div>@Resources.UI_Year</div>
+        <span>
+            @Html.TextBoxFor(m => m.Law.OJYear, new { @class = "text_field input-blue clearable width-50" })
+        </span>
+      @*  @Html.EUCSClear(SearchBoxClearType.Simple, "Law_OJYear")*@
+    </div>
+
+    @* OJ Initial page *@
+    <div id="templates-law-oj-initial-page" class="container-form">
+        <div>@Resources.UI_InitialPage</div>
+        <span>
+            @Html.TextBoxFor(m => m.Law.PageNumber, new
+                   {
+                       @class = "text_field input-blue clearable width-50", @*@placeholder = Resources.UI_PageNumber*@ })
+        </span>
+        @*  @Html.EUCSClear(SearchBoxClearType.Simple, "Law_PageNumber")*@
+    </div>
+
+    @* Dates search : both controls *@
+    <div id="templates-law-dates-search" class="container-form">
+        <div class="left width-50 container-form" id="select-datetype">
+            <div>
+                @Resources.UI_DateType <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDateType"></span>
+            </div>
+            <select class="width-80 input-blue" style="height: 28px; margin-top: 2px;" id="law-date-type-select">
+                @for (int i = 0; i <= 6; i++) //TODO: Get real enumeration count
+                {
+                    var resourceString = "UI_LawDateType_" + i;
+                    var resource = Res.GetResource(resourceString);
+                    <option value="@i" data-dateval="@i">@resource</option>
+                }
+            </select>
+        </div>
+        <div class="left width-50 container-form">
+            <div>
+                <input type="hidden" id="Law_LawDateType" name="Law.LawDateType" value="0" />
+                <label for="Law.DatePeriodType">
+                    <input type="radio" name="Law.DatePeriodType" id="Law.DatePeriodType_Date" @((Model.Law == null || Model.Law.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Date) ? "checked=checked" : "") value="date" style="vertical-align: middle;  margin-top: -2px;" />
+                    <span style="padding-top: 0;">@Resources.UI_Date</span>
+                </label>
+
+                <label for="Law.DatePeriodType">
+                    <input style="vertical-align: middle;  margin-top: -2px;" type="radio" @((Model.Law != null && Model.Law.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Period) ? "checked=checked" : "") name="Law.DatePeriodType" id="Law.DatePeriodType_Period" value="period" />
+                    <span>@Resources.UI_Period <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDateTimePeriod"></span></span>
+                </label>
+            </div>
+            <span>@Html.TextBoxFor(m => m.Law.DateFrom, new { @Value = (Model.Law != null && Model.Law.DateFrom.HasValue && Model.Law.DateFrom.Value.Year > 1) ? Model.Law.DateFrom.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder })</span>
+            <span>&nbsp;-&nbsp;</span>
+            <span>@Html.TextBoxFor(m => m.Law.DateTo, new { @Value = (Model.Law != null && Model.Law.DateTo.HasValue && Model.Law.DateTo.Value.Year > 1) ? Model.Law.DateTo.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder, @disabled = "disabled" })</span>
+        </div>
+    </div>
+
+    @* Directory legislation *@
+    <div id="templates-law-directory-legislation" class="container-form">
+        <div><label class="f-black">@Resources.UI_DirectoryLegislation <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDirectoryLegislation"></span></label></div>
+        <div>
+            @Html.CheckTreeViewFor(m => m.Law.DirectoryLegislation)
+        </div>
+    </div>
+
+    @* Eurovoc *@
+    <div id="templates-law-eurovoc" class="container-form">
+        <div><label class="f-black">@Resources.UI_Eurovoc <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationEurovoc"></span></label></div>
+        <div>
+            @Html.CheckTreeViewFor(m => m.Law.Eurovoc)
+        </div>
+    </div>
+
+    @* Subject matter *@
+    <div id="templates-law-subject-matter" class="container-form">
+        <div>
+            <label class="f-black">@Resources.UI_Subjectmatter <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationSubjectMatter"></span></label>
+        </div>
+        <div>
+            @Html.CheckTreeViewFor(m => m.Law.SubjectMatter)
+        </div>
+    </div>
+
+    @* By Country *@
+    <div id="templates-law-by-country" class="container-form">
+        <div>
+            <label class="f-black">@Resources.UI_Law_ActJurisdictions @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationSubjectMatter"></span>*@</label>
+        </div>
+        <div>
+            @Html.CheckTreeViewFor(m => m.Law.ActJurisdictions)
+        </div>
+    </div>
+
+    @* Publication source *@
+    <div id="templates-law-publication-sources" class="container-form">
+        <div>@Resources.UI_Law_PublicationSources @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationOJSeries"></span>*@</div>
+        <input type="hidden" id="Law_PublicationSources" name="Law.PublicationSources" value="-1" />
+        <select class="width-80 input-blue" style="height: 28px;" id="select-publication-sources">
+            <option value="-1" selected="selected">@Resources.UI_All</option>
+            @*  <option>CA</option>
+                <option>CE</option>*@
+        </select>
+    </div>
+</div>

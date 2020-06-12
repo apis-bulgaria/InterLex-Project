@@ -1,0 +1,198 @@
+﻿@using Interlex.BusinessLayer.Models;
+@model Interlex.BusinessLayer.Models.EuFins.EuroLibor
+@using Interlex.App.Resources
+
+<h3 class="f-blue" style="margin-top: -6px;">@Resources.UI_FinancesEuribor</h3>
+
+<div id="libor-options" class="f-0-8">
+     <div class="left width-40">
+         <p>@Html.Raw(Resources.UI_FinancesEuriborType)
+             <select id="libor-for-picker" class="form-control margin-left-15">
+                 <option value="_1m">@("1 " + Resources.UI_Fins_Month)</option>
+                 <option value="_3m">@("3 " + Resources.UI_Fins_Months)</option>
+                 <option value="_6m">@("6 " + Resources.UI_Fins_Months)</option>
+                 <option value="_1y">@("1 " + Resources.UI_Fins_Year)</option>
+             </select>
+         </p>
+    </div>
+    <div class="left width-30">
+        <p>
+            @Resources.UI_Period:
+            <select id="datepicker-year">
+                @{ var maxYearObj = DateTime.Parse(Model.DateAsString); }
+                @for (int i = 1994; i <= maxYearObj.Year; i++) /* TODO: Get actual initial year */ /* EDIT: Don't do it if no one tells you to... */
+                {
+                    <option value="@i" selected="@(i == maxYearObj.Year ? "selected" : String.Empty)">@i</option>
+                }
+            </select>
+        </p>
+    </div>
+    <div class="width-25 left padding-top-15">
+        <a href="javascript:void(0)" class="text-right f-white text-decoration-none" id="link-show-chart" onclick="financesScrollToChart()">
+            <span class="fa fa-line-chart"></span> @Resources.UI_Fins_ShowChart
+        </a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+
+<div>
+    <div class="col-md-12">
+        <table id="example" class="display table-fins" style="width:100%;border:s-0; text-align: center;">
+            <thead>
+                <tr>
+                    <th class="text-center">@Resources.UI_Month</th>
+                    <th class="text-center" id="th-libor-for">@Resources.UI_Fins_Value</th>
+                    <th class="text-center" id="th-libor-change">@Resources.UI_Fins_Change</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var currentDate = new Date();
+        try {
+            var dateModel = $('#datepicker-model').val();
+            currentDate = new Date(dateModel);
+        } catch (err) { }
+
+        var name = 'EuRibor1';
+        var liborFor = '_1m';
+        
+        $('#datepicker-year').on('change', function () {
+            var selYear = $(this).val();
+            currentDate = new Date(selYear, 1, 1);
+            initTable(liborFor, name, currentDate);
+        });
+
+        var dataTable = null;
+        
+        $('#libor-for-picker').on('change', function () {
+            liborFor = $('#libor-for-picker :selected').val();
+            var curMaxDate = '@maxYearObj.Year';
+            var dateObject = new Date(curMaxDate, 1, 1);
+            initTable(liborFor, name, dateObject);
+        });
+
+        var chartOptions = {
+            xaxis: {
+                mode: "time",
+                tickSize: [1, "month"],
+                monthNames: GlobalizationHandler.getMonthsShort(getCookie('sitelang')),
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: false,
+                    lineWidth: 3
+                },
+                points: {
+                    show: true,
+                    radius: 3,
+                    fill: true,
+                    fillColor: "#ffffff",
+                    lineWidth: 2
+                }
+            },
+            grid: {
+                hoverable: true,
+                clickable: false,
+                borderWidth: 0
+            },
+            legend: {
+                show: false
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: '%x: <b>%y.4</b>'
+            },
+            colors: ['#148dd4']
+        }
+
+        var holderLibor = $('#line-chart-libor');
+        var jsonData, hasLoadedNewData;
+        $(window).resize(function () {
+            populatePlots(jsonData);
+        });
+
+        function initTable(liborFor, name, currentDate) {
+            if (dataTable != null) {
+                $('#example tbody').remove();
+                dataTable.fnDestroy();
+                dataTable = null;
+            }
+            if (dataTable == null) {
+                var dtoptions = {
+                    "processing": true,
+                    "serverSide": true,
+                    "bPaginate": false,
+                    "autoWidth": false,
+                    "ajax": {
+                        "url": '/Finances/Data/GetEuRiborData',
+                        "type": 'POST',
+                        "data": {
+                            "name": name,
+                            "liborFor": liborFor,
+                            "year": $('#datepicker-year').val(),
+                            //"month": currentDate.getMonth(),
+                            "readerType": "EuroLiborDataRow"
+                        },
+                        "dataSrc": function (json) {
+                            hasLoadedNewData = true;
+                            jsonData = json;
+                            return json.data;
+                        }
+                    },
+                    "columns": [
+                        {
+                            "data": "dateTable", "orderable": false,
+                            "render": function (data, type, full, meta) {
+                                var dateArray = data.split('.'),
+                                    day = parseInt(dateArray[0]),
+                                    month = parseInt(dateArray[1]),
+                                    year = parseInt(dateArray[2]),
+                                    dt = new Date(year, month-1, day);
+
+                                return GlobalizationHandler.getMonthNameByLanguage(getCookie('sitelang'), dt.getMonth()) + " " + dt.getFullYear();
+                            }
+                        },
+                        { "data": "value", "orderable": false, "targets": -1 },
+                        { "data": "valueChangeTable", "orderable": false, "targets": -1 },
+                    ],
+                    "bFilter": false,
+                    "bInfo": false
+                };
+                dataTable = $('#example')
+                    .dataTable(dtoptions)
+                    .on('draw.dt', function (ev, options) {
+                        if (!$('#example').find('tbody').is(':empty') && hasLoadedNewData) {
+                            hasLoadedNewData = false;
+                            $('#line-chart-libor').css('display', 'block');
+                            populatePlots(jsonData);
+                        }
+                    })
+                    .on('destroy.dt', function (ev, options) {
+                        $('#line-chart-libor').css('display', 'none');
+                    });
+            }
+        };
+
+        function populatePlots(result) {
+            var euroLibor = [];
+            $(result.data).each(function (index, element) {
+                euroLibor.push([Date.parse(element.date), element.value]);
+            });
+
+            var plotDataEur = [{
+                label: "@Resources.UI_FinancesEuroLibor",
+                data: euroLibor
+            }];
+
+            $.plot(holderLibor, plotDataEur, chartOptions);
+        };
+
+        initTable(liborFor, name, currentDate);
+    });
+</script>

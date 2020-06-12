@@ -1,0 +1,23 @@
+﻿.right-aligned {
+    display: inline-block;
+}
+
+.bibliographic-notice-group {
+    /*width: 90%;*/
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.title {
+    text-align: left;
+    background-color: #e9e9e9;
+    padding: 5px;
+}
+
+.bibliographic-notice-group p {
+    font-style: italic;
+}
+
+    .bibliographic-notice-group p > span {
+        font-style: normal;
+    }

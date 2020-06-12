@@ -1,0 +1,1115 @@
+﻿@model Language
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources;
+
+@{
+    ViewBag.Title = "Machine translation";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section JavaScript
+{
+    @Scripts.Render("~/bundles/doc")
+    @Scripts.Render("~/bundles/MtJS")
+}
+
+@section CSS
+{
+    @Styles.Render("~/Content/doc")
+    @Styles.Render("~/Content/MtCSS")
+}
+<div class="mobile-filters-show-button" id="mobile-filters-show-button-act" data-page="act"><span class="fa fa-tasks"></span></div>
+
+<span class="chevron-doc-navigation-closed">
+    <span class="span-doc-navigation-closed">@Resources.UI_Navigation</span>
+</span>
+<div id="doc-view-top-holder" class="filters-container" style="">
+    <div id="doc-view-top-holder-inner">
+        <div class="b-medium b-blue f-white" style="padding-left: 18px; font-weight: bold !important;">
+            @Resources.UI_Navigation
+            @* <span class="chevron-doc-navigation right" title="@Resources.Hint_NavigationHide"></span>*@
+            <span class="fa fa-arrow-circle-o-left right chevron-doc-navigation" title="@Resources.Hint_NavigationHide"></span>
+        </div>
+        <div id="doc-navigation-container">
+            <h3 class="doc-nav-category-title">
+                @Resources.UI_Contents<span class="right chevron-doc-navigation-category f-blue relative f-0-7 margin-left-15">&#x25BC;</span>
+            </h3>
+            @*<div class="b-medium b-white f-blue f-bold" style="padding-left:12px;padding-bottom:3px; height: auto; padding-top: 3px; border: 1px solid #e0e0e0; border-left: 2px solid #148dd4">Lada</div>*@
+            <div style="padding-top: 0;">
+                @*<div id="@string.Format("folder%_tree", hf.Id.ToString())"></div>*@
+                <div id="mt-nav" style="padding-top: 0; margin-top: -5px;">
+                    <ol type="I" class="level-one">
+                        <li>
+                            <span class="menu-element">
+                                <a data-target="guidelines-registering">
+                                    Richtlijnen voor registratie en gebruik van de MT@EG- automatische vertaling van de Europese Commissie
+                                </a>
+                            </span>
+                            <ol type="A" class="level-two">
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="registration">
+                                            Registratie
+                                        </a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="mtec-service">
+                                            Gebruik van de MT@EG - service
+                                        </a>
+                                    </span>
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            <span class="menu-element">
+                                <a data-target="guidelines-free-mt">
+                                    Richtlijnen voor gebruik van gratis online machine translation services
+                                </a>
+                            </span>
+                            <ol type="A" class="level-two">
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="text-translation">
+                                            Vertaling van tekst
+                                        </a>
+                                    </span>
+                                    <ol type="1" class="level-three">
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="translation-web-interface">
+                                                    Vertaling van tekst met behulp van de web interface op providers webpagina’s.
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="translation-integrated-functions">
+                                                    Vertaling van geselecteerde tekst met functies geïntegreerd in de browser  van de gebruiker
+                                                </a>
+                                            </span>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="webpage-translation">
+                                            Vertaling van webpagina's
+                                        </a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="document-translation">
+                                            Vertaling van documenten
+                                        </a>
+                                    </span>
+                                    <ol type="1" class="level-three">
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="file-translation">
+                                                    Vertaling van een bestand
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="opened-document-translation">
+                                                    Vertaling van een geopend document
+                                                </a>
+                                            </span>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_MachineTranslationTopBar", Model)
+
+<div class=WordSection1>
+
+    <p class=MsoNormal align=center style='margin-bottom:12.0pt;text-align:center;
+line-height:107%'>
+        <b>
+            <span lang=NL style='font-size:18.0pt;line-height:107%'>
+                Vertalen
+                van de juridische documenten van de EU in EuroCases met de Machine translation
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:12.0pt;line-height:107%'>
+        <span lang=NL>
+            Machine
+            translation (MT) kan u helpen om de essentie van de document te begrijpen. U
+            kunt verschillende gratis online MT services gebruiken om snel een “ruwe”
+            automatische vertaling van de
+        </span><b>
+            <span lang=NL style='font-size:14.0pt;
+line-height:107%'></span>
+        </b><span lang=NL>
+            juridische documenten in EuroCases
+            te verkrijgen:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:18.0pt;text-indent:
+-18.0pt'>
+        <span lang=NL>
+            1.<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Als u werkt voor een <b>EU-instelling of instantie</b>
+            of u werkt voor een <b>overheidsdienst in een EU-land</b>, kunt u dan zich
+            registreren en gebruik maken van de <a href="http://ec.europa.eu/dgs/translation/translationresources/machine_translation/index_en.htm">
+                MT@EC
+                automatische vertaling dienst
+            </a> van de Europese Commissie. Het biedt
+            vertalingen tussen 552 taalparen combinaties, inclusief alle 24 offici&euml;le
+            talen van de EU. We raden u deze service aan, want die heeft aanzienlijk betere
+            kwaliteit voor de vertaling van juridische teksten.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:0cm;margin-bottom:.0001pt;
+text-indent:-17.85pt;line-height:107%'>
+        <span lang=NL>
+            2.<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Anders kunt u ook profiteren van de volgende gratis
+            online machine translation services:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+107%'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            <a href="https://translate.google.com/">
+                Google
+                Translate
+            </a>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+107%'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            <a href="http://www.bing.com/translator/">
+                Microsoft
+                Bing Translator
+            </a>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:72.0pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+107%'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL><a href="http://www.systranet.com/translate/">SYSTRANet</a></span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:71.7pt;text-indent:-17.85pt;line-height:107%'>
+        <span lang=NL
+              style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Andere services zoals: <a href="http://www.online-translator.com/">PROMPT</a>, <a href="https://en.wikipedia.org/wiki/Yandex.Translate">Yandex Translate</a>, <a href="http://www.worldlingo.com/">WorldLingo</a>, <a href="https://www.freetranslation.com/">SDL</a>, enz.. 
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.45pt;text-indent:-21.25pt;line-height:107%' id="guidelines-registering">
+        <b>
+            <span lang=NL style='font-size:16.0pt;line-height:107%'>
+                I.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span lang=NL style='font-size:16.0pt;line-height:107%'>
+                Richtlijnen
+                voor registratie en gebruik van de MT@EG- automatische vertaling van de
+                Europese Commissie
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.45pt;text-indent:-14.2pt;line-height:107%' id="registration">
+        <b>
+            <i>
+                <span lang=NL style='font-size:14.0pt;line-height:107%'>
+                    A.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b>
+            <i>
+                <span lang=NL style='font-size:14.0pt;line-height:
+107%'>Registratie</span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm'>
+        <span lang=NL>
+            Om gebruik te kunnen maken
+            van
+        </span>MT@EG<span lang=NL>
+            , moet u eerst zo geheten <a href="https://webgate.ec.europa.eu/cas/wayf?loginRequestId=ECAS_LR-21671880-ZwavWuPIuPvtzKRRl6TLkJUgftHSAU7ghAyA5j8e4AYPSonoEpj2cR0oo3DpusU4TbDZqdS4i8pzj8zQyWsoQZ0-Jj71zxYb8yrdaMmFt4gSYi-K961Dzm6QQgAiXfzVVh1nNoQzf1zGKzcd3LHccp0jnsSW&amp;caller=%2Fcas%2Flogin">
+                    EU Login
+            </a> hebben, gecre&euml;erd door de Europese Commissie Authenticatie
+            Service (ECAS).
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:18.0pt;text-indent:
+-18.0pt'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Het personeel dat werkt voor de <b>
+                EU-instellingen
+                of instanties
+            </b> kan MT@EC gebruiken met zijn EU Login.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:18.0pt;text-indent:
+-18.0pt'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Het personeel dat werkt voor een <b>
+                overheidsdienst
+                in een EU-land
+            </b> moet de volgende stappen volgen:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:2.0cm;text-indent:-21.25pt'>
+        <span lang=NL
+              style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            <a href="https://webgate.ec.europa.eu/cas/wayf?loginRequestId=ECAS_LR-21945491-sAIsczqf4P8C3GTl5NkaVEY6U8PCul3k4ZceUi9eSeDYi6nxv8512U3rat4tC0kAuBKuTwGqzkTGgNfiFVszUUW-Jj71zxYb8yrdaMmFt4gSYi-eaE3bzYsQqpH925qey62nBucQeiZojTDeV2rCfsNQRO&amp;caller=%2Fcas%2Flogin">Registreer</a>
+            zich voor uw persoonlijke EU Login en wachtwoord (met alleen je
+            professionele e-mailadres) op de pagina: <a href="https://webgate.ec.europa.eu/cas/">https://webgate.ec.europa.eu/cas/</a>
+            . Er is een <a href="https://erc.europa.eu/sites/default/files/content/pages/pdf/ECAS-creating_an_account_2015.pdf">handleiding</a>
+            hoe u een EU Login kunt maken en een <a href="https://www.youtube.com/watch?v=1jkLGRAEaDo">video</a> in YouTube.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:2.0cm;text-indent:-21.25pt'>
+        <span lang=NL
+              style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Zend een e-mail naar DG Vertaling in <a href="mailto:DGT-MT@ec.europa.eu">DGT-MT@ec.europa.eu</a> om hen te vertellen
+            dat u een EU Login hebt. Zeg wat voor werk u doet en voor welke
+            overheidsinstantie u werkt, noteer onderaan uw naam, positie, instituut,
+            afdeling, adres, contacten.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:2.0cm;text-indent:-21.25pt;line-height:107%'>
+        <span lang=NL
+              style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            DG Vertaling zal uw MT@EG-account aanmaken en zal u
+            op de hoogte brengen.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.45pt;text-indent:-14.2pt;line-height:107%' id="mtec-service">
+        <b>
+            <i>
+                <span lang=NL style='font-size:14.0pt;line-height:107%'>
+                    B.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b>
+            <i>
+                <span lang=NL style='font-size:14.0pt;line-height:
+107%'>Gebruik van de MT@EG - service</span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:justify'>
+        <span lang=NL>
+            Om de
+            MT@EG-service te gebruiken, voer de volgende URL in in uw browser: <a href="https://webgate.ec.europa.eu/mtatec">https://webgate.ec.europa.eu/mtatec</a>.
+            Log dan met uw EU Login in. Zodra u zich hebt aangemeld, kunt u
+            kiezen tussen twee vormen van vertalingen, afhankelijk van uw behoeften:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.7pt;text-align:justify;text-indent:-17.85pt;line-height:
+107%'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><i><span lang=NL>Vertaling van tekst</span></i><span lang=NL>
+            (niet
+            opgemaakte tekst – “<b>tekstfragment</b>”) - Op de menubalk kies “Translate text”(<b>
+                Tekstfragment
+                vertalen
+            </b>). Daarna type of plaats de tekstfragment. (maximaal 4.000
+            karakters). Kies dan de brontaal en de doeltaal van de vertaling. Klik tot slot
+            op de knop “<b>Translate tekst</b>”.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:1.0cm;line-height:107%'>
+        <img border=0 width=626 height=353
+             id="Picture 54" src="~/Content/Images/machine-translation/nl/1.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:107%'>
+        <span lang=NL
+              style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><i><span lang=NL>Vertaling van documenten</span></i><span lang=NL>
+            - Op de menubalk kies “<b>Translate documents</b>”(Bestanden vertalen).
+            Kies dan de brontaal en de doeltaal(s) van de vertaling tussen de meerdere
+            talen. Selecteer het uitvoerformaat (hetzelfde als de bron, TMX of XLIFF).
+            Upload een of meer document-bestanden (dit kan zelfs gelijktijdig worden
+            gedaan) en druk op de knop “<b>Translate document</b>”. De volgende bestandsformaten
+            worden door de service geaccepteerd: doc (x), xls (x), ppt (x), odt, rtf, txt,
+            html, TMX, XLIFF, pdf. De vertaling behoudt het format van het oorspronkelijke
+            document (met uitzondering van de pdf, die wordt teruggegeven als docx).
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt;text-indent:-50.7pt'>
+        <img border=0
+             width=626 height=353 id="Picture 53"
+             src="~/Content/Images/machine-translation/nl/2.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;line-height:107%'>
+        <span lang=NL>
+            Beschrijving in het
+            Engels van de MT@EC service en de belangrijkste functies ervan is te vinden op
+            de volgende webpagina van DG Translation: <a href="http://ec.europa.eu/isa/documents/mt-ec-service-description_en.pdf">http://ec.europa.eu/isa/documents/mt-ec-service-description_en.pdf</a>
+            .
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;line-height:107%'>
+        <b><i><span lang=NL>Gebruikershandleiding:</span></i></b><span lang=NL>
+            Meer informatie over de functionaliteit van de service en hoe het
+            werkt is beschikbaar in de MT@EC Help pagina's (alleen de geregistreerde
+            gebruikers hebben toegang).
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.45pt;text-indent:-21.25pt;line-height:107%' id="guidelines-free-mt">
+        <b>
+            <span lang=NL style='font-size:16.0pt;line-height:107%'>
+                II.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b><span lang=NL style='font-size:14.0pt;line-height:107%'> </span></b><b>
+            <span lang=NL style='font-size:16.0pt;line-height:107%'>
+                Richtlijnen voor gebruik van
+                gratis online machine translation services
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:2.0cm;text-align:justify;text-indent:-21.25pt;line-height:
+normal' id="text-translation">
+        <b>
+            <i>
+                <span lang=NL style='font-size:14.0pt'>
+                    A.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b>
+            <i>
+                <span lang=NL style='font-size:14.0pt'>
+                    Vertaling
+                    van tekst
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:2.0cm;text-indent:-21.25pt;line-height:107%' id="translation-web-interface">
+        <b>
+            <span lang=NL style='font-size:12.0pt;line-height:107%'>
+                1) Vertaling van tekst met
+                behulp van de web interface op providers webpagina’s.
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:justify'>
+        <span lang=NL>
+            Google,
+            Microsoft en SYSTRAN bieden eenvoudige web-interfaces waarmee de gebruikers
+            tekstfragmenten mogen vertalen van een taal naar een ander. De vertaling wordt
+            uitgevoerd in drie opeenvolgende stappen (gemeen voor alle drie providers):
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt;text-indent:-36.55pt'>
+        <span lang=NL>
+            •
+            Type of plak de om te vertalen tekst in de link tekst veld.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:42.55pt;text-indent:-7.1pt'>
+        <span lang=NL>
+            •
+            Kies een talencombinatie met behulp van drop down menu's - de brontaal waarvan
+            u vertaalt en de doeltaal waarnaar u vertaalt. Als een optie, Google en
+            Microsoft bieden automatische detectie van de brontaal.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.0pt;text-indent:-36.55pt;line-height:107%'>
+        <span lang=NL>
+            •
+            Klik op de knop “Translate”(Vertalen). De vertaling verschijnt in het rechter
+            tekstveld.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt;text-indent:-72.0pt'>
+        <span lang=NL>
+            De
+            web-interfaces voor automatische vertaling worden verstrekt op de volgende
+            pagina:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:35.45pt;text-indent:-21.25pt'>
+        <b>
+            <i>
+                <span lang=EN-US>a) Google Translate</span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:35.45pt'>
+        <span lang=NL>Webpagina</span><span lang=EN-US>URL:</span><span lang=NL>
+            <a href="https://translate.google.com/">
+                <span lang=EN-US>https://translate.google.com/</span>
+            </a>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.45pt;line-height:107%'><span lang=NL>Talen bedekt: 103</span></p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.05pt;text-indent:-57.85pt;line-height:107%'>
+        <img border=0 width=599 height=260 id="Picture 52"
+             src="~/Content/Images/machine-translation/nl/3.png">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:12.0pt;text-indent:-21.8pt;
+line-height:normal'>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span lang=NL
+                          style='color:black;background:white'>Gebruikershandleiding:</span>
+                </i>
+            </b>
+        </span><span lang=NL><a href="https://support.google.com/translate/#googtrans">https://support.google.com/translate/#googtrans</a></span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-left:35.45pt;text-indent:
+-21.25pt'><b><i><span lang=EN-US>b) Microsoft Bing Translator</span></i></b></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-left:35.45pt'>
+        <span lang=EN-US>Webpagina URL:</span><span lang=NL>
+            <a href="http://www.bing.com/translator/"><span lang=EN-US>http://www.bing.com/translator/</span></a>
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:35.45pt'>
+        <span lang=NL>
+            Max. lengte van de
+            brontekst: 5000 karakters (inclusief spaties).
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.45pt;line-height:107%'><span lang=NL>Talen bedekt: 52</span></p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.05pt;text-indent:-57.85pt;line-height:107%'>
+        <img border=0 width=595 height=336 id="Picture 51"
+             src="~/Content/Images/machine-translation/nl/4.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal'>
+        <b>
+            <i>
+                c)
+                SYSTRANet
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:18.0pt;text-indent:
+-18.0pt;line-height:normal'>
+        Webpagina URL: <span lang=NL>
+            <a href="http://www.systranet.com/translate">http://www.systranet.com/translate</a>
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:18.0pt;text-indent:
+-18.0pt;line-height:normal'>Max. lengte van de brontekst: 1000 woorden</p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal'>
+        Talen
+        bedekt: 15
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.05pt;text-indent:-57.85pt;line-height:107%'>
+        <img border=0 width=593 height=335 id="Picture 50"
+             src="~/Content/Images/machine-translation/nl/5.png">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:18.0pt;text-indent:
+-21.8pt;line-height:normal'>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span style='color:black;background:white'>Gebruikershandleiding</span><span lang=NL
+                                                                                                 style='color:black;background:white'>:</span>
+                </i>
+            </b>
+        </span><span lang=NL>
+            <a href="http://www.systransoft.com/translation-support/online-services/systranet/user-guide/">http://www.systransoft.com/translation-support/online-services/systranet/user-guide/</a>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:53.85pt;text-align:justify;text-indent:-17.85pt;line-height:
+normal' id="translation-integrated-functions">
+        <b>
+            <span style='font-size:12.0pt'>
+                2) Vertaling van geselecteerde tekst
+                met functies ge&iuml;ntegreerd in de browser  van de gebruiker
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;text-align:justify;line-height:107%'>
+        <span lang=NL>
+            Google
+            Translate is beschikbaar in sommige browsers als een uitbreiding. Bijvoorbeeld,
+            een aantal van de <a href="https://addons.mozilla.org/en-US/firefox/search/?q=google+translate&amp;appver=&amp;platform=">Firefox-extensies</a>
+            bestaan voor Google Translate services. In de regel, met een klik van de
+            rechtermuisknop geven ze toegang tot de vertaling. Bovendien sommige van hen
+            bieden de vertaling van de actieve webpagina in een nieuw venster. De
+            Chrome-browser integreert volledig de Google Translate service en vertaalt
+            automatisch webpagina’s (zie punt B hieronder).
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;text-align:justify;line-height:107%'>
+        <span lang=NL>
+            In
+            Internet Explorer 10 kunt u gebruikmaken van de Bing Translate Accelerator, die
+            standaard wordt ge&iuml;nstalleerd. Het helpt de gebruikers om gemarkeerde
+            delen van de tekst te vertalen met behulp van de rechtermuisknop commando.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.05pt;text-indent:-57.85pt;line-height:107%'>
+        <img border=0 width=626 height=353 id="Picture 49"
+             src="~/Content/Images/machine-translation/nl/6.png">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:49.65pt;text-align:justify;text-indent:-35.4pt;
+line-height:normal' id="webpage-translation">
+        <b>
+            <i>
+                <span lang=NL style='font-size:14.0pt'>
+                    B.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b>
+            <i>
+                <span lang=NL style='font-size:14.0pt'>
+                    Vertaling
+                    van
+                </span>
+            </i>
+        </b><b><span style='font-size:14.0pt'>webpagina's</span></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt'><span lang=NL>&nbsp;</span></p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;text-align:justify;line-height:107%'>
+        <span lang=NL>
+            Google
+            Translator, Microsoft Bing Vertalen en SYSTRANet bieden ook diverse
+            mogelijkheden voor automatische vertaling van webpagina's.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:justify'>
+        <span lang=NL>
+            Echter,
+            in dit stadium alleen Google Chrome kan u helpen om automatisch te vertalen de geopende
+            binnen EuroCases-interface documenten. Deze browser biedt een functie, waarmee
+            de gebruikers in staat stelt de geopende webpagina in de actieve browservenster
+            te vertalen. Wanneer u een pagina tegenkomt die is geschreven in een taal die u
+            niet begrijpt, kunt u de automatische vertaalfunctie van Chrome gebruiken en de
+            pagina laten vertalen door op “<b>Translate</b>” (Vertalen) aan de adresbalk
+            bovenaan het Chrome-venster te klikken:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.05pt;text-indent:-57.85pt;line-height:107%'>
+        <img border=0 width=626 height=353 id="Picture 48"
+             src="~/Content/Images/machine-translation/nl/7.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;line-height:107%'>
+        <span lang=NL>
+            Alle andere
+            eerdergenoemde oplossingen openen de om te vertalen pagina in een nieuw browservenster
+            en dit is niet geschikt voor EuroCases, omdat de service ongeautoriseerde
+            toegang tot applicaties van derden niet toestaat.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:49.65pt;text-align:justify;text-indent:-35.4pt;
+line-height:normal' id="document-translation">
+        <b>
+            <i>
+                <span lang=NL style='font-size:14.0pt'>
+                    C.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b>
+            <i>
+                <span lang=NL style='font-size:14.0pt'>
+                    Vertaling
+                    van documenten
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoNormalCxSpFirst style='margin-bottom:18.0pt'>
+        <span lang=NL>
+            U kunt
+            de tekst van elk document (act of arrest) in EuroCases naar een RTF- of
+            PDF-bestand exporteren en dan door de respectieve Machine translation service
+            laten vertalen. Dit kan op twee manieren:
+        </span>
+    </p>
+
+    <p class=MsoNormalCxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
+18.0pt;margin-left:42.55pt;text-indent:-21.25pt'>
+        <span lang=NL>
+            • Door het
+            uploaden van het bestand van het document op de server van de provider, of
+        </span>
+    </p>
+
+    <p class=MsoNormalCxSpLast style='margin-top:0cm;margin-right:0cm;margin-bottom:
+18.0pt;margin-left:42.55pt;text-align:justify;text-indent:-21.25pt'>
+        <span lang=NL>
+            •Door te vragen de betreffende editor applicatie van de serviceprovider
+            om de geopende bij de gebruiker document te vertalen
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:18.0pt;margin-right:0cm;margin-bottom:
+18.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal' id="file-translation">
+        <b>
+            <span lang=NL style='font-size:12.0pt'>1)</span>
+        </b><b>
+            <span style='font-size:12.0pt'>
+                Vertaling
+                van een bestand
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormalCxSpFirst style='margin-bottom:18.0pt'>
+        <span lang=NL>
+            Google
+            Translate en SYSTRANet sevices stellen de gebruikers in staat om bestanden te
+            vertalen in verschillende formaten, incl. RTF en PDF die de twee
+            bestandsformaten voor export van documenten in EuroCases zijn.
+        </span>
+    </p>
+
+    <p class=MsoNormalCxSpMiddle style='margin-bottom:18.0pt'>
+        <span lang=NL>
+            Om een
+            bestand met Google Translate te vertalen, klik op de link “<b>
+                translate a
+                document
+            </b>” (vertaal een document) en vervolgens op de knop “<b>Choose File</b>”
+            (Bestand kiezen) om het bestand te uploaden:
+        </span>
+    </p>
+
+    <p class=MsoNormalCxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
+18.0pt;margin-left:72.0pt;text-indent:-57.8pt'>
+        <img border=0 width=626
+             height=349 id="Picture 47" src="~/Content/Images/machine-translation/nl/8.png">
+    </p>
+
+    <p class=MsoNormalCxSpMiddle style='margin-top:0cm;margin-right:0cm;margin-bottom:
+18.0pt;margin-left:72.0pt'><span lang=NL>&nbsp;</span></p>
+
+    <p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:12.0pt;
+margin-left:72.05pt;text-indent:-57.85pt;line-height:107%'>
+        <img border=0
+             width=626 height=415 id="Picture 46"
+             src="~/Content/Images/machine-translation/nl/9.png">
+    </p>
+
+    <p class=MsoNormalCxSpMiddle style='margin-bottom:18.0pt'>
+        <span lang=NL>
+            De
+            tekst van het vertaalde document wordt weergegeven in een nieuw browservenster:
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:12.0pt;line-height:107%'>
+        <img border=0
+             width=626 height=342 id="Picture 45"
+             src="~/Content/Images/machine-translation/nl/10.png">
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:12.0pt;line-height:107%'>
+        <span lang=NL>
+            Om
+            een bestand met SYSTRANet te vertalen moet u eerst zich <a href="http://www.systran.net/accounts/signup?loc_lang=en&amp;">
+                registreren voor
+                de sevice
+            </a>. SYSTRANet laat u snel documenten vertalen in Microsoft Office
+            bestandsformaten (doc, docx), evenals RTF, HTML, HTM en TXT-bestanden.Als u een
+            bestand met SYSTRANet wilt vertalen:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:18.0pt;text-indent:-18.0pt'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Klik op het tabblad &quot;File&quot;(Bestand) en
+            vervolgens op “Choose file” (Kies bestand) om een bestand op uw pc te
+            selecteren voor vertaling.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:18.0pt;
+margin-left:72.0pt;text-indent:-72.0pt'>
+        <img border=0 width=626 height=353
+             id="Picture 44" src="~/Content/Images/machine-translation/nl/11.png">
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:18.0pt;text-indent:
+-18.0pt'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Kies de taalcombinatie met behulp van de drop down
+            menu's: kies de brontaal (de taal waarvan wordt vertaalt) en doeltaal (de taal
+            waarnaar vertaald moet worden) en klik vervolgens op “<b>Translate</b>&quot;(Vertalen)
+            om de vertaling te starten.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-bottom:18.0pt;text-indent:-18.0pt'>
+        <span lang=NL style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=NL>
+            Download het vertaalde bestand zodra het klaar is
+            of controleer uw Postvak IN als u hebt gekozen versturen via email.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:18.0pt;
+margin-left:72.0pt;text-indent:-72.0pt'>
+        <img border=0 width=626 height=353
+             id="Picture 43" src="~/Content/Images/machine-translation/nl/12.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:42.55pt;text-indent:-21.25pt;line-height:107%' id="opened-document-translation">
+        <b>
+            <span lang=NL style='font-size:12.0pt;line-height:107%'>
+                2)  Vertaling van een geopend
+                document
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;text-align:justify;line-height:107%'>
+        <span lang=NL>
+            U
+            kunt in Microsoft Word of Google Drive een document openen, ge&euml;xporteerd
+            van EuroCases in RTF bestand formaat en dan de betreffende toepassing vragen om
+            de tekst van het geopende document te vertalen. Verder leest u hoe precies het
+            werkt.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;text-indent:35.45pt;line-height:107%'>
+        <b>
+            <i>
+                <span lang=NL>a) Vertaling van een document geopend in Microsoft Word</span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:justify'>
+        <span lang=NL>
+            Klik op
+            het tabblad “Review”(Controleren) op het lint op de bovenkant van het scherm en
+            kies vervolgens de knop “Translate”(Vertalen) en ten slotte selecteer:
+            “Translate document”(Vertaal document). Een venster verschijnt om te berichten
+            dat dit document wordt via internet verstuurt naar Microsoft of andere
+            serviceprovider voor vertaling.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt'><span lang=NL>&nbsp;</span></p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.0pt;text-indent:-72.0pt;line-height:107%'>
+        <img border=0
+             width=626 height=352 id="Picture 42"
+             src="~/Content/Images/machine-translation/nl/13.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;line-height:107%'>
+        <span lang=NL>
+            Tik op “<b>Yes</b>”. De
+            inhoud van de vertaalde document wordt geopend in een nieuw browservenster.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.0pt;text-indent:-72.0pt;line-height:107%'>
+        <img border=0
+             width=626 height=353 id="Picture 41"
+             src="~/Content/Images/machine-translation/nl/14.png">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm'>
+        <span lang=NL>
+            De vertaling in MS Word
+            wordt gedaan vanuit de brontaal naar de gekozen targettaal. U kunt deze taal
+            veranderen.
+        </span><span style='background:yellow'>
+            ТУК липсва текст : Можете да
+            промените тези опции, като изберете Избор на език за превод (Choose Translation
+            Language) от бутона Превод:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt'><span lang=NL>&nbsp;</span></p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.0pt;text-indent:-72.0pt;line-height:107%'>
+        <img border=0
+             width=626 height=353 id="Picture 40"
+             src="~/Content/Images/machine-translation/nl/15.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;text-align:justify;line-height:107%'>
+        <span lang=NL>
+            Bovendien
+            kunt u een deel van het document laten vertalen. Daarvoor bestaat de optie
+            “Translate
+        </span><span lang=EN-IE> Selected</span><span lang=EN-NZ> Text</span><span lang=NL>
+            ” (Vertaal de geselecteerde tekst). De vertaalde tekst verschijnt
+            rechtsaf van het geopende document en kan gekopieerd worden of geplaats worden
+            op de plek van de gekozen tekst.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;line-height:107%'>
+        <span lang=NL>
+            Meer informatie en een
+            korte video over de vertaling functies in MS Word kunt u hier vinden: <a href="https://www.microsoft.com/en-us/translator/word.aspx">https://www.microsoft.com/en-us/translator/word.aspx</a>.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:21.25pt;line-height:107%'>
+        <b>
+            <i>
+                <span lang=NL>
+                    2b) Vertaling
+                    van een document geopend in Google Drive
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm;text-align:justify'>
+        <span lang=NL>
+            Klik op
+            “Tools”(Extra) in de menubalk aan de bovenkant van het scherm en kies
+            vervolgens “<b>Translate document”(Vertaal):</b>
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt'><span lang=NL>&nbsp;</span></p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.0pt;text-indent:-72.0pt;line-height:107%'>
+        <img border=0
+             width=626 height=353 id="Picture 39"
+             src="~/Content/Images/machine-translation/nl/16.png">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm;line-height:107%'>
+        <span lang=NL>
+            Een venster pop-up waarin
+            u moet de doeltaal kiezen – de taal waarnaar het document zal worden vertaald.
+            Klik vervolgens op de knop “<b>Translate”(Vertaal):</b>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:72.0pt;text-indent:-72.0pt;line-height:107%'>
+        <img border=0
+             width=626 height=353 id="Picture 38"
+             src="~/Content/Images/machine-translation/nl/17.png">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:0cm'>
+        <span lang=NL>
+            Google Drive zal een
+            &quot;vertaald kopie&quot; van de bron document openen in een nieuw tab venster
+            van de browser:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:18.0pt;margin-left:72.0pt;text-indent:-72.0pt'>
+        <img border=0
+             width=626 height=353 id="Picture 37"
+             src="~/Content/Images/machine-translation/nl/18.png">
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:18.0pt'><span lang=NL>&nbsp;</span></p>
+
+</div>

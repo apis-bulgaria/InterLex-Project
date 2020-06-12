@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Interlex.BusinessLayer.Models.RefDocsPair>
+
+@Html.Partial("_RefDocsList", Model.Where(x => x.ProductOrder == 1))
+@* HACK: Fix all hacks for TFEU *@
+@if (Model != null && Model.Count() != 0 && Model.ElementAt(0).MainDocument.DocNumber != "12012E") 
+{
+    @Html.Partial("_RefDocsList", Model.Where(x => x.ProductOrder == 2))
+}

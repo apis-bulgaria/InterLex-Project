@@ -1,0 +1,31 @@
+﻿@model List<Interlex.BusinessLayer.Models.PalProvision>
+
+@using Interlex.App.Resources
+
+@{ 
+    if (ViewBag.IsIndexSearch == null)
+    {
+        ViewBag.IsIndexSearch = false;
+    }
+}
+
+@{
+    if (Model.Count == 0)
+    {
+        <b>@Resources.UI_PAL_NoProvisionsFound</b>
+    }
+    else
+    {
+        <ul id="list-provision-choose" class="f-0-8 width-75 text-left" style="padding-left:10px; padding-top:0;">
+            @{
+                foreach (var p in Model)
+                {
+                    <li data-customval="0">
+                        <a href="javascript:void(true)" onclick="palProvision(this,'@String.Format("{0}{1}", p.ToDocParId.ToString(), 
+                                                                                   (p.LinkIds.Count > 0 ?":"+String.Join("|", p.LinkIds):""))', 'art@(p.Title.Split(" ".ToCharArray()[0])[1].ToString())', @ViewBag.IsIndexSearch.ToString().ToLower(), @int.Parse(Session["SelectedProductId"].ToString()))">@p.Title</a>
+                                                                </li>
+                }
+            }
+        </ul>
+                }
+}

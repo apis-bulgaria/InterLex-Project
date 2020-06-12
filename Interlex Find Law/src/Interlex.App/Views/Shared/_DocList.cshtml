@@ -1,0 +1,69 @@
+﻿@model Interlex.BusinessLayer.Models.SearchResult
+
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Helpers
+
+@if (Model.SearchSource == Interlex.BusinessLayer.Enums.SearchSources.Search)
+{
+    ViewData["SearchSource"] = Model.SiteSearchId;
+
+    // spaghetti code
+    var complexSearchText = Model.SearchBoxFilters.SearchText;
+    if (Model.SearchBoxFilters.Cases != null && Model.SearchBoxFilters.Cases.MultiDict != null && !String.IsNullOrEmpty(Model.SearchBoxFilters.Cases.MultiDict.Text))
+    {
+        if (!String.IsNullOrEmpty(Model.SearchBoxFilters.SearchText))
+        {
+            complexSearchText = complexSearchText + " AND (";
+        }
+        else
+        {
+            complexSearchText = "(";
+        }
+
+        complexSearchText = complexSearchText + Model.SearchBoxFilters.Cases.MultiDict.Text; // combining search text with multilingial dictionary if present
+        complexSearchText = complexSearchText.Replace("OR", "[OR]").Replace("AND", "[AND]"); // trimming logical operators
+        complexSearchText = complexSearchText + ")";
+    }
+    else if (Model.SearchBoxFilters.Law != null && Model.SearchBoxFilters.Law.MultiDict != null && !String.IsNullOrEmpty(Model.SearchBoxFilters.Law.MultiDict.Text))
+    {
+        if (!String.IsNullOrEmpty(Model.SearchBoxFilters.SearchText))
+        {
+            complexSearchText = complexSearchText + " AND (";
+        }
+        else
+        {
+            complexSearchText = "(";
+        }
+
+        complexSearchText = complexSearchText + Model.SearchBoxFilters.Law.MultiDict.Text; // combining search text with multilingial dictionary if present
+        complexSearchText = complexSearchText.Replace("OR", "[OR]").Replace("AND", "[AND]"); // trimming logical operators
+        complexSearchText = complexSearchText + ")";
+    }
+
+
+    ViewData["SearchText"] = complexSearchText;
+}
+else
+{
+    if (Model.SearchSource == Interlex.BusinessLayer.Enums.SearchSources.InLinks)
+    {
+        ViewData["SearchSource"] = Model.SiteSearchId;
+    }
+
+    ViewData["SearchText"] = null;
+}
+
+@{
+    var list = Model.GetList((Session["UserData"] as Interlex.BusinessLayer.Models.UserData), Convert.ToInt32(Session["LanguageId"]));
+    foreach (var t in list)
+    {
+        @Html.DocPartial(t.DocumentInfo, Convert.ToInt32(Session["LanguageId"]), WebAppHelper.AppRootFolder, (Session["UserData"] as UserData).OpenDocumentsInNewTab, ViewData)
+    }
+}
+
+<script>
+    $().ready(function () {
+        globalDocumentUIBinding();
+        addHints('doc-info-link', @Session["LanguageId"].ToString(), @((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+    });
+</script>

@@ -1,0 +1,329 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+
+@* Div that holds all elements that are about to be populated in different containers *@
+<div id="templates-cases" style="display: none;">
+    @* Parties *@
+    <div id="templates-cases-parties" class="container-form">
+        <div for="@string.Format("tb{0}Text", Html.IdFor(model => model.Cases.Parties))" class="f-black">
+            @Resources.UI_Parties
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLaw_Parties"></span>
+        </div>
+        @Html.TextBoxFor(m => m.Cases.Parties, new { @class = "text_field input-blue clearable width-70 tooltip" })
+        @* @Html.EUCSClear(SearchBoxClearType.Simple, "Cases_Parties")*@
+    </div>
+
+    @* Case number *@
+    <div id="templates-cases-casenumber" class="container-form">
+        <div>
+            @Resources.UI_NumberFormated
+        </div>
+        @Html.TextBoxFor(m => m.Cases.CaseNumber, new { @class = "text_field input-blue clearable width-80" })
+        @*   @Html.EUCSClear(SearchBoxClearType.Simple, "Cases_CaseNumber")*@
+    </div>
+
+    @* Year *@
+    <div id="templates-cases-year" class="container-form">
+        <div>
+            @Resources.UI_Year
+        </div>
+        @Html.TextBoxFor(m => m.Cases.Year, new { @class = "text_field input-blue clearable width-40" })
+        @*    @Html.EUCSClear(SearchBoxClearType.Simple, "Cases_Year")*@
+    </div>
+
+    @* NatID / ECLI *@
+    <div id="templates-cases-natid-ecli" class="container-form">
+        <div for="@string.Format("tb{0}Text", Html.IdFor(model => model.Cases.NatID_ECLI))" class="f-black" id="container-cases-ecli">@Resources.UI_NumbersAll <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawCelexNumber"></span></div>
+        @Html.TextBoxFor(m => m.Cases.NatID_ECLI, new { @class = "text_field input-blue clearable width-70" })
+        @*     @Html.EUCSClear(SearchBoxClearType.Simple, "Cases_NatID_ECLI")*@
+    </div>
+
+    @* Jurisdictions *@
+    <div id="templates-cases-jurisdictions" class="container-form">
+        <div>@Resources.UI_Jurisdiction <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawJurisdiction"></span></div>
+        <div>
+            @Html.CheckTreeViewFor(m => m.Cases.CourtsFolders)
+    </div>
+</div>
+
+@* Dates *@
+<div id="templates-cases-dates" class="container-form">
+    <div>
+        <label for="Cases.DatePeriodType">
+            <input type="radio" name="Cases.DatePeriodType" id="Cases.DatePeriodType_Date" @((Model.Cases == null || Model.Cases.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Date) ? "checked=checked" : "") value="date" style="vertical-align: middle;  margin-top: -2px;" />
+            <span style="padding-top: 0;">@Resources.UI_Date</span>
+        </label>
+
+        <label for="Cases.DatePeriodType">
+            <input style="vertical-align: middle;  margin-top: -2px;" type="radio" @((Model.Cases != null && Model.Cases.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Period) ? "checked=checked" : "") name="Cases.DatePeriodType" id="Cases.DatePeriodType_Period" value="period" />
+            <span>@Resources.UI_Period</span>
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawDateTimePeriod"></span>
+        </label>
+    </div>
+    <span>@Html.TextBoxFor(m => m.Cases.DateFrom, new { @Value = (Model.Cases != null && Model.Cases.DateFrom.HasValue && Model.Cases.DateFrom.Value.Year > 1) ? Model.Cases.DateFrom.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder })</span>
+    <span>&nbsp;-&nbsp;</span>
+    <span>@Html.TextBoxFor(m => m.Cases.DateTo, new { @Value = (Model.Cases != null && Model.Cases.DateTo.HasValue && Model.Cases.DateTo.Value.Year > 1) ? Model.Cases.DateTo.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder, @disabled = "disabled" })</span>
+</div>
+
+@* Document type *@
+<div id="templates-cases-document-type" class="container-form">
+    <div>
+        @Resources.UI_DocumentType
+        <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawDocumentType"></span>
+    </div>
+    <div>
+        @Html.CheckTreeViewFor(m => m.Cases.DocumentTypes)
+    </div>
+</div>
+
+@* Procedure type
+    <div id="templates-cases-procedure-type" class="container-form">
+        <div>
+            @Resources.UI_ProcedureType
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawProcedureType"></span>
+        </div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.ProcedureType)
+        </div>
+    </div>
+
+    @* General lawyer
+    <div id="templates-cases-general-lawyer" class="container-form">
+        <div>
+            @Resources.UI_GeneralLawyer
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawAdvocateGeneral"></span>
+        </div>
+        <div>
+            @Html.CheckTreeViewFor(m => m.Cases.AdvocateGeneral)
+        </div>
+    </div>
+
+    @* Judge rapporteur
+    <div id="templates-cases-judge-rapporteur" class="container-form">
+        <div>
+            @Resources.UI_JudgeRapporteur
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawJudgeRapporteur"></span>
+        </div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.JudgeRapporteur)
+        </div>
+    </div>
+
+    @* Enactment *@
+@*<div id="templates-cases-enactment" class="container-form">
+        <div>
+            @Resources.UI_Enactment
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawLegalAct"></span>
+        </div>
+        @Html.TextBoxFor(m => m.Cases.EnactmentText, new { @class = "btn text_field clearable-enactment width-70 left", @readonly = "readonly", @onclick = "$('#link-choose-enactment').trigger('click'); return false;" })
+        <span data-index-search="0" class="btn fa fa-pencil-square-o btn-edit-search-field left" id="link-choose-enactment"></span>
+        @Html.EUCSClear(SearchBoxClearType.Enactment, "Cases_EnactmentText")
+        @Html.HiddenFor(m => m.Cases.EnactmentDocLangId)
+        @Html.HiddenFor(m => m.Cases.EnactmentCelex)
+    </div>
+
+    @* Provision
+    <div id="templates-cases-provision" class="container-form">
+        <div>
+            @Resources.UI_Provision
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawProvision"></span>
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Cases.ProvisionText, new { @class = "btn text_field clearable-provision width-70 left", @readonly = "readonly", @onclick = "showProvisionDlg();return false;" })
+            <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="link-choose-provision"></span>
+            @Html.EUCSClear(SearchBoxClearType.Provision, "Cases_ProvisionText")
+            @Html.HiddenFor(m => m.Cases.ProvisionId)
+            @Html.HiddenFor(m => m.Cases.ProvisionParOriginal)
+        </div>
+    </div>*@
+<div class="container-form" id="templates-cases-enactment">
+    <div style="display: none">
+        @Html.TextBoxFor(m => m.Cases.EnactmentText, new { @class = "btn text_field clearable-enactment width-70 left", @readonly = "readonly", @onclick = "$('#link-choose-enactment').trigger('click'); return false;" })
+        @Html.HiddenFor(m => m.Cases.EnactmentDocLangId)
+        @Html.HiddenFor(m => m.Cases.EnactmentCelex)
+        @Html.TextBoxFor(m => m.Cases.ProvisionText, new { @class = "btn text_field clearable-provision width-70 left", @readonly = "readonly", @onclick = "showProvisionDlg();return false;" })
+        @Html.HiddenFor(m => m.Cases.ProvisionId)
+        @Html.HiddenFor(m => m.Cases.ProvisionParOriginal)
+    </div>
+    <input type="text" class="width-70 cursor-pointer left" id="link-choose-enactment-index" readonly="readonly" />
+    <span class="btn fa fa-pencil-square-o btn-edit-search-field left" onclick="$('#link-choose-enactment-index').trigger('click');"></span>
+
+    @*<button type="button" class="btn btn-blue f-white f-bold" id="link-choose-enactment-index" data-index-search="0">
+        @* onclick="DoSearch('enactmentIndex'); 
+        <span id="enactment-provision-button-label-mobile"><span class="fa fa-search f-white"></span></span>
+        <span id="enactment-provision-button-label-desktop">@Resources.UI_SearchByEnactmentProvision</span>
+    </button>*@
+    @*<span id="selected-enactment-label">
+            @Resources.UI_JS_Pal_NoSearchCriteria
+        </span>*@
+</div>
+
+
+@* Eurovoc
+    <div id="templates-cases-eurovoc" class="container-form">
+        <div class="f-black">@Resources.UI_Eurovoc <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawEurovoc"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.Eurovoc)
+        </div>
+    </div>
+
+    @* Subject matter
+    <div id="templates-cases-subject-matter" class="container-form">
+        <div class="f-black">@Resources.UI_Subjectmatter <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawSubjectMatter"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.SubjectMatter)
+        </div>
+    </div>
+
+    @* Directory caselaw
+    <div id="templates-cases-directory-caselaw" class="container-form">
+        <div class="f-black">@Resources.UI_DirectoryCaseLaw <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawDirectoryLaw"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.DirectoryCaseLaw)
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    @* Show full directory case law (checkbox) *@
+<div id="templates-cases-directory-caselaw-show-full">
+    <label style="margin-left: -5px;">
+        @Html.CheckBoxFor(m => m.Cases.DirectoryCaseLawFull, new { @style = "vertical-align: middle; margin-top: -1px;" }) <span>@Resources.UI_ShowFullDirectoryCaseLaw</span>
+    </label>
+</div>
+
+@* EuroCases classifier
+    <div id="templates-cases-eurocases-classifier" class="container-form">
+        <div class="f-black">
+            @if (System.Web.Configuration.WebConfigurationManager.AppSettings["SolutionVersion"] == "product")
+            {
+                @Resources.UI_EuroCases;
+            }
+            else
+            {
+                @Resources.UI_EUCases;
+            }
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_CaseLawEuroCasesClassifier"></span>
+        </div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.EuroCases)
+        </div>
+    </div>
+
+    @* Respondent state
+    <div id="templates-cases-respondent-state" class="container-form">
+        <div>@Resources.UI_Cases_States @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.States)
+        </div>
+    </div>
+
+    @* Importance level
+    <div id="templates-cases-importance-level" class="container-form">
+        <div>@Resources.UI_Cases_HudocImportance @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.HudocImportance)
+        </div>
+    </div>
+
+    @* Violation / non-violation
+    <div id="templates-cases-violation" class="container-form">
+        <div>@Resources.UI_Cases_HudocArticleViolation @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span>*/div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.HudocArticleViolation)
+        </div>
+    </div>
+
+    @* HUDOC
+    <div id="templates-cases-hudoc" class="container-form">
+        <div>@Resources.UI_Cases_Hudoc @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.Hudoc)
+        </div>
+    </div>
+
+    @* Applicability
+    <div id="templates-cases-applicability" class="container-form">
+        <div>@Resources.UI_Cases_HudocApplicability @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.HudocApplicability)
+        </div>
+    </div>
+
+    @* Courts
+    <div id="templates-cases-originating-body" class="container-form">
+        <div>@Resources.UI_Cases_Courts @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span></div>
+        <div>
+        @Html.CheckTreeViewFor(m => m.Cases.Courts)
+        </div>
+    </div>
+
+    @* Hudoc articles
+    <div id="templates-cases-hudoc-articles" class="container-form">
+        <div>@Resources.UI_Provision @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span></div>
+        <div class="refered-act-provision-input-container">
+        @Html.CheckTreeViewFor(m => m.Cases.HudocArticles)
+        </div>
+    </div>
+
+    @* Rules of the court *@
+<div id="templates-cases-court-rules" class="container-form">
+    <div>@Resources.UI_Provision @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span>*@</div>
+    <div class="refered-act-provision-input-container">
+        @Html.CheckTreeViewFor(m => m.Cases.RulesOfTheCourt)
+    </div>
+</div>
+
+@* Applicant *@
+<div id="templates-cases-applicant" class="container-form">
+    <div>
+        @Resources.UI_Cases_Applicant
+    </div>
+    @Html.TextBoxFor(m => m.Cases.Applicant, new { @class = "text_field input-blue clearable width-70" })
+    @*   @Html.EUCSClear(SearchBoxClearType.Simple, "Cases_Applicant")*@
+</div>
+
+@* Application number *@
+<div id="templates-cases-application-number" class="container-form">
+    <div>
+        @Resources.UI_Cases_ApplicationNumber
+    </div>
+    @Html.TextBoxFor(m => m.Cases.ApplicationNumber, new { @class = "text_field input-blue clearable width-70" })
+    @*    @Html.EUCSClear(SearchBoxClearType.Simple, "Cases_ApplicationNumber")*@
+</div>
+
+@* Refered act
+    <div id="templates-cases-refered-act" class="container-form">
+        <div>
+            @Resources.UI_Cases_ReferedAct
+            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span>
+        </div>
+        <input type="text" id="input-refered-act" class="btn text_field width-80 left" readonly="readonly" onclick="$('#link-choose-refered-act').trigger('click'); return false;"/>
+        <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="link-choose-refered-act"></span>
+    </div>*@
+
+@* Refered act - simplified *@
+<div id="templates-cases-refered-act" class="container-form">
+    <div>
+        @Resources.UI_Cases_ReferedAct
+        @* <span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span>*@
+    </div>
+    <select id="select-refered-act" class="width-70 left input-blue" style="height: 28px;">
+        <option value="0"> </option>
+        <option value="1">@Resources.UI_Cases_HudocArticles</option>
+        <option value="2">@Resources.UI_Cases_RulesOfTheCourt</option>
+    </select>
+</div>
+
+@* Refered act fictive-provision *@
+<div id="templates-cases-refered-act-provision" class="container-form refered-act-provision-input-container">
+    <div>
+        @Resources.UI_Provision
+        @*  <span class="fa fa-info-circle f-blue icon-hint tooltip" title="Missing hint"></span>*@
+    </div>
+    <input type="text" id="input-refered-act-provision" class="btn text_field width-70 left" disabled="disabled" readonly="readonly" onclick="$('#link-choose-provision-fictive').trigger('click'); return false;" />
+    <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="link-choose-provision-fictive"></span>
+    @Html.EUCSClear(SearchBoxClearType.ECHRProvision, "input-refered-act-provision")
+</div>
+</div>
+

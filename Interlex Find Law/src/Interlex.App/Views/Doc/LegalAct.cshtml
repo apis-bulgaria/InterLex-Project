@@ -1,0 +1,32 @@
+﻿@model Interlex.BusinessLayer.Models.CourtAct
+
+@using Interlex.BusinessLayer
+@using Interlex.BusinessLayer.Enums
+@{
+    if (Model != null && Model.HtmlModel != null)
+    {
+        ViewBag.Title = "- " + Common.StripHTML(Model.HtmlModel.Title.Value.ToString());
+    }
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section JavaScript
+{
+    @Scripts.Render("~/bundles/doc")
+}
+
+@section CSS
+{
+    @Styles.Render("~/Content/doc")
+}
+
+@if (ViewBag.DocError != null && ViewBag.DocError != "")
+{
+    <span class="f-blue text-center" style="margin-left: 40%;">@ViewBag.DocError</span>
+}
+else
+{
+    @Html.Partial("_DocNavigation", Model)
+    @Html.Partial("_DocTopBar")
+    @Html.Partial("Act", Model)
+}

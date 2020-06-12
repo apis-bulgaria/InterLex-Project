@@ -1,0 +1,225 @@
+﻿@using Interlex.App.Helpers
+@using Interlex.App.Resources
+
+<div class="display-none f-0-8" id="modal-multilingual-dictionary">
+    <div id="multilingual-dictionary-search-lang-container" class="text-left margin-bottom-10">
+        <span class="f-blue">@Resources.UI_MultilingualDictionarySearchLanguage:</span>
+        <select class="width-15 inline input-default" style="margin: 0; border-right: 0 !important;" id="slct-multilingual-dictionary-lang" autocomplete="off">
+            @foreach (var lang in Interlex.BusinessLayer.Languages.GetAllLangsFromCache())
+            {
+                <option value="@lang.Id" @(lang.Id == int.Parse(Session["LanguageId"].ToString()) ? "selected" : "")>@lang.Text.CapitalizeFirstLetter()</option>
+            }
+        </select>
+    </div>
+    <div id="multilingual-dictionary-alphabet-container">
+        <div id="multilingual-dictionary-alphabet-inner-container" class="inline left width-100">
+            <a href="#" class="multilingual-dictionary-letter selected" data-letter="all">@Resources.UI_All</a>
+            @foreach (var letter in Interlex.BusinessLayer.Languages.GetAlphabetByLangId(Convert.ToInt32(Session["LanguageId"])))
+            {
+                <a href="#" class="multilingual-dictionary-letter @(!letter.HasOccurrencesInitially ? "disabled" : String.Empty)" data-letter="@letter.Letter">@letter.Letter</a>
+            }
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <div id="multilingual-dictionary-main-container">
+        <div class="border-fine-box" style="width: 98%; margin-left: 1%; margin-top: 10px;" id="multilingual-dictionary-search-container">
+            <input type="text" id="tb-multilingual-dictionary-search" class="width-90 inline input-default" 
+                   style="margin-left: -5px; border-radius:3px; height:1.7em; padding-left: 5px; 
+                   border-left: 1px solid #dcdcdc !important;" placeholder="@Resources.UI_MultilingualDictionaryFindTerm" />
+            <button type="button" id="btn-multilingual-dictionary-search"><span class="fa fa-search"></span></button>
+        </div>
+        <div id="multilingual-dictionary-content" style="width: 100%;">
+            @Html.Partial("~/Views/Shared/_SearchBoxFormMultiDictionary.cshtml", new List<Interlex.BusinessLayer.Models.MultiDictItem>())
+        </div>
+
+        <fieldset id="multilingual-dictionary-fieldset" class="margin-top-10 width-96 border-fine-box f-0-9">
+            <legend>
+                <label class="cursor-pointer">
+                    <input type="radio" value="AND" id="rd-multilingual-dictionary-and" name="rd-multilingual-dictionary" class="vertical-middle pull-top-2" />
+                    <span class="pull-left-2">AND</span>
+                </label>
+                <label class="cursor-pointer">
+                    <input type="radio" checked="checked" value="OR" id="rd-multilingual-dictionary-or" name="rd-multilingual-dictionary" class="vertical-middle pull-top-2" />
+                    <span class="pull-left-2">OR</span>
+                </label>
+            </legend>
+            <div class="width-100 f-italic" id="multilingual-dictionary-query-content">
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<script>
+    $().ready(function () {
+          var lastOpenedMultilingualIsFromSearchbox = false;
+
+        /* Multilingual Dictionary */
+        $('#multi-dict-main-trigger, #Cases_tb-multilingual-dictionary, #Law_tb-multilingual-dictionary').on('click', function (event) {
+            var $that = $(this),
+                isFromSearchBox,
+                mainButtonLabel,
+                tabPrefix = $('#formCases').is(':visible') ? 'Cases_' : $('#formLaw').is(':visible') ? 'Law_' : '';
+
+            console.log(tabPrefix);
+
+            if ($that.attr('id') === 'multi-dict-main-trigger') {
+                isFromSearchBox = false;
+            }
+            else {
+                isFromSearchBox = true;
+            }
+
+            if (isFromSearchBox) {
+                mainButtonLabel = 'OK';
+            }
+            else {
+                mainButtonLabel = '@Resources.UI_Search';
+            }
+            event.preventDefault();
+            event.stopPropagation();
+
+            $('#modal-multilingual-dictionary')
+                .attr('data-max-height', 625)
+                .dialog({
+                    dialogClass: 'dialog-settings fixed-dialog multilingual-dictionary-dialog',
+                    autoOpen: true,
+                    resizable: false,
+                    height: 625, // height is calculated in fluidDialog, utitlity.js
+                    width: 'auto',
+                    maxWidth: 1010,
+                    defaultWidth: 1010,
+                    fluid: true,
+                    title: '<span class="fa fa-book"></span> @Resources.UI_MultilingualDictionary',
+                    modal: true,
+                    draggable: true,
+                    open: function () {
+                        $('#tb-multilingual-dictionary-search').focus();
+                        isAModalOpened = true;
+                        if (isFromSearchBox === false && lastOpenedMultilingualIsFromSearchbox === true) {
+                            multiDictClear();
+                        }
+
+                        lastOpenedMultilingualIsFromSearchbox = isFromSearchBox;
+                    },
+                    close: function () {
+                        setTimeout(function () {
+                            isAModalOpened = false;
+                        }, 200);
+                    },
+                    position: { my: 'top', at: 'top+100' },
+                    buttons: [
+                {
+                    text: mainButtonLabel, click: function () {
+                        if (isFromSearchBox === false) {
+                            clearCasesFilters(true);
+                        }
+
+                        $('#' + tabPrefix + 'tb-multilingual-dictionary').val($('#' + tabPrefix + 'MultiDict_Text').val());
+                        $('#' + tabPrefix + 'tb-multilingual-dictionary').attr('title', $('#' + tabPrefix + 'MultiDict_Text').val());
+                        $('#' + tabPrefix + 'MultiDict_Text').trigger('change');
+                        $('#' + tabPrefix + 'MultiDict_SelectedIds').val(getCookie('selectedMultiDictIds'));
+                        $('#' + tabPrefix + 'MultiDict_SelectedIds').trigger('change');
+
+                        if (isFromSearchBox) {
+                            $(this).dialog('close');
+                        }
+                        else {
+                            DoSearch('simple', false);
+                        }
+                    }, class: 'btn-large btn-blue f-white f-0-7-important f-bold btn-modal-multilingual-dictionary'
+                },
+                  {
+                      text: '@Html.Raw(Resources.UI_Clear.CapitalizeFirstLetter())', click: function () {
+                          multiDictClear();
+                      }, class: 'btn-large btn-lgrey f-0-7-important f-blue f-bold btn-modal-multilingual-dictionary'
+                  },
+                {
+                    text: '@Html.Raw(Resources.UI_Cancel.CapitalizeFirstLetter())', click: function () {
+                        if (isFromSearchBox === false) {
+                            multiDictClear();
+                        }
+                        $(this).dialog('close');
+                    }, class: 'btn-large btn-lgrey f-0-7-important f-blue f-bold btn-modal-multilingual-dictionary'
+                }
+                    ]
+                });
+        });
+
+        $('input[name="rd-multilingual-dictionary"]').on('change', function () {
+            var that = $(this),
+               // tabPrefix = '@ViewData["TabPrefix"]',
+                tabPrefix = $('#formCases').is(':visible') ? 'Cases_' : $('#formLaw').is(':visible') ? 'Law_' : '',
+                logicalHidden = $('#' + tabPrefix + 'MultiDict_LogicalType');
+            $('.lb-multilingual-dictionary-logical').text(that.val());
+            if (that.val() === 'AND') {
+                logicalHidden.val('true');
+            }
+            else {
+                logicalHidden.val('false');
+            }
+
+            populateBuildedQuery();
+        });
+
+        bindMultiDictContentEvents();
+
+        $('#btn-multilingual-dictionary-search').on('click', function (event) {
+            var searchText = $('#tb-multilingual-dictionary-search').val(),
+                leadingCharacter = $('.multilingual-dictionary-letter.selected').attr('data-letter');
+            
+            if (searchText !== null && searchText !== '' && searchText.length < 2 && leadingCharacter === 'all') {
+                $('#tb-multilingual-dictionary-search').focus();
+            }
+            else {
+                $('#tb-multilingual-dictionary-search').removeClass('shadow-inner-orange');
+
+                $.ajax({
+                    type: 'POST',
+                    url: appRootFolder + '/Search/MultiDictSearch',
+                    data: {
+                        langId: $('#slct-multilingual-dictionary-lang option:selected').val(),
+                        searchText: searchText,
+                        leadingCharacter: leadingCharacter
+                    }
+                }).done(function (response) {
+                    $('#multilingual-dictionary-content').html(response);
+                    bindMultiDictContentEvents();
+                });
+            }
+        });
+
+        $('#tb-multilingual-dictionary-search').keyup(function () {
+            setDelay(function () {
+                $('#btn-multilingual-dictionary-search').trigger('click');
+            }, 350);
+        });
+
+        $('#tb-multilingual-dictionary-search').enterKey(function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            $('#btn-multilingual-dictionary-search').trigger('click');
+        });
+
+        bindMultiDictLetterEvents();
+
+        $('#slct-multilingual-dictionary-lang').on('change', function () {
+            var $that = $(this),
+                lang = $that.val();
+
+            $.ajax({
+                method: 'POST',
+                url: appRootFolder + '/Search/MultiDictGetLanguageAlphabet',
+                data: {
+                    langId: lang
+                }
+            }).done(function (response) {
+                $('#multilingual-dictionary-alphabet-inner-container').html(response);
+                bindMultiDictLetterEvents();
+                $('#btn-multilingual-dictionary-search').trigger('click');
+            });
+
+        });
+    });
+</script>

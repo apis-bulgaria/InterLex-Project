@@ -1,0 +1,67 @@
+﻿@using Interlex.App.Helpers
+@using Interlex.App.Resources
+@model Interlex.BusinessLayer.Models.SearchBox
+
+@Html.HiddenFor(m => m.Law.MultiDict.LogicalType)
+@Html.HiddenFor(m => m.Law.MultiDict.Text)
+@Html.HiddenFor(m => m.Law.MultiDict.SelectedIds)
+@Html.HiddenFor(m => m.Law.MultiDict.SearchText)
+@Html.HiddenFor(m => m.Law.MultiDict.SelectedQueryTexts)
+
+<fieldset class="width-80 container-form">
+    <legend>@Resources.UI_MultilingualDictionary</legend>
+    <div class="left width-50">
+        <label for="Law_tb-multilingual-dictionary" class="block">
+            @Resources.UI_MultilingualDictionary
+        </label>
+        <input type="text" class="width-70 cursor-pointer left" id="Law_tb-multilingual-dictionary" name="tb-multilingual-dictionary" readonly="readonly" />
+        <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="Law_link-edit-multilingual-dictionary"></span>
+        @Html.EUCSClear(SearchBoxClearType.MultilingualDictionary, "tb-multilingual-dictionary")
+    </div>
+    <div class="clearfix"></div>
+</fieldset>
+
+<fieldset class="width-80 margin-top-5">
+    <legend>@Resources.UI_DocumentReference</legend>
+    <div>
+       <div class="left width-50" id="law-national-by-country"></div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="margin-top-20">
+        <div class="left width-50">
+            <div class="left width-60" id="law-national-document-type"></div> @* Document type *@
+            <div class="left width-40" id="law-national-doc-number"></div> @* Doc number *@
+            <div class="clearfix"></div>
+        </div>
+        <div class="left width-50 container-form">
+            <div class="left width-30" id="law-national-year"></div> @* Year *@
+            <div class="left width-70" id="law-national-natid-eli"></div> @* NatId_ELI*@
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</fieldset>
+
+<fieldset class="width-80 margin-top-5">
+    <legend>@Resources.UI_Publication</legend>
+   @* <div class="left width-50" id="law-national-publication-sources"></div> @* Source *@
+    <div class="left width-50">
+        <div class="left width-30" id="law-national-oj-number"></div> @* OJ Number *@
+        <div class="left width-30" id="law-national-oj-year"> </div> @* OJ Year *@
+        <div class="left width-40" id="law-national-oj-initial-page"></div> @* OJ Initial page *@
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</fieldset>
+<div class="clearfix"></div>
+
+<fieldset class="width-80 margin-top-5">
+    <legend>
+        @Resources.UI_Dates
+    </legend>
+    <div id="law-national-dates-search"></div>
+    <div class="clearfix"></div>
+</fieldset>
+
+
+
+<div class="clearfix"></div>

@@ -1,0 +1,221 @@
+﻿@using Interlex.App.Resources
+@using Interlex.App.Helpers
+@using Interlex.BusinessLayer.Models
+@using Interlex.BusinessLayer.Helpers
+@model IEnumerable<Interlex.BusinessLayer.Models.RefDocsPair>
+
+@foreach (var refDocPair in Model)
+{
+    <div class="item item-book-scales">
+        <a class="doc-left-border left">
+            &nbsp;
+        </a>
+        <div class="doc-item-container" style="font-size:18px">
+            <div class="doc-title">
+                <div class="doc-title-a-container">
+                    @{
+                        <a href="~/Doc/CourtAct/@refDocPair.Document.DocLangId/" ;" title="@Html.Raw(refDocPair.Document.Title)" @((Session["UserData"] as Interlex.BusinessLayer.Models.UserData).OpenDocumentsInNewTab == true ? "target=_blank" : "") @((Session["opened_docs-" + Session["SelectedProductId"]] as HashSet<int>).Contains(refDocPair.Document.DocLangId) ? "class=f-bold-italic" : "")>
+                            @Html.Raw(refDocPair.Document.Title.Replace("<b style='mso-bidi-font-weight: normal'>", String.Empty))
+                        </a>
+                    }
+                </div>
+            </div>
+            @{
+                var articleData = refDocPair.ArticleData;
+            }
+
+            @if (articleData.Count > 0)
+                {
+                <div class="doc-other-articles">
+                    <div class="doc-tab-container">
+                        @*f-dgrey f-bold *@
+                        <span class="  blue-text f-italic keywords-summaries-label">@Resources.UI_FinsOtherArticlesReferenced</span>
+                    </div>
+                    @{
+                        string currentElTopMostParent = string.Empty;
+                        string prevElTopMostParent = string.Empty;
+                        string currentClass = string.Empty;
+                    }
+                    <div class="other-articles-content" style="padding-top: 5px;">
+                        @for (int i = 0; i < articleData.Count; i++)
+                        {
+                            var currentData = articleData.ElementAt(i);
+                            currentElTopMostParent = currentData.TopMostParent;
+
+                            if (currentElTopMostParent != prevElTopMostParent)
+                            {
+                                if (currentClass == string.Empty || currentClass == "other-article-referenced-coloured")
+                                {
+                                    currentClass = "other-article-referenced-white";
+                                }
+                                else
+                                {
+                                    currentClass = "other-article-referenced-coloured";
+                                }
+                            }
+
+                            if (currentClass == "other-article-referenced-coloured")
+                            {
+                                <span class="other-article-referenced-coloured-span">
+                                    <a href="./DocLangId=@refDocPair.MainDocument.DocLangId&ToPar=@currentData.Eid" class="article-link d-apis d-ref d-inline @currentClass" data-eid="@currentData.Eid" data-article-order="@refDocPair.ArticleOrder">@currentData.Num</a>@Html.Raw(i == refDocPair.ArticleData.Count - 1 ? "" : "<span class='coloured-comma'>, </span>")
+                                </span>
+                            }
+                            else
+                            {
+                                <a href="./DocLangId=@refDocPair.MainDocument.DocLangId&ToPar=@currentData.Eid" class="article-link d-apis d-ref d-inline @currentClass" data-eid="@currentData.Eid" data-article-order="@refDocPair.ArticleOrder">@currentData.Num</a>@Html.Raw(i == refDocPair.ArticleData.Count - 1 ? "" : "<span>,</span>")
+                            }
+
+                            prevElTopMostParent = currentElTopMostParent;
+                        }
+                    </div>
+                </div>
+            }
+            @if (refDocPair.Document.Keywords.Count > 0 || refDocPair.Document.Summaries.Count > 0 || refDocPair.Document.IsEuFins())
+                {
+                <div class="toggle-doc-info">
+                    <span class="toggle-doc-info-text">
+                        @Resources.UI_ShowMore_Lower
+                    </span>
+                    <span class="toggle-doc-info-arrow">
+                        &#x25BC; @* Down arrow *@
+                    </span>
+                </div>
+            }
+            @if (refDocPair.Document.Keywords.Count > 0)
+                {
+                <div class="doc-keywords">
+                    <div class="doc-tab-container">
+                        @for (int i = refDocPair.Document.Keywords.Keys.Count - 1; i >= 0; i--)
+                        {
+                            if (i != 0)
+                            {
+                                <a href="#" data-target="@refDocPair.Document.DocLangId-@refDocPair.Document.Keywords.Keys.ElementAt(i).Replace("&", "_AND_")" class="keywords-link f-blue-important" onclick="javascript: changeKeywordsTab(this); return false;">@refDocPair.Document.Keywords.Keys.ElementAt(i)</a>
+                            }
+                            else
+                            {
+                                <a href="#" data-target="@refDocPair.Document.DocLangId-@refDocPair.Document.Keywords.Keys.ElementAt(0).Replace("&", "_AND_")" class="not-active-link-keywords f-black" onclick="javascript: changeKeywordsTab(this); return false;">@refDocPair.Document.Keywords.Keys.ElementAt(i)</a>
+                            }
+                        }
+                        @*f-dgrey f-bold *@
+                        <span class="blue-text f-italic keywords-summaries-label" >
+                            <span class="fa fa-key"></span>
+                            @Resources.UI_Keywords_Upper
+                        </span>
+                    </div>
+                    @*Inverted loop is not needed, expanding is done by id represented by source key*@
+                    @for (int i = 0; i < refDocPair.Document.Keywords.Keys.Count; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <div id="keywords-@refDocPair.Document.DocLangId-@refDocPair.Document.Keywords.Keys.ElementAt(i).Replace("&", "_AND_")" class="keywords-content" style="margin-top: -10px;">
+                                <p>@Html.Raw(Server.HtmlDecode(refDocPair.Document.Keywords[refDocPair.Document.Keywords.Keys.ElementAt(i)]))</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="keywords-@refDocPair.Document.DocLangId-@refDocPair.Document.Keywords.Keys.ElementAt(i).Replace("&", "_AND_")" class="keywords-content" style="display: none; margin-top: -10px;">
+                                <p>@Html.Raw(Server.HtmlDecode(refDocPair.Document.Keywords[refDocPair.Document.Keywords.Keys.ElementAt(i)]))</p>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+
+
+            @{
+                // v.o. [2016.02.01] added additial check if there are any valid summaries
+                bool hasSummaries = refDocPair.Document.Summaries.Any();
+                hasSummaries &= refDocPair.Document.Summaries.Select(x => x.Value).Any(GeneralHelper.IsValidSummaryForDocumentListVisualization);
+            }
+            @if (hasSummaries)
+                {
+                <div class="doc-summary">
+                    <div class="doc-tab-container">
+                        @for (int i = refDocPair.Document.Summaries.Keys.Count - 1; i >= 0; i--)
+                        {
+                            /*
+                                v.o. [2016.02.01] check if the summary is valid. Valid means non empty text with atleast one letter.
+                                related to: Bug 3907
+                             */
+                            String summaryText = refDocPair.Document.Summaries[refDocPair.Document.Summaries.Keys.ElementAt(i)];
+                            bool isValidSummary = GeneralHelper.IsValidSummaryForDocumentListVisualization(summaryText);
+
+                            if (isValidSummary)
+                            {
+                                if (i != 0)
+                                {
+                                    <a href="#" data-target="@refDocPair.Document.DocLangId-@refDocPair.Document.Summaries.Keys.ElementAt(i).Replace("&", "_AND_")" class="summaries-link f-blue-important" onclick="javascript: changeSummariesTab(this); return false;">@refDocPair.Document.Summaries.Keys.ElementAt(i)</a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-target="@refDocPair.Document.DocLangId-@refDocPair.Document.Summaries.Keys.ElementAt(0).Replace("&", "_AND_")" class="not-active-link-summaries f-black" onclick="javascript: changeSummariesTab(this); return false;">@refDocPair.Document.Summaries.Keys.ElementAt(i)</a>
+                                }
+                            }
+                        }
+                        @*f-dgrey f-bold *@
+                        <span class=" blue-text f-italic keywords-summaries-label">
+                            <span class="fa fa-file-text-o"></span>
+                            @Resources.UI_Summary_Upper
+                        </span>
+                    </div>
+                    @*Inverted loop is not needed, expanding is done by id represented by source key*@
+                    @for (int i = 0; i < refDocPair.Document.Summaries.Keys.Count; i++)
+                    {
+                        /*
+                            v.o. [2016.02.01] check if the summary is valid. Valid means non empty text with atleast one letter.
+                            related to: Bug 3907
+                        */
+                        String summaryText = refDocPair.Document.Summaries[refDocPair.Document.Summaries.Keys.ElementAt(i)];
+                        bool isValidSummary = GeneralHelper.IsValidSummaryForDocumentListVisualization(summaryText);
+
+                        if (isValidSummary)
+                        {
+                            if ((Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+                            {
+                                if (refDocPair.Document.Summaries[refDocPair.Document.Summaries.Keys.ElementAt(i)].Length >= 300)
+                                {
+                                    <div id="summaries-@refDocPair.Document.DocLangId-@refDocPair.Document.Summaries.Keys.ElementAt(i).Replace("&", "_AND_")" class="summaries-content" style="display: @(i == 0 ? "block" : "none"); margin-top: -10px;">
+                                        <p>@Html.Raw(Server.HtmlDecode(refDocPair.Document.Summaries[refDocPair.Document.Summaries.Keys.ElementAt(i)]).Replace("class=\"d-inline d-p\"", "style=\"margin:0 0 0 0 !important;\"").TruncateHtml(300) + "... " + "<a href=\""+WebAppHelper.AppRootFolder+"/User/ProductFeaturesInfo/8\" class=\"f-blue\">" + Resources.UI_ShowMore_Lower.ToLower() + "</a>")</p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div id="summaries-@refDocPair.Document.DocLangId-@refDocPair.Document.Summaries.Keys.ElementAt(i).Replace("&", "_AND_")" class="summaries-content" style="display: @(i == 0 ? "block" : "none"); margin-top: -10px;">
+                                        <p>@Html.Raw(Server.HtmlDecode(refDocPair.Document.Summaries[refDocPair.Document.Summaries.Keys.ElementAt(i)]).Replace("class=\"d-inline d-p\"", "style=\"margin:0 0 0 0 !important;\""))</p>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div id="summaries-@refDocPair.Document.DocLangId-@refDocPair.Document.Summaries.Keys.ElementAt(i).Replace("&", "_AND_")" class="summaries-content" style="display: @(i == 0 ? "block" : "none"); margin-top: -10px;">
+                                    <p>@Html.Raw(Server.HtmlDecode(refDocPair.Document.Summaries[refDocPair.Document.Summaries.Keys.ElementAt(i)]).Replace("class=\"d-inline d-p\"", "style=\"margin:0 0 0 0 !important;\""))</p>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            }
+
+            @{
+                // v.o. [2016.03.21] by request of pesho.k.
+                // the fins documents need have have link to the original eurlex document between the keywrds and the summary
+                if (refDocPair.Document.IsEuFins())
+                {
+                    var eurocasesUrl = refDocPair.Document.BuildEurocasesUrl(Convert.ToInt32(Session["LanguageId"]));
+
+                    if (!String.IsNullOrEmpty(eurocasesUrl))
+                    {
+                        <div class="original-document-url-conatainer">
+                            <a target="_blank" data-dn="@refDocPair.Document.ConvertEuFinsDocumentNumberToCelex()" class="original-document-url doc-info-link type-celex rewrite-ignore" href="@Html.Raw(eurocasesUrl)">@Html.Raw(refDocPair.Document.GetFriendlyLookForEuFinsDocumentNumber())</a>
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+        <div class="clearfix">
+        </div>
+    </div>
+                }
+
+

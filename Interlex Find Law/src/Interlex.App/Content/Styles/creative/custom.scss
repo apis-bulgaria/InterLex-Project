@@ -1,0 +1,50 @@
+﻿@import "_variables.scss";
+
+.container-main {
+    padding-top: 10px;
+}
+
+
+.login {
+    background-color: rgba(0,0,0,0.6);
+    height: 250px;
+    width: 380px;
+    margin: 0 auto;
+    margin-top: -200px;
+    padding: 55px;
+    padding-top: 35px;
+    text-align: center !important;
+    // border: 2px solid $primary;
+    -webkit-box-shadow: 0 0 10px #fff;
+    box-shadow: 0 0 10px #fff;
+
+    input {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        display: block;
+        margin: 0 auto;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+}
+
+.contact-form {
+    margin-top: 10px;
+
+    .form-control {
+        margin: 10px;
+    }
+}
+
+#contact-form-result-span {
+    font-size: 1.15em;
+    margin-top: 15px;
+
+    .fa {
+        font-size: 1.5em;
+    }
+}

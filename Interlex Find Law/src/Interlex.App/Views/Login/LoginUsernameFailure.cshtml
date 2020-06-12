@@ -1,0 +1,53 @@
+﻿@using Interlex.App.Resources
+@using System.Configuration
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>
+        @((ConfigurationManager.AppSettings["SolutionVersion"] == "product" ? "EuroCases" : "ConsumerCases") + " " + ViewBag.Title)
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @Styles.Render("~/Content/Styles/eurocases")
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/js")
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header-main">
+            <nav>
+                <ul class="right horizontal">
+                    <li class="li-chevron padding-7">@Html.Action("LanguageMenu", "ContextMenus")</li>
+                </ul>
+                <div class="clearfix"></div>
+            </nav>
+            <div style="height:35px;"></div>
+        </header>
+        <div class="body-container">
+            <div class="error-frame">
+                <div class="panel-header">
+                    <div class="logo-main-eu"></div>
+                </div>
+                <div class="error-panel-content">
+                    <div class="error-message">@ViewBag.ErrorMsg</div>
+                    <a id="eurocases-link" href="http://eurocases.eu">Official site</a>
+                </div>
+            </div>
+        </div>
+
+        @{Html.RenderPartial("_Footer");}
+    </div>
+</body>
+</html>
+
+
+
+

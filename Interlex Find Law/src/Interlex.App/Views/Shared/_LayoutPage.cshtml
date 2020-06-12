@@ -1,0 +1,309 @@
+﻿@using System.Configuration
+@using Interlex.App.Resources
+@using System.Globalization
+@using System.Collections
+@using System.Resources
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Helpers
+
+<!DOCTYPE html>
+<html>
+<head>
+    @* @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+        {
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <script>
+                $().ready(function () {
+                    (adsbygoogle = window.adsbygoogle || []).push({
+                        google_ad_client: "ca-pub-1339072016240303",
+                        enable_page_level_ads: true
+                    });
+                });
+            </script>
+        }*@
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+    @* <meta name="viewport" content="width=device-width" />*@
+    @* Disable auto-zoom for mobile*@
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>
+        InterLex – Find Law Module – Beta version
+    </title>
+    <link rel="icon" type="image/png" size="32x32" href="@WebAppHelper.AppRootFolder/favicon32.png"/>
+    <link rel="icon" type="image/png" href="@WebAppHelper.AppRootFolder/favicon.png"/>
+    <script type="text/javascript">
+        appRootFolder = '@WebAppHelper.AppRootFolder';
+    </script>
+    @Styles.Render("~/Content/css")
+    @{
+        if (WebAppHelper.AppRootFolder == "")
+        {
+            @Styles.Render("~/Content/fancytree")
+        }
+        else
+        {
+            @Styles.Render("~/Content/fancytree_findlaw")
+        }
+    }
+    @RenderSection("CSS", required: false)
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/Content/Styles/lib/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    @Styles.RenderFormat("<link href=\"{0}\" rel=\"stylesheet\" type=\"text/css\" media=\"all\" />", "~/Content/Styles/eurocases")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/js")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @*link href="~/Content/Styles/lib/jquery.mobile-1.4.5.css" media="screen and (max-width: 480px)"  rel="stylesheet" type="text/css"/>*@
+
+    @* @Styles.Render("~/Content/Styles/xslt")*@
+    @RenderSection("JavaScript", required: false)
+    <script type="text/javascript">
+        // BROWSERS
+
+        var isIE = false || !!document.documentMode;
+        var userAgentString = navigator.userAgent;
+        //Detect browsers
+        var isEdge = userAgentString.indexOf("Edge") > -1;
+        var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+        var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+        var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+        // At least Safari 3+: "[object HTMLElementConstructor]"
+        var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+        var isIE = false || !!document.documentMode;
+        //***************************
+
+        //object to hold client-side translations
+        Resources = function () {
+            var _storage = [];
+            var _JS_PREFIX = "UI_JS_";
+
+            //standart getter; no prefix prepended
+            function getResource(key) {
+                if (_storage[key] !== undefined) {
+                    return _storage[key];
+                }
+                else {
+                    return key;
+                }
+            }
+
+            //getting js only resource
+            function getJSResource(key) {
+                var fullKey = _JS_PREFIX + key;
+
+                getResource(fullKey);
+            }
+
+            function setResource(key, value) {
+                if (key !== undefined && key !== null && value !== undefined) {
+                    _storage[key] = value;
+                }
+                else {
+                    throw 'Invalid details for setting resource';
+                }
+            }
+
+            return {
+                getResource: getResource,
+                getJSResource: getJSResource,
+                setResource: setResource,
+                storage: _storage
+            }
+        }();
+
+        //populating client-side translations from resources
+        @{
+            ResourceSet defaultResSet = Resources.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true);
+            ResourceSet resourceSetForLanguage = Resources.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+            Dictionary<string, object> fullSet = new Dictionary<string, object>();
+
+            // Get default ones
+            foreach(DictionaryEntry entry in defaultResSet)
+            {
+                string resourceKey = entry.Key.ToString();
+                object resource = entry.Value.ToString().Replace(Environment.NewLine, "");
+
+                if (resourceKey.StartsWith("UI_JS_") || resourceKey.Equals("UI_NumbersAll") || resourceKey.Equals("UI_NumbersEU") || resourceKey.Equals("UI_NumbersNational") || resourceKey.Equals("UI_Remove") || resourceKey.Equals("UI_PILCases"))
+                {
+                    fullSet.Add(resourceKey, resource);
+                }
+            }
+
+            // Replace with the current language ones
+            foreach (DictionaryEntry entry in resourceSetForLanguage)
+            {
+                string resourceKey = entry.Key.ToString();
+                if (resourceKey.StartsWith("UI_JS_") || resourceKey.Equals("UI_NumbersAll") || resourceKey.Equals("UI_NumbersEU") || resourceKey.Equals("UI_NumbersNational") || resourceKey.Equals("UI_Remove") || resourceKey.Equals("UI_PILCases"))
+                {
+                    fullSet[resourceKey] = entry.Value.ToString().Replace("\n", "").Replace("\r", "").Replace("\r\n", "");
+                }
+            }
+
+            foreach (var entry in fullSet)
+            {
+                string resourceKey = entry.Key;
+                object resource = entry.Value;
+                @:Resources.setResource('@resourceKey', '@resource');
+                                    }
+        }
+
+        var searchId = 1;
+
+        function create(template, vars, opts) {
+            return $container.notify("create", template, vars, opts);
+        }
+
+        $(document).ready(function () {
+            $container = $("#notifications").notify();
+
+            $.ajaxSetup({ cache: false });
+        });
+
+        $(document).ajaxComplete(function (event, xhr, settings) {
+            UnAuthJsonCheck(xhr.responseJSON);
+        });
+
+        $(document).ajaxError(function (e, jqxhr, settings, exception) {
+            if (exception != '')
+                alert('Error:' + exception);
+        })
+
+    </script>
+</head>
+@{
+    var currentLangObj = InterfaceLanguages.GetLanguageById(Convert.ToInt32(Session["LanguageId"]));
+}
+<body class="@(Session["UserData"] != null && ((UserData)Session["UserData"]).Username.ToLower() == "sysdemo" ? "body-demo": null) @(Session["SelectedProductId"] != null && Convert.ToInt32(Session["SelectedProductId"]) == 2 ? "body-fins" : null) lang-@(currentLangObj.ShortCode)">
+    <div class="container">
+        @{Html.RenderPartial("_Header");}
+        <div class="body-container">
+            @RenderBody()
+            @*@if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+                {
+                    @Html.Partial("~/Views/Home/_DemoInitialMessage.cshtml")
+                }*@
+        </div>
+        <div class="clearfix"></div>
+        @{Html.RenderPartial("_Footer");}
+    </div>
+    <div id="notifications" style="z-index:1">
+    </div>
+    @if ((Session["UserData"] != null) && ((UserData)Session["UserData"]).Username == "sysdemo")
+    {
+        <script>
+            var curSelProductId = '@Session["SelectedProductId"].ToString()';
+
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments);
+                    (i[r].q = i[r].q || []).push(["_setCustomVar", 1, "ProductId", "EuroCases", 1]);
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-68700957-2', 'auto');
+
+            if (curSelProductId === '1') {
+                ga.q.push(["_setCustomVar", 1, "Product", "EuroCases"]);
+                ga('set', 'dimension1', 'EuroCases');
+            }
+            else if (curSelProductId === '2') {
+                ga.q.push(["_setCustomVar", 1, "Product", "Tax&Financial Standards"]);
+                ga('set', 'dimension1', 'Tax&Financial Standards');
+            }
+            else {
+                console.log("Google Analytics: Unexpected session selected product id");
+                ga('set', 'dimension1', 'EuroCases');
+            }
+
+            ga('set', 'metric1', curSelProductId);
+            ga('send', 'pageview');
+
+            @*  var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-68700957-2']);
+
+            if (curSelProductId === '1') {
+                _gaq.push(['_setCustomVar', 1, 'Product', 'EuroCases']);
+            }
+            else if(curSelProductId === '2') {
+                _gaq.push(['_setCustomVar', 1, 'Product', 'Tax&Financial Standards']);
+            }
+            else {
+                console.log('Invalid product id');
+                // should be only logging error but temporarily sending fake data
+                _gaq.push(['_setCustomVar', 1, 'Product', 'EuroCases']);
+            }
+
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/analytics.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })(); *@
+        </script>
+    }
+    <script>
+        @Html.JsMinify(@<text>
+        @* Fluid dialogs bindings *@
+        $(window).resize(function () {
+            fluidDialog();
+        });
+        $(document)
+            .on("dialogopen", ".ui-dialog", function (event, ui) {
+                fluidDialog();
+                $('body').css('overflow', 'hidden');
+            })
+            .on('dialogclose', '.ui-dialog:not(.modal-in-modal)', function (event, ui) {
+                $('body').css('overflow', 'visible');
+            });
+
+        $().ready(function () {
+            $('body').backToTop();
+
+            $('#demo-initial-message').dialog({
+                dialogClass: 'dialog-initial-message fixed-dialog',
+                autoOpen: false,
+                resizable: false,
+                height: 'auto',
+                title: '@Resources.UI_FreeTour',
+                width: 'auto',
+                maxWidth: 650,
+                defaultWidth: 650,
+                modal: true,
+                draggable: true,
+                fluid: true,
+                position: { my: 'top', at: 'top+250' },
+                open: function () {
+                    isAModalOpened = true;
+                    $('a').blur();
+                },
+                close: function () {
+                    setTimeout(function () {
+                        isAModalOpened = false;
+                    }, 200);
+                },
+                buttons: [
+     {
+         text: '@Resources.UI_Close_Lower', click: function () {
+             $(this).dialog("close");
+         }, class: 'btn-large btn-blue f-white f-bold f-0-7-important'
+     },
+                ],
+            });
+
+            $('#li-about-free-tour, #a-about-free-tour').on('click', function () {
+                $('#demo-initial-message').dialog('open');
+            });
+        });
+        </text>)
+    </script>
+</body>
+</html>
+
+
+

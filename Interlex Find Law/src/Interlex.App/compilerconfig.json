@@ -1,0 +1,94 @@
+﻿[
+  {
+    "outputFile": "Content/Styles/eurocases.css",
+    "inputFile": "Content/Styles/eurocases.less"
+  },
+  {
+    "outputFile": "Content/Styles/doc.css",
+    "inputFile": "Content/Styles/doc.less"
+  },
+  {
+    "outputFile": "Content/Styles/nav.css",
+    "inputFile": "Content/Styles/nav.less"
+  },
+  {
+    "outputFile": "Content/Styles/layout.css",
+    "inputFile": "Content/Styles/layout.less"
+  },
+  {
+    "outputFile": "Content/Styles/doc-list.css",
+    "inputFile": "Content/Styles/doc-list.less"
+  },
+  {
+    "outputFile": "Content/Styles/utility.css",
+    "inputFile": "Content/Styles/utility.less"
+  },
+  {
+    "outputFile": "Content/Styles/media.css",
+    "inputFile": "Content/Styles/media.less"
+  },
+  {
+    "outputFile": "Content/Styles/search.css",
+    "inputFile": "Content/Styles/search.less"
+  },
+  {
+    "outputFile": "Content/Styles/spritecrops.css",
+    "inputFile": "Content/Styles/spritecrops.less"
+  },
+  {
+    "outputFile": "Content/Styles/my-searches.css",
+    "inputFile": "Content/Styles/my-searches.less"
+  },
+  {
+    "outputFile": "Content/Styles/finances.css",
+    "inputFile": "Content/Styles/finances.less"
+  },
+  {
+    "outputFile": "Content/Styles/settings.css",
+    "inputFile": "Content/Styles/settings.less"
+  },
+  {
+    "outputFile": "Content/Styles/my-documents.css",
+    "inputFile": "Content/Styles/my-documents.less"
+  },
+  {
+    "outputFile": "Content/Styles/filters.css",
+    "inputFile": "Content/Styles/filters.less"
+  },
+  {
+    "outputFile": "Content/Styles/home.css",
+    "inputFile": "Content/Styles/home.less"
+  },
+  {
+    "outputFile": "Content/Styles/login-username-failure.css",
+    "inputFile": "Content/Styles/login-username-failure.less"
+  },
+  {
+    "outputFile": "Content/Styles/export-rtf.css",
+    "inputFile": "Content/Styles/export-rtf.less"
+  },
+  {
+    "outputFile": "Content/Styles/machine-translation.css",
+    "inputFile": "Content/Styles/machine-translation.less"
+  },
+  {
+    "outputFile": "Content/Styles/doc-top-bar.css",
+    "inputFile": "Content/Styles/doc-top-bar.less"
+  },
+  {
+    "outputFile": "Content/Styles/login.css",
+    "inputFile": "Content/Styles/login.less"
+  },
+  {
+    "outputFile": "Content/Styles/creative/creative.css",
+    "inputFile": "Content/Styles/creative/creative.scss"
+  },
+  {
+    "outputFile": "Content/Styles/colors.css",
+    "inputFile": "Content/Styles/colors.less"
+  },
+  {
+    "outputFile": "Content/Styles/paging.css",
+    "inputFile": "Content/Styles/paging.less"
+  }
+]

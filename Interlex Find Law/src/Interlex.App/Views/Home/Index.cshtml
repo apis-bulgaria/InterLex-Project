@@ -1,0 +1,149 @@
+﻿@model Interlex.BusinessLayer.Models.HomeData
+
+@using Interlex.BusinessLayer.Models;
+@using Interlex.App.Resources
+@using Interlex.App.Helpers
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script type="text/javascript">
+       @Html.JsMinify(@<text>
+    $().ready(function () {
+        addHints('doc-info-link', @Session["LanguageId"].ToString(), @((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+    });
+    </text>)
+</script>
+
+<div class="container-fluid main-content">
+    <div>
+        <div class="filters-container">
+            <div class="filters_box">
+               
+                @{
+                    var PILfolder = Model.Folders.Where(x => x.query.StartsWith("classificators:(0e82da2c20cf4fbba2c24006ae0342da")).FirstOrDefault();
+                    if (PILfolder != null)
+                    {
+                        <div class="btn_filter" id="right-buttons-container">
+                            <div>
+                                <span class="www-line"></span>
+                            </div>
+                            <div>
+                                <span>
+                                    @*<a href="~/Search/HomeSearch/@PILfolder.id" class="title_filter_btn">@PILfolder.title (@PILfolder.DocsCount)</a>*@
+                                    <a href="~/Search/HomeSearch/@PILfolder.id" class="title_filter_btn">@Resources.UI_PILCases (@PILfolder.DocsCount)</a>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                }
+                @{
+                    foreach (var folder in Model.Folders.Where(x => !x.query.StartsWith("classificators:(0e82da2c20cf4fbba2c24006ae0342da")).ToList())
+                    {
+                        <a href="~/Search/HomeSearch/@folder.id" class="title_filter">@folder.title (@folder.DocsCount)</a>
+
+                        <menu class="filter_menu">
+                            <ul>
+                                @foreach (var childFolder in folder.children)
+                                {
+                                    <li><a href="~/Search/HomeSearch/@childFolder.id" class="list_filters">@childFolder.title (@childFolder.DocsCount)</a></li>
+                                }
+                            </ul>
+                        </menu>
+                    }
+                }
+            </div>
+        </div>
+
+        @*  @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+            {
+                <div class="banner-container banner-container-box banner-container-mobile">
+                    <!-- Httpool Block -->
+                    <script type="text/javascript">
+                                    AdPlatformZone = {
+                                        id: "2f73fc142",
+                                        format: "300x250"
+                                    };
+                    </script>
+                    <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>
+                    <!-- /Httpool Block -->
+                </div>
+            }*@
+
+
+        <div id="index-right-container">
+
+            @*   @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+                {
+                    <div id="demo-announcement-container">
+                        <a target="_blank" href="http://eurocases.eu/en/Seminars"><span class="fa fa-calendar f-0-8" style="vertical-align: top; margin-top: 5px;"></span> Free online seminar on private international law - 30.11.2016, 15:00 CET <span class="fa fa-calendar f-0-8"  style="vertical-align: top; margin-top: 5px;"></span></a>
+                    </div>
+                }*@
+
+            <div class="margin-right-10 main-title-div-holder @((Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo") ? String.Empty : String.Empty)" style="height: 1px;">
+
+                @if (Convert.ToInt32(Session["SelectedProductId"]) == 1)
+                {
+                    @*  @Html.Partial("~/Views/Shared/_ReferedActProvisionSearch.cshtml") za Svetla *@
+                }
+                else if (Convert.ToInt32(Session["SelectedProductId"]) == 2 && Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+                {
+                    @* <div class="banner-container banner-container-wide" style="margin-left: 23px;">
+                <!-- Httpool Block -->
+                <script type="text/javascript">
+                        AdPlatformZone = {
+                            id: "2f73fc142",
+                            format: "728x90"
+                        };
+                </script>
+                <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>
+                <!-- /Httpool Block -->
+            </div>*@
+                }
+
+                <span class="f-blue f-bold page-main-title">
+                    @((Session["SelectedProductId"].ToString() == "1") ? Resources.UI_NewDocuments : Resources.UI_Fins_NewDocuments)
+                </span>
+
+           
+
+                @Html.Partial("~/Views/Shared/_ReferedActProvisionSearch.cshtml")
+
+
+                @*@Html.Partial("~/Views/Shared/_DocListButtons.cshtml")*@
+            </div>
+            <div>
+                &nbsp;
+            </div>
+        </div>
+    </div>
+
+
+    <div id="list_container" class="list-container-home" style="float: left;">
+        @*  width: @(Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo" ? "69%" : "79%");  *@
+
+        @foreach (var t in Model.NewDocs)
+        {
+            <div class="item item-book-scales">
+                @Html.DocPartial(t, Convert.ToInt32(Session["LanguageId"]), WebAppHelper.AppRootFolder, (Session["UserData"] as UserData).OpenDocumentsInNewTab)
+                <div>
+
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+
+<div class="mobile-filters-show-button" data-page="home"><span class="fa fa-filter"></span></div>
+
+<script>
+    @Html.JsMinify(@<text>
+    globalDocumentUIBinding();
+
+    $().ready(function(){
+        highlightMenu('home');
+    });
+    </text>)
+</script>

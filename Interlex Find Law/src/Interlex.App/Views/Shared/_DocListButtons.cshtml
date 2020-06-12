@@ -1,0 +1,71 @@
+﻿@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Models;
+
+@*<div class="right" id="right-buttons-container">
+    <a href="#" id="btn-clear-export-list" style="display: none;" class="f-bold f-orange-original">
+    <div><img src="~/Content/Images/checkbox-selected-new.png" style="display: inline; vertical-align: bottom; margin-left: 0; margin-right: 2px;"/>@Resources.UI_ExportUnmarkAll</div></a>
+    @if ((Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+    {
+        <a href="~/Export/ExportMultiDocs?type=rtf" id="rtf-export-sysdemo" class="f-bold f-orange-original"><span class="fa fa-file-word-o f-grey"></span> @Resources.UI_ExportTo RTF</a>
+        <a href="~/Export/ExportMultiDocs?type=pdf" id="pdf-export-sysdemo" class="f-bold f-orange-original"><span class="fa fa-file-pdf-o f-grey"></span> @Resources.UI_ExportTo PDF</a>
+    }
+    else
+    {
+        <a href="~/Export/ExportMultiDocs?type=rtf" id="rtf-export" class="f-bold f-orange-original"><span class="fa fa-file-word-o f-grey"></span> @Resources.UI_ExportTo RTF</a>
+        <a href="~/Export/ExportMultiDocs?type=pdf" id="pdf-export" class="f-bold f-orange-original"><span class="fa fa-file-pdf-o f-grey"></span> @Resources.UI_ExportTo PDF</a>
+    }
+</div>*@
+
+<script>
+    var selectedDocsIds = [];
+    var MAX_SELECTED_DOCUMENTS = 10;
+
+    $().ready(function () {
+        $('#rtf-export').click(preventNullCountExport);
+        $('#pdf-export').click(preventNullCountExport);
+
+        if ($('#rtf-export-sysdemo').length) {
+            $('#rtf-export-sysdemo, #pdf-export-sysdemo').click(exportButtonClickSysDemo);
+        }
+
+        function preventNullCountExport(e) {
+            if (selectedDocsIds.length === 0) {
+                e.preventDefault();
+
+                notify('',
+                Resources.storage['UI_JS_AtLeastOneDocumentToExport'],
+                'warn');
+            }
+        }
+
+        function exportButtonClickSysDemo(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            @if (Session["SelectedProductId"].ToString() == "1")
+            {
+                @:window.location.href = "/User/ProductFeaturesInfo/7";
+            }
+            else
+            {
+                 @:window.location.href = "/User/ProductFeaturesInfoFinances/7";
+            }
+
+        }
+
+        $('#btn-clear-export-list').on('click', function () {
+            selectedDocsIds = [];
+            $('.checkbox-document-selected').addClass('checkbox-document');
+            $('.checkbox-document-selected').removeClass('checkbox-document-selected');
+            $('.doc-item-container').css('background-color', 'white');
+            $('.not-active-link-summaries').css('background-color', 'white');
+            $('.not-active-link-summaries').css('border-bottom', '3px solid white');
+            $('.not-active-link-keywords').css('background-color', 'white');
+            $('.not-active-link-keywords').css('border-bottom', '3px solid white');
+            $('.checkbox-document').unbind();
+            bindSelectsForExport();
+            $('#btn-clear-export-list').fadeOut(200);
+            return false;
+        });
+    });
+</script>

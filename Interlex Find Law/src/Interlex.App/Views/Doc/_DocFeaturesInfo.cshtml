@@ -1,0 +1,271 @@
+﻿@model Interlex.BusinessLayer.Models.Document
+@using Interlex.BusinessLayer.Models;
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Helpers
+
+<div class="container-fluid main-content @Model.HtmlModel.PublisherId">
+    <div id="doc-view-container" style="width:99%; margin-left:0; min-height:0;" data-langid="@Model.LangId" data-docnumber="@Model.DocNumber">
+
+        @{
+            //Dictionary<int, string> langsDict = new Dictionary<int, string> { { 1, "BG" }, { 2, "DE" }, { 3, "FR" }, { 4, "EN" } };
+            Language interfaceLanguage = InterfaceLanguages.GetLanguageById(int.Parse(Session["LanguageId"].ToString()));//langsDict[int.Parse(Session["LanguageId"].ToString())];
+        }
+
+        @ActHelper.DisplayTitle(this.Model, this.Html)
+        @ActHelper.DisplaySubTitle(this.Model, this.Html)
+
+        <!-- Keywords -->
+        @if (Model.HtmlModel.Keywords != null && Model.HtmlModel.PublisherId != "EUFINS")
+        {
+            //var langs = Model.HtmlModel.Keywords.Content.Select(x => x.Language).ToList();
+            var sources = Model.HtmlModel.Keywords.Content.ToList();
+
+            string doclang = null;
+            var source = Model.HtmlModel.Keywords.Content.FirstOrDefault().Source;
+
+            string extendDisplayKeywords = String.Empty;
+            string chevronDirKeywords = String.Empty;
+
+            if (Request.Cookies["section-opened-keywords"] == null || Request.Cookies["section-opened-keywords"].Value == "1")
+            {
+                extendDisplayKeywords = "display:block;";
+                chevronDirKeywords = "down";
+            }
+            else
+            {
+                extendDisplayKeywords = "display:none;";
+                chevronDirKeywords = "right";
+            }
+
+            <div class="expanding-section docmenu-item">
+                <div class="semantic-header" onclick="showContent($('#keywordsChevr'), '#keywordsSec', 'chevron-blue2-down', 'chevron-blue2-right', 'keywords')">
+                    <span id="keywordsSecHeader" class="docmenu-item-text">@Model.HtmlModel.Keywords.Rubric</span>
+                    <div class="right">
+                        <div class="heading-langs blockList left">
+                            @foreach (var item in sources)
+                            {
+                                <span onclick="showTabContent(this, event, '@Html.Raw("#keyword"+item.Source)', '.lang-keyword', '.btn-lang-keyword')" class="btn btn-lang-keyword btn-lang@((source == item.Source) ? " selected" : "")" hint="@item.Hint">@Html.Raw(item.Source)</span>
+                            }
+                        </div>
+                        <span id="keywordsChevr" class="chevron-blue2-@chevronDirKeywords margin-left-10"></span>
+                    </div>
+                </div>
+                <div id="keywordsSec" style="@extendDisplayKeywords">
+                    @if (Model.HtmlModel.Keywords.Content != null)
+                    {
+                        <div class="semantic-section">
+                            @foreach (var c in Model.HtmlModel.Keywords.Content)
+                            {
+                                string display = "display:none;";
+                                if (source == c.Source)
+                                {
+                                    display = "display:block;";
+                                }
+
+                                var dls = c.LanguageGroups.Where(x => x.Language.Value.ToUpper() == interfaceLanguage.ShortCode.ToUpper()).FirstOrDefault();
+                                if (dls != null)
+                                {
+                                    doclang = dls.Language.Value;
+                                }
+
+                                if (doclang == null)
+                                {
+                                    doclang = c.LanguageGroups.FirstOrDefault().Language.Value;
+                                }
+
+                                <div id="@Html.Raw("keyword" + c.Source)" class="lang-keyword" style="@display">
+                                    @{ var langs = c.LanguageGroups; }
+                                    @if (!(langs.Count == 1 && langs.FirstOrDefault().Language.Value.ToUpper() == interfaceLanguage.ShortCode.ToUpper()))
+                                    {
+                                        <div class="langs-tab">
+                                            @foreach (var item in langs)
+                                            {
+                                                <span onclick="showTabContent(this, event, '@Html.Raw("#keywordLang"+c.Source+item.Language.Value)', '.lang-keywordLang@(c.Source)', '.btn-lang-keywordLang')" class="btn-lang-keywordLang@((item.Language.Value == doclang) ? " selected" : "" )">@item.Language.Value</span>
+                                            }
+                                        </div>
+                                    }
+
+                                    @foreach (var t in c.LanguageGroups)
+                                    {
+                                        display = "display:none";
+                                        if (t.Language.Value == doclang)
+                                        {
+                                            display = "display:block";
+                                        }
+                                        <div id="@Html.Raw("keywordLang" + c.Source + t.Language.Value)" class="lang-keywordLang@(c.Source)" style="@display">
+                                            @{ var lang = t.Language; }
+                                            @foreach (var item in t)
+                                            {
+                                                <span>@Html.Raw(item)</span>
+                                            }
+                                        </div>
+                                                }
+
+                                </div>
+
+                                                }
+                        </div>
+                                                }
+                </div>
+            </div>
+                                                }
+
+        <!-- Summary -->
+        @if (Model.HtmlModel.Summaries != null)
+        {
+            //var langs = Model.HtmlModel.Summaries.Content.Select(x => x.Language).ToList();
+            var sources = Model.HtmlModel.Summaries.Content.ToList();
+            string doclang = null;
+            var source = Model.HtmlModel.Summaries.Content.FirstOrDefault().Source;
+
+            string extendDisplaySummary = String.Empty;
+            string chevronDirSummary = String.Empty;
+
+            if (Request.Cookies["section-opened-summary"] == null || Request.Cookies["section-opened-summary"].Value == "1")
+            {
+                extendDisplaySummary = "display:block;";
+                chevronDirSummary = "down";
+            }
+            else
+            {
+                extendDisplaySummary = "display:none;";
+                chevronDirSummary = "right";
+            }
+
+            <div class="expanding-section docmenu-item">
+                <div class="semantic-header" onclick="showContent($('#summaryChevr'), '#summarySec', 'chevron-blue2-down', 'chevron-blue2-right', 'summary')">
+                    <span id="summarySecHeader" class="docmenu-item-text">@Model.HtmlModel.Summaries.Rubric</span>
+                    <div class="right">
+                        <div class="heading-langs blockList left">
+                            @foreach (var item in sources)
+                            {
+                                <span onclick="showTabContent(this, event, '@Html.Raw(" #summary"+item.Source)', '.lang-summary' , '.btn-lang-summary' )" class="btn btn-lang-summary btn-lang@((source == item.Source)?" selected":"")" hint="@item.Hint">@Html.Raw(item.Source)</span>
+                            }
+                        </div>
+                        <span id="summaryChevr" class="chevron-blue2-@chevronDirSummary margin-left-10"></span>
+                    </div>
+                </div>
+                <div id="summarySec" style="@extendDisplaySummary">
+                    @if (Model.HtmlModel.Summaries.Content != null)
+                    {
+                        <div class="semantic-section">
+                            @foreach (var c in Model.HtmlModel.Summaries.Content)
+                            {
+                                string display = "display:none;";
+                                if (source == c.Source)
+                                {
+                                    display = "display:block;";
+                                }
+
+                                var dls = c.LanguageGroups.Where(x => x.Language.Value.ToUpper() == interfaceLanguage.ShortCode.ToUpper()).FirstOrDefault();
+                                if (dls != null)
+                                {
+                                    doclang = dls.Language.Value;
+                                }
+
+                                if (doclang == null)
+                                {
+                                    doclang = c.LanguageGroups.FirstOrDefault().Language.Value;
+                                }
+
+                                <div id="@Html.Raw("summary" + c.Source)" class="lang-summary" style="@display">
+                                    @{ var langs = c.LanguageGroups; }
+                                    @if (!(langs.Count == 1 && langs.FirstOrDefault().Language.Value.ToUpper() == interfaceLanguage.ShortCode.ToUpper()))
+                                    {
+                                        <div class="langs-tab">
+                                            @foreach (var item in langs)
+                                            {
+                                                <span onclick="showTabContent(this, event, '@Html.Raw("#summaryLang"+c.Source+item.Language.Value)', '.lang-summaryLang@(c.Source)', '.btn-lang-summaryLang')" class="btn-lang-summaryLang@((item.Language.Value == doclang) ? " selected" : "" )">@item.Language.Value</span>
+                                            }
+                                        </div>
+                                    }
+                                    @foreach (var t in c.LanguageGroups)
+                                    {
+                                        display = "display:none";
+                                        if (t.Language.Value == doclang)
+                                        {
+                                            display = "display:block";
+                                        }
+
+                                        <div id="@Html.Raw("summaryLang" + c.Source + t.Language.Value)" class="lang-summaryLang@(c.Source)" style="@display">
+                                            @foreach (var item in t)
+                                            {
+                                                <span>@Html.Raw(item.Html.TruncateHtml(300) + "... " + "<a href=\"javascript:void(0)\" class=\"f-blue show-more\">" + Resources.UI_ShowMore_Lower.ToLower() + "</a>")</span>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                                        }
+                        </div>
+                                        }
+                </div>
+            </div>
+                                        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.show-more').tooltipster({
+            content: '@Resources.UI_NotAvaiableFeature',
+            theme: 'tooltipster-light',
+            contentAsHTML: false,
+            interactive: true
+        });
+    });
+    showContent = function (obj, selector, visibleClass, hiddenClass, cookieKey) {
+        var el = $(selector);
+        if (el.css('display') === 'none') {
+            el.slideDown(0);
+            $(obj).addClass(visibleClass);
+            $(obj).removeClass(hiddenClass);
+
+            setCookie('section-opened-' + cookieKey, '1', 365);
+
+            console.log(getCookie('section-opened-' + cookieKey));
+        }
+        else {
+            el.slideUp(0);
+            $(obj).removeClass(visibleClass);
+            $(obj).addClass(hiddenClass);
+
+            setCookie('section-opened-' + cookieKey, '0', 365);
+
+            console.log(getCookie('section-opened-' + cookieKey));
+        }
+    }
+
+    showTabContent = function (obj, ev, selector, tabContentsClass, tabBtnsClass) {
+        var el = $(selector);
+        ev.stopPropagation();
+
+        var sibls = $(tabContentsClass);
+        for (var i = 0; i < sibls.length; i++) {
+            $(sibls[i]).slideUp(0);
+        }
+
+        var chil = $(obj).parent().children(tabBtnsClass);
+        var btns = chil;//$(tabBtnsClass);
+        for (var i = 0; i < btns.length; i++) {
+            $(btns[i]).removeClass('selected');
+        }
+
+        if (el.css('display') === 'none') {
+            el.slideDown(0);
+            el.css('display', 'blobk');
+            //obj.className = 'chevron-blue2-down';
+        }
+        else {
+            el.slideUp(0);
+            el.css('display', 'none');
+            //obj.className = 'chevron-blue2-right';
+        }
+
+        $(obj).addClass('selected');
+    }
+
+    $().ready(function () {
+        var currentDoc_LangId = $('#doc-view-container').data('langid');
+        addHints('inline_link', currentDoc_LangId, true);
+    });
+</script>

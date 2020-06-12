@@ -1,0 +1,70 @@
+﻿@{
+    Layout = null;
+}
+
+<div id="settings-popup" style="display: none">
+    <div class="col-md-3" id="settings-menu-container">
+        @Html.Partial("~/Views/User/_SettingsMenu.cshtml")
+    </div>
+    @Html.Partial("~/Views/User/_CommonSettings.cshtml") @*default editable option*@
+    @Html.Partial("~/Views/User/_SettingsChangeResult.cshtml")
+</div>
+
+<script>
+    $('#settings-menu-list button').click(function () {
+        var $settingsBodyContainer = $('#settings-body-container'),
+        url = $(this).data('url');
+        var id = $(this).attr('id');
+
+        $(this).removeClass('f-grey');
+        $(this).removeClass('btn-transparent-large');
+        $(this).addClass('btn-gray-large');
+        $(this).addClass('f-blue');
+        $(this).addClass('settings-tab-border');
+
+        if (id === 'settings-password') {
+            refreshButtonStyles('#settings-languages');
+            refreshButtonStyles('#settings-email');
+            refreshButtonStyles('#settings-common');
+            refreshButtonStyles('#settings-account-deletion');
+        }
+        else if (id === 'settings-email') {
+            refreshButtonStyles('#settings-password');
+            refreshButtonStyles('#settings-languages');
+            refreshButtonStyles('#settings-common');
+            refreshButtonStyles('#settings-account-deletion');
+        }
+        else if(id === 'settings-languages') {
+            refreshButtonStyles('#settings-password');
+            refreshButtonStyles('#settings-email');
+            refreshButtonStyles('#settings-common');
+            refreshButtonStyles('#settings-account-deletion');
+        }
+        else if (id === 'settings-account-deletion') {
+            refreshButtonStyles('#settings-password');
+            refreshButtonStyles('#settings-email');
+            refreshButtonStyles('#settings-common');
+            refreshButtonStyles('#settings-languages');
+        }
+        else {
+            refreshButtonStyles('#settings-password');
+            refreshButtonStyles('#settings-email');
+            refreshButtonStyles('#settings-languages');
+            refreshButtonStyles('#settings-account-deletion');
+        }
+
+        $.get(url, function (data) {
+            $settingsBodyContainer.replaceWith(data);
+        });
+    });
+
+   
+
+    function refreshButtonStyles(selector) {
+        $(selector).removeClass('settings-tab-border');
+        $(selector).removeClass('btn-gray-large');
+        $(selector).addClass('btn-transparent-large');
+        $(selector).removeClass('f-blue');
+        $(selector).addClass('f-grey');
+    }
+</script>

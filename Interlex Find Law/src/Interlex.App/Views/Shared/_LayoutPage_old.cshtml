@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EU Cases @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+    @RenderSection("CSS", required: false)
+
+    <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/js")
+
+    @RenderSection("JavaScript", required: false)
+
+    <script type="text/javascript">
+        var searchId = 1;
+
+        var sessionTimeout = @Session.Timeout; // minutes
+        var sessionTimeoutAlertMins = 1;
+        var timerNotifyExpire;
+        var sessionExpireDlg;
+
+        function sessionExpired() {
+            $('#pSession').html('Session expired');
+            $('#bContinueSession').hide();
+            $('#bLogin').show();
+        }
+
+        function create(template, vars, opts) {
+            return $container.notify("create", template, vars, opts);
+        }
+
+        function showSessionExpire()
+        {
+            sessionExpireDlg = create("session_expire", { title: 'Session expire', text: 'Your session is going to expire after' }, {
+                expires: false
+            });
+
+            $('#bContinueSession').show();
+            $('#bLogin').hide();
+
+            sessionExpireDlg.widget().delegate("#bContinueSession", "click", function () {
+                // do empty ajax call to refresh server session
+                $.ajax({ url: '@Url.Action("RefreshSession", "Login")' })
+                        .done(function (result) {
+                            //action no needed
+                        })
+                        .fail(function (xhr, status, error) {
+                            // todo
+                            //api.set('content.text', status + ': ' + error)
+                        })
+                //Dialog will be closed automatically by global event ajaxComplete
+            });
+
+            sessionExpireDlg.widget().delegate("#bLogin", "click", function () {
+                // do empty ajax call to refresh server session
+                window.location.href = '@Url.Action("Index", "Login")';
+            });
+
+            $("#expireMins").countdowntimer(
+                    {
+                        minutes: sessionTimeoutAlertMins,
+                        seconds: 0,
+                        size: "lg",
+                        timeUp : sessionExpired
+                    });
+        }
+
+        function refreshTimeout()
+        {
+            if(timerNotifyExpire != null)
+            {
+                clearTimeout(timerNotifyExpire);
+
+                // just in case notification is shown
+                if(sessionExpireDlg)
+                    sessionExpireDlg.close();
+            }
+
+            // notify user that session is going to expire
+            timerNotifyExpire = setTimeout(showSessionExpire, (sessionTimeout - sessionTimeoutAlertMins)*60*1000);
+        }
+
+        $(document).ready(function () {
+            $container = $("#notifications").notify();
+
+            refreshTimeout();
+        });
+
+        $(document).ajaxComplete(function( event, xhr, settings ) {
+            UnAuthJsonCheck(settings);
+            refreshTimeout();
+        });
+
+        $(document).ajaxError(function(e, jqxhr, settings, exception) {
+            alert(exception);
+        })
+
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div class="top-nav">
+            <div class="container-fluid">
+                <div class="row">
+                    @Html.Action("MainMenu", "ContextMenus")
+                    <div class="col-md-5">
+                        <div class="pull-right">
+                            @Html.Action("UserMenu", "ContextMenus")
+                            @Html.Action("LanguageMenu", "ContextMenus")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-search">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="pull-left" style="font-size: 13px;">EU and national legislation and cases in consumer law</p>
+                    </div>
+                    @{Html.RenderAction("Show", "SearchBox");}
+                </div>
+            </div>
+        </div>
+        <div class="blue-row">&nbsp;</div>
+    </div>
+    <div id="notifications" style="z-index:10000">
+        <div id="session_expire">
+            <a class="ui-notify-close ui-notify-cross" href="#">close</a>
+            <h1>Session expire</h1>
+            <p id="pSession">#{text} <span id="expireMins"></span>.</p>
+            <p style="margin-top:10px;text-align:center">
+                <input type="button" id="bContinueSession" class="confirm" value="Continue session" />&nbsp;
+                <input type="button" id="bLogin" class="confirm" value="Login" />
+            </p>
+        </div>
+    </div>
+    <div id="content">
+        @RenderBody()
+    </div>
+    @{Html.RenderPartial("_Footer");}
+</body>
+</html>

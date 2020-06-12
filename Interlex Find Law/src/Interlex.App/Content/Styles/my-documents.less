@@ -1,0 +1,65 @@
+﻿.my-folders-container .fancytree-node.fancytree-active,
+.my-folders-container .fancytree-node.fancytree-selected {
+    background-color: #cbe8f6;
+    border-color: #26a0da;
+}
+
+#link-wrapper {
+    .add-new-folder-link {
+        margin-top: 4.4%;
+    }
+    /*
+    @media screen and (max-width: 900px) {
+        text-align: initial;
+
+        .add-new-folder-link {
+            margin: 0 0;
+        }
+    }
+    */
+}
+
+/*
+.folders-main-btn-cancel {
+    @media screen and (max-width: 900px) {
+        clear: both;
+    }
+}
+
+.folders-main-btn-save {
+    @media screen and (max-width: 900px) {
+        float: left !important;
+    }
+}
+*/
+#my-documents-folders-container {
+    float: left;
+    width: 19%;
+    overflow: auto;
+}
+
+#my-documents-docs-container {
+    float: left;
+    border-left-width: 2px;
+    border-left-style: solid;
+    border-left-color: rgb(224, 224, 224);
+
+    #my-documents-list-container {
+        margin-top: 5px;
+    }
+
+    #doc-filter-pagination-container {
+        #top_paging {
+            width: 100% !important;
+            overflow: initial;
+        }
+    }
+}
+
+.container {
+    cursor: auto;
+
+    &.document-dragging {
+        cursor: move;
+    }
+}

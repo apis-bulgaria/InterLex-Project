@@ -1,0 +1,75 @@
+﻿@using Interlex.BusinessLayer.Models
+@using Interlex.App.Helpers;
+
+<div class="dropdown pull-right" id="languages-dropdown-container">
+    @{
+        foreach (var lang in InterfaceLanguages.Languages.Where(l => l.IsInterfaceLang == true))
+        {
+            if (Convert.ToInt32(Session["LanguageId"]) == lang.Id)
+            {
+                <a href="#" class="dropdown-toggle language-dropdown block" data-toggle="dropdown" aria-expanded="false">
+                    <span class="block left header-language-title">@lang.Text.CapitalizeFirstLetter()</span>
+                    <img class="block left flag-in-dropdown" src="~/Content/Images/flags/@string.Format("{0}.png", lang.ShortCode)" alt="@lang.Text">
+                    <span class="chevron-white-down left"></span>
+                </a>
+                @* <a href="#" class="language-dropdown"><img src="~/Content/Images/chevron-down-white.png" /></a>*@
+                break;
+            }
+        }
+    }
+    <ul class="dropdown-menu arrow_box_small" id="language-menu" role="menu" aria-labelledby="language-dropdown" style="display: none;">
+        @{
+            foreach (var lang in InterfaceLanguages.Languages.Where(l => l.IsInterfaceLang == true))
+            {
+                @* Not showing currently chosen language*@
+        if (Convert.ToInt32(Session["LanguageId"]) == lang.Id)
+        {
+            continue;
+        }
+
+                @* If in T&FSt context, not showing languages that are not primary*@
+            if (Convert.ToInt32(Session["SelectedProductId"]) == 2 && lang.Id > 4
+                && Session["UserData"] != null
+                && ((Session["UserData"] as UserData).ClientId != 1 || (Session["UserData"] as UserData).Username.ToUpper() == "SYSDEMO")) // Apis Europe client ignore
+                {
+                    continue;
+                }
+
+                <li class="language-container">
+                    <a href="javascript:changeLang('@lang.Code')" role="menuitem" class="block">
+                        <span class="block left">@lang.Text.CapitalizeFirstLetter()</span><img class="block right flag-in-dropdown" src="~/Content/Images/flags/@string.Format("{0}.png", lang.ShortCode)" alt="@lang.Text.CapitalizeFirstLetter()">
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+    <div class="clearfix"></div>
+</div>
+
+<script>
+    $('#language-menu').hide();
+
+    $('.language-dropdown').click(function (e) {
+        e.preventDefault();
+
+        if ($('#language-menu').css('display') === 'none') {
+            $('#language-menu').show();
+
+            if ($('#help-container').is(':visible')) {
+                $('#help-container').hide();
+            }
+
+            if ($('#user-details').css('display') !== 'none') {
+                $('#user-details').hide();
+            }
+
+            if ($('#container-product-change').is(':visible')) {
+                $('#container-product-change').hide();
+            }
+        }
+        else {
+            $('#language-menu').hide();
+        }
+    })
+</script>
+

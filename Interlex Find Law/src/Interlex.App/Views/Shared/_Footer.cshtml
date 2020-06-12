@@ -1,0 +1,111 @@
+﻿@using Interlex.App.Resources
+@using Interlex.BusinessLayer
+@using Interlex.BusinessLayer.Models
+<footer class="@(Session["UserData"] != null && ((UserData)Session["UserData"]).Username.ToLower() == "sysdemo" ? "footer-demo" : "")">
+    @if (System.Configuration.ConfigurationManager.AppSettings["ShowDebugLabel"] == "1")
+    {
+        <div class="footer-menu">
+            <ul>
+                <span id="footer-span-version" class="right f-0-7 f-grey" style="padding-right: 55px;">
+                    version:&nbsp;@System.Configuration.ConfigurationManager.ConnectionStrings["ConnPG"].ConnectionString.Split(';')[2].Replace("Database=", "") (@DBUtil.GetDBMaxVersion())
+                </span>
+            </ul>
+        </div>
+    }
+
+    @*@if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo"){*@
+    <div class="main-footer">
+        <div id="footer-freetour-left" class="left margin-left-10 footer-box">
+            @{
+
+                <div class="eu_flag_img">
+                    <img src="~/Content/Images/eu_flag.png" alt="Eu_flag" />
+                </div>
+                <div class="eu_flag_info">
+                    <p>
+                        @Resources.UI_FooterFundedProject
+                    </p>
+                </div>
+                <p>
+                    @Resources.UI_FooterInfoProject
+                </p>
+            }
+        </div>
+        @{var currentLang = InterfaceLanguages.GetLanguageById(Convert.ToInt32(Session["LanguageId"])).ShortCode;
+            if (currentLang != "bg" && currentLang != "it")
+            {
+                currentLang = "en";
+            }
+        }
+        <div id="footer-right" class="footer-links">
+            @{
+                //middle-footer-box
+                <div id="footer_list">
+                    <ul>
+                        <li><a href="http://www.interlexproject.eu/" target="_blank">@Resources.UI_ABOUT_INTERLEX</a></li>
+                        <li><a href="https://interlex-portal.eu/@currentLang/index.html" target="_blank">@Resources.UI_Portal</a></li>
+                        <li><a href="https://interlex-portal.eu/@currentLang/legal.html#privacy-policy" target="_blank">@Resources.UI_PRIVACY_POLICE</a></li>
+                        <li><a href="https://interlex-portal.eu/@currentLang/legal.html#disclaimer" target="_blank">@Resources.UI_DISCLAIMER_LINK</a></li>
+                        <li><a href="https://interlex-portal.eu/@currentLang/legal.html#copyright-notice" target="_blank">@Resources.UI_LEGAL_NOTICE</a></li>
+                    </ul>
+                </div>
+
+                @*<div>
+                        &copy;
+                        @DateTime.Now.Year
+                        <a href="http://apis.bg/en" target="_blank">APIS Europe</a>
+                    </div>*@
+            }
+
+        </div>
+        <div class="footer-logo">
+            @{
+                <div class="footer-main-eu">
+                </div>
+            }
+        </div>
+
+
+        @*<div id="footer-freetour-right" class="right">
+            @* <span class="label">@Resources.UI_Footer_FreeTour_ServiceOf</span> <img src="~/Content/Images/footer-apis-logo.png" alt="APIS EUROPE" title="APIS EUROPE" id="footer-apis-logo" /> *@
+        @*  <a href="http://eurocases.eu" target="_blank">@Resources.UI_EuroCasesMainSite</a>
+                <a href="javascript:void(0);" id="a-about-free-tour">@Resources.UI_AboutFreeTour</a>
+            </div>*@
+    </div>
+    @*}
+        else
+        {*@
+    @*<div>*@
+    @*<div class="left footer-font-style-1 margin-top-10" id="footer-long-text footer-boxes">*@
+    @*@Resources.UI_LongText2   &nbsp;  *@
+    @*</div>*@
+
+    @*<div id="footer-freetour-left" class="left margin-left-10 footer-boxes">
+            @{
+                <p>@Resources.UI_FooterFundedProject</p>
+            }
+        </div>*@
+
+    @*<div id="footer-middle" class="footer-boxes">
+
+            &copy;
+            @DateTime.Now.Year
+            <a href="http://apis.bg/en" target="_blank">APIS Europe</a>
+        </div>*@
+
+    @*<div id="footer-right" class="footer-boxes">
+            @{
+                <p>
+                    @Resources.UI_FooterInfoProject
+                </p>
+            }
+        </div>*@
+
+    @*<div class="left" id="footer-images">
+                    <a href="http://apis.bg" target="_blank"><img src="~/Content/Images/footer-apis-logo.png" alt="APIS EUROPE" title="APIS EUROPE" id="footer-apis-logo" /></a>
+                </div>
+            </div>
+        }*@
+
+    <div class="clearfix"></div>
+</footer>

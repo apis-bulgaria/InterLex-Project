@@ -1,0 +1,36 @@
+﻿@using Interlex.App.Resources
+<div id="settings-body-container">
+    <div class="panel-body">
+        <label>@Resources.UI_CurrentPassword</label>
+        <input type="password" id="del-acc-password" />
+        <div id="del-acc-result" class="f-bold f-grey f-0-8">
+        </div>
+        <button class="btn-large btn f-white f-bold btn-blue" id="del-acc" style="font-size: 0.8em; margin-top: 44px; margin-left: 20px;">@Resources.UI_Delete</button>
+    </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#del-acc').on('click', function () {
+            $.ajax({
+                method: 'POST',
+                url: '@(Url.Action("DelAcc", "User"))',
+                data: {
+                    password: $('#del-acc-password').val()
+                }
+            }).done(function (response) {
+                if (response === 'OK') {
+                    window.location.href = appRootFolder;
+                }
+                else if (response === 'FAIL') {
+                    $('#del-acc-result').html('@Resources.UI_WrongPassword');
+                }
+                else {
+                    console.log('error');
+                }
+            });
+        });
+    });
+</script>

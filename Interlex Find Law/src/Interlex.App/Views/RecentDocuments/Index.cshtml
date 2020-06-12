@@ -1,0 +1,117 @@
+@model Interlex.BusinessLayer.Models.RecentDocuments
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script type="text/javascript">
+    function resize_content() {
+        $('#dList').height($(window).height() - $('#footer').height() - $('#header').height());
+    }
+
+    $().ready(function () {
+        resize_content();
+        highlightMenu('recent-documents');
+    });
+
+    $(window).resize(function () {
+        resize_content();
+    });
+
+    function LoadRecentDocs(page) {
+        if ($('#OrderBy').length)
+            orderBy = $('#OrderBy').val();
+        else
+            orderBy = 'open_date';
+        
+       // if ($('#OrderDir').length)
+            orderDir = $('#sort_dir').data('dir');
+       // else
+        //    orderDir = 'desc';
+
+        pinned = null;
+        if ($('#Pinned').length) {
+            if ($('#Pinned').val() == 'True')
+                pinned = true;
+            else if ($('#Pinned').val() == 'False')
+                pinned = false;
+        }
+
+        period = 0;
+        if ($('#Period').length)
+            period = $('#Period').val();
+
+        docType = null;
+        if ($('#DocType').length)
+            docType = $('#DocType').val();
+        
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("List"))",
+            data: { pinned: pinned, docType: docType, period: period, orderBy: orderBy, orderDir: orderDir }
+        })
+  .done(function (data) {
+      $('#list_container').html(data);
+  });
+    }
+
+    function pin(id)
+    {
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("Pin"))",
+            data: { id: id }
+    })
+    .done(function (data) {
+        $('#pin' + id).attr("href", "unpin(" + id + ")");
+        $('#pin' + id).html('unpin');
+    });
+    }
+
+    function unpin(id)
+    {
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("Unpin"))",
+            data: { id: id }
+    })
+    .done(function (data) {
+        $('#pin' + id).attr("href", "pin(" + id + ")");
+        $('#pin' + id).html('pin');
+    });
+    }
+
+    function pinFilter(s)
+    {
+        $('#Pinned').val(s);
+        LoadRecentDocs(1);
+    }
+
+    function docTypeFilter(s) {
+        $('#DocType').val(s);
+        LoadRecentDocs(1);
+    }
+
+    function periodFilter(s) {
+        $('#Period').val(s);
+        LoadRecentDocs(1);
+    }
+
+    function orderByFilter(s) {
+        $('#OrderBy').val(s);
+        LoadRecentDocs(1);
+    }
+
+    function orderDirFilter(s) {
+        $('#sort_dir').data('dir', s);
+        LoadRecentDocs(1);
+    }
+
+    $().ready(function () {
+        LoadRecentDocs(1);
+    });
+
+</script>
+
+<div id="list_container"></div>
+<div class="mobile-filters-show-button" data-page="recent-documents"><span class="fa fa-filter"></span></div>

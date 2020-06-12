@@ -1,0 +1,214 @@
+﻿@model Interlex.BusinessLayer.Models.RecentDocuments
+
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources
+@using Interlex.App.Helpers
+
+<div class="container-fluid main-content">
+    <div>
+        <div class="filters-container">
+            <div id="pAvaiableFilters">
+                <div class="b-medium b-orange f-white f-bold" style="border-radius:3px;">@Resources.UI_Filters@*<span class="chevron-white-down-on-orange right"></span>*@</div>
+                <div id="pAvaiableFiltersBody">
+                    <div class="filter">@Html.HiddenFor(m => m.Filters.Period, new { @id = "Period" })<b> @Resources.UI_Period:</b></div>
+                    <ul class="filter-ul-holder">
+                        <li class="not-classifier">
+                            @if (Model.Filters.Period == RecentDocDatePeriod.All)
+                            {
+                                @Resources.UI_All
+                            }
+                            else
+                            {
+                                <a href="javascript:periodFilter(0)">@Resources.UI_All</a>
+                            }
+                        </li>
+
+                        <li class="not-classifier">
+                            @if (Model.Filters.Period == RecentDocDatePeriod.Today)
+                            {
+                                @Resources.UI_Today
+                            }
+                            else
+                            {
+                                <a href="javascript:periodFilter(1)">@Resources.UI_Today</a>
+                            }
+                        </li>
+
+                        <li class="not-classifier">
+                            @if (Model.Filters.Period == RecentDocDatePeriod.Yesterday)
+                            {
+                                @Resources.UI_Yesterday
+                            }
+                            else
+                            {
+                                <a href="javascript:periodFilter(2)">@Resources.UI_Yesterday</a>
+                            }
+                        </li>
+                        <li class="not-classifier">
+                            @if (Model.Filters.Period == RecentDocDatePeriod.LastWeek)
+                            {
+                                @Resources.UI_LastWeek
+                            }
+                            else
+                            {
+                                <a href="javascript:periodFilter(3)">@Resources.UI_LastWeek</a>
+                            }
+                        </li>
+
+                        <li class="not-classifier">
+                            @if (Model.Filters.Period == RecentDocDatePeriod.LastMonth)
+                            {
+                                @Resources.UI_LastMonth
+                            }
+                            else
+                            {
+                                <a href="javascript:periodFilter(4)">@Resources.UI_LastMonth</a>
+                            }
+                        </li>
+                    </ul>
+                    <div class="filter">@Html.HiddenFor(m => m.Filters.DocType, new { @id = "DocType" })<b> @Resources.UI_DocumentType:</b></div>
+                    <ul class="filter-ul-holder">
+                        <li class="not-classifier">
+                            @if (Model.Filters.DocType == null)
+                            {
+                                @Resources.UI_All
+                            }
+                            else
+                            {
+                                <a href="javascript:docTypeFilter(null)">@Resources.UI_All</a>
+                            }
+                        </li>
+                        <li class="not-classifier">
+                            @if (Model.Filters.DocType == 1)
+                            {
+                                @Resources.UI_Caselaw
+                            }
+                            else
+                            {
+                                <a href="javascript:docTypeFilter(1)">@Resources.UI_Caselaw</a>
+                            }
+                        </li>
+                        <li class="not-classifier">
+                            @if (Model.Filters.DocType == 2)
+                            {
+                                @Resources.UI_Legislation
+                            }
+                            else
+                            {
+                                <a href="javascript:docTypeFilter(2)">@Resources.UI_Legislation</a>
+                            }
+                        </li>
+                        @if (Convert.ToInt32(Session["SelectedProductId"]) == 2)
+                        {
+                            <li class="not-classifier">
+                                @if (Model.Filters.DocType == 3)
+                                {
+                                    @Resources.UI_TFST_Practice
+                                }
+                                else
+                                {
+                                    <a href="javascript:docTypeFilter(3)">@Resources.UI_TFST_Practice</a>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="left-recent-doc-container">
+            <div class="margin-right-10 main-title-div-holder" style="height: 1px;">
+                <span class="f-blue f-bold page-main-title" style="margin-left: 13px;">@Resources.UI_RecentDocuments</span>
+
+
+                @*@Html.Partial("~/Views/Shared/_ReferedActProvisionSearch.cshtml")*@
+                @Html.Partial("~/Views/Shared/_DocListButtons.cshtml")
+            </div>
+            <div>
+                &nbsp;
+            </div>
+
+            <div id="doc-filter-pagination-container">
+                <div id="top_paging"></div> @*Just for keeping layout *@
+
+                <div class="rec-doc-holder">
+                    <a href="#" id="a-del-all-recent-docs" class="mydocs-docs-action-link mobile-row f-0-8-important margin-right-5">
+                        <span class="fa fa-trash-o"></span> @Resources.UI_DeleteAllDocuments
+                    </a>
+
+                    <a href="javascript:changeSortDir(true);" id="sort_dir" class="right" data-dir="@Model.OrderDir">
+                        @if (Model.OrderDir == "asc")
+                        {
+                            <span id="chevron-sort" class="chevron-sort-up"></span>
+                        }
+                        else
+                        {
+                            <span id="chevron-sort" class="chevron-sort-down"></span>
+                        }
+                    </a>
+                    @Html.DropDownListFor(m => m.OrderBy,
+                                     new List<SelectListItem>()
+                            {
+                                new SelectListItem{ Text = @Resources.UI_OpenDate, Value = "open_date", Selected = (Model.OrderBy == "open_date")},
+                                new SelectListItem{ Text = @Resources.UI_Title_Lower, Value = "title", Selected = (Model.OrderBy == "title")}
+                            },
+                                     new { @id = "OrderBy", @class = "right" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="recent-docs-container">
+        @if (Model.Items.Count > 0)
+        {
+            foreach (var item in Model.Items)
+            {
+                @Html.DocPartial(item as Document, Convert.ToInt32(Session["LanguageId"]), WebAppHelper.AppRootFolder, (Session["UserData"] as UserData).OpenDocumentsInNewTab)
+                @* @Html.Partial("~/Views/Shared/_Doc.cshtml", item as Document)*@
+            }
+        }
+    </div>
+</div>
+
+<script>
+    $().ready(function () {
+        globalDocumentUIBinding();
+
+        $('#OrderBy').selectmenu({
+            change: function (event, ui) {
+                if ($(this).val() === 'title') {
+                    $('#sort_dir').data('dir', 'asc');
+                    $('#chevron-sort').addClass('chevron-sort-up');
+                    $('#chevron-sort').removeClass('chevron-sort-down');
+                }
+                else {
+                    $('#sort_dir').data('dir', 'desc');
+                    $('#chevron-sort').addClass('chevron-sort-down');
+                    $('#chevron-sort').removeClass('chevron-sort-up');
+                }
+                orderDirFilter($('#sort_dir').data('dir'));
+            },
+            select: function (event, ui) {
+                $('#OrderBy').removeClass('ui-state-focus');
+            },
+            close: function (event, ui) {
+                $('#OrderBy').removeClass('ui-state-focus');
+            }
+        });
+
+        $('#a-del-all-recent-docs').on('click', function(){
+            $.ajax({
+                method: 'POST',
+                url: appRootFolder + '/RecentDocuments/DeleteAll'
+            }).done(function(response) {
+                if(response === 'Ok'){
+                    $('#recent-docs-container').html('');
+                }
+                else{
+                    console.log('error when deleting recent documents');
+                }
+            });
+        });
+    });
+
+    addHints('doc-info-link', @Session["LanguageId"].ToString(), @((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+</script>

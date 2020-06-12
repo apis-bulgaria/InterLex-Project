@@ -1,0 +1,328 @@
+﻿@model Interlex.BusinessLayer.Models.Document
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Helpers
+@using Interlex.BusinessLayer.Helpers
+
+<div class="doc-left-border left">
+    &nbsp;
+</div>
+
+
+<div class="doc-item-container left">
+    <div class="doc-top-bar">
+        @*f-bold*@
+
+
+        @*<span class="checkbox-document" data-itemid="@Model.DocLangId" title="@Resources.Hint_MarkExport"></span>*@
+
+        @*@if ((string)ViewContext.RouteData.Values["controller"] != "User")
+            {
+                if ((Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+                {
+                    <a class="star" href="/User/ProductFeaturesInfo/5"></a>
+                }
+                else if (Model.UserDocId == String.Empty || String.IsNullOrEmpty(Model.UserDocId))
+                {
+                    <span class="star aFavouriteDoc" data-itemid="@Model.DocLangId" data-itemtitle="@Model.Title" title="@Resources.UI_JS_MyDocumentsAdd"></span>
+                }
+                else
+                {
+                    <span class="star-yellow aFavouriteDocRemove" data-itemid="@Model.DocLangId" data-itemtitle="@Model.Title" title="@Resources.UI_JS_MyDocumentsRemove"></span>
+                }
+            }*@
+
+
+        @if (Model.DocType == 1)
+        {
+            <span class="icon-cases-small" title="@Resources.UI_Cases"></span>
+        }
+        else if (Model.DocType == 2)
+        {
+            <span class="icon-law-small" title="@Resources.UI_Legislation"></span>
+        }
+        else if (Model.DocType == 3)
+        {
+            if (int.Parse(Session["SelectedProductId"].ToString()) == 2)
+            {
+                <span class="icon-finances-doc-small" title="@Resources.UI_TFST_Practice"></span>
+            }
+            else
+            {
+                <span class="icon-simple-doc-small"></span>
+            }
+        }
+        <span class="doc-title-a-container">
+            @{
+                string toUrl = "";
+                if (ViewData["SearchSource"] != null && !String.IsNullOrWhiteSpace(ViewData["SearchSource"].ToString())) //if ((ViewData["SearchText"] == "" || ViewData["SearchText"] == null) && (ViewData["SearchSource"] == "" || ViewData["SearchSource"] == null))
+                {
+                    toUrl = Url.RouteUrl("DocText", new { action = (Model.DocType == 1) ? "CourtAct" : "LegalAct", id = Model.DocLangId, siteSearchId = (ViewData["SearchSource"] != "" && ViewData["SearchSource"] != null) ? ViewData["SearchSource"] : null });
+                }
+                else
+                {
+                    toUrl = WebAppHelper.AppRootFolder + "/Doc/" + ((Model.DocType == 1) ? "CourtAct" : "LegalAct") + "/" + Model.DocLangId;
+
+
+                }
+                <a href="@toUrl" title="@Html.Raw(Model.Title)" @((Session["UserData"] as Interlex.BusinessLayer.Models.UserData).OpenDocumentsInNewTab == true ? "target=_blank" : "") @((Session["opened_docs-" + Session["SelectedProductId"]] as HashSet<int>).Contains(Model.DocLangId) ? "class=f-bold-italic" : "")>
+                    @Html.Raw(Model.Title.Replace("<b style='mso-bidi-font-weight: normal'>", String.Empty))
+                    @if (Model.Country.ToUpper() == "EU" && Model.DocNumber[0] == '0')
+                    {
+                        @: (@Res.GetResource("UI_ConsolidatedVersion", Languages.GetLang(Model.LangId).Code) : @Model.DocDate.ToString("dd.MM.yyyy"))
+                    }
+                    // V.O. Related to bug: 2700
+                    else if (Model.IsTreaty() && !Model.DoesTitleContainsConsolidatedVersionText())
+                    {
+                        @: (@Model.DocDate.ToString("yyyy"))
+                    }
+
+                </a>
+            }
+        </span>
+        <span class="span-avaiable-languages right">
+            @if (Model.Country.Length == 2)
+            {
+                string countryCode = Model.Country.ToLower();
+                string title = Resources.UI_Source + ": " + Res.GetResource("UI_Country_" + countryCode.ToUpper());
+
+                if (Model.AdditionalInfo == AdditionalInfoEnum.InternationalAgreement)
+                {
+                    countryCode = "int";
+                    title = Resources.UI_Source + ": " + Res.GetResource("UI_Country_" + countryCode.ToUpper());
+                }
+                else if (Model.AdditionalInfo == AdditionalInfoEnum.ExpertMaterials)
+                {
+                    countryCode = "em";
+                    title = Res.GetResource("UI_Country_" + countryCode.ToUpper());
+                }
+                
+                <img src="~/Content/Images/flags/@(countryCode).png" title="@title" style="border: 1px solid #E0E0E0;" />
+            }
+
+            @if (Model.IsEuFins() && Model.Country.ToUpper() != "EU")
+            {
+                <img src="~/Content/Images/flags/eu.png" title="@Resources.UI_Publisher: @Res.GetResource("UI_Country_EU")" style="border: 1px solid #E0E0E0;" />
+            }
+        </span>
+    </div>
+
+    <div class="doc-title">
+        @if ((string)ViewContext.RouteData.Values["controller"] == "User")
+        {
+            <span class="x-grey aFavouriteDocRemove" data-itemid="@Model.DocLangId" title="@Resources.Hint_RemoveFavourite"></span>
+        }
+
+        @if (Model.Country.ToUpper() == "EU" && (Model.DocType == 1 || Model.DocType == 2) && Model.DocNumber.Length > 3 && Model.DocNumber != "undefined")
+        {
+            <span class="doc-number-span right f-grey f-0-7">
+                @Model.DocNumber
+            </span>
+        }
+
+        @if (Model is Interlex.BusinessLayer.Models.FavouriteDoc && (Model as Interlex.BusinessLayer.Models.FavouriteDoc).AddedDate != null)
+        {
+            <span class="doc-fav-added-date right f-grey f-0-7">
+                <span class="fa fa-clock-o margin-right-3"></span>
+                @*  @Resources.UI_DateAdded: @Model.AddedDate*@
+                @Resources.UI_AddedOn: @((Model as Interlex.BusinessLayer.Models.FavouriteDoc).AddedDate)
+            </span>
+        }
+
+        @if (Model is Interlex.BusinessLayer.Models.RecentDoc && (Model as Interlex.BusinessLayer.Models.RecentDoc).OpenDate != null)
+        {
+            <span class="doc-recent-open-date left f-grey f-0-7">
+                <span class="fa fa-clock-o margin-right-3"></span>
+                @Resources.UI_OpenedOn: @((Model as Interlex.BusinessLayer.Models.RecentDoc).OpenDate)
+            </span>
+        }
+
+        @if (!(String.IsNullOrEmpty(Model.DateOfEffect.ToString())) && Model.DateOfEffect.HasValue == true && Model.DateOfEffect != default(DateTime) && Model.DateOfEffect != new DateTime(999, 12, 31))
+        {
+            <span class="doc-date-of-effect right f-grey f-0-7">
+                <span class="fa fa-clock-o margin-right-3"></span>
+                @Resources.UI_LawDateType_2: @(Model.DateOfEffect.GetValueOrDefault().Day.ToString().PadLeft(2, '0') + "." + Model.DateOfEffect.GetValueOrDefault().Month.ToString().PadLeft(2, '0') + "." + Model.DateOfEffect.GetValueOrDefault().Year)
+            </span>
+        }
+
+        @if (!(String.IsNullOrEmpty(Model.EndDate.ToString())) && Model.EndDate.HasValue == true && Model.EndDate != default(DateTime) && Model.EndDate != new DateTime(9999, 12, 31))
+        {
+            <span class="doc-end-date right f-grey f-0-7">
+                <span class="fa fa-clock-o margin-right-3"></span>
+                @Resources.UI_LawDateType_3: @(Model.EndDate.GetValueOrDefault().Day.ToString().PadLeft(2, '0') + "." + Model.EndDate.GetValueOrDefault().Month.ToString().PadLeft(2, '0') + "." + Model.EndDate.GetValueOrDefault().Year)
+            </span>
+        }
+
+    </div>
+
+
+    @if (!String.IsNullOrEmpty(Model.LastConsDocNumber))
+    {
+        <div class="f-0-8 f-grey f-italic last-cons-version-container" style="padding-left:8px;">
+            @Resources.UI_LastConsVersion: <a href="~/Doc/Act/@Model.LangId/@(Model.LastConsDocNumber.Replace("/", "_"))" style="color: #148dd4 !important; text-decoration: none !important;" @((Session["UserData"] as Interlex.BusinessLayer.Models.UserData).OpenDocumentsInNewTab == true ? "target=_blank" : "")>@Model.LastConsDocNumber</a>
+        </div>
+    }
+    @if (Model.Keywords.Count > 0)
+    {
+        <div class="doc-keywords">
+            <div class="doc-tab-container">
+                @for (int i = Model.Keywords.Keys.Count - 1; i >= 0; i--)
+                {
+                    if (i != 0)
+                    {
+                        <a href="#" data-target="@Model.DocLangId-@Doc.GetHtmlFriendlyEscapedSource(Model.Keywords.Keys.ElementAt(i))" class="keywords-link f-blue-important" onclick="javascript: changeKeywordsTab(this); return false;">@Model.Keywords.Keys.ElementAt(i)</a>
+                    }
+                    else
+                    {
+                        <a href="#" data-target="@Model.DocLangId-@Doc.GetHtmlFriendlyEscapedSource(Model.Keywords.Keys.ElementAt(0))" class="not-active-link-keywords f-black" onclick="javascript: changeKeywordsTab(this); return false;">@Model.Keywords.Keys.ElementAt(i)</a>
+                    }
+                }
+                @*f-dgrey f-bold *@
+                <span class="blue-text keywords-summaries-label">
+                    @*<span class="fa fa-key"></span>*@
+                    <span class="keywords-summaries-label-text">@Resources.UI_Keywords_Upper</span>
+                </span>
+            </div>
+            @*Inverted loop is not needed, expanding is done by id represented by source key*@
+            @for (int i = 0; i < Model.Keywords.Keys.Count; i++)
+            {
+                if (i == 0)
+                {
+                    <div id="keywords-@Model.DocLangId-@Doc.GetHtmlFriendlyEscapedSource(Model.Keywords.Keys.ElementAt(i))" class="keywords-content" style="margin-top: -10px;">
+                        <p>@Html.Raw(Server.HtmlDecode(Model.Keywords[Model.Keywords.Keys.ElementAt(i)]))</p>
+                    </div>
+                }
+                else
+                {
+                    <div id="keywords-@Model.DocLangId-@Doc.GetHtmlFriendlyEscapedSource(Model.Keywords.Keys.ElementAt(i))" class="keywords-content" style="display: none; margin-top: -10px;">
+                        <p>@Html.Raw(Server.HtmlDecode(Model.Keywords[Model.Keywords.Keys.ElementAt(i)]))</p>
+                    </div>
+                }
+            }
+        </div>
+    }
+
+
+    @{
+        // v.o. [2016.02.01] added additial check if there are any valid summaries
+        bool hasSummaries = Model.Summaries.Any();
+        hasSummaries &= Model.Summaries.Select(x => x.Value).Any(GeneralHelper.IsValidSummaryForDocumentListVisualization);
+    }
+    @if (hasSummaries)
+    {
+        <div class="doc-summary">
+            <div class="doc-tab-container">
+                @for (int i = Model.Summaries.Keys.Count - 1; i >= 0; i--)
+                {
+                    /*
+                        v.o. [2016.02.01] check if the summary is valid. Valid means non empty text with atleast one letter.
+                        related to: Bug 3907
+                     */
+                    String summaryText = Model.Summaries[Model.Summaries.Keys.ElementAt(i)];
+                    bool isValidSummary = GeneralHelper.IsValidSummaryForDocumentListVisualization(summaryText);
+
+                    if (isValidSummary)
+                    {
+                        if (i != 0)
+                        {
+                            <a href="#" data-target="@Model.DocLangId-@Doc.GetHtmlFriendlyEscapedSource(Model.Summaries.Keys.ElementAt(i))" class="summaries-link f-blue-important" onclick="javascript: changeSummariesTab(this); return false;">@Model.Summaries.Keys.ElementAt(i)</a>
+                        }
+                        else
+                        {
+                            <a href="#" data-target="@Model.DocLangId-@Doc.GetHtmlFriendlyEscapedSource(Model.Summaries.Keys.ElementAt(0))" class="not-active-link-summaries f-black" onclick="javascript: changeSummariesTab(this); return false;">@Model.Summaries.Keys.ElementAt(i)</a>
+                        }
+                    }
+                }
+                @*f-dgrey f-bold *@
+                <span class="blue-text  keywords-summaries-label">
+                    @*<span class="fa fa-file-text-o"></span>*@
+                    <span class=" keywords-summaries-label-text">@Resources.UI_Summary_Upper</span>
+                </span>
+            </div>
+            @*Inverted loop is not needed, expanding is done by id represented by source key*@
+            @for (int i = 0; i < Model.Summaries.Keys.Count; i++)
+            {
+                /*
+                    v.o. [2016.02.01] check if the summary is valid. Valid means non empty text with atleast one letter.
+                    related to: Bug 3907
+                */
+                String summaryText = Model.Summaries[Model.Summaries.Keys.ElementAt(i)];
+                bool isValidSummary = GeneralHelper.IsValidSummaryForDocumentListVisualization(summaryText);
+
+                if (isValidSummary)
+                {
+                    @*if ((Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+                        {
+                            if (Model.Summaries[Model.Summaries.Keys.ElementAt(i)].Length >= 300)
+                            {
+                                <div id="summaries-@Model.DocLangId-@Model.Summaries.Keys.ElementAt(i).Replace("&", "_AND_")" class="summaries-content" style="display: @(i == 0 ? "block" : "none"); margin-top: -10px;">
+                                    <p>@Html.Raw(Server.HtmlDecode(Model.Summaries[Model.Summaries.Keys.ElementAt(i)]).Replace("class=\"d-inline d-p\"", "style=\"margin:0 0 0 0 !important;\"").TruncateHtml(300) + "... " + "<a href=\"/User/ProductFeaturesInfo/8\" class=\"f-blue\">" + Resources.UI_ShowMore_Lower.ToLower() + "</a>")</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="summaries-@Model.DocLangId-@Model.Summaries.Keys.ElementAt(i).Replace("&", "_AND_")" class="summaries-content" style="display: @(i == 0 ? "block" : "none"); margin-top: -10px;">
+                                    <p>@Html.Raw(Server.HtmlDecode(Model.Summaries[Model.Summaries.Keys.ElementAt(i)]).Replace("class=\"d-inline d-p\"", "style=\"margin:0 0 0 0 !important;\""))</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {*@
+                    <div id="summaries-@Model.DocLangId-@Doc.GetHtmlFriendlyEscapedSource(Model.Summaries.Keys.ElementAt(i))" class="summaries-content" style="display: @(i == 0 ? "block" : "none"); margin-top: -10px;">
+                        <p>@Html.Raw(Server.HtmlDecode(Model.Summaries[Model.Summaries.Keys.ElementAt(i)]).Replace("class=\"d-inline d-p\"", "style=\"margin:0 0 0 0 !important;\""))</p>
+                    </div>
+                    @*}*@
+                }
+            }
+        </div>
+    }
+
+    @{
+        // v.o. [2016.03.21] by request of pesho.k.
+        // the fins documents need have have link to the original eurlex document between the keywrds and the summary
+        if (Model.IsEuFins())
+        {
+            var eurocasesUrl = Model.BuildEurocasesUrl(Convert.ToInt32(Session["LanguageId"]));
+
+            if (!String.IsNullOrEmpty(eurocasesUrl))
+            {
+                <div class="original-document-url-conatainer">
+                    <a target="_blank" data-dn="@Model.ConvertEuFinsDocumentNumberToCelex()" class="original-document-url doc-info-link type-celex" href="@Html.Raw(eurocasesUrl)">@Html.Raw(Model.GetFriendlyLookForEuFinsDocumentNumber())</a>
+                </div>
+            }
+        }
+    }
+
+    @if ((Model.DocType == 1 && Model.RelatedDocNumbers.Count >= 1) || (Model.DocType == 2 && Model.RelatedDocNumbers.Count >= 1))
+    {
+        <div class="related-docs f-grey">
+            @if (Model.DocType == 1)
+            {
+                <span class="f-0-8 f-italic margin-left-5 padding-2"><span class="fa fa-file-o"></span> @Resources.UI_RelatedDocuments: </span>
+            }
+            else if (Model.DocType == 2)
+            {
+                <span class="f-0-8 f-italic margin-left-5 padding-2"><span class="fa fa-file-o"></span> @Resources.UI_Found_In_ConsVersion: </span>
+            }
+
+            @{
+                var relDocContent = String.Empty;
+                string targetAttribute = (Session["UserData"] as UserData).OpenDocumentsInNewTab == true ? " target=\"_blank\"" : String.Empty;
+                if (Model.DocType == 1)
+                {
+                    relDocContent = String.Join(", ", Model.RelatedDocNumbers.Select(e => "<a href=\"" + WebAppHelper.AppRootFolder + "/Doc/Act/" + Convert.ToInt32(Session["LanguageId"])
+                    + "/" + e.DocNumber.Replace("/", "_").Replace("\\", "_") + "\" data-dn=\"" + e.DocNumber + "\" class=\"inline-link type-celex doc-info-link text-decoration-underline-hover f-blue f-0-8\"" + targetAttribute + ">" + e.DateAsString + "</a>").ToList());
+                }
+                else
+                {
+                    relDocContent = String.Join(", ", Model.RelatedDocNumbers.Select(e => "<a href=\"" + WebAppHelper.AppRootFolder + "/Doc/Act/Id/" + e.DocLangId + "/" + ((ViewData["SearchSource"] != null) ? ViewData["SearchSource"].ToString() : "")
+                                                  + "\" data-dn=\"" + e.DocLangId + "\" class=\"inline-link doc-info-link text-decoration-underline-hover type-doclangid f-blue f-0-8\"" + targetAttribute + ">" + e.DateAsString + "</a>").ToList());
+                }
+            }
+            @Html.Raw(relDocContent)
+        </div>
+    }
+</div>
+<div class="clearfix">
+</div>

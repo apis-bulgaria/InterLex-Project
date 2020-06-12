@@ -1,0 +1,157 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Models
+
+@* Populating templates partial *@
+@Html.Partial("~/Views/Shared/_SearchBoxFormCasesTemplates.cshtml", Model)
+
+
+<form id="formCases" @{ if (int.Parse((Session["SelectedProductId"].ToString())) != 1 || (Model.Cases == null && Model.Law != null)) { @: style="display: none;"
+      }}>
+    <div class="search-items-wrapper">
+        <div class="width-100 margin-top-5">
+            <div id="checkboxes-form-cases" class=" width-50 text-left container-form" style="margin-left: 12px;">
+                <label for="Cases_OnlyInTitles">
+                    @Html.CheckBoxFor(m => m.Cases.OnlyInTitles, new { @style = "vertical-align: middle;" })
+                    <span class="label-after-checkbox">@Resources.UI_SearchOnlyInTitles</span>
+                </label>
+                <label for="ExactMatch">
+                    @Html.CheckBoxFor(m => m.ExactMatch, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                    <span class="label-after-checkbox">@Resources.UI_SearchExactMatch</span>
+                </label>
+
+                @{
+                    var shortLang = InterfaceLanguages.GetLanguageById(Convert.ToInt32(Session["LanguageId"])).ShortCode.ToLower();
+                    if (System.Configuration.ConfigurationManager.AppSettings["ShowTranslateSearch"] == "1" && (shortLang == "bg" || shortLang == "it" || shortLang == "en"))
+                    {
+                        <label for="Cases_TranslateSearchText">
+                            @Html.CheckBoxFor(m => m.Cases.TranslateSearchText, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                            <span class="label-after-checkbox">@Resources.UI_TranslateSearchText</span>
+                            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.UI_TranslateSearchText_Hint"></span>
+                        </label>
+                    }
+                }
+
+            </div>
+            @*<div class="left width-20 text-left" style="margin-top: -5px; margin-left: -5px;">
+
+                </div>*@
+            @*@Html.Partial("~/Views/Shared/_SearchBoxFormShared.cshtml", Model)*@
+            @* Logicals *@
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+        @*<fieldset class="width-80 container-form" id="container-caselawtype">
+                <legend>@Resources.UI_SearchArea</legend>
+                <div class="left width-100 margin-left-30">
+                    @*radio buttons nested inside of labels in order to be correctly aligned vertically
+                    <div class="text-left">
+                        <div class="left width-50">
+                            <label for="Cases.CaseLawType">
+                                <input type="radio" data-prefix="cases-all-" name="Cases.CaseLawType" id="Cases.CaseLawType_All" value="0" @((Model.Cases == null || Model.Cases.CaseLawType == Interlex.BusinessLayer.Enums.CaseLawType.All ? "checked=checked" : "")) style="vertical-align: middle; margin-top: -2px;" />
+                                <span class="label-after-radio">@Resources.UI_All</span>
+                            </label>
+                        </div>
+                        <div class="left width-50">
+                            <label for="Cases.CaseLawType">
+                                <input type="radio" data-prefix="cases-eu-" name="Cases.CaseLawType" id="Cases.CaseLawType_EU" value="1" @((Model.Cases != null && Model.Cases.CaseLawType == Interlex.BusinessLayer.Enums.CaseLawType.EU ? "checked=checked" : "")) style="vertical-align: middle;  margin-top: -2px;" />
+                                <span class="label-after-radio">@Resources.UI_EUCaseLaw</span>
+                            </label>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="text-left">
+                        <div class="left width-50">
+                            <label for="Cases.CaseLawType">
+                                <input type="radio" data-prefix="cases-echr-" name="Cases.CaseLawType" id="Cases.CaseLawType_ECHR" value="3" @((Model.Cases != null && Model.Cases.CaseLawType == Interlex.BusinessLayer.Enums.CaseLawType.ECHR ? "checked=checked" : "")) style="vertical-align: middle;  margin-top: -2px;" />
+                                <span class="label-after-radio">@Resources.UI_ECHRCaseLaw</span>
+                            </label>
+                        </div>
+                        <div class="left width-50">
+                            <label for="Cases.CaseLawType" class="caseslawtype-last-label">
+                                <input type="radio" data-prefix="cases-national-" name="Cases.CaseLawType" id="Cases.CaseLawType_National" @((Model.Cases != null && Model.Cases.CaseLawType == Interlex.BusinessLayer.Enums.CaseLawType.National ? "checked=checked" : "")) value="2" style="vertical-align: middle;  margin-top: -2px;" />
+                                <span class="label-after-radio">@Resources.UI_NationalCaseLaw</span>
+                            </label>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </fieldset>*@
+
+        @Html.HiddenFor(m => m.Cases.MultiDict.LogicalType)
+        @Html.HiddenFor(m => m.Cases.MultiDict.Text)
+        @Html.HiddenFor(m => m.Cases.MultiDict.SelectedIds)
+        @Html.HiddenFor(m => m.Cases.MultiDict.SearchText)
+        @Html.HiddenFor(m => m.Cases.MultiDict.SelectedQueryTexts)
+
+        <fieldset class="width-80 container-form">
+            <legend></legend>
+            <div class="left width-50">
+                <label for="Cases_tb-multilingual-dictionary" class="block">
+                    @Resources.UI_MultilingualDictionary
+                </label>
+                <input type="text" class="width-70 cursor-pointer left" id="Cases_tb-multilingual-dictionary" name="tb-multilingual-dictionary" readonly="readonly" />
+                <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="Cases_link-edit-multilingual-dictionary"></span>
+                @Html.EUCSClear(SearchBoxClearType.MultilingualDictionary, "Cases_tb-multilingual-dictionary")
+            </div>
+            <div class="left width-50">
+                <label>@Resources.UI_ReferedEUActProvision</label>
+                <div id="cases-all-enactment"></div>  @* Enactment *@
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+
+        @* All cases type form *@
+        <div id="cases-all" class="cases-type-container">
+            @Html.Partial("~/Views/Shared/_SearchBoxFormCasesAll.cshtml")
+        </div>
+
+        @* EU *@
+        <div id="cases-eu" class="display-none cases-type-container">
+            @Html.Partial("~/Views/Shared/_SearchBoxFormCasesEU.cshtml")
+        </div>
+
+        @* National *@
+        <div id="cases-national" class="display-none cases-type-container">
+            @Html.Partial("~/Views/Shared/_SearchBoxFormCasesNational.cshtml")
+        </div>
+
+        @* ECHR *@
+        <div id="cases-echr" class="display-none cases-type-container">
+            @Html.Partial("~/Views/Shared/_SearchBoxFormCasesECHR.cshtml")
+        </div>
+
+        @Html.HiddenFor(m => m.Cases.ECHRReferedActType)
+        @Html.HiddenFor(m => m.Cases.ReferedActECHRDocLangId)
+        @Html.HiddenFor(m => m.Cases.ReferedActTitle)
+
+        @Html.HiddenFor(m => m.Cases.IsIndexEnactmentSearch)
+
+        <div class="clearfix"></div>
+        <div class="form-group adv-search-buttons clearfix">
+            <input type="button" class="btn btn-large btn-blue f-white f-bold" value="@Resources.UI_Search" onclick="DoSearch('tabCases', false);">
+            <input type="button" class="btn btn-large btn-lgrey f-blue f-bold" value="@Resources.UI_Clear" onclick="clearAdvSearchFilters('tabCases', false);">
+            <button class="btn btn-large btn-lgrey f-blue adv-search-close f-bold" type="button">@Resources.UI_Close_Lower</button>
+        </div>
+        <div id="adv-search-notifications-cases" class="f-red">
+            &nbsp;
+        </div>
+    </div>
+</form>
+
+@Html.Partial("~/Views/Shared/_SearchBoxFormCasesModals.cshtml")
+
+<script>
+    //$('#link-choose-provision').trigger('click');
+    $().ready(function () {
+        // Populating original cases template
+        populateSearchTemplate('templates-cases-', 'cases-all-');
+
+        $('#Cases_link-edit-multilingual-dictionary').on('click', function () {
+            $('#Cases_tb-multilingual-dictionary').trigger('click');
+        });
+    });
+</script>

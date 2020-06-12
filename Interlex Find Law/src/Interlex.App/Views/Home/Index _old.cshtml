@@ -1,0 +1,105 @@
+﻿@{
+        ViewBag.Title = "";
+        Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    }
+    <script type="text/javascript">
+
+        function AddTreeWithoutChecks() {
+            $("#homeTree").remove();
+            var newDiv = document.createElement("div");
+            newDiv.id = "homeTree";
+            $("#container").append(newDiv);
+
+            $("#homeTree").fancytree(
+                {
+                    extensions: ["persist"],
+                    persist: {
+                        //cookieId: "homeTree",
+                        expandLazy: true, // true: recursively expand and load lazy nodes
+                        overrideSource: false,  // true: cookie takes precedence over `source` data attributes.
+                        store: "cookie",
+                        types: "active expanded focus"
+                    },
+                    source: {
+                        url: appRootFolder + '/Home/GetMainFolders',
+                        type: 'GET',
+                        success: function (data) {
+                            //UnAuthJsonCheck(data);
+                        },
+                        error: function (jqXMR, textStatus, errorThrown) {
+                            if (jqXMR.status == 401) // unauthorized (expired session)
+                                top.window.location = '/Login/Index';
+                        }
+                    },
+                    lazyload: function (event, data) {
+                        var node = data.node;
+                        data.result = {
+                            url: appRootFolder + '/Home/GetMainFolders',
+                            data: { key: node.key }
+                        }
+                    },
+                    checkbox: false,
+                    click: function (event, data) {
+                        if (data.targetType == 'title') {
+                            var node = data.node;
+                            ShowFolder(node.key);
+                        }
+                    },
+                    activate: function (event, data) {
+                        var node = data.node;
+                        // TODO Временно !!!
+                        //ShowFolder(node.key);
+                    },
+                    error: function (jqXMR, textStatus, errorThrown) {
+                        //alert(jqXMR.status);
+                        if (jqXMR.status == 401)
+                            top.window.location = '/Login/Index';
+                    }
+                });
+        }
+
+        $().ready(function () {
+            AddTreeWithoutChecks();
+
+            $("#splitter").height($(window).height() - $('#footer').height() - $('#header').height()).split({
+                orientation: 'vertical',
+                position: '20%',
+                limit: 250
+            });
+            $('#dSearchResult').height($("#splitter").height());
+
+            $(window).trigger('resize');
+        });
+
+        function resizeIndex() {
+            $("#splitter").height($(window).height() - $('#footer').height() - $('#header').height());
+
+            if ($("#splitter").height() < 400) {
+                $("#splitter").height(400);
+                $("#splitter").css("margin-bottom", 50);
+            }
+
+            $('#dSearchResult').height($("#splitter").height());
+        }
+
+        $(window).resize(function () {
+            resizeIndex();
+        });
+
+    </script>
+
+    <div class="container-fluid main-content">
+        <div id="splitter" style="margin-left:-15px; margin-right:-15px;">
+            <div id="LeftPane">
+                <div class="panel-group" id="folders">
+                    <div id="container">
+                        <div id="homeTree" style="height: 500px;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="RightPane" style="overflow: hidden;">
+                <div id="dSearchResult"></div>
+            </div>
+        </div>
+    </div>

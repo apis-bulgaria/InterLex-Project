@@ -1,0 +1,1699 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{264E75C5-957F-4670-BCB1-2396188FB8DC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Interlex.App</RootNamespace>
+    <AssemblyName>Interlex.App</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AkomaNtosoXml.Xslt.Core, Version=4.2.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\lib\net40\AkomaNtosoXml.Xslt.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AkomaNtosoXml.Xslt.Transformation, Version=2.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AkomaNtosoXml.Xslt.Transformation.2.2.7\lib\net40\AkomaNtosoXml.Xslt.Transformation.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.ClassificationService.Model, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClassificationServiceModel.2.0.0\lib\net40\Apis.ClassificationService.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Common, Version=2.25.19.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Common.2.25.19\lib\net40\Apis.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Common.Celex, Version=1.6.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Common.Celex.1.6.6\lib\net40\Apis.Common.Celex.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Common.Html, Version=1.6.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Common.Html.1.7.0\lib\net40\Apis.Common.Html.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Common.Xml, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Common.Xml.1.2.1\lib\net40\Apis.Common.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Doc.Conversion.Publishers, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Doc.Conversion.Publishers.1.0.1\lib\net40\Apis.Doc.Conversion.Publishers.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.EuCases.Common, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Eucases.Common.2.1.22\lib\net40\Apis.EuCases.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Mail.Notification, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Mail.Notification.1.0.0\lib\net40\Apis.Mail.Notification.dll</HintPath>
+    </Reference>
+    <Reference Include="ClassificationService, Version=2.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClassificationService.3.0.0\lib\net40\ClassificationService.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.13.3.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.13.3\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.12.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.12\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.5\lib\net45\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.5.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.5\lib\net45\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiFilters\UserAuthorize.cs" />
+    <Compile Include="Api\Classes\EuroCasesHelper.cs" />
+    <Compile Include="Api\Classes\WebApisHelper.cs" />
+    <Compile Include="Api\DocController.cs" />
+    <Compile Include="Api\Models\DocumentLink.cs" />
+    <Compile Include="Api\EntityController.cs" />
+    <Compile Include="Api\Models\EurocasesDocumentLink.cs" />
+    <Compile Include="Api\Models\LinksToHtmlModel.cs" />
+    <Compile Include="Api\Models\WebApisDocumentLink.cs" />
+    <Compile Include="Api\Classes\WebApisRequest.cs" />
+    <Compile Include="Api\ResourcesController.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Base\BaseApiController.cs" />
+    <Compile Include="Base\BaseController.cs" />
+    <Compile Include="Base\BaseSearchResultController.cs" />
+    <Compile Include="Controllers\ApplicationUpdateController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\CompareController.cs" />
+    <Compile Include="Controllers\ContextMenusController.cs" />
+    <Compile Include="Controllers\DocController.cs" />
+    <Compile Include="Controllers\DocumentsForPeriodController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
+    <Compile Include="Controllers\FinancesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RecentDocumentsController.cs" />
+    <Compile Include="Controllers\SearchBoxController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SitemapController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="CustomBinders\SearchBoxBinder.cs" />
+    <Compile Include="CustomBinders\SearchCasesBinder.cs" />
+    <Compile Include="CustomBinders\SearchFinancesBinder.cs" />
+    <Compile Include="CustomBinders\SearchLawBinder.cs" />
+    <Compile Include="CustomValidators\CheckMailExistsAttribute.cs" />
+    <Compile Include="CustomValidators\ValidateAjaxAttribute.cs" />
+    <Compile Include="Filters\UserAuthorize.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Helpers\CheckTreeViewExtensions.cs" />
+    <Compile Include="Helpers\ConnectionStringSettingsExtensions.cs" />
+    <Compile Include="Helpers\DocListView.cs" />
+    <Compile Include="Helpers\DocListViewEngine.cs" />
+    <Compile Include="Helpers\DocPartialExtensions.cs" />
+    <Compile Include="Helpers\EnumExtension.cs" />
+    <Compile Include="Helpers\EuroCasesClear.cs" />
+    <Compile Include="Helpers\EuroCasesClearExtensions.cs" />
+    <Compile Include="Helpers\GeneralHelper.cs" />
+    <Compile Include="Helpers\HttpContextHelper.cs" />
+    <Compile Include="Helpers\MinificationExtensions.cs" />
+    <Compile Include="Helpers\RequestExtensions.cs" />
+    <Compile Include="Helpers\SessionExtensions.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\WebAppHelper.cs" />
+    <Compile Include="Helpers\WebConfigHelper.cs" />
+    <Compile Include="Helpers\XsltFragmentExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Res.cs" />
+    <Compile Include="Resources\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ContactsViewModel.cs" />
+    <Compile Include="ViewModels\Vat32006L0112.cs" />
+    <Compile Include="ViewModels\ProductFeaturesInfo.cs" />
+    <Compile Include="ViewModels\UserFolderDataJson.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\FileStructure\nationalLegislationMap.txt" />
+    <Content Include="Content\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.svg" />
+    <Content Include="Content\Fonts\OpenSans\Bold\OpenSans-Bold.svg" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.svg" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.svg" />
+    <Content Include="Content\Fonts\OpenSans\Italic\OpenSans-Italic.svg" />
+    <Content Include="Content\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.svg" />
+    <Content Include="Content\Fonts\OpenSans\Light\OpenSans-Light.svg" />
+    <Content Include="Content\Fonts\OpenSans\Regular\OpenSans-Regular.svg" />
+    <Content Include="Content\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.svg" />
+    <Content Include="Content\Fonts\OpenSans\Semibold\OpenSans-Semibold.svg" />
+    <Content Include="Content\fotorama%402x.png" />
+    <Content Include="Content\fotorama.png" />
+    <Content Include="Content\Images\adobe-reader-download.jpg" />
+    <Content Include="Content\Images\auction1.png" />
+    <Content Include="Content\Images\beta-logo-110.png" />
+    <Content Include="Content\Images\beta-logo-90.png" />
+    <Content Include="Content\Images\beta-logo.png" />
+    <Content Include="Content\Images\column-green.png" />
+    <Content Include="Content\Images\column1.png" />
+    <Content Include="Content\Images\court.png" />
+    <Content Include="Content\Images\courthouse.png" />
+    <Content Include="Content\Images\demo-logo-110.png" />
+    <Content Include="Content\Images\demo-logo-90.png" />
+    <Content Include="Content\Images\demo-logo.png" />
+    <Content Include="Content\Images\eu_flag.png" />
+    <Content Include="Content\Images\flags\em.png" />
+    <Content Include="Content\Images\flags\int.png" />
+    <Content Include="Content\Images\gdpr.jpg" />
+    <Content Include="Content\Images\gdpr2.jpg" />
+    <Content Include="Content\Images\header.jpg" />
+    <Content Include="Content\Images\icon-law-other-big.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\checkbox-default.png" />
+    <Content Include="Content\Images\checkbox-hover-new.png" />
+    <Content Include="Content\Images\checkbox-hover.png" />
+    <Content Include="Content\Images\checkbox-selected-new.png" />
+    <Content Include="Content\Images\checkbox-selected.png" />
+    <Content Include="Content\Images\checkbox.png" />
+    <Content Include="Content\Images\checkbox2.png" />
+    <Content Include="Content\Images\checkbox4.png" />
+    <Content Include="Content\Images\chevron-doc-navigation-up.png" />
+    <Content Include="Content\Images\chevron-doc-navigation.png" />
+    <Content Include="Content\Images\chevron-down-white-orange.png" />
+    <Content Include="Content\Images\chevron-down-white.png" />
+    <Content Include="Content\Images\chevron-filters-down.png" />
+    <Content Include="Content\Images\chevron-filters-right.png" />
+    <Content Include="Content\Images\chevron-sort-select.png" />
+    <Content Include="Content\Images\dd_arrow.gif" />
+    <Content Include="Content\Images\doc-title-image.png" />
+    <Content Include="Content\Images\ecb_logo.png" />
+    <Content Include="Content\Images\eucases-logo-1024.png" />
+    <Content Include="Content\Images\eucases-logo-main.png" />
+    <Content Include="Content\Images\eucases-logo-mobile.png" />
+    <Content Include="Content\Images\EUCasesLogo.jpg" />
+    <Content Include="Content\Images\export-pdf-logo-new.png" />
+    <Content Include="Content\Images\export-pdf-logo.png" />
+    <Content Include="Content\Images\export-rtf-logo-new.png" />
+    <Content Include="Content\Images\export-rtf-logo.png" />
+    <Content Include="Content\Images\features\MyDocuments.JPG" />
+    <Content Include="Content\Images\features\MySearches.JPG" />
+    <Content Include="Content\Images\features\RecentDocuments.JPG" />
+    <Content Include="Content\Images\fins_flags\AED.png" />
+    <Content Include="Content\Images\fins_flags\AFA.png" />
+    <Content Include="Content\Images\fins_flags\ALL.png" />
+    <Content Include="Content\Images\fins_flags\AMD.png" />
+    <Content Include="Content\Images\fins_flags\AOA.png" />
+    <Content Include="Content\Images\fins_flags\AOR.png" />
+    <Content Include="Content\Images\fins_flags\ARS.png" />
+    <Content Include="Content\Images\fins_flags\AUD.png" />
+    <Content Include="Content\Images\fins_flags\AZM.png" />
+    <Content Include="Content\Images\fins_flags\BAM.png" />
+    <Content Include="Content\Images\fins_flags\BGN.png" />
+    <Content Include="Content\Images\fins_flags\BHD.png" />
+    <Content Include="Content\Images\fins_flags\BMD.png" />
+    <Content Include="Content\Images\fins_flags\BRL.png" />
+    <Content Include="Content\Images\fins_flags\BYB.png" />
+    <Content Include="Content\Images\fins_flags\CAD.png" />
+    <Content Include="Content\Images\fins_flags\CDF.png" />
+    <Content Include="Content\Images\fins_flags\CHF.png" />
+    <Content Include="Content\Images\fins_flags\CLP.png" />
+    <Content Include="Content\Images\fins_flags\CNY.png" />
+    <Content Include="Content\Images\fins_flags\COP.png" />
+    <Content Include="Content\Images\fins_flags\CRC.png" />
+    <Content Include="Content\Images\fins_flags\CSD.png" />
+    <Content Include="Content\Images\fins_flags\CUP.png" />
+    <Content Include="Content\Images\fins_flags\CYP.png" />
+    <Content Include="Content\Images\fins_flags\CZK.png" />
+    <Content Include="Content\Images\fins_flags\DKK.png" />
+    <Content Include="Content\Images\fins_flags\DOP.png" />
+    <Content Include="Content\Images\fins_flags\DZD.png" />
+    <Content Include="Content\Images\fins_flags\EEK.png" />
+    <Content Include="Content\Images\fins_flags\EGP.png" />
+    <Content Include="Content\Images\fins_flags\ETB.png" />
+    <Content Include="Content\Images\fins_flags\GBP.png" />
+    <Content Include="Content\Images\fins_flags\GEL.png" />
+    <Content Include="Content\Images\fins_flags\HKD.png" />
+    <Content Include="Content\Images\fins_flags\HRK.png" />
+    <Content Include="Content\Images\fins_flags\HUF.png" />
+    <Content Include="Content\Images\fins_flags\IDR.png" />
+    <Content Include="Content\Images\fins_flags\ILS.png" />
+    <Content Include="Content\Images\fins_flags\INR.png" />
+    <Content Include="Content\Images\fins_flags\IQD.png" />
+    <Content Include="Content\Images\fins_flags\IRR.png" />
+    <Content Include="Content\Images\fins_flags\ISK.png" />
+    <Content Include="Content\Images\fins_flags\JMD.png" />
+    <Content Include="Content\Images\fins_flags\JOD.png" />
+    <Content Include="Content\Images\fins_flags\JPY.png" />
+    <Content Include="Content\Images\fins_flags\KES.png" />
+    <Content Include="Content\Images\fins_flags\KGS.png" />
+    <Content Include="Content\Images\fins_flags\KHR.png" />
+    <Content Include="Content\Images\fins_flags\KPW.png" />
+    <Content Include="Content\Images\fins_flags\KRW.png" />
+    <Content Include="Content\Images\fins_flags\KWD.png" />
+    <Content Include="Content\Images\fins_flags\KZT.png" />
+    <Content Include="Content\Images\fins_flags\LAK.png" />
+    <Content Include="Content\Images\fins_flags\LBP.png" />
+    <Content Include="Content\Images\fins_flags\LRD.png" />
+    <Content Include="Content\Images\fins_flags\LTL.png" />
+    <Content Include="Content\Images\fins_flags\LVL.png" />
+    <Content Include="Content\Images\fins_flags\LYD.png" />
+    <Content Include="Content\Images\fins_flags\MAD.png" />
+    <Content Include="Content\Images\fins_flags\MDL.png" />
+    <Content Include="Content\Images\fins_flags\MGF.png" />
+    <Content Include="Content\Images\fins_flags\MKD.png" />
+    <Content Include="Content\Images\fins_flags\MNT.png" />
+    <Content Include="Content\Images\fins_flags\MTL.png" />
+    <Content Include="Content\Images\fins_flags\MVR.png" />
+    <Content Include="Content\Images\fins_flags\MXN.png" />
+    <Content Include="Content\Images\fins_flags\MYR.png" />
+    <Content Include="Content\Images\fins_flags\MZM.png" />
+    <Content Include="Content\Images\fins_flags\NAD.png" />
+    <Content Include="Content\Images\fins_flags\NGN.png" />
+    <Content Include="Content\Images\fins_flags\NIO.png" />
+    <Content Include="Content\Images\fins_flags\NOK.png" />
+    <Content Include="Content\Images\fins_flags\NPR.png" />
+    <Content Include="Content\Images\fins_flags\NZD.png" />
+    <Content Include="Content\Images\fins_flags\PAB.png" />
+    <Content Include="Content\Images\fins_flags\PEN.png" />
+    <Content Include="Content\Images\fins_flags\PHP.png" />
+    <Content Include="Content\Images\fins_flags\PKR.png" />
+    <Content Include="Content\Images\fins_flags\PLN.png" />
+    <Content Include="Content\Images\fins_flags\QAR.png" />
+    <Content Include="Content\Images\fins_flags\ROL.png" />
+    <Content Include="Content\Images\fins_flags\RON.png" />
+    <Content Include="Content\Images\fins_flags\RSD.png" />
+    <Content Include="Content\Images\fins_flags\RUB.png" />
+    <Content Include="Content\Images\fins_flags\SAR.png" />
+    <Content Include="Content\Images\fins_flags\SCR.png" />
+    <Content Include="Content\Images\fins_flags\SDP.png" />
+    <Content Include="Content\Images\fins_flags\SEK.png" />
+    <Content Include="Content\Images\fins_flags\SGD.png" />
+    <Content Include="Content\Images\fins_flags\SIT.png" />
+    <Content Include="Content\Images\fins_flags\SKK.png" />
+    <Content Include="Content\Images\fins_flags\SYP.png" />
+    <Content Include="Content\Images\fins_flags\THB.png" />
+    <Content Include="Content\Images\fins_flags\TND.png" />
+    <Content Include="Content\Images\fins_flags\TRL.png" />
+    <Content Include="Content\Images\fins_flags\TRY.png" />
+    <Content Include="Content\Images\fins_flags\TWD.png" />
+    <Content Include="Content\Images\fins_flags\TZS.png" />
+    <Content Include="Content\Images\fins_flags\UAH.png" />
+    <Content Include="Content\Images\fins_flags\USD.png" />
+    <Content Include="Content\Images\fins_flags\UYU.png" />
+    <Content Include="Content\Images\fins_flags\UZS.png" />
+    <Content Include="Content\Images\fins_flags\VEB.png" />
+    <Content Include="Content\Images\fins_flags\VND.png" />
+    <Content Include="Content\Images\fins_flags\YER.png" />
+    <Content Include="Content\Images\fins_flags\ZAR.png" />
+    <Content Include="Content\Images\fins_flags\ZWD.png" />
+    <Content Include="Content\Images\flags\ad-big.png" />
+    <Content Include="Content\Images\flags\ad.png" />
+    <Content Include="Content\Images\flags\al-big.png" />
+    <Content Include="Content\Images\flags\al.png" />
+    <Content Include="Content\Images\flags\am-big.png" />
+    <Content Include="Content\Images\flags\am.png" />
+    <Content Include="Content\Images\flags\at-big.png" />
+    <Content Include="Content\Images\flags\at.png" />
+    <Content Include="Content\Images\flags\az-big.png" />
+    <Content Include="Content\Images\flags\az.png" />
+    <Content Include="Content\Images\flags\ba-big.png" />
+    <Content Include="Content\Images\flags\ba.png" />
+    <Content Include="Content\Images\flags\be-big.png" />
+    <Content Include="Content\Images\flags\be.png" />
+    <Content Include="Content\Images\flags\bg-big.png" />
+    <Content Include="Content\Images\flags\bg.png" />
+    <Content Include="Content\Images\flags\by-big.png" />
+    <Content Include="Content\Images\flags\by.png" />
+    <Content Include="Content\Images\flags\ch-big.png" />
+    <Content Include="Content\Images\flags\ch.png" />
+    <Content Include="Content\Images\flags\cs-big.png" />
+    <Content Include="Content\Images\flags\cs.png" />
+    <Content Include="Content\Images\flags\cy-big.png" />
+    <Content Include="Content\Images\flags\cy.png" />
+    <Content Include="Content\Images\flags\cz-big.png" />
+    <Content Include="Content\Images\flags\cz.png" />
+    <Content Include="Content\Images\flags\da-big.png" />
+    <Content Include="Content\Images\flags\da.png" />
+    <Content Include="Content\Images\flags\de-big.png" />
+    <Content Include="Content\Images\flags\de.png" />
+    <Content Include="Content\Images\flags\dk-big.png" />
+    <Content Include="Content\Images\flags\dk.png" />
+    <Content Include="Content\Images\flags\ee-big.png" />
+    <Content Include="Content\Images\flags\ee.png" />
+    <Content Include="Content\Images\flags\en-big.png" />
+    <Content Include="Content\Images\flags\en.png" />
+    <Content Include="Content\Images\flags\es-big.png" />
+    <Content Include="Content\Images\flags\es.png" />
+    <Content Include="Content\Images\flags\et-big.png" />
+    <Content Include="Content\Images\flags\et.png" />
+    <Content Include="Content\Images\flags\eu-big.png" />
+    <Content Include="Content\Images\flags\eu.png" />
+    <Content Include="Content\Images\flags\fi-big.png" />
+    <Content Include="Content\Images\flags\fi.png" />
+    <Content Include="Content\Images\flags\fr-big.png" />
+    <Content Include="Content\Images\flags\fr.png" />
+    <Content Include="Content\Images\flags\ge-big.png" />
+    <Content Include="Content\Images\flags\ge.png" />
+    <Content Include="Content\Images\flags\gr-big.png" />
+    <Content Include="Content\Images\flags\gr.png" />
+    <Content Include="Content\Images\flags\hr-big.png" />
+    <Content Include="Content\Images\flags\hr.png" />
+    <Content Include="Content\Images\flags\hu-big.png" />
+    <Content Include="Content\Images\flags\hu.png" />
+    <Content Include="Content\Images\flags\ie-big.png" />
+    <Content Include="Content\Images\flags\ie.png" />
+    <Content Include="Content\Images\flags\io.png" />
+    <Content Include="Content\Images\flags\is-big.png" />
+    <Content Include="Content\Images\flags\is.png" />
+    <Content Include="Content\Images\flags\it-big.png" />
+    <Content Include="Content\Images\flags\it.png" />
+    <Content Include="Content\Images\flags\kz-big.png" />
+    <Content Include="Content\Images\flags\kz.png" />
+    <Content Include="Content\Images\flags\li-big.png" />
+    <Content Include="Content\Images\flags\li.png" />
+    <Content Include="Content\Images\flags\lt-big.png" />
+    <Content Include="Content\Images\flags\lt.png" />
+    <Content Include="Content\Images\flags\lu-big.png" />
+    <Content Include="Content\Images\flags\lu.png" />
+    <Content Include="Content\Images\flags\lv-big.png" />
+    <Content Include="Content\Images\flags\lv.png" />
+    <Content Include="Content\Images\flags\mc-big.png" />
+    <Content Include="Content\Images\flags\mc.png" />
+    <Content Include="Content\Images\flags\md-big.png" />
+    <Content Include="Content\Images\flags\md.png" />
+    <Content Include="Content\Images\flags\me-big.png" />
+    <Content Include="Content\Images\flags\me.png" />
+    <Content Include="Content\Images\flags\mk-big.png" />
+    <Content Include="Content\Images\flags\mk.png" />
+    <Content Include="Content\Images\flags\mt-big.png" />
+    <Content Include="Content\Images\flags\mt.png" />
+    <Content Include="Content\Images\flags\nl-big.png" />
+    <Content Include="Content\Images\flags\nl.png" />
+    <Content Include="Content\Images\flags\no-big.png" />
+    <Content Include="Content\Images\flags\no.png" />
+    <Content Include="Content\Images\flags\pl-big.png" />
+    <Content Include="Content\Images\flags\pl.png" />
+    <Content Include="Content\Images\flags\po.png" />
+    <Content Include="Content\Images\flags\pt-big.png" />
+    <Content Include="Content\Images\flags\pt.png" />
+    <Content Include="Content\Images\flags\ro-big.png" />
+    <Content Include="Content\Images\flags\ro.png" />
+    <Content Include="Content\Images\flags\rs-big.png" />
+    <Content Include="Content\Images\flags\rs.png" />
+    <Content Include="Content\Images\flags\ru-big.png" />
+    <Content Include="Content\Images\flags\ru.png" />
+    <Content Include="Content\Images\flags\se-big.png" />
+    <Content Include="Content\Images\flags\se.png" />
+    <Content Include="Content\Images\flags\si-big.png" />
+    <Content Include="Content\Images\flags\si.png" />
+    <Content Include="Content\Images\flags\sk-big.png" />
+    <Content Include="Content\Images\flags\sk.png" />
+    <Content Include="Content\Images\flags\sl-big.png" />
+    <Content Include="Content\Images\flags\sl.png" />
+    <Content Include="Content\Images\flags\sm-big.png" />
+    <Content Include="Content\Images\flags\sm.png" />
+    <Content Include="Content\Images\flags\sv-big.png" />
+    <Content Include="Content\Images\flags\sv.png" />
+    <Content Include="Content\Images\flags\tr-big.png" />
+    <Content Include="Content\Images\flags\tr.png" />
+    <Content Include="Content\Images\flags\ua-big.png" />
+    <Content Include="Content\Images\flags\ua.png" />
+    <Content Include="Content\Images\flags\uk-big.png" />
+    <Content Include="Content\Images\flags\uk.png" />
+    <Content Include="Content\Images\flags\va-big.png" />
+    <Content Include="Content\Images\flags\va.png" />
+    <Content Include="Content\Images\flags\xk-big.png" />
+    <Content Include="Content\Images\flags\xk.png" />
+    <Content Include="Content\Images\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\Bold\OpenSans-Bold.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\Italic\OpenSans-Italic.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\Light\OpenSans-Light.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\Regular\OpenSans-Regular.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.svg" />
+    <Content Include="Content\Images\Fonts\OpenSans\Semibold\OpenSans-Semibold.svg" />
+    <Content Include="Content\Images\footer-apis-logo.png" />
+    <Content Include="Content\Images\footer-eu-cases.png" />
+    <Content Include="Content\Images\footer-eu-logo.png" />
+    <Content Include="Content\Images\footer-flag-eu.png" />
+    <Content Include="Content\Images\footer-sfp-logo.png" />
+    <Content Include="Content\Images\go-exact-page.png" />
+    <Content Include="Content\Images\grey-x-on-grey.png" />
+    <Content Include="Content\Images\grey-x-on-white.png" />
+    <Content Include="Content\Images\grey-x.png" />
+    <Content Include="Content\Images\icon-cases-big.png" />
+    <Content Include="Content\Images\icon-cases-small-grey.png" />
+    <Content Include="Content\Images\icon-cases-small-white.png" />
+    <Content Include="Content\Images\icon-cases-small.png" />
+    <Content Include="Content\Images\icon-cases-tiny.png" />
+    <Content Include="Content\Images\icon-cases-xsmall-white.png" />
+    <Content Include="Content\Images\icon-choose-classifier.PNG" />
+    <Content Include="Content\Images\icon-file-reference-gray.PNG" />
+    <Content Include="Content\Images\icon-file-reference.PNG" />
+    <Content Include="Content\Images\icon-finances-doc-small.png" />
+    <Content Include="Content\Images\icon-law-big.png" />
+    <Content Include="Content\Images\icon-law-small-grey.png" />
+    <Content Include="Content\Images\icon-law-small-white.png" />
+    <Content Include="Content\Images\icon-law-small.png" />
+    <Content Include="Content\Images\icon-law-tiny.png" />
+    <Content Include="Content\Images\icon-law-xsmall-white.png" />
+    <Content Include="Content\Images\icon-machine-translation.png" />
+    <Content Include="Content\Images\icon-pencil.png" />
+    <Content Include="Content\Images\icon-search-in-document.png" />
+    <Content Include="Content\Images\icon-simple-doc-small.png" />
+    <Content Include="Content\Images\icon-simple-doc-tiny.png" />
+    <Content Include="Content\Images\icons.gif" />
+    <Content Include="Content\Images\in-doc-search-first.png" />
+    <Content Include="Content\Images\in-doc-search-highlight.png" />
+    <Content Include="Content\Images\in-doc-search-icon.png" />
+    <Content Include="Content\Images\in-doc-search-last.png" />
+    <Content Include="Content\Images\in-doc-search-next.png" />
+    <Content Include="Content\Images\in-doc-search-prev.png" />
+    <Content Include="Content\Images\in-links.png" />
+    <Content Include="Content\Images\Interlex150x82.png" />
+    <Content Include="Content\Images\InterLex_logo.png" />
+    <Content Include="Content\Images\interlex_logo_110x60.png" />
+    <Content Include="Content\Images\interLex_logo_130x60.png" />
+    <Content Include="Content\Images\interLex_logo_90x46.png" />
+    <Content Include="Content\Images\law-book.png" />
+    <Content Include="Content\Images\law-book1.png" />
+    <Content Include="Content\Images\law-book2.png" />
+    <Content Include="Content\Images\law-book3.png" />
+    <Content Include="Content\Images\libra-doc.png" />
+    <Content Include="Content\Images\loading.gif" />
+    <Content Include="Content\Images\logo-consumer-cases-1024.png" />
+    <Content Include="Content\Images\logo-consumer-cases-1280.png" />
+    <Content Include="Content\Images\logo-consumer-cases.png" />
+    <Content Include="Content\Images\logo.svg" />
+    <Content Include="Content\Images\logo_apis.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Images\machine-translation\it\1.jpg" />
+    <Content Include="Content\Images\machine-translation\it\10.jpg" />
+    <Content Include="Content\Images\machine-translation\it\11.jpg" />
+    <Content Include="Content\Images\machine-translation\it\12.jpg" />
+    <Content Include="Content\Images\machine-translation\it\13.jpg" />
+    <Content Include="Content\Images\machine-translation\it\14.jpg" />
+    <Content Include="Content\Images\machine-translation\it\15.jpg" />
+    <Content Include="Content\Images\machine-translation\it\16.jpg" />
+    <Content Include="Content\Images\machine-translation\it\17.jpg" />
+    <Content Include="Content\Images\machine-translation\it\18.jpg" />
+    <Content Include="Content\Images\machine-translation\it\2.jpg" />
+    <Content Include="Content\Images\machine-translation\it\3.jpg" />
+    <Content Include="Content\Images\machine-translation\it\4.jpg" />
+    <Content Include="Content\Images\machine-translation\it\5.jpg" />
+    <Content Include="Content\Images\machine-translation\it\6.jpg" />
+    <Content Include="Content\Images\machine-translation\it\7.jpg" />
+    <Content Include="Content\Images\machine-translation\it\8.jpg" />
+    <Content Include="Content\Images\machine-translation\it\9.jpg" />
+    <Content Include="Content\Images\machine-translation\nl\1.png" />
+    <Content Include="Content\Images\machine-translation\nl\10.png" />
+    <Content Include="Content\Images\machine-translation\nl\11.png" />
+    <Content Include="Content\Images\machine-translation\nl\12.png" />
+    <Content Include="Content\Images\machine-translation\nl\13.png" />
+    <Content Include="Content\Images\machine-translation\nl\14.png" />
+    <Content Include="Content\Images\machine-translation\nl\15.png" />
+    <Content Include="Content\Images\machine-translation\nl\16.png" />
+    <Content Include="Content\Images\machine-translation\nl\17.png" />
+    <Content Include="Content\Images\machine-translation\nl\18.png" />
+    <Content Include="Content\Images\machine-translation\nl\2.png" />
+    <Content Include="Content\Images\machine-translation\nl\3.png" />
+    <Content Include="Content\Images\machine-translation\nl\4.png" />
+    <Content Include="Content\Images\machine-translation\nl\5.png" />
+    <Content Include="Content\Images\machine-translation\nl\6.png" />
+    <Content Include="Content\Images\machine-translation\nl\7.png" />
+    <Content Include="Content\Images\machine-translation\nl\8.png" />
+    <Content Include="Content\Images\machine-translation\nl\9.png" />
+    <Content Include="Content\Images\machine-translation\pl\1.png" />
+    <Content Include="Content\Images\machine-translation\pl\10.png" />
+    <Content Include="Content\Images\machine-translation\pl\11.png" />
+    <Content Include="Content\Images\machine-translation\pl\12.png" />
+    <Content Include="Content\Images\machine-translation\pl\13.png" />
+    <Content Include="Content\Images\machine-translation\pl\14.png" />
+    <Content Include="Content\Images\machine-translation\pl\15.png" />
+    <Content Include="Content\Images\machine-translation\pl\16.png" />
+    <Content Include="Content\Images\machine-translation\pl\17.png" />
+    <Content Include="Content\Images\machine-translation\pl\18.png" />
+    <Content Include="Content\Images\machine-translation\pl\2.png" />
+    <Content Include="Content\Images\machine-translation\pl\3.png" />
+    <Content Include="Content\Images\machine-translation\pl\4.png" />
+    <Content Include="Content\Images\machine-translation\pl\5.png" />
+    <Content Include="Content\Images\machine-translation\pl\6.png" />
+    <Content Include="Content\Images\machine-translation\pl\7.png" />
+    <Content Include="Content\Images\machine-translation\pl\8.png" />
+    <Content Include="Content\Images\machine-translation\pl\9.png" />
+    <Content Include="Content\Images\machine-translation\pt\1.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\10.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\11.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\12.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\13.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\14.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\15.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\16.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\17.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\18.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\2.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\3.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\4.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\5.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\6.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\7.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\8.jpg" />
+    <Content Include="Content\Images\machine-translation\pt\9.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\1.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\10.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\11.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\12.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\13.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\14.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\15.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\16.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\17.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\18.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\2.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\3.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\4.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\5.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\6.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\7.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\8.jpg" />
+    <Content Include="Content\Images\machine-translation\bg\9.jpg" />
+    <Content Include="Content\Images\machine-translation\de\1.jpg" />
+    <Content Include="Content\Images\machine-translation\de\10.jpg" />
+    <Content Include="Content\Images\machine-translation\de\11.jpg" />
+    <Content Include="Content\Images\machine-translation\de\12.jpg" />
+    <Content Include="Content\Images\machine-translation\de\13.jpg" />
+    <Content Include="Content\Images\machine-translation\de\14.jpg" />
+    <Content Include="Content\Images\machine-translation\de\15.jpg" />
+    <Content Include="Content\Images\machine-translation\de\16.jpg" />
+    <Content Include="Content\Images\machine-translation\de\17.jpg" />
+    <Content Include="Content\Images\machine-translation\de\18.jpg" />
+    <Content Include="Content\Images\machine-translation\de\2.jpg" />
+    <Content Include="Content\Images\machine-translation\de\3.jpg" />
+    <Content Include="Content\Images\machine-translation\de\4.jpg" />
+    <Content Include="Content\Images\machine-translation\de\5.jpg" />
+    <Content Include="Content\Images\machine-translation\de\6.jpg" />
+    <Content Include="Content\Images\machine-translation\de\7.jpg" />
+    <Content Include="Content\Images\machine-translation\de\8.jpg" />
+    <Content Include="Content\Images\machine-translation\de\9.jpg" />
+    <Content Include="Content\Images\machine-translation\en\1.jpg" />
+    <Content Include="Content\Images\machine-translation\en\10.jpg" />
+    <Content Include="Content\Images\machine-translation\en\11.jpg" />
+    <Content Include="Content\Images\machine-translation\en\12.jpg" />
+    <Content Include="Content\Images\machine-translation\en\13.jpg" />
+    <Content Include="Content\Images\machine-translation\en\14.jpg" />
+    <Content Include="Content\Images\machine-translation\en\15.jpg" />
+    <Content Include="Content\Images\machine-translation\en\16.jpg" />
+    <Content Include="Content\Images\machine-translation\en\17.jpg" />
+    <Content Include="Content\Images\machine-translation\en\18.jpg" />
+    <Content Include="Content\Images\machine-translation\en\2.jpg" />
+    <Content Include="Content\Images\machine-translation\en\3.jpg" />
+    <Content Include="Content\Images\machine-translation\en\4.jpg" />
+    <Content Include="Content\Images\machine-translation\en\5.jpg" />
+    <Content Include="Content\Images\machine-translation\en\6.jpg" />
+    <Content Include="Content\Images\machine-translation\en\7.jpg" />
+    <Content Include="Content\Images\machine-translation\en\8.jpg" />
+    <Content Include="Content\Images\machine-translation\en\9.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\1.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\10.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\11.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\12.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\13.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\14.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\15.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\16.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\17.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\18.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\2.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\3.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\4.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\5.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\6.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\7.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\8.jpg" />
+    <Content Include="Content\Images\machine-translation\fr\9.jpg" />
+    <Content Include="Content\Images\modal-browse-contents.png" />
+    <Content Include="Content\Images\modal-close.png" />
+    <Content Include="Content\Images\my-searches-icon-load.PNG" />
+    <Content Include="Content\Images\my-searches-icon-remove.PNG" />
+    <Content Include="Content\Images\my-searches-icon-search.PNG" />
+    <Content Include="Content\Images\orange-x-on-grey.png" />
+    <Content Include="Content\Images\orange-x-on-white.png" />
+    <Content Include="Content\Images\pattern2.png" />
+    <Content Include="Content\Images\portfolio\fullsize\1.jpg" />
+    <Content Include="Content\Images\portfolio\fullsize\2.jpg" />
+    <Content Include="Content\Images\portfolio\fullsize\3.jpg" />
+    <Content Include="Content\Images\portfolio\fullsize\4.jpg" />
+    <Content Include="Content\Images\portfolio\fullsize\5.jpg" />
+    <Content Include="Content\Images\portfolio\fullsize\6.jpg" />
+    <Content Include="Content\Images\portfolio\thumbnails\1.jpg" />
+    <Content Include="Content\Images\portfolio\thumbnails\2.jpg" />
+    <Content Include="Content\Images\portfolio\thumbnails\3.jpg" />
+    <Content Include="Content\Images\portfolio\thumbnails\4.jpg" />
+    <Content Include="Content\Images\portfolio\thumbnails\5.jpg" />
+    <Content Include="Content\Images\portfolio\thumbnails\6.jpg" />
+    <Content Include="Content\Images\print.png" />
+    <Content Include="Content\Images\script1.png" />
+    <Content Include="Content\Images\script.png" />
+    <Content Include="Content\Images\spinner.gif" />
+    <Content Include="Content\Images\sprite.png" />
+    <Content Include="Content\Images\star-grey.png" />
+    <Content Include="Content\Images\star-hover.png" />
+    <Content Include="Content\Images\star-yellow.png" />
+    <Content Include="Content\Images\tabs-BG-large.png" />
+    <Content Include="Content\Images\tabs-BG.png" />
+    <Content Include="Content\Images\tabs-DE-large.png" />
+    <Content Include="Content\Images\tabs-DE.png" />
+    <Content Include="Content\Images\tabs-EN-large.png" />
+    <Content Include="Content\Images\tabs-EN.png" />
+    <Content Include="Content\Images\tabs-FR-large.png" />
+    <Content Include="Content\Images\tabs-FR.png" />
+    <Content Include="Content\Images\title-bg.gif" />
+    <Content Include="Content\Images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\Images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\Images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\Images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\Images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\Images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\Images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\Images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\Images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\Images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\Images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\Images\www-line-small.png" />
+    <Content Include="Content\Scripts\app.js" />
+    <Content Include="Content\Scripts\creative.js" />
+    <Content Include="Content\Scripts\doc.js" />
+    <Content Include="Content\Scripts\eurocases-back-to-top.js" />
+    <Content Include="Content\Scripts\eurocases-clear.js" />
+    <Content Include="Content\Scripts\eurocases-dropdown.js" />
+    <Content Include="Content\Scripts\export.js" />
+    <Content Include="Content\Scripts\favourites.js" />
+    <Content Include="Content\Scripts\filters.js" />
+    <Content Include="Content\Scripts\finances.js" />
+    <Content Include="Content\Scripts\hint-examples.js" />
+    <Content Include="Content\Scripts\jquery.fitvids.js" />
+    <Content Include="Content\Scripts\jquery.simplePagination.js" />
+    <Content Include="Content\Scripts\jquery_scrollToCopy.js" />
+    <Content Include="Content\Scripts\jquery_scrollTo.js" />
+    <Content Include="Content\Scripts\keywords-summaries.js" />
+    <Content Include="Content\Scripts\lib\addclear.js" />
+    <Content Include="Content\Scripts\lib\bootstrap-notify.min.js" />
+    <Content Include="Content\Scripts\lib\bootstrap.bundle.min.js" />
+    <Content Include="Content\Scripts\lib\bootstrap.min.js" />
+    <Content Include="Content\Scripts\lib\fotorama.js" />
+    <Content Include="Content\Scripts\lib\gridstack.js" />
+    <Content Include="Content\Scripts\lib\hammer-time.min.js" />
+    <Content Include="Content\Scripts\lib\hammer.min.js" />
+    <Content Include="Content\Scripts\lib\icheck.min.js" />
+    <Content Include="Content\Scripts\lib\jquery-2.0.3.js" />
+    <Content Include="Content\Scripts\lib\jquery-migrate-1.2.1.js" />
+    <Content Include="Content\Scripts\lib\jquery-scrollto.js" />
+    <Content Include="Content\Scripts\lib\jquery-ui-1.10.3.js" />
+    <Content Include="Content\Scripts\lib\jquery-ui.js" />
+    <Content Include="Content\Scripts\lib\jquery-ui.min.js" />
+    <Content Include="Content\Scripts\lib\jquery.clearsearch.js" />
+    <Content Include="Content\Scripts\lib\jquery.contextMenu.js" />
+    <Content Include="Content\Scripts\lib\jquery.cookie.js" />
+    <Content Include="Content\Scripts\lib\jquery.cookiebar.js" />
+    <Content Include="Content\Scripts\lib\jquery.countdownTimer.js" />
+    <Content Include="Content\Scripts\lib\jquery.dataTables.min.js" />
+    <Content Include="Content\Scripts\lib\jquery.dd.js" />
+    <Content Include="Content\Scripts\lib\jquery.dimensions.js" />
+    <Content Include="Content\Scripts\lib\jquery.easing\jquery.easing.compatibility.js" />
+    <Content Include="Content\Scripts\lib\jquery.easing\jquery.easing.min.js" />
+    <Content Include="Content\Scripts\lib\jquery.fancytree.dnd.js" />
+    <Content Include="Content\Scripts\lib\jquery.fancytree.js" />
+    <Content Include="Content\Scripts\lib\jquery.fancytree.persist.js" />
+    <Content Include="Content\Scripts\lib\jquery.flot.js" />
+    <Content Include="Content\Scripts\lib\jquery.flot.time.js" />
+    <Content Include="Content\Scripts\lib\jquery.flot.tooltip.min.js" />
+    <Content Include="Content\Scripts\lib\jquery.highlight.js" />
+    <Content Include="Content\Scripts\lib\jquery.magnificpopup\jquery.magnific-popup.js" />
+    <Content Include="Content\Scripts\lib\jquery.mobile-1.4.5.js" />
+    <Content Include="Content\Scripts\lib\jquery.notify.js" />
+    <Content Include="Content\Scripts\lib\jquery.paginate.js" />
+    <Content Include="Content\Scripts\lib\jquery.paging.js" />
+    <Content Include="Content\Scripts\lib\jquery.paging.min.js" />
+    <Content Include="Content\Scripts\lib\jquery.qtip.js" />
+    <Content Include="Content\Scripts\lib\jquery.splitter-0.14.0.js" />
+    <Content Include="Content\Scripts\lib\jquery.textfill.js" />
+    <Content Include="Content\Scripts\lib\jquery.tooltipster.min.js" />
+    <Content Include="Content\Scripts\lib\jquery.validate.min.js" />
+    <Content Include="Content\Scripts\lib\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\Scripts\lib\OLD-jquery.fancytree.js" />
+    <Content Include="Content\Scripts\lib\particles.min.js" />
+    <Content Include="Content\Scripts\lib\scrollreveal\scrollreveal.min.js" />
+    <Content Include="Content\Scripts\lib\underscore.js" />
+    <Content Include="Content\Scripts\machineTranslation.js" />
+    <Content Include="Content\Scripts\multidict.js" />
+    <Content Include="Content\Scripts\search.js" />
+    <Content Include="Content\Scripts\SearchBox.js" />
+    <Content Include="Content\Scripts\SearchBox_clear.js" />
+    <Content Include="Content\Scripts\utility.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Styles\colors.css">
+      <DependentUpon>colors.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\colors.min.css">
+      <DependentUpon>colors.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\creative\bootstrap.min.css" />
+    <Content Include="Content\Styles\creative\creative.css">
+      <DependentUpon>creative.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\creative\creative.min.css">
+      <DependentUpon>creative.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc-list.css">
+      <DependentUpon>doc-list.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc-list.min.css">
+      <DependentUpon>doc-list.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc-top-bar.css">
+      <DependentUpon>doc-top-bar.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc-top-bar.min.css">
+      <DependentUpon>doc-top-bar.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc.css">
+      <DependentUpon>doc.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc.min.css">
+      <DependentUpon>doc.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\docapi.css" />
+    <Content Include="Content\Styles\eurocases.css">
+      <DependentUpon>eurocases.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\eurocases.min.css">
+      <DependentUpon>eurocases.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\export-rtf.css">
+      <DependentUpon>export-rtf.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\export-rtf.min.css">
+      <DependentUpon>export-rtf.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\filters.css">
+      <DependentUpon>filters.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\filters.min.css">
+      <DependentUpon>filters.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\finances.css">
+      <DependentUpon>finances.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\finances.min.css">
+      <DependentUpon>finances.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\home.css">
+      <DependentUpon>home.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\home.min.css">
+      <DependentUpon>home.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\ie8.css">
+      <DependentUpon>ie8.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\ie8.min.css">
+      <DependentUpon>ie8.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Styles\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\Styles\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\Styles\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\Styles\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\Styles\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\Styles\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Styles\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\Styles\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Styles\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Styles\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Styles\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\Styles\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Styles\interlex_logo_110x60.png" />
+    <Content Include="Content\Styles\layout.css">
+      <DependentUpon>layout.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\layout.min.css">
+      <DependentUpon>layout.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\lib\bootstrap-theme.min.css" />
+    <Content Include="Content\Styles\lib\bootstrap.min.css" />
+    <Content Include="Content\Styles\lib\checkbox\blue%402x.png" />
+    <Content Include="Content\Styles\lib\checkbox\blue.css" />
+    <Content Include="Content\Styles\lib\checkbox\blue.png" />
+    <Content Include="Content\Styles\lib\checkbox\flat%402x.png" />
+    <Content Include="Content\Styles\lib\checkbox\flat.css" />
+    <Content Include="Content\Styles\lib\checkbox\flat.png" />
+    <Content Include="Content\Styles\lib\checkbox\square%402x.png" />
+    <Content Include="Content\Styles\lib\checkbox\square.css" />
+    <Content Include="Content\Styles\lib\checkbox\square.png" />
+    <Content Include="Content\Styles\lib\checkbox\_all.css" />
+    <Content Include="Content\Styles\lib\dd.css" />
+    <Content Include="Content\Styles\lib\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\Styles\lib\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Styles\lib\fotorama%402x.png" />
+    <Content Include="Content\Styles\lib\fotorama.css" />
+    <Content Include="Content\Styles\lib\fotorama.png" />
+    <Content Include="Content\Styles\lib\gridstack-extra.css" />
+    <Content Include="Content\Styles\lib\gridstack.css" />
+    <Content Include="Content\Styles\lib\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Styles\lib\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Content\Styles\lib\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Content\Styles\lib\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Content\Styles\lib\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Styles\lib\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Content\Styles\lib\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Content\Styles\lib\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\Styles\lib\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Content\Styles\lib\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Styles\lib\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Content\Styles\lib\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Content\Styles\lib\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Styles\lib\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Content\Styles\lib\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Content\Styles\lib\jquery-ui.css" />
+    <Content Include="Content\Styles\lib\jquery-ui.min.css" />
+    <Content Include="Content\Styles\lib\jquery-ui.structure.css" />
+    <Content Include="Content\Styles\lib\jquery-ui.structure.min.css" />
+    <Content Include="Content\Styles\lib\jquery-ui.theme.css" />
+    <Content Include="Content\Styles\lib\jquery-ui.theme.min.css" />
+    <Content Include="Content\Styles\lib\jquery.contextMenu.css" />
+    <Content Include="Content\Styles\lib\jquery.cookiebar.css" />
+    <Content Include="Content\Styles\lib\jquery.mobile-1.4.5.css" />
+    <Content Include="Content\Styles\lib\jquery.qtip.css" />
+    <Content Include="Content\Styles\lib\jquery.splitter.css" />
+    <Content Include="Content\Styles\lib\magnific-popup.css" />
+    <Content Include="Content\Styles\lib\themes\tooltipster-light.css" />
+    <Content Include="Content\Styles\lib\tooltipster.css" />
+    <Content Include="Content\Styles\lib\ui.fancytree_FindLaw.css" />
+    <Content Include="Content\Styles\lib\ui.fancytree.css" />
+    <Content Include="Content\Styles\lib\ui.notify.css" />
+    <Content Include="Content\Styles\login-username-failure.css">
+      <DependentUpon>login-username-failure.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\login-username-failure.min.css">
+      <DependentUpon>login-username-failure.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\login.css">
+      <DependentUpon>login.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\machine-translation.css">
+      <DependentUpon>machine-translation.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\machine-translation.min.css">
+      <DependentUpon>machine-translation.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\media.css">
+      <DependentUpon>media.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\media.min.css">
+      <DependentUpon>media.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\my-documents.css">
+      <DependentUpon>my-documents.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\my-documents.min.css">
+      <DependentUpon>my-documents.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\my-searches.css">
+      <DependentUpon>my-searches.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\my-searches.min.css">
+      <DependentUpon>my-searches.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\nav.css">
+      <DependentUpon>nav.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\nav.min.css">
+      <DependentUpon>nav.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\notifications.css">
+      <DependentUpon>notifications.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\notifications.min.css">
+      <DependentUpon>notifications.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\paging.css">
+      <DependentUpon>paging.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\paging.min.css">
+      <DependentUpon>paging.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\search.css">
+      <DependentUpon>search.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\search.min.css">
+      <DependentUpon>search.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\settings.css">
+      <DependentUpon>settings.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\settings.min.css">
+      <DependentUpon>settings.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\simplePagination.css" />
+    <Content Include="Content\Styles\spritecrops.css">
+      <DependentUpon>spritecrops.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\spritecrops.min.css">
+      <DependentUpon>spritecrops.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\themes\tooltipster-light.css" />
+    <Content Include="Content\Styles\themes\tooltipster-noir.css" />
+    <Content Include="Content\Styles\themes\tooltipster-punk.css" />
+    <Content Include="Content\Styles\themes\tooltipster-shadow.css" />
+    <Content Include="Content\Styles\utility.css">
+      <DependentUpon>utility.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\utility.min.css">
+      <DependentUpon>utility.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\xslt\styleActGeneral.css" />
+    <Content Include="Content\Styles\xslt\styleEurolexJudgment.css" />
+    <Content Include="Content\Styles\xslt\styleGeneral.css" />
+    <Content Include="Content\Styles\xslt\styleJudgmentGeneral.css" />
+    <Content Include="favicon.png" />
+    <Content Include="favicon32.png" />
+    <Content Include="Global.asax">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="IvanAkcheurov.profile.xml" />
+    <Content Include="robots.txt" />
+    <Content Include="Content\Pdf\EuroCases_User_Manual_BG.pdf" />
+    <Content Include="Content\Pdf\EuroCases_User_Manual_DE.pdf" />
+    <Content Include="Content\Pdf\EuroCases_User_Manual_EN.pdf" />
+    <Content Include="Content\Pdf\EuroCases_User_Manual_FR.pdf" />
+    <Content Include="App_Code\ActHelper.cshtml" />
+    <Content Include="Content\Styles\finances.less" />
+    <Content Include="Content\Styles\my-documents.less" />
+    <Content Include="Content\Styles\home.less" />
+    <Content Include="Content\Styles\login-username-failure.less" />
+    <Content Include="Content\Styles\machine-translation.less" />
+    <Content Include="Content\Pdf\TaxAndFinancialStandards_User_Manual_BG.pdf" />
+    <Content Include="Content\Pdf\TaxAndFinancialStandards_User_Manual_EN.pdf" />
+    <Content Include="Content\Styles\creative\creative.scss" />
+    <Content Include="Content\Styles\creative\_bootstrap-overrides.scss" />
+    <Content Include="Content\Styles\creative\_global.scss" />
+    <Content Include="Content\Styles\creative\_masthead.scss" />
+    <Content Include="Content\Styles\creative\_mixins.scss" />
+    <Content Include="Content\Styles\creative\_navbar.scss" />
+    <Content Include="Content\Styles\creative\_portfolio.scss" />
+    <Content Include="Content\Styles\creative\_services.scss" />
+    <Content Include="Content\Styles\creative\_variables.scss" />
+    <Content Include="Content\Styles\creative\custom.scss" />
+    <Content Include="libman.json" />
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Y-Publ.pubxml" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <!--<None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />-->
+    <!--<Content Include="Scripts\modernizr-2.6.2.js" />-->
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\_ProductFeaturesInfo.cshtml" />
+    <Content Include="Views\Shared\_ProductFeaturesInfo_Wrapper.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCasesTemplates.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCasesAll.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCasesEU.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCasesNational.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCasesECHR.cshtml" />
+    <Content Include="Views\SearchResult\_ReferedActECHRSearch.cshtml" />
+    <Content Include="Views\Doc\_DocFeaturesInfo.cshtml" />
+    <Content Include="Views\User\MyDocuments.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormFinances.cshtml" />
+    <Content Include="Views\Finances\_EuroStatTable.cshtml" />
+    <Content Include="Views\Finances\_FinsMenu.cshtml" />
+    <Content Include="Views\Finances\_FilterContainers.cshtml" />
+    <Content Include="Views\Home\Index_new.cshtml" />
+    <Content Include="Views\Login\LoginUsernameFailure.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCasesModals.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormMultiDictionary.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormMultiDictionaryTranslations.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCasesMultiDictionaryAlphabet.cshtml" />
+    <Content Include="Views\Doc\Vat32006L0112.cshtml" />
+    <Content Include="Views\Doc\_RefDocsListArticle.cshtml" />
+    <Content Include="Views\Doc\_RefDocsList.cshtml" />
+    <Content Include="Views\Shared\_ProductFeaturesInfo_Finances.cshtml" />
+    <Content Include="Views\Finances\_FinsCurrencyECB.cshtml" />
+    <Content Include="Views\Doc\_DocArticleProvisionsList.cshtml" />
+    <Content Include="Views\Home\MachineTranslationen.cshtml" />
+    <Content Include="Views\Home\MachineTranslationbg.cshtml" />
+    <Content Include="Views\Home\MachineTranslationfr.cshtml" />
+    <Content Include="Views\Home\MachineTranslationde.cshtml" />
+    <Content Include="Views\Home\MachineTranslationpt.cshtml" />
+    <Content Include="Views\Home\MachineTranslationpl.cshtml" />
+    <Content Include="Views\Home\MachineTranslationnl.cshtml" />
+    <Content Include="Views\Shared\_ReferedActProvisionSearch.cshtml" />
+    <Content Include="Views\Doc\_RefDocsPartialList.cshtml" />
+    <Content Include="Views\Home\_DemoInitialMessage.cshtml" />
+    <Content Include="Views\Doc\_ArticlesCorrelation.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormEnactmentModals.cshtml" />
+    <Content Include="Views\Home\MachineTranslationit.cshtml" />
+    <Content Include="Views\DocumentsForPeriod\Index.cshtml" />
+    <Content Include="Views\Finances\_Euribor.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormLawEU.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormLawNational.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormLawTemplates.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormLaw_new.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormMultiDictionaryModals.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormShared.cshtml" />
+    <!--<Content Include="Scripts\jquery-1.10.2.min.map" />-->
+    <Content Include="Views\Shared\_LayoutPresentation.cshtml" />
+    <Content Include="Views\Shared\_HeaderPresentation.cshtml" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Login\AfterRegistration.cshtml" />
+    <Content Include="Views\Login\AfterActivation.cshtml" />
+    <Content Include="Views\User\_AccountDeletion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Scripts\esm\" />
+    <Folder Include="Scripts\pdf.js\build\" />
+    <Folder Include="Scripts\pdf.js\web\cmaps\" />
+    <Folder Include="Scripts\pdf.js\web\images\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ach\" />
+    <Folder Include="Scripts\pdf.js\web\locale\af\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ak\" />
+    <Folder Include="Scripts\pdf.js\web\locale\an\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ar\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ast\" />
+    <Folder Include="Scripts\pdf.js\web\locale\as\" />
+    <Folder Include="Scripts\pdf.js\web\locale\az\" />
+    <Folder Include="Scripts\pdf.js\web\locale\be\" />
+    <Folder Include="Scripts\pdf.js\web\locale\bg\" />
+    <Folder Include="Scripts\pdf.js\web\locale\bn-BD\" />
+    <Folder Include="Scripts\pdf.js\web\locale\bn-IN\" />
+    <Folder Include="Scripts\pdf.js\web\locale\brx\" />
+    <Folder Include="Scripts\pdf.js\web\locale\br\" />
+    <Folder Include="Scripts\pdf.js\web\locale\bs\" />
+    <Folder Include="Scripts\pdf.js\web\locale\cak\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ca\" />
+    <Folder Include="Scripts\pdf.js\web\locale\crh\" />
+    <Folder Include="Scripts\pdf.js\web\locale\csb\" />
+    <Folder Include="Scripts\pdf.js\web\locale\cs\" />
+    <Folder Include="Scripts\pdf.js\web\locale\cy\" />
+    <Folder Include="Scripts\pdf.js\web\locale\da\" />
+    <Folder Include="Scripts\pdf.js\web\locale\de\" />
+    <Folder Include="Scripts\pdf.js\web\locale\el\" />
+    <Folder Include="Scripts\pdf.js\web\locale\en-CA\" />
+    <Folder Include="Scripts\pdf.js\web\locale\en-GB\" />
+    <Folder Include="Scripts\pdf.js\web\locale\en-US\" />
+    <Folder Include="Scripts\pdf.js\web\locale\en-ZA\" />
+    <Folder Include="Scripts\pdf.js\web\locale\eo\" />
+    <Folder Include="Scripts\pdf.js\web\locale\es-AR\" />
+    <Folder Include="Scripts\pdf.js\web\locale\es-CL\" />
+    <Folder Include="Scripts\pdf.js\web\locale\es-ES\" />
+    <Folder Include="Scripts\pdf.js\web\locale\es-MX\" />
+    <Folder Include="Scripts\pdf.js\web\locale\et\" />
+    <Folder Include="Scripts\pdf.js\web\locale\eu\" />
+    <Folder Include="Scripts\pdf.js\web\locale\fa\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ff\" />
+    <Folder Include="Scripts\pdf.js\web\locale\fi\" />
+    <Folder Include="Scripts\pdf.js\web\locale\fr\" />
+    <Folder Include="Scripts\pdf.js\web\locale\fy-NL\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ga-IE\" />
+    <Folder Include="Scripts\pdf.js\web\locale\gd\" />
+    <Folder Include="Scripts\pdf.js\web\locale\gl\" />
+    <Folder Include="Scripts\pdf.js\web\locale\gn\" />
+    <Folder Include="Scripts\pdf.js\web\locale\gu-IN\" />
+    <Folder Include="Scripts\pdf.js\web\locale\he\" />
+    <Folder Include="Scripts\pdf.js\web\locale\hi-IN\" />
+    <Folder Include="Scripts\pdf.js\web\locale\hr\" />
+    <Folder Include="Scripts\pdf.js\web\locale\hsb\" />
+    <Folder Include="Scripts\pdf.js\web\locale\hto\" />
+    <Folder Include="Scripts\pdf.js\web\locale\hu\" />
+    <Folder Include="Scripts\pdf.js\web\locale\hy-AM\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ia\" />
+    <Folder Include="Scripts\pdf.js\web\locale\id\" />
+    <Folder Include="Scripts\pdf.js\web\locale\is\" />
+    <Folder Include="Scripts\pdf.js\web\locale\it\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ja\" />
+    <Folder Include="Scripts\pdf.js\web\locale\kab\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ka\" />
+    <Folder Include="Scripts\pdf.js\web\locale\kk\" />
+    <Folder Include="Scripts\pdf.js\web\locale\km\" />
+    <Folder Include="Scripts\pdf.js\web\locale\kn\" />
+    <Folder Include="Scripts\pdf.js\web\locale\kok\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ko\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ks\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ku\" />
+    <Folder Include="Scripts\pdf.js\web\locale\lg\" />
+    <Folder Include="Scripts\pdf.js\web\locale\lij\" />
+    <Folder Include="Scripts\pdf.js\web\locale\lo\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ltg\" />
+    <Folder Include="Scripts\pdf.js\web\locale\lt\" />
+    <Folder Include="Scripts\pdf.js\web\locale\lv\" />
+    <Folder Include="Scripts\pdf.js\web\locale\mai\" />
+    <Folder Include="Scripts\pdf.js\web\locale\meh\" />
+    <Folder Include="Scripts\pdf.js\web\locale\mk\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ml\" />
+    <Folder Include="Scripts\pdf.js\web\locale\mn\" />
+    <Folder Include="Scripts\pdf.js\web\locale\mr\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ms\" />
+    <Folder Include="Scripts\pdf.js\web\locale\my\" />
+    <Folder Include="Scripts\pdf.js\web\locale\nb-NO\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ne-NP\" />
+    <Folder Include="Scripts\pdf.js\web\locale\nl\" />
+    <Folder Include="Scripts\pdf.js\web\locale\nn-NO\" />
+    <Folder Include="Scripts\pdf.js\web\locale\nso\" />
+    <Folder Include="Scripts\pdf.js\web\locale\oc\" />
+    <Folder Include="Scripts\pdf.js\web\locale\or\" />
+    <Folder Include="Scripts\pdf.js\web\locale\pa-IN\" />
+    <Folder Include="Scripts\pdf.js\web\locale\pl\" />
+    <Folder Include="Scripts\pdf.js\web\locale\pt-BR\" />
+    <Folder Include="Scripts\pdf.js\web\locale\pt-PT\" />
+    <Folder Include="Scripts\pdf.js\web\locale\rm\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ro\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ru\" />
+    <Folder Include="Scripts\pdf.js\web\locale\rw\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sah\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sat\" />
+    <Folder Include="Scripts\pdf.js\web\locale\si\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sk\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sl\" />
+    <Folder Include="Scripts\pdf.js\web\locale\son\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sq\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sr\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sv-SE\" />
+    <Folder Include="Scripts\pdf.js\web\locale\sw\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ta-LK\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ta\" />
+    <Folder Include="Scripts\pdf.js\web\locale\te\" />
+    <Folder Include="Scripts\pdf.js\web\locale\th\" />
+    <Folder Include="Scripts\pdf.js\web\locale\tl\" />
+    <Folder Include="Scripts\pdf.js\web\locale\tn\" />
+    <Folder Include="Scripts\pdf.js\web\locale\tr\" />
+    <Folder Include="Scripts\pdf.js\web\locale\tsz\" />
+    <Folder Include="Scripts\pdf.js\web\locale\uk\" />
+    <Folder Include="Scripts\pdf.js\web\locale\ur\" />
+    <Folder Include="Scripts\pdf.js\web\locale\uz\" />
+    <Folder Include="Scripts\pdf.js\web\locale\vi\" />
+    <Folder Include="Scripts\pdf.js\web\locale\wo\" />
+    <Folder Include="Scripts\pdf.js\web\locale\xh\" />
+    <Folder Include="Scripts\pdf.js\web\locale\zam\" />
+    <Folder Include="Scripts\pdf.js\web\locale\zh-CN\" />
+    <Folder Include="Scripts\pdf.js\web\locale\zh-TW\" />
+    <Folder Include="Scripts\pdf.js\web\locale\zu\" />
+    <Folder Include="Sitemaps\" />
+    <Folder Include="Views\Blog\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Design\sprite.xcf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.eot" />
+    <Content Include="Content\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.ttf" />
+    <Content Include="Content\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.woff" />
+    <Content Include="Content\Fonts\OpenSans\Bold\OpenSans-Bold.eot" />
+    <Content Include="Content\Fonts\OpenSans\Bold\OpenSans-Bold.ttf" />
+    <Content Include="Content\Fonts\OpenSans\Bold\OpenSans-Bold.woff" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.eot" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.ttf" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.woff" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.eot" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.ttf" />
+    <Content Include="Content\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.woff" />
+    <Content Include="Content\Fonts\OpenSans\Italic\OpenSans-Italic.eot" />
+    <Content Include="Content\Fonts\OpenSans\Italic\OpenSans-Italic.ttf" />
+    <Content Include="Content\Fonts\OpenSans\Italic\OpenSans-Italic.woff" />
+    <Content Include="Content\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.eot" />
+    <Content Include="Content\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.ttf" />
+    <Content Include="Content\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.woff" />
+    <Content Include="Content\Fonts\OpenSans\Light\OpenSans-Light.eot" />
+    <Content Include="Content\Fonts\OpenSans\Light\OpenSans-Light.ttf" />
+    <Content Include="Content\Fonts\OpenSans\Light\OpenSans-Light.woff" />
+    <Content Include="Content\Fonts\OpenSans\Regular\OpenSans-Regular.eot" />
+    <Content Include="Content\Fonts\OpenSans\Regular\OpenSans-Regular.ttf" />
+    <Content Include="Content\Fonts\OpenSans\Regular\OpenSans-Regular.woff" />
+    <Content Include="Content\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.eot" />
+    <Content Include="Content\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.ttf" />
+    <Content Include="Content\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.woff" />
+    <Content Include="Content\Fonts\OpenSans\Semibold\OpenSans-Semibold.eot" />
+    <Content Include="Content\Fonts\OpenSans\Semibold\OpenSans-Semibold.ttf" />
+    <Content Include="Content\Fonts\OpenSans\Semibold\OpenSans-Semibold.woff" />
+    <Content Include="Content\Images\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Images\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Images\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\BoldItalic\OpenSans-BoldItalic.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\Bold\OpenSans-Bold.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\Bold\OpenSans-Bold.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\Bold\OpenSans-Bold.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBoldItalic\OpenSans-ExtraBoldItalic.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\ExtraBold\OpenSans-ExtraBold.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\Italic\OpenSans-Italic.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\Italic\OpenSans-Italic.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\Italic\OpenSans-Italic.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\LightItalic\OpenSans-LightItalic.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\Light\OpenSans-Light.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\Light\OpenSans-Light.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\Light\OpenSans-Light.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\Regular\OpenSans-Regular.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\Regular\OpenSans-Regular.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\Regular\OpenSans-Regular.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\SemiboldItalic\OpenSans-SemiboldItalic.woff" />
+    <Content Include="Content\Images\Fonts\OpenSans\Semibold\OpenSans-Semibold.eot" />
+    <Content Include="Content\Images\Fonts\OpenSans\Semibold\OpenSans-Semibold.ttf" />
+    <Content Include="Content\Images\Fonts\OpenSans\Semibold\OpenSans-Semibold.woff" />
+    <Content Include="Content\Pdf\Help_ConsumerCases_En.pdf" />
+    <Content Include="Content\Styles\dynamic\product\colors.less" />
+    <Content Include="Content\Styles\dynamic\project\colors.less" />
+    <Content Include="Content\Styles\lib\bootstrap-theme.css.map" />
+    <Content Include="Content\Styles\lib\bootstrap.css.map" />
+    <Content Include="Content\Styles\lib\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Styles\lib\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Styles\lib\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Styles\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Styles\lib\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\Styles\colors.less" />
+    <Content Include="Content\Styles\doc-list.less" />
+    <Content Include="Content\Styles\doc-list.css.map">
+      <DependentUpon>doc-list.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc-top-bar.less" />
+    <Content Include="Content\Styles\doc-top-bar.css.map">
+      <DependentUpon>doc-top-bar.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\doc.less" />
+    <Content Include="Content\Styles\doc.css.map">
+      <DependentUpon>doc.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\eurocases.less" />
+    <Content Include="Content\Styles\eurocases.css.map">
+      <DependentUpon>eurocases.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\export-rtf.less" />
+    <Content Include="Content\Styles\export-rtf.css.map">
+      <DependentUpon>export-rtf.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\filters.less" />
+    <Content Include="Content\Styles\filters.css.map">
+      <DependentUpon>filters.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\ie8.less" />
+    <Content Include="Content\Styles\ie8.css.map">
+      <DependentUpon>ie8.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\layout.less" />
+    <Content Include="Content\Styles\layout.css.map">
+      <DependentUpon>layout.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\login.less" />
+    <Content Include="Content\Styles\login.css.map">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\media.less" />
+    <Content Include="Content\Styles\media.css.map">
+      <DependentUpon>media.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\my-searches.less" />
+    <Content Include="Content\Styles\my-searches.css.map">
+      <DependentUpon>my-searches.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\nav.less" />
+    <Content Include="Content\Styles\nav.css.map">
+      <DependentUpon>nav.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\notifications.less" />
+    <Content Include="Content\Styles\notifications.css.map">
+      <DependentUpon>notifications.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\paging.less" />
+    <Content Include="Content\Styles\paging.css.map">
+      <DependentUpon>paging.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\search.less" />
+    <Content Include="Content\Styles\search.css.map">
+      <DependentUpon>search.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\settings.less" />
+    <Content Include="Content\Styles\settings.css.map">
+      <DependentUpon>settings.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\spritecrops.less" />
+    <Content Include="Content\Styles\spritecrops.css.map">
+      <DependentUpon>spritecrops.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\utility.less" />
+    <Content Include="Content\Styles\utility.css.map">
+      <DependentUpon>utility.css</DependentUpon>
+    </Content>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Views\Compare\Index.cshtml" />
+    <Content Include="Views\ContextMenus\LanguageMenu.cshtml" />
+    <Content Include="Views\ContextMenus\UserMenu.cshtml" />
+    <Content Include="Views\Doc\Act.cshtml" />
+    <Content Include="Views\Doc\CourtAct.cshtml" />
+    <Content Include="Views\Doc\LegalAct.cshtml" />
+    <Content Include="Views\Doc\ParHint.cshtml" />
+    <Content Include="Views\Doc\TempDocView.cshtml" />
+    <Content Include="Views\Doc\_DocNavigation.cshtml" />
+    <Content Include="Views\Doc\_DocTopBar.cshtml" />
+    <Content Include="Views\Error\404.cshtml" />
+    <Content Include="Views\Error\500.cshtml" />
+    <Content Include="Views\Home\Index _old.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\LostPassword.cshtml" />
+    <Content Include="Views\Login\Registration.cshtml" />
+    <Content Include="Views\Login\ResetPassword.cshtml" />
+    <Content Include="Views\RecentDocuments\Index.cshtml" />
+    <Content Include="Views\RecentDocuments\List.cshtml" />
+    <Content Include="Views\SearchResult\FullPracticeByArticle.cshtml" />
+    <Content Include="Views\SearchResult\List.cshtml" />
+    <Content Include="Views\SearchResult\PalProvisions.cshtml" />
+    <Content Include="Views\SearchResult\PalSearch.cshtml" />
+    <Content Include="Views\SearchResult\SearchResultIncomingLegal.cshtml" />
+    <Content Include="Views\SearchResult\SearchResultIncomingPractice.cshtml" />
+    <Content Include="Views\SearchResult\SearchResultOutgoingLegal.cshtml" />
+    <Content Include="Views\SearchResult\SearchResultVersions.cshtml" />
+    <Content Include="Views\Shared\_CheckTreeView.cshtml" />
+    <Content Include="Views\Home\_MachineTranslationTopBar.cshtml" />
+    <Content Include="Views\Shared\_Doc.cshtml" />
+    <Content Include="Views\Shared\_DocList.cshtml" />
+    <Content Include="Views\Shared\_DocListButtons.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Shared\_LayoutPage.cshtml" />
+    <Content Include="Views\Shared\_LayoutPageBeforeLogin.cshtml" />
+    <Content Include="Views\Shared\_LayoutPage_old.cshtml" />
+    <Content Include="Views\Shared\_SearchBox.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormCases.cshtml" />
+    <Content Include="Views\Shared\_SearchBoxFormLaw.cshtml" />
+    <Content Include="Views\Shared\_SearchList.cshtml" />
+    <Content Include="Views\User\MyDocumentsList.cshtml" />
+    <Content Include="Views\User\MySearches.cshtml" />
+    <Content Include="Views\User\_ChangeEmail.cshtml" />
+    <Content Include="Views\User\_ChangePassword.cshtml" />
+    <Content Include="Views\User\_CommonSettings.cshtml" />
+    <Content Include="Views\User\_Index.cshtml" />
+    <Content Include="Views\User\_PreferedLanguages.cshtml" />
+    <Content Include="Views\User\_SettingsChangeResult.cshtml" />
+    <Content Include="Views\User\_SettingsMenu.cshtml" />
+    <Content Include="Views\Finances\Index.cshtml" />
+    <Content Include="Views\Finances\_EuroLibor.cshtml" />
+    <Content Include="Views\Finances\_FinsCurrency.cshtml" />
+    <Content Include="Views\Finances\_FinsStockIndex.cshtml" />
+    <Content Include="Views\Error\_UnavaiableProductEuroFins.cshtml" />
+    <Content Include="Views\Finances\_EuroStat.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Finances\_Pragove.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.bg.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.de.resx" />
+    <EmbeddedResource Include="Resources\Resources.es.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.fr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.it.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.nl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.pl.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.pt.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Interlex.BusinessLayer\Interlex.BusinessLayer.csproj">
+      <Project>{549fb514-8527-466e-a4fd-e7a54a18cdb3}</Project>
+      <Name>Interlex.BusinessLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>7194</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:9000/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets" Condition="Exists('..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

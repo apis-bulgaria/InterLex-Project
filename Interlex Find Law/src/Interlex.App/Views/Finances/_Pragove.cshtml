@@ -1,0 +1,25 @@
+﻿@model string
+
+@using Interlex.BusinessLayer.Models;
+
+
+@section JavaScript
+{
+    @Scripts.Render("~/bundles/doc")
+}
+
+@section CSS
+{
+    @Styles.Render("~/Content/doc")
+}
+
+
+<div>
+    @Html.Raw(Model)
+</div>
+
+<script>
+    $().ready(function () {
+     //   prepairInlineLinks(@((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+    });
+</script>

@@ -1,0 +1,101 @@
+﻿@model Interlex.BusinessLayer.Models.DocumentsForPeriod
+
+@using Interlex.App.Helpers
+@using Newtonsoft.Json
+@using Interlex.BusinessLayer.Models
+@using System.Text
+
+@{
+    ViewBag.Title = "New Documents";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="container-fluid main-content">
+    <div id="periods" class="periods-container">
+        <div class="last-period-container">
+            @ActHelper.DisplayPeriodInformation(this.Model.GetLastGroupPeriodByYear(), this.Model.StartPeriod, this.Model.EndPeriond, this.Html)
+        </div>
+        <div class="archive-periods-container">
+            <div class="period-wrapper">
+                <div class="b-medium b-white f-blue f-bold period-container">
+                    <a class="period-container-anchor-archive" href="#">@EuroCases.App.Resources.Resources.UI_FinsArchive</a>
+                    <span class="fa fa-chevron-right period-container-chevron-archive"></span>
+                </div>
+                <ul class="period-list-archive">
+                    @{ var archiveExpandedClass = this.Model.IsAnyRestGroupInPeriod() ? " expanded" : String.Empty; }
+                    <li class="period-list-archive-item @archiveExpandedClass">
+                        @ActHelper.DisplayPeriodInformation(this.Model.GetRestGroupPeriodsByYear(), this.Model.StartPeriod, this.Model.EndPeriond, this.Html)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="list_container" class="list-container-new-docs" style="float: left; width: 79%; margin-left: 0.5%; margin-top: 5px;">
+
+        @{
+            foreach (var document in this.Model.Items)
+            {
+                <div class="item item-book-scales">
+                    @Html.DocPartial(document, this.Session.LanguageId(), this.Session.UserData().OpenDocumentsInNewTab)
+
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    var chevrons = $('.period-container-chevron');
+    chevrons.click(function (e) {
+
+        var chevron = $(e.target);
+
+        var periodListItem = $(chevron.parent().parent()).find('.period-list-item');
+        if (periodListItem.filter(function () { return $(this).hasClass('expanded'); }).length > 0) {
+            periodListItem.removeClass('expanded');
+            chevron.removeClass('fa fa-chevron-down');
+            chevron.addClass('fa fa-chevron-right')
+        } else {
+            periodListItem.addClass('expanded');
+            chevron.removeClass('fa fa-chevron-right');
+            chevron.addClass('fa fa-chevron-down');
+        }
+
+    });
+
+    var arhiveChevron = $('.period-container-chevron-archive');
+    arhiveChevron.click(function (e)
+    {
+        var chevron = $(e.target);
+
+        var periodListItem = $(chevron.parent().parent()).find('.period-list-archive-item');
+        if (periodListItem.filter(function () { return $(this).hasClass('expanded'); }).length > 0) {
+            periodListItem.removeClass('expanded');
+            chevron.removeClass('fa fa-chevron-down');
+            chevron.addClass('fa fa-chevron-right')
+        } else {
+            periodListItem.addClass('expanded');
+            chevron.removeClass('fa fa-chevron-right');
+            chevron.addClass('fa fa-chevron-down');
+        }
+    });
+
+    var arhiveAnchor = $('.period-container-anchor-archive');
+    arhiveAnchor.click(function (e) {
+        var anchor = $(e.target);
+        var chevron = anchor.next();
+        var periodListItem = $(anchor.parent().parent()).find('.period-list-archive-item');
+        if (periodListItem.filter(function () { return $(this).hasClass('expanded'); }).length > 0) {
+            periodListItem.removeClass('expanded');
+            chevron.removeClass('fa fa-chevron-down');
+            chevron.addClass('fa fa-chevron-right')
+        } else {
+            periodListItem.addClass('expanded');
+            chevron.removeClass('fa fa-chevron-right');
+            chevron.addClass('fa fa-chevron-down');
+        }
+    });
+
+
+</script>

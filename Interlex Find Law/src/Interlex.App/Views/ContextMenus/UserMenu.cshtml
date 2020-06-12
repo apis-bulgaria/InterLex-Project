@@ -1,0 +1,62 @@
+﻿@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources
+<div class="pull-left dropdown user-dropdown">
+    <a href="#" id="user-dropdown" data-toggle="dropdown">@Html.Raw((Session["UserData"] == null) ? "---" : "<span class=\"fa fa-user user-icon-header\"></span>")
+        <span class="chevron-white-down right"></span>
+    </a>
+    
+    <ul class="dropdown-menu" role="menu" id="user-menu" aria-labelledby="language-dropdown" style="display: none;">
+        @*<li role="presentation">*@
+            @*<a href="~/User/MyDocuments" role="menuitem">My documents</a>*@
+            @*<a href="~/User/MySearches" role="menuitem">My searches</a>*@
+            @*<a href="" role="menuitem" id="settings">Settings</a>
+            <a href="~/Login/Logout" role="menuitem">Logout</a>*@
+        @*</li>*@
+        <li>
+            <a href="" role="menuitem" id="settings">@Resources.UI_Settings</a>
+        </li>
+        <li>
+            <a href="~/Login/Logout" role="menuitem">@Resources.UI_Logout_Upper</a>
+        </li>
+
+    </ul>
+</div>
+
+@Html.Partial("~/Views/User/_Index.cshtml")
+<script>
+    $('#user-dropdown').click(function (e) {
+        e.preventDefault();
+
+        if ($('#user-details').css('display') === 'none') {
+            $('#user-details').show();
+
+            if ($('#help-container').is(':visible')) {
+                $('#help-container').hide();
+            }
+
+            if ($('#language-menu').css('display') !== 'none') {
+                $('#language-menu').hide();
+            }
+
+            if ($('#container-product-change').is(':visible')) {
+                $('#container-product-change').hide();
+            }
+        }
+        else {
+            $('#user-details').hide();
+        }
+
+       
+
+        /*if ($('#user-menu').css('display') === 'none') {
+            $('#user-menu').show();
+
+            if ($('#language-menu').css('display') !== 'none') {
+                $('#language-menu').hide();
+            }
+        }
+        else {
+            $('#user-menu').hide();
+        }*/
+    })
+</script>

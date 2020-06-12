@@ -1,0 +1,54 @@
+﻿@using Interlex.App.Helpers
+@using Interlex.App.Resources
+
+<fieldset class="width-80">
+    <legend>@Resources.UI_DocumentReference</legend>
+    <div class="left width-50">
+        <div class="left width-40" id="cases-eu-parties"></div> @* Parties *@
+        <div class="left width-55">
+            <div class="left width-35" id="cases-eu-casenumber"></div> @* Case number *@
+            <div class="left width-45" id="cases-eu-year"></div> @* Year *@
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="left width-50" id="cases-eu-natid-ecli"></div> @* NatId / ECLI *@
+    <div class="clearfix"></div>
+    <div class="left width-50" id="cases-eu-jurisdictions"></div> @* Jurisdictions *@
+    <div class="left width-sb-dates-container sb-dates-container" id="cases-eu-dates"></div> @* Dates *@
+</fieldset>
+<div class="clearfix"></div>
+
+<fieldset class="width-80">
+    <legend>Types of document and procedure</legend> @* TODO: GET RESOURCE *@
+    <div class="left width-50" id="cases-eu-document-type"></div> @* Document type *@
+    <div class="left width-50" id="cases-eu-procedure-type"></div> @* Procedure type *@
+    <div class="clearfix"></div>
+</fieldset>
+<div class="clearfix"></div>
+
+<fieldset class="width-80">
+    <div class="left width-50" id="cases-eu-general-lawyer"></div> @* General lawyer *@
+    <div class="left width-50" id="cases-eu-judge-rapporteur"></div> @* Judge rapporteur *@
+    <div class="clearfix"></div>
+</fieldset>
+<div class="clearfix"></div>
+
+
+<fieldset class="width-80">
+    <legend>@Resources.UI_ReferedEUActProvision</legend>
+    <div class="left width-50" id="cases-eu-enactment"></div> @* Enactment / Legal act *@
+    <div class="left width-50" id="cases-eu-provision"></div> @* Provision *@
+    <div class="clearfix"></div>
+</fieldset>
+<div class="clearfix"></div>
+
+<fieldset class="width-80">
+    <legend>@Resources.UI_Classifiers</legend>
+    <div class="left width-50" id="cases-eu-eurovoc"></div> @* Eurovoc *@
+    <div class="left width-50" id="cases-eu-subject-matter"></div> @* Subject matter *@
+    <div class="clearfix"></div>
+    <div class="left width-50" id="cases-eu-directory-caselaw"></div> @* Directory caselaw *@
+    <div class="clearfix"></div>
+    <div id="cases-eu-directory-caselaw-show-full" class="directory-caselaw-show-full"></div> @* Directory caselaw show full checkbox *@
+</fieldset>

@@ -1,0 +1,232 @@
+﻿@using Interlex.App.Helpers
+@using Interlex.App.Resources
+
+<div style="display: none" id="modal-choose-enactment">
+    <div class="width-30 left height-100 text-left container-form" id="modal-choose-enactment-folders-container" style="border-right: 2px solid #148dd4;">
+        <div id="PAL_Tree"></div>
+        <input type="hidden" id="hClassifierId" value="" />
+        <input type="hidden" id="hPalQuery" value="" />
+    </div>
+
+    <div class="left padding-left-20 container-form header-modal-box">
+        <div>
+            <div class="left-input-part">
+                <div class="relative content-center f-0-9">
+                    <input type="text" id="input-enactment-search" class="input-blue" placeholder="@Resources.UI_SearchEuAndNationalLegislation" />
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="margin-top-5 f-0-9">
+                    <input type="text" id="input-enactment-number" class="input-blue width-25" placeholder="@Resources.UI_Number" />
+                    <input type="text" id="input-enactment-year" class="input-blue width-25 margin-left-5" placeholder="@Resources.UI_Year" />
+                    <input type="text" id="input-enactment-celex" class="input-blue margin-left-5 width-45" placeholder="@Resources.UI_NatIdOrEcli" />
+                </div>
+            </div>
+
+            <div class="right-btn-part">
+                <a href="#" id="btn-enactment-search" class="btn btn-blue btn-small inline-block"> <span class="fa fa-search f-white" style="font-size: 1.5em !important;"></span></a>
+            </div>
+            @*style="vertical-align: top; height: 21px; margin-top: 2px; padding-top: 2px;"*@
+        </div>
+        <div id="pal_pages_top"></div>
+
+        <div class="list-container-provision">
+            <div class="list-box-left">
+                <div id="pal_docs_list" class="margin-top-5"></div>
+            </div>
+            <div class="list-box-right" style=" margin-left: 15px; margin-top: 5px;">
+                <div id="modal-choose-provision"></div>
+            </div>
+        </div>
+    </div>
+    @*<div class="width-25 left">
+            @*<h5>@Resources.UI_Provision</h5>
+            <div id="modal-choose-provision"></div>
+        </div>*@
+    <div class="clearfix"></div>
+</div>
+
+<div class="display-none" id="modal-choose-provision-fictive">
+    @* Used just for a holder before choosing refered act*@
+    Choose a refered act first @* TODO: Resource *@
+</div>
+
+
+
+<script>
+    function showProvisionDlg(isIndexSearch) {
+        //if (isIndexSearch === true) {
+        //    docLangId = $('#Cases_EnactmentDocLangId_Index').val();
+        //}
+        //else {
+            docLangId = $('#Cases_EnactmentDocLangId').val() || $('#Finances_EnactmentDocLangId').val();
+       // }
+
+   //     isAModalOpened = true;
+        if (docLangId && docLangId != '') {
+            loadPalProvisions(docLangId, isIndexSearch);
+        }
+        else {
+            $('#modal-choose-provision').html(Resources.storage["UI_JS_PalNoActChoosen"]);
+        }
+
+        @*$('#modal-choose-provision')
+            .attr('data-max-height', 440)
+            .dialog({
+                dialogClass: 'dialog-settings fixed-dialog modal-choose-provision-outer',
+                autoOpen: true,
+                resizable: false,
+                height: 440, // height is calculated in fluidDialog, utitlity.js
+                title: '@Resources.UI_ChooseProvision',
+                width: 'auto',
+              //  minWidth: 300,
+                maxWidth: 380,
+                defaultWidth: 380,
+                fluid: true,
+                modal: true,
+                draggable: true,
+                position: { my: 'top', at: 'top+250' },
+                open: function () {
+
+                },
+                close: function () {
+                    setTimeout(function () {
+                        isAModalOpened = false;
+                    }, 200);
+                }
+            });*@
+    }
+
+    $().ready(function () {
+        var lastOpenedEnactmentModalIsFromSearch = undefined;
+
+        $('#link-choose-enactment, #link-choose-enactment-index').click(function () {
+            var isIndexSearch = parseInt($(this).attr('data-index-search')),
+                bonusDialogClass;
+
+            if (isIndexSearch === 1) {
+                bonusDialogClass = " index-search";
+            }
+            else {
+                bonusDialogClass = '';
+            }
+
+            if (lastOpenedEnactmentModalIsFromSearch !== undefined && lastOpenedEnactmentModalIsFromSearch !== isIndexSearch) {
+                clearEnactmentModal();
+            }
+            lastOpenedEnactmentModalIsFromSearch = isIndexSearch;
+
+            let buttonsObj = {};
+
+            let mainButtonFunc = function (event) {
+                DoSearch('enactmentIndex');
+            };
+
+            if (isIndexSearch) {
+                buttonsObj['@Resources.UI_Search'] = function (event) {
+                    DoSearch('enactmentIndex');
+                };
+            }
+            else{
+                buttonsObj[$('<i/>').html('@Resources.UI_Ok').text()] = function (event) {
+                    isAModalOpened = false;
+                    $('#modal-choose-enactment').dialog('close');
+                }
+            }
+
+            buttonsObj['@Resources.UI_Close_Lower'] = function (event) {
+                isAModalOpened = false;
+                $('#modal-choose-enactment').dialog('close');
+            }
+
+            $('#modal-choose-enactment')
+                .attr('data-max-height', 480)
+                .dialog({
+                    dialogClass: 'dialog-settings fixed-dialog modal-enactment-outer' + bonusDialogClass,
+                    autoOpen: true,
+                    resizable: false,
+                    height: 480, // height is calculated in fluidDialog, utitlity.js
+                    title: '@Resources.UI_ChooseEnactment',
+                    width: 'auto',
+                    maxWidth: 1000,
+                    defaultWidth: 1000,
+                    fluid: true,
+                    modal: true,
+                    draggable: true,
+                    position: { my: 'top', at: 'top+250' },
+                    open: function () {
+                       // debugger;
+                        isAModalOpened = true;
+                        $('#modal-choose-enactment').attr('data-index-search', isIndexSearch);
+                        ShowPAL_Tree(@int.Parse(Session["SelectedProductId"].ToString()));
+                        $('#modal-choose-provision').html('');
+                        showProvisionDlg(isIndexSearch);
+                    },
+                    close: function () {
+                        setTimeout(function () {
+                            isAModalOpened = false;
+                        }, 200);
+                    },
+                    buttons: buttonsObj
+                });
+        });
+
+        // Fictive provision binding. Modal is shown only when no DocLangId is chosen for a refered act
+        $('#link-choose-provision-fictive').click(function () {
+            if (GlobalValidator.inputHasValue('#input-refered-act')) {
+                // do stuff
+            }
+            else {
+                $('#modal-choose-provision-fictive').dialog({
+                    dialogClass: 'dialog-settings fixed-dialog',
+                    autoOpen: true,
+                    resizable: false,
+                    height: 100,
+                    width: 'auto',
+                    maxWidth: 300,
+                    defaultWidth: 300,
+                    fluid: true,
+                    title: 'Choose provision',
+                    modal: true,
+                    draggable: true,
+                    open: function () {
+                        isAModalOpened = true;
+                    },
+                    close: function () {
+                        setTimeout(function () {
+                            isAModalOpened = false;
+                        }, 200);
+                    },
+                    position: { my: 'top', at: 'top+250' },
+                });
+            }
+
+            return false;
+        });
+
+        $('#list-enactment-choose li a').click(function () {
+          //  showProvisionDlg(true);
+          //  $('#modal-choose-enactment').dialog('close');
+        });
+
+        $('#btn-enactment-search').click(function () {
+            palSearch();
+        });
+
+        $('#link-choose-provision').click(function () {
+            showProvisionDlg(false);
+        });
+
+        $('#list-provision-choose li a').click(function () {
+            $('#modal-choose-provision').dialog('close');
+        });
+
+        // Binding enter press to inputs for legal act search
+        $('#input-enactment-search, #input-enactment-number, #input-enactment-year, #input-enactment-celex').keyup(function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                $('#btn-enactment-search').trigger('click');
+            }
+        });
+    });
+</script>

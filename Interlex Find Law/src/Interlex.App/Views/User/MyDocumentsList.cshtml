@@ -1,0 +1,212 @@
+﻿@model IEnumerable<Interlex.BusinessLayer.Models.Document>
+@using Interlex.App.Resources
+@using Interlex.App.Helpers
+@using Interlex.BusinessLayer.Models
+
+<div >
+    @Html.Partial("~/Views/Shared/_DocListButtons.cshtml")
+    <span id="my-documents-view-title" class="f-blue f-bold padding-left-5 inline-block margin-bottom-5 page-main-title">@Resources.UI_JS_MyDocuments</span>
+    <div id="doc-filter-pagination-container">
+        <div id="top_paging" class="f-blue">
+            <span>@Resources.UI_DocumentsCount:</span>
+            <span class="my-docs-count f-blue mobile-row-center">
+                @Model.Count()
+            </span>
+            <a href="#" id="delete-all-documents-link" class="mydocs-docs-action-link mobile-row"><span class="fa fa-trash-o"></span> @Resources.UI_DeleteAllDocuments</a>
+            <a href="#" id="move-all-documents-link" class="mydocs-docs-action-link mobile-row-center"><span class="fa fa-mail-reply-all" style="margin-right:4.5px;"></span>@Resources.UI_MoveAllDocs</a>
+          
+            <a href="javascript:myDocsHandler.changeFavouriteDocsSortDir();" id="sort_dir" class="right" data-dir="@ViewBag.OrderDir">
+                @if (ViewBag.OrderDir == "asc" || ViewBag.OrderDir == null || string.IsNullOrEmpty(ViewBag.OrderDir))
+                {
+                    <span id="chevron-sort" class="chevron-sort-up"></span>
+                }
+                else
+                {
+                    <span id="chevron-sort" class="chevron-sort-down"></span>
+                }
+            </a>
+            @if (ViewBag.OrderBy == "add_date")
+            {
+                <select class="right" id="OrderBy">
+                    <option value="add_date" selected="selected">@Resources.UI_DateAdded</option>
+                    <option value="title">@Resources.UI_Alpaberical</option>
+                </select>
+            }
+            else if (ViewBag.OrderBy == "title")
+            {
+                <select class="right" id="OrderBy">
+                    <option value="add_date">@Resources.UI_DateAdded</option>
+                    <option value="title" selected="selected">@Resources.UI_Alpaberical</option>
+                </select>
+            }
+        </div>
+    </div> @*id used just to preserve layout - change if a real paging is made *@
+</div>
+<div id="my-documents-list-container">
+    @foreach (var doc in Model)
+    {
+        @Html.DocPartial(doc, Convert.ToInt32(Session["LanguageId"]), WebAppHelper.AppRootFolder, (Session["UserData"] as UserData).OpenDocumentsInNewTab)
+        @*  @Html.Partial("~/Views/Shared/_Doc.cshtml", doc)*@
+    }
+</div>
+</div>
+<div>&nbsp;</div>
+<script>
+    controlOverflowing();
+
+    bindSelectsForExport();
+
+    $('.doc-item-container').hover(function () {
+        $(this).prev().css('height', $(this).css('height'));
+        $(this).prev().css('visibility', 'visible');
+        $(this).css('border-left', '2px solid #FCB647');
+    }, function () {
+        $(this).prev().css('visibility', 'hidden');
+        $(this).css('border-left', '2px solid #E0E0E0');
+    });
+
+    addHints('doc-info-link', @Session["LanguageId"].ToString(), @((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+
+    $('.aFavouriteDocRemove').click(favouriteDocRemoveAndDeleteElementClick);
+
+    $('#OrderBy').selectmenu({
+        change: function (event, ui) {
+            if ($(this).val() === 'title') {
+                $('#sort_dir').data('dir', 'asc');
+                $('#chevron-sort').addClass('chevron-sort-up');
+                $('#chevron-sort').removeClass('chevron-sort-down');
+            }
+            else {
+                $('#sort_dir').data('dir', 'desc');
+                $('#chevron-sort').addClass('chevron-sort-down');
+                $('#chevron-sort').removeClass('chevron-sort-up');
+            }
+            myDocsHandler.LoadMyDocuments(1);
+        },
+        select: function (event, ui) {
+            $('#OrderBy').removeClass('ui-state-focus');
+        },
+        close: function (event, ui) {
+            $('#OrderBy').removeClass('ui-state-focus');
+        }
+    });
+
+    $('#delete-all-documents-link').click(function(e){
+        e.preventDefault();
+
+        $('<div></div>').appendTo('body')
+            .html('<div><h6>@Resources.UI_DeleteAllDocumentsConfirm</h5><div>')
+            .dialog({
+                modal: true, title: '@(Resources.UI_DeleteAllDocuments)', zIndex: 10000, autoOpen: true,
+                width: 'auto',
+                maxWidth: 450,
+                defaultWidth: 450,
+                fluid: true,
+                resizable: false,
+                draggable: true,
+                open: function () {
+                    isAModalOpened = true;
+                },
+                buttons: [{
+                    text: '@Resources.UI_Yes', click: function () {
+                        deleteAllDocumentsConfirm(myDocsHandler.getSelectedNodeKey());
+                        $(this).dialog("close");
+                    },
+                    class: 'btn-large btn-blue f-white f-bold f-0-7-important'
+                }, {
+                    text: '@Resources.UI_Cancel', click: function () {
+                        $(this).dialog('close');
+                    },
+                    class: 'btn-large btn-lgrey f-blue f-bold f-0-7-important'
+                }],
+                close: function (event, ui) {
+                    setTimeout(function () {
+                        isAModalOpened = false;
+                    }, 200);
+
+                    $(this).remove();
+                }
+            });
+    });
+
+    function deleteAllDocumentsConfirm(folderId){
+        $.ajax({
+            method: "POST",
+            url: "@(Url.Action("MyDocumentsDeleteAll", "User"))",
+            data: {
+                folderId: folderId
+            },
+            traditional: true
+        }).done(function(response){
+            if (response === "Ok") {
+                $('#my-documents-list-container').empty();
+                $('#my-documents-list-container').trigger('mydocs:all-docs-removed');
+                $('.my-docs-count').text('0');
+            }
+        });
+    }
+
+    $().ready(function(){
+        $('.doc-title-a-container a').click(function () {
+            $(this).addClass('f-bold');
+            $(this).addClass('f-italic');
+        });
+
+        $('#move-all-documents-link').click(function () {
+            var myFoldersHandler = new MyDocumentsHandler({
+                    foldersContainerSelector: '#my-folders-select-container',
+                    folderClick: function (event, data) {
+
+                    }
+            });
+
+            $('<div id="select-doc-dialog"><div id="my-folders-select-container" class="my-folders-container"></div></div>')
+                .dialog({
+                    modal: true,
+                    title: '@Resources.UI_SelectFolder',
+                    zIndex: 10000,
+                    autoOpen: true,
+                    width: 'auto',
+                    fluid: true,
+                    maxWidth: 480,
+                    defaultWidth: 480,
+                    resizable: false,
+                    draggable: true,
+                    open: function () {
+                        isAModalOpened = true;
+                    },
+                    buttons: [{
+                        text: Resources.storage['UI_JS_Cancel'],
+                        click: function () {
+                            $(this).dialog('close');
+                        },
+                        class: 'btn btn-lgrey f-blue f-bold f-0-7-important right'
+                    }, {
+                        text: Resources.storage['UI_JS_Save'],
+                        click: function () {
+                            myDocsHandler.moveAllDocsFromFolderToFolder(myFoldersHandler.getSelectedNodeKey());
+                            $(this).dialog("close");
+                        },
+                        class: 'btn btn-blue f-white f-bold f-0-7-important right'
+                    }],
+                    close: function (event, ui) {
+                        setTimeout(function () {
+                            isAModalOpened = false;
+                        }, 200);
+
+                        $(this).remove();
+                    }
+                })
+                .parent()
+                .find('.ui-dialog-buttonset')
+                .prepend('<div id="link-wrapper"><a style="color: #148dd4" class="add-new-folder-link f-bold f-0-7-important left">' + Resources.storage['UI_JS_NewFolder'] + '</a>')
+                .ready(function () {
+                    var link = $('.ui-dialog-buttonset .add-new-folder-link');
+                    myFoldersHandler.initFolders();
+
+                    link.click(myFoldersHandler.createFolderBtnCallback);
+                    link.css('cursor', 'pointer');
+                });
+        });
+    });
+</script>

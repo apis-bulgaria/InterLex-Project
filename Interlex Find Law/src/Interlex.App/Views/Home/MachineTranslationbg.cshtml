@@ -1,0 +1,1289 @@
+﻿@model Language
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources;
+
+@{
+    ViewBag.Title = "Machine translation";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section JavaScript
+{
+    @Scripts.Render("~/bundles/doc")
+    @Scripts.Render("~/bundles/MtJS")
+}
+
+@section CSS
+{
+    @Styles.Render("~/Content/doc")
+    @Styles.Render("~/Content/MtCSS")
+}
+
+
+<span class="chevron-doc-navigation-closed">
+    <span class="span-doc-navigation-closed">@Resources.UI_Navigation</span>
+</span>
+<div id="doc-view-top-holder" class="filters-container" style="">
+    <div id="doc-view-top-holder-inner">
+        <div class="b-medium b-blue f-white" style="padding-left: 18px; font-weight: bold !important;">
+            @Resources.UI_Navigation
+            @* <span class="chevron-doc-navigation right" title="@Resources.Hint_NavigationHide"></span>*@
+            <span class="fa fa-arrow-circle-o-left right chevron-doc-navigation" title="@Resources.Hint_NavigationHide"></span>
+        </div>
+        <div id="doc-navigation-container">
+            <h3 class="doc-nav-category-title">
+                @Resources.UI_Contents<span class="right chevron-doc-navigation-category f-blue relative f-0-7 margin-left-15">&#x25BC;</span>
+            </h3>
+            @*<div class="b-medium b-white f-blue f-bold" style="padding-left:12px;padding-bottom:3px; height: auto; padding-top: 3px; border: 1px solid #e0e0e0; border-left: 2px solid #148dd4">Lada</div>*@
+            <div style="padding-top: 0;">
+                @*<div id="@string.Format("folder%_tree", hf.Id.ToString())"></div>*@
+                <div id="mt-nav" style="padding-top: 0; margin-top: -5px;">
+                    <ol type="I" class="level-one">
+                        <li>
+                            <span class="menu-element">
+                                <a data-target="guidelines-registering">
+                                    Указания за регистриране и ползване на услугата MT@EC на Европейската комисия
+                                </a>
+                            </span>
+                            <ol type="A" class="level-two">
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="registration">
+                                            Регистрация
+                                        </a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="mtec-service">
+                                            Използване на услугата MT@EC
+                                        </a>
+                                    </span>
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            <span class="menu-element">
+                                <a data-target="guidelines-free-mt">
+                                	Наръчник за използване на безплатни онлайн услуги за машинен превод
+                                </a>
+                            </span>
+                            <ol type="A" class="level-two">
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="text-translation">
+                                            Превод на текст
+                                        </a>
+                                    </span>
+                                    <ol type="1" class="level-three">
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="translation-web-interface">
+                                                    Превод на текст на уеб страницата на доставчика
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="translation-integrated-functions">
+                                                    Превод на маркиран текст с функции, интегрирани в браузъра на потребителя
+                                                </a>
+                                            </span>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="webpage-translation">
+                                            Превод на уеб страници
+                                        </a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="document-translation">
+                                            Превод на документи
+                                        </a>
+                                    </span>
+                                    <ol type="1" class="level-three">
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="file-translation">
+                                                    Превод на файл
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="opened-document-translation">
+                                                    Превод на отворен документ
+                                                </a>
+                                            </span>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_MachineTranslationTopBar", Model)
+
+<div class=WordSection1>
+
+    <p class=MsoNormal align=center style='margin-bottom:6.0pt;text-align:center;
+line-height:normal'>
+        <b>
+            <span style='font-size:18.0pt'>
+                Превeждане на съдебни
+                решения от EuroCases с машинен превод
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>&nbsp;</p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        Машинният
+        превод може да Ви помогне да разберете в основни линии смисъла на текста на
+        даден документ. За целта можете да използвате различни безплатни онлайн услуги,
+        с които бързо да получите в суров текст автоматични преводи на решенията в
+        EuroCases:
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        1.<span style='font:7.0pt "Times New Roman"'>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </span>Ако работите в 1) <b>институция или агенция на ЕС</b>, или 2) в <b>
+            администрацията
+            на държава-членка на ЕС
+        </b>, можете да се регистрирате и да използвате <a href="http://ec.europa.eu/dgs/translation/translationresources/machine_translation/index_en.htm">
+            услугата
+            за машинен превод MT@EC
+        </a><span class=MsoHyperlink> </span>на Европейската
+        комисия. Тя предлага преводи между 552 езикови двойки, обхващащи всички 24
+        официални езика на ЕС. Силно Ви препоръчваме да използвате тази услуга, защото
+        тя осигурява значително по-добро качество на превода на юридически текстове.
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='text-indent:-.25in'>
+        <span class=apple-converted-space>
+            <span style='line-height:107%;color:black'>
+                2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </span>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>
+                В останалите случаи можете да се възползвате от следните
+                безплатни онлайн услуги за машинен превод:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <span style='font-family:Symbol'>
+                ·<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </span><a href="https://translate.google.com/">
+            <span style='background:white'>Google Преводач</span>
+        </a>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <span style='font-family:Symbol'>
+                ·<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </span><a href="http://www.bing.com/translator/">
+            <span style='background:white'>Microsoft Bing Преводач</span>
+        </a><span class=apple-converted-space><span style='color:black;background:white'> </span></span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <span style='font-family:Symbol'>
+                ·<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </span><a href="http://www.systranet.com/translate/">
+            <span style='background:white'>SYSTRANet</span>
+        </a>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+0in;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span class=apple-converted-space>
+            <span style='color:black;
+background:white'>Други услуги (като</span>
+        </span><a href="http://www.online-translator.com/"><span style='background:white'>PROMPT</span></a><span class=apple-converted-space><span style='color:black;background:white'>, </span></span><a href="https://en.wikipedia.org/wiki/Yandex.Translate">
+            <span style='background:
+white'>Yandex.Translate</span>
+        </a><span class=apple-converted-space>
+            <span style='color:black;background:white'>,</span>
+        </span><a href="http://www.worldlingo.com/"><span style='background:white'>WorldLingo</span></a><span class=apple-converted-space><span style='color:black;background:white'>, </span></span><a href="https://www.freetranslation.com/"><span style='background:white'>SDL</span></a><span class=apple-converted-space>
+            <span style='color:black;background:white'>
+                , и
+                др.).
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-left:.25in'>
+        <b>
+            <span style='font-size:16.0pt;
+line-height:107%;color:black;background:white'>&nbsp;</span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst id="guidelines-registering" style='margin-bottom:6.0pt;text-indent:-.5in;
+line-height:normal'>
+        <b>
+            <span style='font-size:16.0pt'>
+                I.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span style='font-size:16.0pt'>
+                Указания за регистриране и
+                ползване на услугата
+            </span>
+        </b><b><span lang=EN-US style='font-size:16.0pt'>MT</span></b><b>
+            <span style='font-size:16.0pt'>@@</span>
+        </b><b><span lang=EN-US style='font-size:16.0pt'>EC</span></b><b>
+            <span style='font-size:16.0pt'>на Европейската комисия</span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><b><i><span style='font-size:14.0pt'>&nbsp;</span></i></b></p>
+
+    <p class=MsoListParagraphCxSpLast id="registration" style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:70.9pt;text-indent:-28.35pt;line-height:normal'>
+        <b>
+            <i>
+                <span style='font-size:14.0pt'>
+                    A.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b><i><span style='font-size:14.0pt'>Регистрация</span></i></b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        За ползване
+        на услугата <span lang=EN-US>MT</span>@@<span lang=EN-US>EC</span> трябва първо
+        да имате т.нар. <a href="https://webgate.ec.europa.eu/cas/">EU Login</a>,
+        създадена от Службата за идентификация на Европейската комисия<span class=apple-converted-space><span style='color:black;background:white'>.</span></span>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Служителите, които работят в <b>институции или агенции на ЕС </b>може
+        да използват услугата <span lang=EN-US>MT</span>@@<span lang=EN-US>EC</span><span lang=EN-US></span>чрез регистрацията си в EU Login.
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0in;margin-right:0in;margin-bottom:
+6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Служителите, които работят в <b>
+            публичната администрация в държава-членка
+            на ЕС
+        </b>, трябва да изпълнят следните стъпки:
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:.75in;text-indent:-.25in;line-height:normal'>
+        <span style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;
+            </span>
+        </span><a href="https://webgate.ec.europa.eu/cas/">Създайте</a> Ваш
+        личен EU Login и парола (<b>
+            използвайки само Вашия професионален имейл
+            адрес
+        </b>) на следната страница: <a href="https://webgate.ec.europa.eu/cas/">https://webgate.ec.europa.eu/cas/</a>.
+        Прочетете това <a href="https://erc.europa.eu/sites/default/files/content/pages/pdf/ECAS-creating_an_account_2015.pdf">ръководство</a>
+        с инструкции как да създадете EU Login или гледайте това <a href="https://www.youtube.com/watch?v=1jkLGRAEaDo">видео</a> в YouTube.
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:.75in;text-indent:-.25in;line-height:normal'>
+        <span style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;
+            </span>
+        </span>Изпратете имейл на Генерална дирекция „Писмени преводи“ на адрес <a href="mailto:DGT-MT@ec.europa.eu">DGT-MT@ec.europa.eu</a> , за да им съобщите,
+        че вече имате EU Login. Посочете какво включва работа ви и кой е
+        административният орган, за който работите. Поставете след текста на имейла
+        пълния си подпис – имена, длъжност, институция, отдел, адрес за контакти.
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:.75in;text-indent:-.25in;line-height:normal'>
+        <span style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;
+            </span>
+        </span>Генерална дирекция „Писмени преводи“ ще създаде Вашата регистрация
+        за услугата <span lang=EN-US>MT</span>@@<span lang=EN-US>EC</span><span lang=EN-US></span> и ще Ви уведоми.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span style='font-size:10.0pt'>&nbsp;</span>
+    </p>
+
+    <p class=MsoNormal id="mtec-service" style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:17.85pt;line-height:normal;page-break-after:avoid'>
+        <b>
+            <i>
+                <span style='font-size:14.0pt'>Б. Използване на MT@EC услугата</span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='line-height:107%;color:black;background:white'>
+            За
+            да използвате услугата
+        </span><span lang=EN-US style='line-height:107%'>MT</span><span style='line-height:107%'>@@</span><span lang=EN-US style='line-height:107%'>EC</span><span style='line-height:107%;color:black;background:white'>
+            , въведете следния адрес
+            в браузъра си:
+        </span><a href="https://webgate.ec.europa.eu/mtatec">
+            <span style='line-height:107%;background:white'>https://webgate.ec.europa.eu/mtatec</span>
+        </a><span style='line-height:107%;color:black;background:white'>
+            . След това влезте с потребителското
+            име и паролата от Вашият EU Login. След като сте влезли в сайта на
+            услугата, можете да избирате между два вида превод в зависимост от своите
+            нужди:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><i>Превод на текст</i> –  От лентата на менюто изберете <b>
+            Превод
+            на текст
+        </b>. След това напишете или копирайте и поставете фрагмент от текста
+        (до 4000 знака). След това изберете езика, от който превеждате и на кой език
+        искате превода. Накрая, кликнете върху бутона <b>Преведи</b>.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span class=apple-converted-space>
+            <span style='background:white'>
+                <img border=0
+                     width=651 height=367 id="Picture 9"
+                     src="~/Content/Images/machine-translation/bg/1.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-left:35.7pt;text-indent:-17.85pt;
+line-height:normal'>
+        <span style='font-family:Symbol;color:black'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><i>Превод на документи</i> – От лентата на менюто изберете <b>
+            Превод
+            на документи
+        </b>. След това изберете езика, от който превеждате, както и езика (или
+        езиците), на който/които да се превежда (услугата позволява превод на множество
+        езици). Посочете изходния формат на документа (същия като на източника, tmx или
+        xliff). Качете един или повече файлове с документи (дори може да бъде
+        едновременно) и натиснете бутона <b>Преведи</b>. Следните файлови формати се
+        приемат от услугата: doc (х), xls (х), ppt (х), odt, rtf, txt, html, tmx,
+        xliff, pdf. Услугата запазва форматирането на оригиналния документ (с
+        изключение на pdf, в който случай файлът се връща като docx).
+    </p>
+
+    <p class=MsoNormal style='line-height:normal'>
+        <span class=apple-converted-space>
+            <span style='color:black;background:white'>
+                <img border=0 width=655 height=367 id="Picture 10"
+                     src="~/Content/Images/machine-translation/bg/2.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='line-height:107%'>
+            Описание на английски език на
+            услугата
+        </span><span lang=EN-US style='line-height:107%'>MT</span><span style='line-height:107%'>@@</span><span lang=EN-US style='line-height:107%'>EC</span><span lang=EN-US style='line-height:107%'></span><span style='line-height:107%'>
+            и
+            най-важните &#1117; характеристики е публикувана на интернет страницата на Генерална
+            дирекция „Писмени преводи“:
+        </span><a href="http://ec.europa.eu/isa/documents/mt-ec-service-description_en.pdf">
+            <span style='line-height:107%'>http://ec.europa.eu/isa/documents/mt-ec-service-description_en.pdf</span>
+        </a><span style='line-height:107%'>.</span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span style='line-height:107%;color:black;background:white'>Ръководство за ползване:</span>
+                </i>
+            </b>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>
+                Повече информация за функционалността на услугата и как тя
+                работи има на
+            </span>
+        </span><a href="https://webgate.ec.europa.eu/mtatec/html/help_bg.htm">
+            <span lang=EN-US
+                  style='line-height:107%;background:white'>MT</span><span style='line-height:
+107%;background:white'>@@</span><span lang=EN-US style='line-height:107%;
+background:white'>EC</span><span style='line-height:107%;background:white'>
+                Помощ
+            </span>
+        </a><span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>
+                (само регистрираните потребители имат
+                достъп).
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph id="guidelines-free-mt" style='margin-top:.25in;margin-right:0in;margin-bottom:
+.25in;margin-left:.5in;text-align:justify;text-indent:-.5in;line-height:normal'>
+        <b>
+            <span style='font-size:16.0pt'>
+                II.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <i>
+                <span style='font-size:16.0pt'>
+                    Наръчник за използване
+                    на безплатни онлайн услуги за машинен превод
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraph id="text-translation" style='margin-top:0in;margin-right:0in;margin-bottom:
+.25in;margin-left:56.7pt;text-align:justify;text-indent:-21.25pt;line-height:
+normal'>
+        <b>
+            <span style='font-size:14.0pt'>
+                A.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b><span style='font-size:14.0pt'>Превод на текст</span></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast id="translation-web-interface" style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:.75in;text-align:justify;text-indent:-.25in;
+line-height:normal'>
+        <b>
+            <span style='font-size:12.0pt'>
+                1)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span style='font-size:12.0pt'>
+                Превод на текст на уеб
+                страницата на доставчика
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;text-align:justify;line-height:
+normal'>
+        Google, Microsoft и SYSTRAN предлагат прости уеб интерфейси, които
+        позволяват на потребителите да превеждат на откъси от текст от един език на
+        друг. Преводът се извършва в три последователни стъпки (общи и за трите
+        доставчика):
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:71.4pt;text-align:justify;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Напишете или поставете текста, който ще се превежда, в текстовото
+        поле вляво.
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:71.4pt;text-align:justify;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Изберете езиците с помощта на падащи менюта – изходния език и
+        езика, на който да се превежда. Google и Microsoft предлагат възможност за
+        автоматично разпознаване на изходния език.
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:71.4pt;text-align:justify;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Натиснете бутона Преведи. Преводът се появява в дясното текстово
+        поле.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;text-align:justify;line-height:
+normal'>
+        На следващите страници са показани уеб интерфейсите за машинен превод
+        на трите доставчика:
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        <b>
+            <i>
+                a)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </i>
+        </b><b><i>Google Преводач</i></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>Уеб адрес:<a href="https://translate.google.com/">https://translate.google.com/</a></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>Превод от: 103 езика</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <img border=0 width=599 height=338 id="Picture 15"
+             src="~/Content/Images/machine-translation/bg/3.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span style='color:black;
+background:white'>Ръководство за ползване:</span>
+                </i>
+            </b>
+        </span> <a href="https://support.google.com/translate/#googtrans">https://support.google.com/translate/#googtrans</a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal;
+page-break-after:avoid'>
+        <b>
+            <i>
+                b)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </i>
+        </b><b><i>Microsoft Bing Преводач</i></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle>
+        Уеб адрес: <a href="http://www.bing.com/translator/">http://www.bing.com/translator/</a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>Макс. дължина на превеждания текст: 5000 знака (с включени интервали)</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>Превод от: 52 езика</p>
+
+    <p class=MsoListParagraphCxSpMiddle>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <img border=0 width=597 height=338 id="Picture 16"
+             src="~/Content/Images/machine-translation/bg/4.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle>
+        <span style='font-size:10.0pt;line-height:
+107%'>&nbsp;</span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;text-indent:
+-.25in;line-height:normal'>
+        <b>
+            <i>
+                c)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </i>
+        </b><b><i>SYSTRANet</i></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>Уеб адрес:<a href="http://www.systranet.com/translate">http://www.systranet.com/translate</a></p>
+
+    <p class=MsoListParagraphCxSpMiddle>
+        Макс. дължина на превеждания текст: 1,000
+        думи
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>Превод от: 15 езика</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><b>&nbsp;</b></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <img border=0 width=601 height=339 id="Picture 3"
+             src="~/Content/Images/machine-translation/bg/5.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>&nbsp;</p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span style='color:black;
+background:white'>Ръководство за ползване</span>
+                </i>
+            </b>
+        </span><span class=apple-converted-space><b><i><span style='color:black;background:white'>:</span></i></b></span>
+        <a href="http://www.systransoft.com/translation-support/online-services/systranet/user-guide/">http://www.systransoft.com/translation-support/online-services/systranet/user-guide/</a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span style='font-size:12.0pt'>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpLast id="translation-integrated-functions" style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:.75in;text-align:justify;text-indent:-.25in;
+line-height:normal'>
+        <b>
+            <span style='font-size:12.0pt'>
+                2)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span style='font-size:12.0pt'>
+                Превод на маркиран текст с
+                функции, интегрирани в браузъра на потребителя
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        Google Преводач
+        е достъпен чрез добавки в някои браузъри, които могат да използват преводаческата
+        машина. Например, редица <a href="https://addons.mozilla.org/bg/firefox/search/?q=google+translate&amp;appver=&amp;platform=">
+            добавки
+            за Firefox
+        </a> ползват услугите на Google Преводач. По правило, те позволяват
+        достъп до услугата за превод чрез десния бутон на мишката. В допълнение, някои
+        от тях предлагат и превод на текущо отворената уеб страница в нов прозорец.
+        Браузърът Chrome интегрира напълно в себе си услугата Google Преводач, като
+        осигурява автоматичен превод на уеб страницата в същия прозорец (виж Раздел <span lang=EN-US>B</span> по-долу).
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        В Internet
+        Explorer 10 може да използвате <span lang=EN-US>Bing</span> Преводач, който е
+        инсталиран по подразбиране. Той помага на потребителите да превеждат маркирани части
+        от текста чрез команда с десния бутон на мишката.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=647 height=364 id="Picture 1"
+             src="~/Content/Images/machine-translation/bg/6.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:56.7pt;text-align:justify;line-height:normal'>
+        <b>
+            <span style='font-size:14.0pt'>&nbsp;</span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast id="webpage-translation" style='margin-top:0in;margin-right:0in;
+margin-bottom:6.0pt;margin-left:56.7pt;text-align:justify;text-indent:-21.25pt;
+line-height:normal'>
+        <b>
+            <span style='font-size:14.0pt'>
+                B.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b><span style='font-size:14.0pt'>Превод на уеб страници </span></b>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='line-height:107%'>
+            Google Преводач, Microsoft
+            Bing Преводач и SYSTRANet предлагат също така различни варианти за машинен
+            превод на уеб страници.
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='line-height:107%'>
+            Въпреки това, на този етап
+            само браузърът Google Chrome може да ви помогне да преведете автоматично отворените
+            в рамките на интерфейса на EuroCases съдебни решения, защото единствено този
+            браузър предлага функция, с която позволява на потребителите да преведат текущо
+            отворената уеб страница в същия прозорец. Всеки път, когато отворите страница,
+            написана на език, който не разбирате, можете да използвате функцията за
+            автоматичен превод на Chrome, за да преведете тази страница чрез кликване върху
+            бутона <b>Превод</b> в левия ъгъл на адресната лента,
+        </span><span style='font-size:10.0pt;line-height:107%'></span><span style='line-height:
+107%'>в горната част на страницата:</span>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='font-size:10.0pt;line-height:107%'>
+            <img border=0 width=649 height=364 id="Picture 17"
+                 src="~/Content/Images/machine-translation/bg/7.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='line-height:107%'>
+            Всички други споменати
+            по-горе решения отварят страницата, която трябва да бъде преведена, в нов прозорец
+            на браузъра, а това е неприложимо при EuroCases, защото в този случай системата
+            изисква оторизация на достъпа, осуетяваща превода.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph id="document-translation" style='margin-top:0in;margin-right:0in;margin-bottom:
+6.0pt;margin-left:56.7pt;text-align:justify;text-indent:-21.25pt;line-height:
+normal'>
+        <b>
+            <span style='font-size:14.0pt'>
+                C.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b><span style='font-size:14.0pt'>Превод на документи</span></b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        Можете да
+        експортирате текста на всеки документ (съдебно решение) в EuroCases в RTF- или
+        PDF-файл и да го преведете чрез съответната услуга за машинен превод. Това може
+        да стане по два начина:
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Чрез качването на файла на документа на сървъра на доставчика,
+        или
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;text-indent:
+-.25in;line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Като се поиска от съответното приложение-редактор, предоставено
+        от доставчика на услуги, да преведе отворения от потребителя документ.
+    </p>
+
+    <p class=MsoListParagraph id="file-translation" style='margin-top:.25in;margin-right:0in;margin-bottom:
+6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal'>
+        <b>
+            <span style='font-size:12.0pt'>
+                1)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b><span style='font-size:12.0pt'>Превод на файл</span></b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        Услугите
+        Google Translate и SYSTRANet позволяват на потребителите да превеждат файлове в
+        различни формати, вкл. rtf и pdf, които са двата файлови формата, използвани за
+        експорт на документи в EuroCases.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        За да
+        преведете файл с Google Преводач, кликнете върху линка <b>Преведете документ</b>
+        и след това бутона <b>Избор на файл</b>, за да качите файла:
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span style='font-size:10.0pt'>
+            <img border=0 width=652 height=368 id="Picture 20"
+                 src="~/Content/Images/machine-translation/bg/8.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=652 height=365 id="Picture 24"
+             src="~/Content/Images/machine-translation/bg/9.jpg">
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        Текстът на
+        преведения документ ще се появи в нов прозорец на браузъра:
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span style='font-size:12.0pt'>
+            <img border=0 width=649 height=366 id="Picture 26"
+                 src="~/Content/Images/machine-translation/bg/10.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        За да
+        преведете файл с SYSTRANet<span lang=EN-US>,</span> първо трябва да <a href="http://www.systran.net/accounts/signup?loc_lang=en&amp;">
+            се регистрирате
+            за услугата
+        </a>. SYSTRANet ви позволява да превеждате документи във файлови
+        формати на Microsoft Office (doc, docx), както и rtf, html, htm, и txt файлове.
+        За да преведете файл с SYSTRANet:
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Кликнете върху раздела <b>File</b> от менюто и след това върху
+        бутона <b><span lang=EN-US>Choose file</span></b><span lang=EN-US> (</span>&quot;Избор
+        на файл&quot;<span lang=EN-US>)</span>, за да посочите от вашия компютър файла,
+        който искате да преведете.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=651 height=367 id="Picture 23"
+             src="~/Content/Images/machine-translation/bg/11.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Изберете езиковата двойка, като използвате падащите менюта:
+        изберете изходния език (езика, от който се превежда) и целевия език (този, на
+        който искате да се преведе) и след това кликнете върху бутона <b>
+            <span lang=EN-US>Translate</span>
+        </b><span lang=EN-US> </span><span lang=EN-US>(</span>&quot;Преведи&quot;<span lang=EN-US>)</span>, за да започне преводът.  
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-bottom:6.0pt;text-indent:-.25in;
+line-height:normal'>
+        <span style='font-size:10.0pt;font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span>Изтеглете преведения файл, когато е готов, или проверете
+        пощенската си кутия, за да видите дали той е не е бил доставен на електронната
+        Ви поща.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=651 height=367 id="Picture 25"
+             src="~/Content/Images/machine-translation/bg/12.jpg">
+    </p>
+
+    <p class=MsoListParagraph id="opened-document-translation" style='margin-top:.25in;margin-right:0in;margin-bottom:
+6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal'>
+        <b>
+            <span style='font-size:12.0pt'>
+                2)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b><span style='font-size:12.0pt'>Превод на отворен документ</span></b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        Можете да
+        отворите в Microsoft Word или Google Диск съдебно решение, експортирано от
+        EuroCases в rtf формат, и след това да поискате съответното приложение да
+        преведе отворения документ.
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;text-indent:.5in;line-height:
+normal'><b><i>а) Превод на документ, отворен в MS Word</i></b></p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>Кликнете върху раздела<b>Преглед</b></span>
+        </span><span class=apple-converted-space>
+            <b>
+                <span lang=EN-US style='line-height:107%;
+color:black;background:white'>(Review)</span>
+            </b>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>
+                на лентата в горната част на екрана, след което изберете
+                бутона <b>Превод</b>
+            </span>
+        </span><span class=apple-converted-space>
+            <b>
+                <span lang=EN-US style='line-height:107%;color:black;background:white'>(Translate)</span>
+            </b>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>и накрая изберете<b>Превод на документи</b></span>
+        </span><span class=apple-converted-space>
+            <b>
+                <span lang=EN-US style='line-height:107%;
+color:black;background:white'>(Translate Document)</span>
+            </b>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>
+                .  Ще се появи прозорец със съобщение, за да Ви уведоми, че
+                този документ ще бъде изпратен на Microsoft
+            </span>
+        </span><span class=apple-converted-space>
+            <span lang=EN-US style='line-height:107%;
+color:black;background:white'>Bing</span>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>Преводач:</span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>
+                <img border=0 width=655 height=368
+                     id="Picture 11" src="~/Content/Images/machine-translation/bg/13.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>Натиснете<b>Да</b></span>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'><b><span lang=EN-US>(Yes)</span></b></span>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>
+                , за да изпратите текста чрез интернет. Текстът на преведения
+                документ ще бъде отворен в нов прозорец на браузъра Ви:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='line-height:107%'>
+            <img border=0 width=657
+                 height=370 id="Picture 12" src="~/Content/Images/machine-translation/bg/14.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>
+                Преводът в MS Word формат се прави от
+                изходния език на избран от езиковите опции език за превод. Можете да промените
+                тези опции, като изберете <b>Избор на език за превод </b>
+            </span>
+        </span><span class=apple-converted-space>
+            <b>
+                <span lang=EN-US style='line-height:107%;
+color:black;background:white'>(Choose Translation Language)</span>
+            </b>
+        </span><span class=apple-converted-space>
+            <span lang=EN-US style='line-height:107%;
+color:black;background:white'></span>
+        </span><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;background:white'>от бутона<b>Превод</b>:</span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='font-size:
+12.0pt;line-height:107%;color:black;background:white'>
+                <img border=0 width=651
+                     height=367 id="Picture 13" src="~/Content/Images/machine-translation/bg/15.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>
+                Освен това, можете да превеждате част от
+                текста на отворен документ, като изберете конкретен фрагмент и изберете <b>
+                    Преведи
+                    избрания текст
+                </b> от бутона <b>Преведи</b>. Преведеният текст ще се появи в
+                панел от дясно на отворения документ, и Вие можете да го копирате или да го
+                поставите на мястото на избрания текст.
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>
+                Повече информация плюс кратко видео за
+                функциите за превод в MS Word може да намерите тук:
+            </span>
+        </span><a href="https://www.microsoft.com/en-us/translator/word.aspx">
+            <span style='line-height:107%;background:white'>https://www.microsoft.com/en-us/translator/word.aspx</span>
+        </a><span class=apple-converted-space>
+            <span style='line-height:107%;color:black;
+background:white'>.</span>
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:6.0pt;
+margin-left:.25in;line-height:normal'>
+        <b>
+            <i>
+                б) Превод на документ, отворен в Google
+                Диск
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='color:black;
+background:white'>
+                Кликнете върху менюто <b>Инструменти</b> в горната част на
+                екрана и след това изберете <b>Превод на документи</b>:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='font-size:
+12.0pt;line-height:107%;color:black;background:white'>
+                <img border=0 width=652
+                     height=368 id="Picture 27" src="~/Content/Images/machine-translation/bg/16.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='color:black;
+background:white'>
+                Ще се появи прозорец, в който следва да изберете езика, на
+                който да бъде преведен документът. След това кликнете върху бутона <b>Преведи</b>:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='font-size:
+12.0pt;line-height:107%;color:black;background:white'>
+                <img border=0 width=652
+                     height=368 id="Picture 28" src="~/Content/Images/machine-translation/bg/17.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='color:black;
+background:white'>
+                Google Диск ще отвори &quot;преведено копие&quot; на изходния
+                документ в нов прозорец на браузъра:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='color:black;
+background:white'>
+                <img border=0 width=652 height=368 id="Picture 29"
+                     src="~/Content/Images/machine-translation/bg/18.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='color:black;
+background:white'>&nbsp;</span>
+        </span>
+    </p>
+
+</div>
+<div class="mobile-filters-show-button" id="mobile-filters-show-button-act" data-page="act"><span class="fa fa-tasks"></span></div>
+
+<script>
+    $().ready(function () {
+        var docsToCompare = [];
+
+        $('#doc-view-top-holder').show();
+
+        $("#doc-navigation-container").accordion({
+            collapsible: true,
+            heightStyle: "fill",
+            icons: false,
+            animate: false
+        });
+
+        $("h3").focus(function () {
+            $(this).removeClass("ui-state-focus");
+        });
+
+        $('#btn-compare').click(function (e) {
+            e.preventDefault();
+
+            if (docsToCompare.length < 2) {
+                notify(Resources.storage['UI_JS_NotEnoughDocumentsSelected'], Resources.storage['UI_JS_NotEnoughDocumentsSelectedFull'], 'warn');
+            }
+            else {
+                if ((typeof docsToCompare[0] === "number") && Math.floor(docsToCompare[0]) === docsToCompare[0])
+                    window.open('/Compare/' + docsToCompare[0] + '/' + docsToCompare[1], '_blank');
+                else
+                    window.open('/Compare/ByIdentifier/' + docsToCompare[0] + '/' + docsToCompare[1], '_blank');
+            }
+        });
+
+        $('.chevron-doc-navigation').click(function (e) {
+            e.preventDefault();
+
+            $("#doc-view-top-holder").animate({ width: 'toggle' }, 350);
+
+            setTimeout(function () {
+                $('#doc-view-container').animate({ 'width': '99%', 'margin-left': '1%' }, 350);
+                $('#doc-view-top-bar').animate({ 'width': '100%', 'margin-left': '0' }, 350);
+                $('.chevron-doc-navigation-closed').show();
+
+                //$('#doc-view-container').css('width', '100%');
+                // $('#doc-view-container').css('margin-left', '0');
+                // $('#doc-view-top-bar').css('width', '100%');
+                // $('#doc-view-top-bar').css('margin-left', '0');
+            }, 1);
+        });
+
+        $('.chevron-doc-navigation-closed').click(function (e) {
+            e.preventDefault();
+
+            $("#doc-view-top-holder").animate({ width: 'toggle' }, 350);
+
+            setTimeout(function () {
+                $('#doc-view-container').animate({ 'width': '80%', 'margin-left': '20%' }, 350);
+                $('#doc-view-top-bar').animate({ 'width': '80%', 'margin-left': '20%' }, 350);
+                $('#chevron-doc-navigation-closed').hide();
+
+                //$('#doc-view-container').css('width', '100%');
+                // $('#doc-view-container').css('margin-left', '0');
+                // $('#doc-view-top-bar').css('width', '100%');
+                // $('#doc-view-top-bar').css('margin-left', '0');
+            }, 1);
+        });
+
+        $('.cb-version').change(function () {
+            var that = $(this);
+            var docLangId = that.data('doclangid');
+
+            if (that.is(":checked")) {
+                if (docsToCompare.length < 2) {
+                    docsToCompare.push(docLangId);
+                }
+                else {
+                    notify('Maximum elements to compare reached', 'Please select only two documents for comparision.', 'warn');
+                    that.attr('checked', false);
+                }
+            }
+            else {
+                var index = docsToCompare.indexOf(docLangId);
+
+                if (index > -1) {
+                    docsToCompare.splice(index, 1);
+                }
+            }
+
+            //console.log(docsToCompare);
+        });
+    });
+</script>

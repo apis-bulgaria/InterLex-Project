@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Interlex.BusinessLayer.Models.RefDocsPair>
+@using Interlex.App.Resources
+@using Interlex.App.Helpers
+@using Interlex.BusinessLayer.Models
+@using Interlex.BusinessLayer.Helpers
+
+@if (Model.Any())
+{
+    string linksName = Model.First().ProductOrder == 1 ? Resources.UI_FinsFinancialLinks : Resources.UI_FinsEuLinks;
+    string linksNameForIds = Model.First().ProductOrder == 1 ? "fins" : "eu";
+    string linksId = linksNameForIds + "Sec";
+    string linksChevrId = linksNameForIds + "Chevr";
+    string linksSecHeaderId = linksNameForIds + "SecHeader";
+    <div class="expanding-section docmenu-item">
+        <div class="semantic-header" onclick="showContent($('#@linksChevrId'),
+                                        '#@linksId',
+                                        'fa fa-compress',
+                                        'fa fa-expand',
+                                        '@linksNameForIds')">
+            <span id="@linksSecHeaderId" class="docmenu-item-text">@linksName</span>
+            <div class="right">
+                <i id="@linksChevrId" class="fa fa-compress"></i>
+            </div>
+        </div>
+        <div id="@linksId">
+            <div class="semantic-section vat-outer-semantic-section">
+                @* Start new *@
+                <div class="expanding-section docmenu-item">
+                    <div class="semantic-header vat-inner-semantic-header" onclick="showContent($('#@(linksChevrId)-new'),
+                                        '#@(linksId)-new',
+                                        'fa fa-compress',
+                                        'fa fa-expand',
+                                        '@(linksNameForIds)-new')">
+                        <span id="@(linksSecHeaderId)-new" class="docmenu-item-text">
+                            @* HACK: Fix all hacks for TFEU *@
+                            @if (Model != null && Model.Count() != 0 && Model.ElementAt(0).MainDocument.DocNumber != "12012E")
+                            {
+                                <text>@Resources.UI_FinsLinksVatNew</text>
+                            }
+                            else 
+                            {
+                                <text>THE TREATY ON THE FUNCTIONING OF THE EUROPEAN UNION (2012)</text>
+                            }
+                        </span>
+                        <div class="right">
+                            <i id="@(linksChevrId)-new" class="fa fa-compress"></i>
+                        </div>
+                    </div>
+                    <div id="@(linksId)-new" class="vat-expanding-outer-content">
+                        <div class="semantic-section">
+                            @Html.Partial("_RefDocsPartialList", Model)
+                        </div>
+                    </div>
+                </div>
+                @* End new *@
+
+                @* HACK: Fix all hacks for TFEU *@
+                @if (Model != null && Model.Count() != 0 && Model.ElementAt(0).MainDocument.DocNumber != "12012E") 
+                {
+                    @* Start old *@
+                    <div class="expanding-section docmenu-item">
+                        <div class="semantic-header vat-inner-semantic-header vat-old-ref-docs" data-has-content="0" data-docs-type="@linksNameForIds" onclick="showContent($('#@(linksChevrId)-old'),
+                                            '#@(linksId)-old',
+                                            'fa fa-compress',
+                                            'fa fa-expand',
+                                            '@(linksNameForIds)-old')">
+                            <span id="@(linksSecHeaderId)-old" class="docmenu-item-text">@Resources.UI_FinsLinksVatOld</span>
+                            <div class="right">
+                                <i id="@(linksChevrId)-old" class="fa fa-compress"></i>
+                            </div>
+                        </div>
+                        <div id="@(linksId)-old" class="vat-expanding-outer-content">
+                            <div class="semantic-section content-container">
+                                <div id="ref-docs-loading-bar-@linksNameForIds" class="loading-bar" style="display:none;">
+                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-spinner"></i>
+                                    <div class="loading-text">@Resources.UI_JS_Loading</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    @* End old *@       
+                }   
+            </div>
+        </div>
+    </div>
+                                }

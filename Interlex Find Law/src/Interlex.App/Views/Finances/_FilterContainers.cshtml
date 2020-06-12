@@ -1,0 +1,146 @@
+﻿@using Interlex.App.Resources
+
+@* IMPORTANT!: ALL <LI> ELEMENTS ARE INVERTED SO IF YOU WANT TO INSERT AN ELEMENT AS LAST - YOU SHOULD PLACE IT FIRST!!!*@
+
+@if (Model.Page == "GDPCGT")
+{
+    <div id="gdpcgt-filter" class="finances-stat-type-filter-container tab-container">
+        <ul class="tabs clearfix" style="visibility: hidden">
+            <li class="@(Model.Type == "2" ? "selected" : "")">
+                <a href="/Finances/Data/GDPCGT/?from=@Model.From&to=@Model.To&type=2" class="filter-with-tooltip tab-link" title="@Resources.UI_FinsPercentageChangePreviousPeriodPerCapita">@Resources.UI_FinsChainedVolumes</a>
+            </li>
+            <li class="@(Model.Type == "1" ? "selected" : "")">
+                <a href="/Finances/Data/GDPCGT/?from=@Model.From&to=@Model.To&type=1" class="filter-with-tooltip tab-link" title="@Resources.UI_FinsEuroPerCapita">@Resources.UI_FinsChainedVolumes2010</a>
+            </li>
+        </ul>
+    </div>
+}
+else if (Model.Page == "GrossDomesticProduct")
+{
+    <div id="gross-domestic-product-filter" class="finances-stat-type-filter-container tab-container">
+        <ul class="tabs clearfix" style="visibility: hidden">
+            <li class="@(Model.Type == "3" ? "selected" : "")">
+                <a href="/Finances/Data/GrossDomesticProduct/?from=@Model.From&to=@Model.To&type=3" class="filter-with-tooltip tab-link" title="@Resources.UI_FinsPurchasingPower">@Resources.UI_FinsCurrPricesMilionStandards@*Текущи цени, милион стандарти на покупателна способност*@</a>
+            </li>
+            <li class="@(Model.Type == "2" ? "selected" : "")">
+                <a href="/Finances/Data/GrossDomesticProduct/?from=@Model.From&to=@Model.To&type=2" class="filter-with-tooltip tab-link">@Resources.UI_FinsCurrPricesMillionsEuro@*Текущи цени, милиона евро*@</a>
+            </li>
+            <li class="@(Model.Type == "1" ? "selected" : "")">
+                <a href="/Finances/Data/GrossDomesticProduct/?from=@Model.From&to=@Model.To&type=1" class="filter-with-tooltip tab-link" title="@Resources.UI_FinsPerCapita">@Resources.UI_FinsCurrPricesEuro@*Текущи цени, евро на глава от населението*@</a>
+            </li>
+        </ul>
+    </div>
+}
+else if (Model.Page == "GovernmentGrossDebt")
+{
+    <div id="government-gross-debt-filter" class="finances-stat-type-filter-container tab-container">
+        <ul class="tabs clearfix" style="visibility: hidden">
+            <li class="@(Model.Type == "2" ? "selected" : "")">
+                <a href="/Finances/Data/GovernmentGrossDebt/?from=@Model.From&to=@Model.To&type=2" class="tab-link">@Resources.UI_FinsPercentGDP</a>
+            </li>
+            <li class="@(Model.Type == "1" ? "selected" : "")">
+                <a href="/Finances/Data/GovernmentGrossDebt/?from=@Model.From&to=@Model.To&type=1" class="tab-link">@Resources.UI_FinsMilionsEuro</a>
+            </li>
+        </ul>
+    </div>
+}
+else if (Model.Page == "HarmonizedIndicesConsumerPrices")
+{
+    <div id="hicp-filter" class="finances-stat-type-filter-container tab-container">
+        <ul class="tabs clearfix" style="visibility: hidden">
+            <li class="@(Model.Type == "4" ? "selected" : "")">
+                <a href="/Finances/Data/HarmonizedIndicesConsumerPrices/?from=@Model.From&to=@Model.To&type=4" class="filter-with-tooltip tab-link" title="@Resources.UI_FinsPrevTwelveMonthsPercent">@Resources.UI_FinsAnnualAverageInflation</a>
+            </li>
+            <li class="@(Model.Type == "3" ? "selected" : "")">
+                <a href="/Finances/Data/HarmonizedIndicesConsumerPrices/?from=@Model.From&to=@Model.To&type=3" class="filter-with-tooltip tab-link" title="@Resources.UI_FinsPrevMonthPercent">@Resources.UI_FinsMonthlyInflation</a>
+            </li>
+            <li class="@(Model.Type == "2" ? "selected" : "")">
+                <a href="/Finances/Data/HarmonizedIndicesConsumerPrices/?from=@Model.From&to=@Model.To&type=2" class="filter-with-tooltip tab-link" title="@Resources.UI_FinsCorrespondingMonthPrevYearPercent">@Resources.UI_FinsAnnualInfaltion</a>
+            </li>
+            <li class="@(Model.Type == "1" ? "selected" : "")">
+                <a href="/Finances/Data/HarmonizedIndicesConsumerPrices/?from=@Model.From&to=@Model.To&type=1" class="tab-link">@Resources.UI_FinsIndexHICP2005</a>
+            </li>
+        </ul>
+    </div>
+}
+else if (Model.Page == "HarmonizedUnemploymentRateBySex")
+{
+    <div id="harmonized-unemployment-rate-gender-filter" class="finances-stat-type-filter-container tab-container">
+        <ul class="tabs clearfix" style="visibility: hidden">
+            <li class="@(Model.Type == "3" ? "selected" : "")">
+                <a href="/Finances/Data/HarmonizedUnemploymentRateBySex/?from=@Model.From&to=@Model.To&type=3" class="tab-link">@Resources.UI_FinsWomen</a>
+            </li>
+            <li class="@(Model.Type == "2" ? "selected" : "")">
+                <a href="/Finances/Data/HarmonizedUnemploymentRateBySex/?from=@Model.From&to=@Model.To&type=2" class="tab-link">@Resources.UI_FinsMen</a>
+            </li>
+            <li class="@(Model.Type == "1" ? "selected" : "")">
+                <a href="/Finances/Data/HarmonizedUnemploymentRateBySex/?from=@Model.From&to=@Model.To&type=1" class="tab-link">@Resources.UI_FinsTotal</a>
+            </li>
+        </ul>
+    </div>
+}
+
+<div id="size-1132-indicator"></div>
+
+<script type="text/javascript">
+    $(function () {
+       // setTabsWidth();
+        $('.tabs').css('visibility', 'visible');
+
+        $('.filter-with-tooltip').tooltipster({
+            theme: 'tooltipster-light-semitransparent',
+            contentAsHTML: true,
+            interactive: true,
+            position: 'top'
+        });
+
+        $('.finances-stat-type-filter-container').on('click', 'li', function (ev) {
+            var $linkElement = $(this).find('.tab-link'),
+                $linkParent = $linkElement.parent('li');
+            isSelected = $linkParent.hasClass('selected');
+
+            if (!isSelected) {
+                $('.tabs li').removeClass('selected');
+                $linkParent.addClass('selected');
+                $.ajax({
+                    url: $linkElement.attr('href'),
+                }).then(function (tableHtml) {
+                    $('.table-fins').fadeOut(200, function () {
+                        var table = $(tableHtml).hide();
+                        $(this).replaceWith(table);
+                        bindEuroStatColumnHiding();
+                        $('.table-fins').fadeIn(200);
+                    });
+                });
+            }
+
+            return false;
+        });
+
+        function setTabsWidth() {
+            var $tabElements = $('.tabs').find('li'),
+                len = $tabElements.length,
+                biggestWidth = -1,
+                currentWidth,
+                i;
+
+            $.each($tabElements, function () {
+                var $li = $(this);
+                $li.width($li.children('a').width());
+            });
+            for (i = 0; i < len; i++) {
+                currentWidth = $($tabElements[i]).outerWidth();
+                if (currentWidth > biggestWidth) {
+                    biggestWidth = currentWidth;
+                }
+            }
+
+            for (i = 0; i < len; i++) {
+                $($tabElements[i]).width(biggestWidth);
+            }
+            
+            console.log(len * biggestWidth);
+            console.log($($('.tabs')[0]).outerWidth());
+        }
+    });
+</script>

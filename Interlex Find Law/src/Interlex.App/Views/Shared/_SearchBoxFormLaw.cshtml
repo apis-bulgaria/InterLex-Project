@@ -1,0 +1,285 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+@using System.Web.Configuration;
+@using Interlex.BusinessLayer.Models
+
+<form id="formLaw" @{ if (Model.Law == null) { @: style="display: none;"
+      }}>
+    <div class="search-items-wrapper">
+        <div class="width-100 margin-top-5">
+            <div class="width-50 text-left container-form" style="margin-left: 12px;">
+                <label for="Law_OnlyInTitles">
+                    @Html.CheckBoxFor(m => m.Law.OnlyInTitles, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                    <span class="label-after-checkbox">@Resources.UI_SearchOnlyInTitles</span>
+                </label>
+                <label for="ExactMatch">
+                    @Html.CheckBoxFor(m => m.ExactMatch, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                    <span class="label-after-checkbox">@Resources.UI_SearchExactMatch</span>
+                </label>
+                @{
+                    var shortLang = InterfaceLanguages.GetLanguageById(Convert.ToInt32(Session["LanguageId"])).ShortCode.ToLower();
+                    if (System.Configuration.ConfigurationManager.AppSettings["ShowTranslateSearch"] == "1" && (shortLang == "bg" || shortLang == "it" || shortLang == "en"))
+                    {
+                        <label for="Law_TranslateSearchText">
+                            @Html.CheckBoxFor(m => m.Law.TranslateSearchText, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                            <span class="label-after-checkbox">@Resources.UI_TranslateSearchText</span>
+                            <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.UI_TranslateSearchText_Hint"></span>
+                        </label>
+                    }
+                }
+
+            </div>
+            @*<div class="left width-30 text-right container-form container-logical-operators" style="margin-left: 15px;">
+                    <span class="fa fa-info-circle icon-hint tooltip f-blue-important" title="@Resources.Hint_LogicalExpressions"></span>
+                    <button id="cases-btn-tags-and" type="button" class="btn btn-small btn-lgrey f-blue btn-tag" onclick="insertAtCaret('SearchText',' [AND] '); return false;">AND</button>
+                    <button id="cases-btn-tags-or" type="button" class="btn btn-small btn-lgrey f-blue btn-tag" onclick="insertAtCaret('SearchText',' [OR] '); return false;">OR</button>
+                    <button id="cases-btn-tags-not" type="button" class="btn btn-small btn-lgrey f-blue btn-tag" onclick="insertAtCaret('SearchText',' [NOT]'); return false;">NOT</button>
+                    <button id="cases-btn-tags-near" type="button" class="btn btn-small btn-lgrey f-blue btn-tag" onclick="insertAtCaret('SearchText','[NEAR]' + document.getElementById('tag-near-input').value); return false;">NEAR</button>
+                    <input type="number" id="tag-near-input" class="input-blue" />
+                </div>*@
+            <div class="clearfix"></div>
+        </div>
+        @Html.HiddenFor(m => m.Law.MultiDict.LogicalType)
+        @Html.HiddenFor(m => m.Law.MultiDict.Text)
+        @Html.HiddenFor(m => m.Law.MultiDict.SelectedIds)
+        @Html.HiddenFor(m => m.Law.MultiDict.SearchText)
+        @Html.HiddenFor(m => m.Law.MultiDict.SelectedQueryTexts)
+
+        <fieldset class="width-80 container-form">
+            <legend></legend>
+            <div class="left width-50">
+                <label for="Law_tb-multilingual-dictionary" class="block">
+                    @Resources.UI_MultilingualDictionary
+                </label>
+                <input type="text" class="width-70 cursor-pointer left" id="Law_tb-multilingual-dictionary" name="tb-multilingual-dictionary" readonly="readonly" />
+                <span class="btn fa fa-pencil-square-o btn-edit-search-field left" id="Law_link-edit-multilingual-dictionary"></span>
+                @Html.EUCSClear(SearchBoxClearType.MultilingualDictionary, "Law_tb-multilingual-dictionary")
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+        <div class="clearfix"></div>
+        @* <fieldset class="width-80 container-form" id="law-field-of-search-container">
+                    <legend>@Resources.UI_SearchArea <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationSearchArea"></span></legend>
+                    <div class="left width-50 text-center" style="margin-left: -5px;">
+                        <label for="Law_OnlyInActualActs">
+                            @Html.CheckBoxFor(m => m.Law.OnlyInActualActs, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                            <span class="label-after-checkbox">@Resources.UI_SearchOnlyInActualActs</span>
+                        </label>
+                    </div>
+                    <div class="left width-50 text-center container-form" style="margin-left: 2px;">
+                        <label for="Law_OnlyInBasicActs">
+                            @Html.CheckBoxFor(m => m.Law.OnlyInBasicActs, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                            <span class="label-after-checkbox">@Resources.UI_SearchOnlyInBasicActs</span>
+                        </label>
+                    </div>
+                 @*   <div class="left width-50">
+                <label for="Law.LegislationType">
+                    <input type="radio" data-prefix="law-eu-" name="Cases.CaseLawType" id="Cases.CaseLawType_All" value="0" @((Model.Cases == null || Model.Cases.CaseLawType == Interlex.BusinessLayer.Enums.CaseLawType.All ? "checked=checked" : "")) style="vertical-align: middle; margin-top: -2px;" />
+                    <span class="label-after-radio">@Resources.UI_EuLegislation</span>
+                </label>
+            </div>
+            <div class="left width-50">
+                <label for="Law.LegislationType">
+                    <input type="radio" data-prefix="law-national-" name="Cases.CaseLawType" id="Cases.CaseLawType_EU" value="1" @((Model.Cases != null && Model.Cases.CaseLawType == Interlex.BusinessLayer.Enums.CaseLawType.EU ? "checked=checked" : "")) style="vertical-align: middle;  margin-top: -2px;" />
+                    <span class="label-after-radio">@Resources.UI_EUCaseLaw</span>
+                </label>
+            </div>
+                    <div class="clearfix"></div>
+                </fieldset> *@
+        <div class="clearfix"></div>
+
+        <fieldset class="width-80 margin-top-5">
+            <legend>@Resources.UI_DocumentReference</legend>
+            <div class="left width-50">
+                <div class="left width-60 container-form">
+                    <div><label class="f-black">@Resources.UI_DocumentType <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDocumentType"></span></label></div>
+                    <div>
+                        @Html.CheckTreeViewFor(m => m.Law.DocumentTypes)
+                    </div>
+                </div>
+
+                <div class="left width-40 container-form">
+                    <label for="Law.DocNumber" class="block">@Resources.UI_Number</label>
+                    <span>@Html.TextBoxFor(m => m.Law.DocNumber, new { @class = "text_field input-blue width-50 clearable" })</span>
+                    @*     @Html.EUCSClear(SearchBoxClearType.Simple, "Law_DocNumber")*@
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="left width-50 container-form">
+                <div class="left width-30 container-form">
+                    <label for="Law.Year" class="block">@Resources.UI_Year</label>
+                    <span>@Html.TextBoxFor(m => m.Law.Year, new { @class = "text_field input-blue width-50 clearable" })</span>
+                    @*     @Html.EUCSClear(SearchBoxClearType.Simple, "Law_Year")*@
+                </div>
+
+                <div class="left width-70">
+                    <div for="@string.Format("tb{0}Text", Html.IdFor(model => model.Law.NatID_ELI))" class="f-black text-left">@Resources.UI_NatIdOrEli <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationCelexNumber"></span></div>
+                    <span>@Html.TextBoxFor(m => m.Law.NatID_ELI, new { @class = "ftext_field input-blue  input-search-medium clearable width-70" })</span>
+                    @*    @Html.EUCSClear(SearchBoxClearType.Simple, "Law_NatID_ELI")*@
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+        <div class="clearfix"></div>
+
+        <fieldset class="width-80 margin-top-5">
+            <legend>@Resources.UI_OJ</legend>
+            <div class="left width-50 container-form">
+                <div>@Resources.UI_OJSeries <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationOJSeries"></span></div>
+                <input type="hidden" id="Law_OJSeries" name="Law.OJSeries" value="-1" />
+                <select class="width-80 input-blue" style="height: 28px;" id="select-oj-series">
+                    <option value="-1" selected="selected">@Resources.UI_AllOJSeries</option>
+                    <option value="0">@Resources.UI_OJ_L_Series</option>
+                    <option value="1">@Resources.UI_OJ_C_Series</option>
+                    @*  <option>CA</option>
+                        <option>CE</option>*@
+                </select>
+            </div>
+            <div class="left width-50">
+                <div class="left width-30 container-form">
+                    <div>@Resources.UI_OJNumber</div>
+                    <span>
+                        @Html.TextBoxFor(m => m.Law.Number, new
+                   {
+                       @class = "text_field input-blue clearable width-50",@*@placeholder = Resources.UI_Number*@})
+                    </span>
+                    @*  @Html.EUCSClear(SearchBoxClearType.Simple, "Law_Number")*@
+                </div>
+                <div class="left width-30 container-form">
+                    <div>@Resources.UI_Year</div>
+                    <span>
+                        @Html.TextBoxFor(m => m.Law.OJYear, new { @class = "text_field input-blue clearable width-50" })
+                    </span>
+                    @Html.EUCSClear(SearchBoxClearType.Simple, "Law_OJYear")
+                </div>
+                <div class="left width-40 container-form">
+                    <div>@Resources.UI_InitialPage</div>
+                    <span>
+                        @Html.TextBoxFor(m => m.Law.PageNumber, new
+                   {
+                       @class = "text_field input-blue clearable width-50",@*@placeholder = Resources.UI_PageNumber*@})
+                    </span>
+                    @*  @Html.EUCSClear(SearchBoxClearType.Simple, "Law_PageNumber")*@
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+        <div class="clearfix"></div>
+
+        <fieldset class="width-80 margin-top-5">
+            <legend>
+                @Resources.UI_Dates
+            </legend>
+            <div class="left width-50 container-form" id="select-datetype">
+                <div>
+                    @Resources.UI_DateType <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDateType"></span>
+                </div>
+                <select class="width-80 input-blue" style="height: 28px; margin-top: 2px;" id="law-date-type-select">
+                    @for (int i = 0; i <= 6; i++) //TODO: Get real enumeration count
+                    {
+                        var resourceString = "UI_LawDateType_" + i;
+                        var resource = Res.GetResource(resourceString);
+                        <option value="@i" data-dateval="@i">@resource</option>
+                    }
+                </select>
+            </div>
+            <div class="left width-50 container-form">
+                <div>
+                    <input type="hidden" id="Law_LawDateType" name="Law.LawDateType" value="0" />
+                    <label for="Law.DatePeriodType">
+                        <input type="radio" name="Law.DatePeriodType" id="Law.DatePeriodType_Date" @((Model.Law == null || Model.Law.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Date) ? "checked=checked" : "") value="date" style="vertical-align: middle;  margin-top: -2px;" />
+                        <span style="padding-top: 0;">@Resources.UI_Date</span>
+                    </label>
+
+                    <label for="Law.DatePeriodType">
+                        <input style="vertical-align: middle;  margin-top: -2px;" type="radio" @((Model.Law != null && Model.Law.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Period) ? "checked=checked" : "") name="Law.DatePeriodType" id="Law.DatePeriodType_Period" value="period" />
+                        <span>@Resources.UI_Period <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDateTimePeriod"></span></span>
+                    </label>
+                </div>
+                <span>@Html.TextBoxFor(m => m.Law.DateFrom, new { @Value = (Model.Law != null && Model.Law.DateFrom.HasValue && Model.Law.DateFrom.Value.Year > 1) ? Model.Law.DateFrom.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder })</span>
+                <span>&nbsp;-&nbsp;</span>
+                <span>@Html.TextBoxFor(m => m.Law.DateTo, new { @Value = (Model.Law != null && Model.Law.DateTo.HasValue && Model.Law.DateTo.Value.Year > 1) ? Model.Law.DateTo.Value.ToString("dd/MM/yyyy") : "", @class = "text_field input-blue clearable inp-date", @maxlength = "10", @placeholder = @Resources.UI_PeriodPlaceholder, @disabled = "disabled" })</span>
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+        <div class="clearfix"></div>
+
+        @*   <fieldset class="width-80 margin-top-5">
+                        <legend>@Resources.UI_Classifiers</legend>
+
+                        <div class="">
+                            <div class="left width-50 container-form">
+                                <div><label class="f-black">@Resources.UI_DirectoryLegislation <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationDirectoryLegislation"></span></label></div>
+                                <div>
+                                @Html.CheckTreeViewFor(m => m.Law.DirectoryLegislation)
+                                </div>
+                            </div>
+                            <div class="left width-50 container-form">
+                                <div><label class="f-black">@Resources.UI_Eurovoc <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationEurovoc"></span></label></div>
+                                <div>
+                                @Html.CheckTreeViewFor(m => m.Law.Eurovoc)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="margin-top-3">
+                            <div class="left width-50 container-form">
+                                <div>
+                                    <label class="f-black">@Resources.UI_Subjectmatter <span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationSubjectMatter"></span></label>
+                                </div>
+                                <div>
+                                @Html.CheckTreeViewFor(m => m.Law.SubjectMatter)
+                                </div>
+                            </div>
+                            <div class="left width-50 container-form">
+                                @if (WebConfigurationManager.AppSettings["SolutionVersion"] == "project")
+                                {
+            <div><label class="f-black">@Resources.UI_Jurisdiction</label></div>
+                                    <div>@Html.CheckTreeViewFor(m => m.Law.Jurisdictions) <span class="btn fa fa-pencil-square-o btn-edit-search-field left"></span></div>
+                                }
+                                else
+                                {
+                                    @: &nbsp;
+                                }
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </fieldset>
+                    <div class="clearfix"></div>*@
+
+
+        <div class="form-group adv-search-buttons">
+            <input type="button" class="btn btn-large btn-blue f-white f-bold" value="@Resources.UI_Search" onclick="DoSearch('tabLaw', false);">
+            <input type="button" class="btn btn-large btn-lgrey f-blue f-bold" value="@Resources.UI_Clear" onclick="clearAdvSearchFilters('tabLaw');">
+            <button class="btn btn-large btn-lgrey f-blue adv-search-close f-bold" type="button">@Resources.UI_Close_Lower</button>
+        </div>
+        <div id="adv-search-notifications-law" class="f-red">
+            &nbsp;
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+    $().ready(function () {
+        clearLawFilters();
+
+        $('#Law_link-edit-multilingual-dictionary').on('click', function () {
+            $('#Law_tb-multilingual-dictionary').trigger('click');
+        });
+    });
+
+    $('#law-date-type-select').change(function () {
+        $('#Law_LawDateType').val($(this).val());
+    });
+
+    $('#select-oj-series').change(function () {
+        $('#Law_OJSeries').val($(this).val());
+
+        console.log($('#Law_OJSeries').val());
+    });
+</script>

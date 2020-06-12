@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "Finances";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@using Interlex.App.Resources
+
+@Html.Partial("_FinsMenu")
+
+@{ var thrownExc = false; }
+
+<div id="finances-container" class="width-75 left" style="margin-left: 22%;">
+    <div id="finances-content">
+            @try /* High Quality Code to check if DB is being updated */
+            {
+                if (ViewBag.Page == null || ViewBag.Page == "")
+                {
+                @Html.Action("FinancesCurrencyECB", "Finances") //DEFAULT
+                }
+                else if (ViewBag.Page == "FinancesCurrency")
+                {
+                @Html.Action("FinancesCurrency", "Finances")
+                }
+                else if (ViewBag.Page == "FinancesCurrencyECB")
+                {
+                @Html.Action("FinancesCurrencyECB", "Finances")
+                }
+                else if (ViewBag.Page == "StockIndex")
+                {
+                @Html.Action("StockIndex", "Finances")
+                }
+                else if (ViewBag.Page == "Libor")
+                {
+                @Html.Action("EuroLibor", "Finances")
+                }
+                else if (ViewBag.Page == "Euribor")
+                {
+                @Html.Action("Euribor", "Finances")
+                }
+                else if (ViewBag.Page == "GDPCapitalPPS")
+                {
+                <h3 class="f-blue">@Resources.UI_FinsStatGDPCapitaPPS</h3>
+                @Html.Action("EuroStat", "Finances")
+                }
+                else if (ViewBag.Page == "GDPCGT")
+                {
+                <h3 class="f-blue">@Resources.UI_FinsStatGDPCGT</h3>
+                @Html.Partial("~/Views/Finances/_FilterContainers.cshtml", (object)ViewBag)
+                @Html.Action("GDPCGT", "Finances", new { from = ViewBag.From, to = ViewBag.To, type = ViewBag.Type })
+                }
+                else if (ViewBag.Page == "GrossDomesticProduct")
+                {
+                <h3 class="f-blue">@Resources.UI_FinsStatGrossDomesticProduct</h3>
+                @Html.Partial("~/Views/Finances/_FilterContainers.cshtml", (object)ViewBag)
+                @Html.Action("GrossDomesticProduct", "Finances", new { from = ViewBag.From, to = ViewBag.To, type = ViewBag.Type })
+                }
+                else if (ViewBag.Page == "GovernmentGrossDebt")
+                {
+                <h3 class="f-blue">@Resources.UI_FinsStatGovernmentGrossDebt</h3>
+                @Html.Partial("~/Views/Finances/_FilterContainers.cshtml", (object)ViewBag)
+                @Html.Action("GovernmentGrossDebt", "Finances", new { from = ViewBag.From, to = ViewBag.To, type = ViewBag.Type })
+                }
+                else if (ViewBag.Page == "HarmonizedIndicesConsumerPrices")
+                {
+                <h3 class="f-blue">@Resources.UI_FinsStatHarmonizedIndicesConsumerPrices</h3>
+                @Html.Partial("~/Views/Finances/_FilterContainers.cshtml", (object)ViewBag)
+                @Html.Action("HarmonizedIndicesConsumerPrices", "Finances", new { from = ViewBag.From, to = ViewBag.To, type = ViewBag.Type })
+                }
+                else if (ViewBag.Page == "HarmonizedUnemploymentRateBySex")
+                {
+                <h3 class="f-blue">@Resources.UI_FinsStatHarmonizedUnemploymentRateBySex</h3>
+                @Html.Partial("~/Views/Finances/_FilterContainers.cshtml", (object)ViewBag)
+                @Html.Action("HarmonizedUnemploymentRateBySex", "Finances", new { from = ViewBag.From, to = ViewBag.To, type = ViewBag.Type })
+                }
+                else if (ViewBag.Page == "Pragove")
+                {
+                @Html.Action("Pragove", "Finances")
+                }
+                else if (ViewBag.Page == "TaxInformation")
+                {
+                <h3 class="f-blue">@Resources.UI_Finances_TaxInformation</h3>
+                @Html.Action("TaxInformation", "Finances", new { type = ViewBag.Type })
+                }
+            }
+            catch (Exception) /* Pa paraa paaaa */
+            {
+                thrownExc = true;
+            <h3 class="f-orange"><span class="fa fa-exclamation-circle"></span> @Resources.UI_Fins_Update</h3> /* Yea, right */
+        }
+    </div>
+</div>
+
+
+@if (!thrownExc && ViewBag.Page == null || ViewBag.Page == "" || ViewBag.Page == "FinancesCurrency" || ViewBag.Page == "FinancesCurrencyECB")
+{
+    <div id="finances-charts-container" class="width-75 left" style="margin-left: 22%;">
+        @if (ViewBag.Page == null || ViewBag.Page == "" || ViewBag.Page == "FinancesCurrency")
+        {
+            <div>
+                <a href="#" class="f-active f-0-8 link-currency-change margin-right-5" data-currency="eur" style="text-decoration: none !important;"><span class="fa fa-eur"></span> EUR</a>
+                <a href="#" class="f-black f-0-8 link-currency-change margin-right-5" data-currency="usd" style="text-decoration: none !important;"><span class="fa fa-usd"></span> USD</a>
+                <a href="#" class="f-black f-0-8 link-currency-change" data-currency="gbp" style="text-decoration: none !important;"><span class="fa fa-gbp"></span> GBP</a>
+            </div>
+        }
+   
+        <div id="chart-original-container-eur" data-active="1" style="display:none;">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="line-chart-eur" class="chart-area flot-chart" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+
+        @if (ViewBag.Page == null || ViewBag.Page == "" || ViewBag.Page == "FinancesCurrency")
+        {
+            <div id="chart-original-container-usd" data-active="0" style="display:none;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="line-chart-usd" class="chart-area flot-chart" style="height:300px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chart-original-container-gbp" data-active="0" style="display:none;">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id="line-chart-gbp" class="chart-area flot-chart" style="height:300px;"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else if (!thrownExc && ViewBag.Page == "StockIndex")
+{
+    <div id="finances-charts-container" class="width-75 left" style="margin-left: 22%;">
+        <div id="chart-original-container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="line-chart-stockindex" class="chart-area flot-chart" style="height:300px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (!thrownExc && ViewBag.Page == "Libor")
+{
+    <div id="finances-charts-container" class="width-75 left" style="margin-left: 22%;">
+        <div id="chart-original-container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="line-chart-libor" class="chart-area flot-chart" style="height:300px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (!thrownExc && ViewBag.Page == "Euribor")
+{
+    <div id="finances-charts-container" class="width-75 left" style="margin-left: 22%;">
+        <div id="chart-original-container">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div id="line-chart-libor" class="chart-area flot-chart" style="height:300px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $().ready(function () {
+        $('body').backToTop();
+    });
+</script>

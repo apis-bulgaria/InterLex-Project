@@ -1,0 +1,80 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section CSS
+{
+    @Styles.Render("~/Content/doc")
+}
+
+<style>
+    #secSearch {
+        border-bottom: 0 !important;
+    }
+</style>
+
+<script type="text/javascript">
+    var currDifference = 0;
+    var maxDifferences = 0;
+
+    function ShowNextDifference(inc) {
+        currDifference = currDifference + inc;
+        console.log(currDifference);
+        console.log(maxDifferences);
+
+        if (currDifference < 0)
+        {
+            currDifference = maxDifferences-1;
+        }
+        else if (currDifference >= maxDifferences)
+            currDifference = 0;
+
+        $('.diff').removeClass('diffborder');
+        $('.diff:eq('+currDifference+')').addClass('diffborder');
+
+         $('.diffborder').first().ScrollTo();
+    }
+
+    function ShowFirstDifference(){
+        currDifference = 0;
+        ShowNextDifference(0);
+    }
+
+    function ShowLastDifference(){
+        currDifference = maxDifferences-1;
+        ShowNextDifference(0);
+    }
+
+    $().ready(function () {
+        maxDifferences = $('.diff').length;
+        $('#dif-count').text(maxDifferences);
+        ShowNextDifference(0);
+    });
+</script>
+
+<div class="container-fluid compare" style="width: 100%;">
+    <div id="doc-view-top-bar" style="width: 100% !important; margin-left: 0 !important;">
+        <div class="right margin-right-20">
+            <span class="f-grey f-0-8 margin-right-15" style="vertical-align: top;">Differences found: <span id="dif-count" style="vertical-align: top;"></span></span>
+            <a href="javascript:void(0);" onclick="ShowFirstDifference()"><img src="~/Content/Images/in-doc-search-first.png" alt="First Match"></a>
+            <a href="javascript:void(0);" onclick="ShowNextDifference(-1)"><img src="~/Content/Images/in-doc-search-prev.png" alt="Previous Match"></a>
+            <a href="javascript:void(0);" onclick="ShowNextDifference(1)"><img src="~/Content/Images/in-doc-search-next.png" alt="Next Match"></a>
+            <a href="javascript:void(0);" onclick="ShowLastDifference()"><img src="~/Content/Images/in-doc-search-last.png" alt="Last Match"></a>
+        </div>
+    </div>
+    <div class="left width-20" id="doc-view-top-holder">
+        <div id="doc-view-top-holder-inner">
+            &nbsp;
+        </div>
+    </div>
+    <div id="doc-view-container" style="width: 100% !important; margin-left: 0 !important;">
+        <div class="expanding-section docmenu-item">
+            <section id="textSec">
+                @Html.Raw(ViewBag.Html)
+            </section>
+        </div>
+    </div>
+</div>

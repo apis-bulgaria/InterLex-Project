@@ -1,0 +1,86 @@
+﻿@model EuroCases.App.ViewModels.ProductFeaturesInfo
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Enums
+@using Interlex.BusinessLayer.Models
+
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@*@if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+    {
+        <div class="text-center">
+            <!-- Httpool Block -->
+            <script type="text/javascript">
+                AdPlatformZone = {
+                    id: "2f73fc142",
+                    format: "728x90"
+                };
+            </script>
+            <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>
+            <!-- /Httpool Block -->
+        </div>
+    }*@
+
+
+
+@{
+    if (Model.Document != null && Model.FunctionalityType == FunctionalityTypes.DocumentOpen)
+    {
+
+        @section CSS
+        {
+            @Styles.Render("~/Content/doc")
+        }
+
+        if (ViewBag.DocError != null && ViewBag.DocError != "")
+        {
+            <div class="f-blue text-center" style="padding-top:40px;">@ViewBag.DocError</div>
+        }
+        else
+        {
+            @Html.Partial("~/Views/Doc/_DocFeaturesInfo.cshtml", Model.Document);
+        }
+    }
+    else
+    {
+        ViewBag.Title = Resources.UI_NotAvaiableFeature;
+    }
+}
+
+<br class="mobile-hidden" /><br class="mobile-hidden" />
+<div class="width-40" id="wrapper-product-features">
+    <div class="padding-10 text-center">
+        <h3 class="f-white">@Resources.UI_NotAvaiableFeature</h3>
+        @*<div>
+            @Html.Raw(Resources.UI_FullFeaturesMessage)
+        </div>*@
+
+        @*@Html.Partial("~/Views/Shared/_ProductFeaturesInfo.cshtml", Model.FunctionalityType)*@
+    </div>
+</div>
+<div id="wrapper-product-features-btn-container" class="width-40 text-center">
+    <a href="~/Login/Logout/1" class="btn btn-prs-orange-shadowed f-white f-bold f-shadowed-black" style="font-size: 1.0em; border: 1px solid white !important; text-decoration: none;" id="btn-free-trial">@Resources.UI_Login_Upper</a>
+    <a href="~/Login/Registration" class="btn btn-prs-orange-shadowed f-white f-bold f-shadowed-black" style="font-size: 1.0em; border: 1px solid white !important; text-decoration: none;" id="btn-free-trial">@Resources.UI_Registration</a>
+</div>
+@*<div class="width-45 margin-top-10 f-blue text-center" id="wrapper-product-features-contact-container">
+    <span class="f-0-8">
+        <span class="f-bold-italic">@Resources.UI_ContactUs:</span>
+        @Html.Raw(Resources.UI_ContactUsInformation)
+    </span>
+    <div class="clearfix"></div>
+</div>*@
+
+@*<script>
+    $().ready(function () {
+        $('#btn-free-trial').on('click', function () {
+            var win = window.open('http://eurocases.eu/en/GetDemo/1');
+            win.focus();
+        });
+
+        $('#btn-buy-now').on('click', function () {
+            var win = window.open('http://eurocases.eu/en/BuyProduct/1');
+            win.focus();
+        });
+    });
+</script>*@

@@ -1,0 +1,301 @@
+﻿html {
+}
+
+#wrapper {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.coverPage {
+    text-align: left;
+}
+
+    .coverPage .docProponent {
+        font-weight: bold;
+        margin-left: 5px;
+    }
+
+        .coverPage .docProponent:after {
+            content: '\a';
+            white-space: pre;
+        }
+
+.preface {
+    text-align: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .preface .docTitle {
+        font-weight: bold;
+        display: block;
+    }
+
+    .preface .docNumber {
+        font-weight: bold;
+        display: block;
+    }
+
+    .preface .docType {
+        font-weight: bold;
+        display: block;
+    }
+
+    .preface .docDate {
+        font-style: italic;
+        display: block;
+    }
+
+    .preface .docProponent {
+        font-style: italic;
+    }
+
+.preamble p {
+    text-indent: 10px;
+}
+
+.listIntroduction {
+    display: block;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+/*ul {*/
+    /* list-style: none; */ /* Commented V.O [03.13.2015] */
+    /*margin: 0px;*/
+    /*padding: 0px;*/
+/*}*/
+
+.blockList {
+    margin-left: 10px;
+}
+
+li .num {
+    display: inline;
+    float: left;
+    margin-right: 5px;
+}
+
+.point .num {
+    display: inline;
+    float: left;
+    margin-right: 5px;
+    font-style: italic;
+}
+
+p[data-class = centrado] {
+    text-align: center;
+}
+
+p[data-class = center] {
+    text-align: center;
+}
+
+p[data-class = centrato] {
+    text-align: center;
+}
+
+.hierarchy {
+    margin-left: 10px;
+}
+
+.body > .hierarchy > .content > p > .docTitle {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}
+
+.title > .num {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.chapter .num {
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.chapter .heading {
+    font-style: italic;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.chapter .subheading {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.article .num {
+    font-weight: bold;
+    display: block;
+    text-align: center;
+}
+
+.article .heading {
+    font-style: italic;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.section .num {
+    display: inline;
+    float: left;
+    margin-right: 5px;
+}
+
+.section .heading {
+}
+
+.clause {
+    margin-left: 0px;
+}
+
+.conclusions p {
+    font-weight: bold;
+}
+
+.paragraph .num {
+    display: block;
+    float: left;
+    margin-right: 5px;
+}
+
+.mainBody .img {
+    width: 80%;
+}
+
+.borderGroup {
+    margin: 10px auto;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.keyword-group-div {
+    text-align: center;
+}
+
+.AtHead {
+    background-color: #148DD4;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    padding: 3px;
+    margin: 0px;
+    font-size: 14px;
+}
+
+.AtInline {
+    background-color: lightgray;
+    color: black;
+    display: inline;
+    padding: 5px;
+    margin: 3px;
+}
+
+.AtCont {
+    padding: 0px;
+    border: none;
+}
+
+.DocTitle {
+    text-align: center;
+    font-weight: bold;
+    color: #083854;
+    padding-top: 5px;
+}
+
+.heading {
+    text-align: center;
+    font-weight: bold;
+    color: #083854;
+}
+
+.DivContent {
+    padding: 10px;
+}
+
+.NumTable td {
+    padding: 5px;
+    font-size: 12px;
+}
+
+.heading2 {
+    font-size: 12px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #9297AB;
+    font-weight: bold;
+}
+
+.heading3 {
+    font-size: 10px;
+    text-align: right;
+    color: #ffffff;
+    background-color: #9297AB;
+    font-weight: bold;
+}
+
+.BiblTable {
+    margin: 20px;
+    width: calc(100% - 20px);
+}
+
+    .BiblTable td {
+        border: 1px solid #9297AB;
+        font-size: 12px;
+        padding: 2px 5px 2px 5px;
+    }
+
+.BiblTableLeft {
+    font-weight: bold;
+    text-align: left;
+}
+
+.formula {
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    color: #083854;
+}
+
+.title {
+    /*font-size: 14px;
+    text-align: left;
+    font-weight: bold;
+    color: #808080/*#b4b4b4*/;
+    /*padding-left: 40px;*/
+    font-size: 1.1em;
+    font-weight: normal;
+    padding-left: 40px;
+    text-align: left;
+    margin-top:2px;
+    margin-bottom:2px
+}
+
+.subtype {
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    color: #083854;
+}
+
+.signature, .judges, .parties {
+    visibility: hidden;
+    display: none;
+}
+
+.DivContent > .heading {
+    text-align: left;
+}
+
+ul.blockList.blocksopt{
+    list-style-type:none;
+}

@@ -1,0 +1,10 @@
+﻿@model  SortedSet<AlphabetLetter>
+
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Models
+
+<a href="#" class="multilingual-dictionary-letter selected" data-letter="all">@Resources.UI_All</a>
+@foreach (var letter in Model)
+            {
+    <a href="#" class="multilingual-dictionary-letter @(!letter.HasOccurrencesInitially ? "disabled" : String.Empty)" data-letter="@letter.Letter">@letter.Letter</a>
+}

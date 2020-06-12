@@ -1,0 +1,154 @@
+﻿@using Interlex.App.Resources;
+@using Interlex.App.Helpers;
+@using System.Web.Configuration
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script type="text/javascript">
+    $().ready(function () {
+        $('#userName').focus();
+        $.cookie('test_cookie', 'cookie_value', { path: '/' });
+        if (!($.cookie('test_cookie') == 'cookie_value')) {
+            $("#using-cookies-popup")
+                .attr('data-max-height', 130)
+                .dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    height: 130, // height is calculated in fluidDialog, utility.js
+                    width: 600,
+                    modal: true,
+                    draggable: true,
+                    position: ["center", "center"]
+                })
+        }
+    });
+</script>
+
+<header class="masthead text-center text-white d-flex" style="height: calc(100vh - 57px) !important;">
+    <div class="container my-auto">
+        <div class="row header-row">
+            <div class="col-md-12">
+
+                <div id="using-cookies-popup" style="display: none;"><p class="text-center text-primary">@Resources.UI_UsesCookies</p> <p class="text-center text-primary">@Resources.UI_EnableCookies</p></div>
+                
+                <div class="login">
+                    @using (Html.BeginForm("Login", "Login", new { returnUrl = (Request.QueryString["returnUrl"] != null ? Request.QueryString["returnUrl"] : "") }))
+                    {
+                    <div class="login-frame relative">
+
+                        @if (WebConfigurationManager.AppSettings["SolutionVersion"] == "product" && WebConfigurationManager.AppSettings["ShowDemoLabel"] == "1")
+                        {
+                            <span class="f-white f-bold absolute f-0-7" id="login-demo-label">@Resources.UI_DemoVersion</span>
+                        }
+
+                        @if (WebConfigurationManager.AppSettings["SolutionVersion"] == "product")
+                        {
+                            <div class="logo-main-eu" style="position:relative; margin:0 auto; margin-bottom: 10px;"></div>
+                        }
+                        else if (WebConfigurationManager.AppSettings["SolutionVersion"] == "project")
+                        {
+                            <div class="logo-main-cc" style="position: relative; margin: 0 auto; margin-bottom: 10px;"></div>
+                        }
+
+                        <label class="username-label">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Resources.UI_Username_Upper.ToLower()): </label>
+                        <input name="userName" id="userName" type="text" class="inp-txt margin-top-5 form-control" placeholder="@Resources.UI_Username_Upper">
+                        <label class="pass-label">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Resources.UI_Password_Upper.ToLower()): </label>
+                        <input name="password" id="login-password-input" type="password" class="inp-txt margin-top-5 form-control" placeholder="@Resources.UI_Password_Upper">
+                        <button type="submit" class="btn btn-blue btn-medium-wide f-white f-bold">@Resources.UI_Login_Upper</button>
+                        <div class="margin-top-10">
+                            <a class="f-0-8" href="@WebAppHelper.AppRootFolder/Login/LostPassword">@Resources.UI_LostPasswrd_Upper.ToLower().CapitalizeFirstLetter()</a>
+                        </div>
+                      
+                        @* Developers only free tour login
+        @if (Request.UserHostAddress == "::1" || Request.UserHostAddress == "127.0.0.1")
+        {
+            <button type="submit" class="sign-btn-tour margin-top-5">@Resources.UI_FreeTour <span class="fa fa-sign-in"></span></button>
+            <script>
+                $('.sign-btn-tour').on('click', function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    $('#userName').val('sysdemo');
+                    $('#login-password-input').val('@WebConfigurationManager.AppSettings["DEMO_USER_PASS"].ToString()');
+                    $('form').submit();
+                });
+            </script>
+        }*@
+
+                        @if (ViewBag.ErrorMsg != null)
+                        {
+                            <div class="err-msg" style="color: red; margin-top: -10px; margin-bottom: 5px;">@ViewBag.ErrorMsg</div>
+                        }
+                        @*@Html.ActionLink(Resources.UI_LostPasswrd_Upper, "LostPassword", "Login", new { @class = "lost-password-link" })*@
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+@*<script>
+        $().ready(function () {
+            var langCookie = getCookie("sitelang");
+            if (langCookie === "fr-FR") {
+                if ($('#login-demo-label').length) {
+                    $('#login-demo-label').addClass('login-demo-label-french');
+                }
+            }
+        })
+    </script>*@
+
+@*<div id="cookies-popup" style="display: none">
+        <h4>The following site uses cookies. Do you agree using cookies?</h4>
+        <div class="row">
+            <div class="col-md-offset-4 col-md-2">
+                <button class="btn btn-primary btn-lg" onclick="cookiesAccepted()">I agree</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger btn-lg center-block" onclick="cookiesDeclined()">I disagree</button>
+            </div>
+        </div>
+        <span hidden id="cookies-accepted">@ViewBag.CookiesAccepted</span>
+    </div>*@
+
+@*
+    <script>
+        $('.ui-dialog-contain').css('background-color', 'white');
+
+        $(document).ready(function () {
+            var cookiesAcceptedText = $('#cookies-accepted').text();
+
+            if (cookiesAcceptedText == '0') {
+                $("#cookies-popup").dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    height: 150,
+                    width: 600,
+                    modal: true,
+                    draggable: true,
+                    position: ["center", "center"],
+                    closeOnEscape: false,
+                    open: function (event, ui) { $(".ui-dialog-titlebar-close").hide(); }
+                })
+            }
+        });
+
+        function cookiesAccepted() {
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("AddCookieAgreement", "Login"))"
+            })
+            window.location.reload();
+            $('#cookies-popup').dialog('close');
+        }
+        function cookiesDeclined() {
+            window.location.href = 'http://www.cookielaw.org/the-cookie-law/';
+            $('#cookies-popup').dialog('close');
+        }
+    </script>
+*@

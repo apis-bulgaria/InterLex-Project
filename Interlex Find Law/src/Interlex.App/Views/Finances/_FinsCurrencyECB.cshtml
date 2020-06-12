@@ -1,0 +1,345 @@
+﻿@using Interlex.BusinessLayer.Models;
+@model Interlex.BusinessLayer.Models.EuFins.FinsCurrency
+@using Interlex.App.Resources
+
+<style>
+    table.dataTable-helper th.highlight {
+        background-color: #ffd !important;
+    }
+
+    table.dataTable-helper td.highlight {
+        background-color: #ffe !important;
+    }
+
+    .keyvalue-table > tbody > tr > td {
+        vertical-align: middle;
+        padding-top: 11px;
+        padding-bottom: 11px;
+        border-top: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .kv-key {
+        color: #555;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .kv-icon {
+        position: relative;
+        top: 1px;
+        width: 30px;
+        height: 30px;
+        margin-right: .75em;
+        color: #444;
+        font-size: 15px;
+        text-align: center;
+        line-height: 30px;
+        background-color: #eee;
+        border-radius: 4px;
+    }
+
+    .kv-icon-default {
+        background-color: #fff;
+        color: #555;
+        border: 1px solid #ccc;
+    }
+
+    .kv-icon-primary {
+        background-color: #d74b4b;
+        color: #fff;
+    }
+
+    .kv-icon-secondary {
+        background-color: #6685a4;
+        color: #fff;
+    }
+
+    .kv-icon-tertiary {
+        background-color: #bcbcbc;
+        color: #fff;
+    }
+
+    .kv-icon-success {
+        background-color: #5cb85c;
+        color: #fff;
+    }
+
+    .kv-icon-info {
+        background-color: #5bc0de;
+        color: #fff;
+    }
+
+    .kv-icon-danger {
+        background-color: #d9534f;
+        color: #fff;
+    }
+
+    .kv-icon-warning {
+        background-color: #f0ad4e;
+        color: #fff;
+    }
+
+    .kv-value {
+        font-size: 18px;
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .lt-ie9 .kv-value {
+        font-size: 15px;
+    }
+</style>
+
+<h3 class="f-blue" style="margin-top: -6px;">@Resources.UI_FinancesExchangeRates - @Resources.UI_Fins_Ecb</h3>
+
+<div id="fins-currency-options" class="f-0-8">
+    <div class="width-33 left">
+        <p>
+            @Resources.UI_Currency:
+            <span id="currency-picker-wrapper" style="visibility: hidden;">
+                <select id="currency-picker" class="form-control">
+                    @foreach (var item in Model.FinsCurrencies)
+                    {
+                        <option data-image="/Content/Images/fins_flags/@(item.Name).png" value="@item.Name" data-last-date="@Model.LastDates[item.Name]">@item.Country (@item.Name)</option>
+                    }
+                </select>
+            </span>
+        </p>
+    </div>
+    <div class="width-33 left">
+        @Html.HiddenFor(m => m.DateAsString, new { id = "datepicker-model", @class = "form-control" })
+        <p>@Resources.UI_Period: <input type="text" id="datepicker-fins" class="form-control"></p>
+    </div>
+    <div class="width-33 left padding-top-15">
+        <a href="javascript:void(0)" class="text-right f-white text-decoration-none" id="link-show-chart" onclick="financesScrollToChart()">
+            <span class="fa fa-line-chart"></span> @Resources.UI_Fins_ShowChart
+        </a>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+<div>
+    <div class="col-md-12">
+        <table id="example" class="display dataTable-helper table-fins" style="width: 100%; text-align: center; min-height: 150px;">
+            <thead>
+                <tr>
+                    <th class="text-center">@Resources.UI_Date</th>
+                    <th class="text-center">@Resources.UI_Value1EUR</th>
+                    <th class="text-center">@Resources.UI_Fins_Change</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $().ready(function () {
+            var $currencyPicker = $('#currency-picker');
+            $currencyPicker.msDropDown({
+                'byJson': false,
+            });
+
+            var $pickerTitleImage = $('#currency-picker_title').find('img');
+            if ($pickerTitleImage[0].complete == true) {
+                $('#currency-picker-wrapper').css('visibility', 'visible');
+            } else {
+                $pickerTitleImage.load(function () {
+                    $('#currency-picker-wrapper').css('visibility', 'visible');
+                });
+            }
+        });
+
+        //$("#datepicker-from").datepicker();
+        //$("#datepicker-to").datepicker();
+        var currentDate = new Date(),
+            jsonData;
+
+        try {
+            var dateModel = $('#datepicker-model').val();
+            currentDate = new Date(dateModel);
+        } catch (err) { }
+
+        $('#datepicker-fins').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            closeText: "@Resources.UI_Select",
+            monthNamesShort: GlobalizationHandler.getMonths(getCookie('sitelang')),
+            dateFormat: 'MM yy',
+            maxDate: currentDate,
+            onChangeMonthYear: function (dateText, inst) {
+                var month = inst;
+                var year = dateText;
+                currentDate = new Date(year, month - 1, 1);
+                $('#datepicker-fins').val(currentDate.getMonthName(getCookie('sitelang')) + " " + currentDate.getFullYear());
+                initTable(currentCurrency, currentDate);
+            },
+            beforeShow: function (e, t) {
+                $(this).datepicker("hide");
+                $("#ui-datepicker-div").addClass("hide-calendar");
+            },
+            onClose: function (dateText, inst) {
+                setTimeout(function () {
+                    $("#ui-datepicker-div").removeClass("hide-calendar");
+                }, 200);
+            }
+        });
+
+        var dataTable = null;
+        var currentCurrency = '@Model.FinsCurrencies[0].Name';
+
+        $('#datepicker-fins').datepicker("setDate", currentDate);
+        var globalizedDateLabel = currentDate.getMonthName(getCookie(['sitelang'])) + ' ' + currentDate.getFullYear();
+        $('#datepicker-fins').val(globalizedDateLabel);
+
+        $('#currency-picker').on('change', function () {
+            currentCurrency = $('#currency-picker :selected').val();
+
+            var curMaxDate = $('#currency-picker :selected').attr('data-last-date');
+            var dateObject = new Date(curMaxDate);
+            $('#datepicker-fins').datepicker('option', 'maxDate', new Date(curMaxDate));
+
+            globalizedDateLabel = dateObject.getMonthName(getCookie(['sitelang'])) + ' ' + dateObject.getFullYear();
+            $('#datepicker-fins').val(globalizedDateLabel);
+
+            initTable(currentCurrency, new Date(curMaxDate));
+        });
+
+        $(window).resize(function () {
+            populatePlots(jsonData);
+        });
+
+        var chartOptions = {
+            xaxis: {
+                mode: "time",
+                minTickSize: [1, "day"],
+                monthNames: GlobalizationHandler.getMonthsShort(getCookie('sitelang'))
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: false,
+                    lineWidth: 3
+                },
+                points: {
+                    show: true,
+                    radius: 3,
+                    fill: true,
+                    fillColor: "#ffffff",
+                    lineWidth: 2
+                }
+            },
+            grid: {
+                hoverable: true,
+                clickable: false,
+                borderWidth: 0
+            },
+            legend: {
+                show: false
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: '%x: <b>%y</b>'
+            },
+            colors: ['#D74B4B', '#475F77', '#BCBCBC', '#777777', '#6685a4', '#E68E8E']
+        }
+
+        var chartOptionsEur = $.extend({}, chartOptions);
+
+        chartOptionsEur.colors = ['#148dd4'];
+
+        var holderEur = $('#line-chart-eur');
+
+
+        function initTable(currentCurrency, currentDate) {
+            var hasLoadedNewData;
+
+            if (dataTable != null) {
+                $('#example tbody').remove();
+                dataTable.fnDestroy();
+                dataTable = null;
+            }
+            if (dataTable == null) {
+                var dtoptions = {
+                    "processing": true,
+                    "serverSide": true,
+                    "bPaginate": false,
+                    "autoWidth": false,
+                    "ajax": {
+                        "url": '/Finances/Data/GetFinancesCurrencyECBData',
+                        "type": 'POST',
+                        "data": {
+                            "currentCurrency": currentCurrency,
+                            "year": currentDate.getFullYear(),
+                            "month": currentDate.getMonth(),
+                            "readerType": "FinsCurrencyEcbDataRow"
+                        },
+                        "dataSrc": function (json) {
+                            hasLoadedNewData = true;
+                            jsonData = json;
+                            return json.data;
+                        }
+                    },
+                    "columns": [
+                        { "data": "dateTable", "orderable": false, },
+                        { "data": "forEurTable", "orderable": false, "targets": -1 },
+                        { "data": "forEurChangeTable", "orderable": false, "targets": -1 },
+                    ],
+                    "dom": 'C<"clear">lfrtip',
+                    "colVis": {
+                        exclude: [0],
+                        groups: [
+                            {
+                                title: "EUR",
+                                columns: [1, 2]
+                            }
+                        ]
+                    },
+                    "bFilter": false,
+                    "bInfo": false
+                };
+                dataTable = $('#example')
+                    .dataTable(dtoptions)
+                    .on('draw.dt', function (ev, options) {
+                        if (!$('#example').find('tbody').is(':empty') && hasLoadedNewData) {
+                            hasLoadedNewData = false;
+                            populatePlots(jsonData);
+                        }
+                    })
+                    .on('destroy.dt', function (ev, options) {
+                        var tabEur = $('#chart-original-container-eur');
+
+                        if (tabEur.attr('data-active') === '1') {
+                            tabEur.css('display', 'none');
+                        }
+                    });
+                //  new $.fn.dataTable.Responsive(dataTable);
+            }
+        };
+
+        function populatePlots(result) {
+            var forEur = [];
+            $(result.data).each(function (index, element) {
+                forEur.push([Date.parse(element.date), element.forEur]);
+            });
+
+            var plotDataEur = [{
+                label: "@Resources.UI_Value1EUR",
+                data: forEur
+            }];
+
+            var curTab = 'eur';
+
+            $('#chart-original-container-eur').css('visibility', 'visible');
+            $('#chart-original-container-eur').css('display', 'block');
+
+            $.plot(holderEur, plotDataEur, chartOptionsEur);
+        };
+
+        initTable(currentCurrency, currentDate);
+    });
+</script>
+

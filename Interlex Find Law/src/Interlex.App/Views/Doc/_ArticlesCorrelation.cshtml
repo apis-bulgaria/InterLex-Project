@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Interlex.BusinessLayer.Models.ArticleCorrelation>
+
+@if (Model.Count() > 0)
+{
+    <div id="vat-articles-correlation-heading">Articles correlation</div> @*  TODO: RESOURCE *@ 
+    <div id="vat-articles-correlation-container">
+        <table id="vat-articles-correlation-table">
+            <tbody>
+                @foreach (var articleCorrelation in Model)
+                {
+                    <tr>
+                        <td>
+                            <a href="./DocLangId=@articleCorrelation.DocLangId" class="d-apis d-ref d-inline d-no-cons">@articleCorrelation.DocNumber</a>
+                        </td>
+                        <td>
+                            @{ 
+                                var articleData = articleCorrelation.ArticleData;
+                            }
+                            @for (int i = 0; i < articleData.Count; i++)
+                            {
+                                var currentData = articleData.ElementAt(i);
+                                <a href="./DocLangId=@articleCorrelation.DocLangId&ToPar=@currentData.Eid" class="article-link d-apis d-ref d-inline d-no-cons" data-eid="@currentData.Eid">@currentData.Num</a>
+                                @Html.Raw(i == articleData.Count - 1 ? "" : "<span>,</span>");
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{549FB514-8527-466E-A4FD-E7A54A18CDB3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Interlex.BusinessLayer</RootNamespace>
+    <AssemblyName>Interlex.BusinessLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AkomaNtosoXml.Xslt.Core, Version=4.2.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\lib\net40\AkomaNtosoXml.Xslt.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AkomaNtosoXml.Xslt.Transformation, Version=2.2.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AkomaNtosoXml.Xslt.Transformation.2.2.7\lib\net40\AkomaNtosoXml.Xslt.Transformation.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.ClassificationService.Model, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClassificationServiceModel.2.0.0\lib\net40\2.0.0\Apis.ClassificationService.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Common, Version=2.25.19.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Common.2.25.19\lib\net40\Apis.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Common.Celex, Version=1.6.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Common.Celex.1.6.6\lib\net40\Apis.Common.Celex.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Common.Xml, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Common.Xml.1.2.1\lib\net40\Apis.Common.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.Doc.Conversion.Publishers, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Doc.Conversion.Publishers.1.0.1\lib\net40\Apis.Doc.Conversion.Publishers.dll</HintPath>
+    </Reference>
+    <Reference Include="Apis.EuCases.Common, Version=2.1.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Apis.Eucases.Common.2.1.22\lib\net40\Apis.EuCases.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ApisExtensions">
+      <HintPath>lib\ApisExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="ApisLucene">
+      <HintPath>lib\ApisLucene.dll</HintPath>
+    </Reference>
+    <Reference Include="CheckEUVatNumber, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\CheckEUVatNumber.dll</HintPath>
+    </Reference>
+    <Reference Include="ClassificationService, Version=2.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClassificationService.3.0.1\lib\net40\ClassificationService.dll</HintPath>
+    </Reference>
+    <Reference Include="DiffPlex, Version=1.4.2.0, Culture=neutral, PublicKeyToken=1d35e91d1bd7bc0f, processorArchitecture=MSIL">
+      <HintPath>..\packages\DiffPlex.1.4.2\lib\net40\DiffPlex.dll</HintPath>
+    </Reference>
+    <Reference Include="DocToClassifier, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\DocToClassifier.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.12.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.12\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.1.0.145, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.1.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="IPAddressRange, Version=3.2.0.0, Culture=neutral, PublicKeyToken=578e3c3d17e7c751, processorArchitecture=MSIL">
+      <HintPath>..\packages\IPAddressRange.3.2.0\lib\net45\IPAddressRange.dll</HintPath>
+    </Reference>
+    <Reference Include="IvanAkcheurov.Commons, Version=0.2.1.1, Culture=neutral, PublicKeyToken=a61413de1d13f8fc, processorArchitecture=MSIL">
+      <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.Commons.dll</HintPath>
+    </Reference>
+    <Reference Include="IvanAkcheurov.NClassify, Version=0.2.1.1, Culture=neutral, PublicKeyToken=a61413de1d13f8fc, processorArchitecture=MSIL">
+      <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.NClassify.dll</HintPath>
+    </Reference>
+    <Reference Include="IvanAkcheurov.NTextCat.Lib, Version=0.2.1.1, Culture=neutral, PublicKeyToken=a61413de1d13f8fc, processorArchitecture=MSIL">
+      <HintPath>..\packages\IvanAkcheurov.NTextCat.Lib.0.2.1.1\lib\net40\IvanAkcheurov.NTextCat.Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Analyzers, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Analyzers.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Core, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.FastVectorHighlighter, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.FastVectorHighlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Highlighter, Version=2.3.2.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Highlighter.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Memory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Queries, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Queries.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Regex, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Regex.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SimpleFacetedSearch, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SimpleFacetedSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.Snowball, Version=2.0.0.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.Snowball.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net.Contrib.SpellChecker, Version=3.0.3.0, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lucene.Net.Contrib.3.0.3\lib\net40\Lucene.Net.Contrib.SpellChecker.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SautinSoft.HtmlToRtf, Version=5.4.12.15, Culture=neutral, PublicKeyToken=bce916f184012969, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\SautinSoft.HtmlToRtf.dll</HintPath>
+    </Reference>
+    <Reference Include="SearchResultsGrouper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\SearchResultsGrouper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnidecodeSharpFork, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\UnidecodeSharpFork.1.0.0\lib\UnidecodeSharpFork.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminStatisticsExport.cs" />
+    <Compile Include="BanTranslateService.cs" />
+    <Compile Include="CheckVatNumber.cs" />
+    <Compile Include="Classifiers.cs" />
+    <Compile Include="Common.cs" />
+    <Compile Include="Constant\Constants.cs" />
+    <Compile Include="CourtAct.cs" />
+    <Compile Include="CustomValidators\CheckMailExistsAttribute.cs" />
+    <Compile Include="DBUtil.cs" />
+    <Compile Include="DiffMatchPatch.cs" />
+    <Compile Include="Doc.cs" />
+    <Compile Include="DocLinksRewriter.cs" />
+    <Compile Include="Entities\DetailedPractice.cs" />
+    <Compile Include="Entities\DocContentItem.cs" />
+    <Compile Include="Entities\DocStructureElement.cs" />
+    <Compile Include="Entities\DocTextPart.cs" />
+    <Compile Include="Entities\Classifier.cs" />
+    <Compile Include="Entities\FolderData.cs" />
+    <Compile Include="Entities\HomeFolderData.cs" />
+    <Compile Include="Entities\ICourts.cs" />
+    <Compile Include="Entities\IEULegislation.cs" />
+    <Compile Include="Entities\IClassifier.cs" />
+    <Compile Include="Entities\IEurovoc.cs" />
+    <Compile Include="Entities\IJurisdiction.cs" />
+    <Compile Include="Entities\ISubjectMatter.cs" />
+    <Compile Include="Entities\ISyllabus.cs" />
+    <Compile Include="Entities\JurisdictionMock.cs" />
+    <Compile Include="Enums\ApplicationUpdateType.cs" />
+    <Compile Include="Enums\Browsers.cs" />
+    <Compile Include="Enums\CaseLawType.cs" />
+    <Compile Include="Enums\ClassifierTypes.cs" />
+    <Compile Include="Enums\DatePeriodType.cs" />
+    <Compile Include="Enums\DocPartTypes.cs" />
+    <Compile Include="Enums\DocType.cs" />
+    <Compile Include="Enums\ECHRReferedActType.cs" />
+    <Compile Include="Enums\FunctionalityTypes.cs" />
+    <Compile Include="Enums\LegislationType.cs" />
+    <Compile Include="Enums\Month.cs" />
+    <Compile Include="Enums\OrderApplyTypes.cs" />
+    <Compile Include="Enums\OrderStatusTypes.cs" />
+    <Compile Include="Enums\PaymentTypes.cs" />
+    <Compile Include="Enums\PromoCodeTypes.cs" />
+    <Compile Include="Enums\SearchSources.cs" />
+    <Compile Include="Enums\SearchTypes.cs" />
+    <Compile Include="Enums\SortBy.cs" />
+    <Compile Include="Enums\AdministrationStatisticType.cs" />
+    <Compile Include="Enums\UserTypes.cs" />
+    <Compile Include="CacheProvider.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Helpers\AlphabetComparer.cs" />
+    <Compile Include="Helpers\DataRecordExtensions.cs" />
+    <Compile Include="Helpers\EnumerableExtensions.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\XsltModelExtensions.cs" />
+    <Compile Include="Home.cs" />
+    <Compile Include="InMemoryCache.cs" />
+    <Compile Include="Languages.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Logs.cs" />
+    <Compile Include="Mail.cs" />
+    <Compile Include="MergeEngine.cs" />
+    <Compile Include="Models\ClassifierItem.cs" />
+    <Compile Include="Models\FilterClassifierItemsResponse.cs" />
+    <Compile Include="Models\ClientData.cs" />
+    <Compile Include="Models\ConsVersion.cs" />
+    <Compile Include="Models\Doc\ArticleCorrelation.cs" />
+    <Compile Include="Models\Doc\ArticleData.cs" />
+    <Compile Include="Models\Doc\DocHighlightSearchParams.cs" />
+    <Compile Include="Models\Doc\DocumentInfoForPeriod.cs" />
+    <Compile Include="Models\Doc\DocumentsForPeriod.cs" />
+    <Compile Include="Models\Doc\RefDocsPair.cs" />
+    <Compile Include="Models\Doc\RelatedDoc.cs" />
+    <Compile Include="Models\Doc\YearMonth.cs" />
+    <Compile Include="Models\EuFins\Eurostat\TableDataEurostat.cs" />
+    <Compile Include="Models\EuFins\FinancialCrysisGlossaryModel.cs" />
+    <Compile Include="Models\EuFins\FinsCurrencyEcbDataRow.cs" />
+    <Compile Include="Models\EuFins\TaxInformationModel.cs" />
+    <Compile Include="Models\Folders\DocFolderData.cs" />
+    <Compile Include="Models\Folders\UserFolderData.cs" />
+    <Compile Include="Models\Globalization\Alphabet.cs" />
+    <Compile Include="Models\Globalization\AlphabetLetter.cs" />
+    <Compile Include="Models\Globalization\Country.cs" />
+    <Compile Include="Models\Doc\CourtAct.cs" />
+    <Compile Include="Models\Doc\DocHint.cs" />
+    <Compile Include="Models\Doc\DocLink.cs" />
+    <Compile Include="Models\Doc\DocLinksFilter.cs" />
+    <Compile Include="Models\Doc\Document.cs" />
+    <Compile Include="Models\Doc\DocMetaData.cs" />
+    <Compile Include="Models\Doc\DocTextStructure.cs" />
+    <Compile Include="Models\Doc\DocumentCompareInfo.cs" />
+    <Compile Include="Models\Doc\DocumentData.cs" />
+    <Compile Include="Models\Doc\DocumentHtmlModel.cs" />
+    <Compile Include="Models\Doc\DocVersion.cs" />
+    <Compile Include="Models\LawRelationUpdateModel.cs" />
+    <Compile Include="Models\Search\AdvSearchTab.cs" />
+    <Compile Include="Models\Search\MultiDictItem.cs" />
+    <Compile Include="Models\Search\MultiDictTranslation.cs" />
+    <Compile Include="Models\Search\SearchCases.cs" />
+    <Compile Include="Models\Search\SearchDetailsFinances.cs" />
+    <Compile Include="Models\Search\SearchDetailsMultiDict.cs" />
+    <Compile Include="Models\Search\SearchFinances.cs" />
+    <Compile Include="Models\Search\SearchLaw.cs" />
+    <Compile Include="Models\Search\SearchMultiDict.cs" />
+    <Compile Include="Models\User\EditEmail.cs" />
+    <Compile Include="Models\User\EditPassword.cs" />
+    <Compile Include="Models\EuFins\EuroLibor.cs" />
+    <Compile Include="Models\EuFins\EuroLiborDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\Eurostat.cs" />
+    <Compile Include="Models\EuFins\Eurostat\EurostatDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\EuroStatTable.cs" />
+    <Compile Include="Models\EuFins\Eurostat\GdpDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\GdpPerCapitaDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\GgdsDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\GggdDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\HicpDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\HursDataRow.cs" />
+    <Compile Include="Models\EuFins\Eurostat\RealGdp.cs" />
+    <Compile Include="Models\EuFins\FinsCurrency.cs" />
+    <Compile Include="Models\EuFins\FinsCurrencyDataRow.cs" />
+    <Compile Include="Models\EuFins\FinsModel.cs" />
+    <Compile Include="Models\EuFins\FinsStockIndex.cs" />
+    <Compile Include="Models\EuFins\FinsStockIndexDataRow.cs" />
+    <Compile Include="Models\EuFins\Prag.cs" />
+    <Compile Include="Models\EuFins\TableData.cs" />
+    <Compile Include="Models\Doc\FavouriteDoc.cs" />
+    <Compile Include="Models\Home\HomeData.cs" />
+    <Compile Include="Models\Home\HomeFolder.cs" />
+    <Compile Include="Models\Home\HomeSearchData.cs" />
+    <Compile Include="Models\Administration\LogError.cs" />
+    <Compile Include="Models\User\LoginData.cs" />
+    <Compile Include="Models\User\LastLoginData.cs" />
+    <Compile Include="Models\Administration\LogSearchError.cs" />
+    <Compile Include="Models\User\LostPassword.cs" />
+    <Compile Include="Models\Globalization\InterfaceLanguage.cs" />
+    <Compile Include="Models\User\LanguagePreferences.cs" />
+    <Compile Include="Models\ListItem.cs" />
+    <Compile Include="Models\Administration\OpenedDocsAdm.cs" />
+    <Compile Include="Models\Administration\OrderAdm.cs" />
+    <Compile Include="Models\Administration\OrderStatusHistory.cs" />
+    <Compile Include="Models\Search\Pager.cs" />
+    <Compile Include="Models\Search\PagerPage.cs" />
+    <Compile Include="Models\PalProvision.cs" />
+    <Compile Include="Models\PalSearch.cs" />
+    <Compile Include="Models\Administration\PieChartData.cs" />
+    <Compile Include="Models\PracticeByArticleShort.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Promo\PromoCode.cs" />
+    <Compile Include="Models\Promo\PromoCodeData.cs" />
+    <Compile Include="Models\Promo\PromoProducts.cs" />
+    <Compile Include="Models\Doc\RecentDoc.cs" />
+    <Compile Include="Models\User\RecentDocuments.cs" />
+    <Compile Include="Models\Search\ReferedActECHRSearchModel.cs" />
+    <Compile Include="Models\User\RegisterUserData.cs" />
+    <Compile Include="Models\User\ResetPassword.cs" />
+    <Compile Include="Models\Search\SearchBox.cs" />
+    <Compile Include="Models\Search\SearchDetailsCases.cs" />
+    <Compile Include="Models\Search\SearchDetailsClassifier.cs" />
+    <Compile Include="Models\Search\SearchDetailsLaw.cs" />
+    <Compile Include="Models\Search\SearchListItem.cs" />
+    <Compile Include="Models\Search\SearchResult.cs" />
+    <Compile Include="Models\Administration\SearchStatistics.cs" />
+    <Compile Include="Models\User\SellerData.cs" />
+    <Compile Include="Models\Administration\StatSearch.cs" />
+    <Compile Include="Models\EuFins\TableFormData.cs" />
+    <Compile Include="Models\TextAsHint.cs" />
+    <Compile Include="Models\User\UserData.cs" />
+    <Compile Include="Models\Administration\UserDataAdm.cs" />
+    <Compile Include="Models\User\UserDataRemote.cs" />
+    <Compile Include="Models\User\UsersDataSimple.cs" />
+    <Compile Include="Models\User\UserSearch.cs" />
+    <Compile Include="Models\User\UserSearchDetails.cs" />
+    <Compile Include="Models\User\UserSearches.cs" />
+    <Compile Include="Models\VatCheckEu.cs" />
+    <Compile Include="PdfConvert.cs" />
+    <Compile Include="PromoCodes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexUtilities.cs" />
+    <Compile Include="RtfExport.cs" />
+    <Compile Include="Search.cs" />
+    <Compile Include="Sitemap.cs" />
+    <Compile Include="Stat.cs" />
+    <Compile Include="ClassifiersProvider.cs" />
+    <Compile Include="UserMng.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApisHtmlHighlight\ApisHtmlHighlight.csproj">
+      <Project>{856f9250-1afb-4159-85cb-acf7c84d5a24}</Project>
+      <Name>ApisHtmlHighlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interlex.DataLayer\Interlex.DataLayer.csproj">
+      <Project>{5a86603f-0522-4f6f-9066-961cac8bd8f6}</Project>
+      <Name>Interlex.DataLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\ApisExtensions.dll" />
+    <Content Include="lib\ApisLucene.dll" />
+    <Content Include="lib\CaptchaMvc.dll" />
+    <Content Include="lib\CaptchaMvc.pdb" />
+    <Content Include="lib\CaptchaMvc.XML" />
+    <Content Include="lib\CheckEUVatNumber.dll" />
+    <Content Include="lib\DocToClassifier.dll" />
+    <Content Include="lib\SautinSoft.HtmlToRtf.dll" />
+    <Content Include="lib\SautinSoft.HtmlToRtf_old.dll" />
+    <Content Include="lib\SearchResultsGrouper.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets" Condition="Exists('..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\AkomaNtosoXml.Xslt.Core.4.2.14\build\AkomaNtosoXml.Xslt.Core.targets'))" />
+  </Target>
+  <!-- <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" /> -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

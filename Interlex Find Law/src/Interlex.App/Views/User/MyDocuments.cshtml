@@ -1,0 +1,33 @@
+﻿@using Interlex.App.Resources
+
+@{
+    ViewBag.Title = "My Documents";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="container-fluid main-content">
+    <div id="my-documents-folders-container" class="my-folders-container filters-container"></div>
+    <div id="my-documents-docs-container"></div>
+</div>
+<div class="mobile-filters-show-button f-orange-important filters-shown" data-page="my-documents"><span class="fa fa-folder"></span></div>
+<script>
+    var myDocsHandler;// Used in myDocumentsLists
+
+    $().ready(function () {
+        var docsContainerSelector = '#my-documents-docs-container',
+            foldersContainerSelector = '#my-documents-folders-container',
+            bodyContainer = $('.container').find('.body-container');
+
+        $(docsContainerSelector).css('min-height', bodyContainer.height());
+        myDocsHandler = new MyDocumentsHandler({
+            foldersContainerSelector: foldersContainerSelector,
+            docsContainerSelector: docsContainerSelector
+        });
+
+        highlightMenu('my-documents');
+        myDocsHandler.initFolders(function () {
+            myDocsHandler.LoadMyDocuments(1);
+        });
+        //Inits fancytree folders
+    });
+</script>

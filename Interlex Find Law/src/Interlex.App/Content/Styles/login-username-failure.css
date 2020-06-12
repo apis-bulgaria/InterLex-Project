@@ -1,0 +1,61 @@
+﻿.logo-main-eu {
+  background: url('../Images/interLex_logo_130x60.png') no-repeat;
+  height: 75px;
+  width: 120px;
+  /* 130px;*/
+  /*margin-left: 30px;*/
+  margin-top: 10px;
+}
+@media screen and (max-width: 1401px) {
+  .logo-main-eu {
+    background: url(../Images/interLex_logo_110x60.png) no-repeat;
+    width: 240px;
+    height: 60px;
+    margin-left: 3%;
+    margin-bottom: 20px;
+  }
+}
+.error-panel-content {
+  text-align: center;
+}
+#eurocases-link {
+  display: block;
+  margin-top: 2.5%;
+}
+#eurocases-link:link {
+  color: #1488d4;
+  font-weight: bold;
+  text-decoration: none;
+}
+#eurocases-link:visited {
+  color: #999999;
+  font-weight: bold;
+  text-decoration: none;
+}
+#eurocases-link:active,
+#eurocases-link:hover {
+  color: #3498db;
+  text-decoration: underline;
+}
+.panel-header {
+  padding-bottom: 3%;
+}
+.error-frame {
+  -moz-box-shadow: 0 3px 8px #646464;
+  -webkit-box-shadow: 0 3px 8px #646464;
+  box-shadow: 0 3px 8px #646464;
+  position: absolute;
+  width: 40%;
+  min-width: 280px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 30%;
+  padding: 40px 0;
+}
+@media (max-width: 1024px) {
+  .error-frame {
+    width: 80%;
+  }
+}

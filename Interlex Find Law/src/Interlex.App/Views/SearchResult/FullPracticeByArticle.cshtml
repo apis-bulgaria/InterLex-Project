@@ -1,0 +1,7 @@
+﻿@model Interlex.BusinessLayer.Models.SearchResult
+
+
+@foreach (var item in Model.SearchList)
+{
+    <a href='~/DocText/DocText?documentId='@Html.Raw(item.DocumentId)>@Html.Raw(item.Title)</a><br />
+}

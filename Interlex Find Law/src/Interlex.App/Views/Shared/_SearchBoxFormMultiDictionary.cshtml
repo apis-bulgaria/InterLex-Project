@@ -1,0 +1,41 @@
+﻿@model List<Interlex.BusinessLayer.Models.MultiDictItem>
+
+@using System.Linq;
+@using Interlex.App.Resources
+
+@if (ViewBag.ShowInitialLabel != false)
+{
+    <div class="multilingual-dictionary-curtain">
+        <span class="fa fa-exclamation"></span> @Resources.UI_MultilingualDictionaryInitialMessage
+    </div>
+}
+else if (Model.Count == 0)
+{
+    <div class="multilingual-dictionary-curtain">@Resources.UI_JS_NoMatchesFound</div>
+}
+
+<div class="margin-top-10" id="multilingual-dictionary-filter-content">
+    <div class="left width-49 border-fine-box b-white relative" id="multilingual-dictionary-terms-list-container">
+        <ul id="list-multilingual-dictionary-terms">
+            @foreach (var item in Model)
+            {
+                <li data-id="@item.ItemId" data-text="@item.Text" class="@(item.Selected ? "selected" : "")">
+                    @if (item.Selected)
+                    {
+                        <span class="fa fa-check-square-o"></span>
+                    }
+                    else
+                    {
+                        <span class="fa fa-square-o"></span>
+                    }
+                    @item.Text
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="left width-49 border-fine-box b-white margin-left-1-percent" id="multilingual-dictionary-translations-container">
+        @Html.Partial("~/Views/Shared/_SearchBoxFormMultiDictionaryTranslations.cshtml", new List<Interlex.BusinessLayer.Models.MultiDictTranslation>())
+    </div>
+    <div class="clearfix">
+    </div>
+</div>

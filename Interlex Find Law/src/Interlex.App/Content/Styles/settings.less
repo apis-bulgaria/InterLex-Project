@@ -1,0 +1,156 @@
+﻿@import "colors.less";
+
+#settings-popup {
+    text-align: center;
+    background-color: @color-gray-header;
+    color: @color-blue-primary;
+    font-size: 0.8em;
+    padding-top: 0;
+}
+
+.settings-overlay {
+    // background-color: @color-gray-header;
+}
+
+#settings-menu-list {
+    width: 40%;
+    float: left;
+
+    button {
+        cursor: pointer;
+    }
+}
+
+.tree-dialog .ui-widget-content, .dialog-settings .ui-widget-content {
+   // background-color: @color-gray-primary;
+    border: 0;
+}
+
+.tree-dialog .ui-dialog-buttonset {
+    text-align: center;
+    font-size: 0.7em;
+}
+
+.ui-fancytree {
+    outline: 0 !important;
+}
+
+.fancytree-container {
+    outline: 0 !important;
+}
+
+.fancytree-treefocus {
+    outline: 0 !important;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    text-align: center;
+    margin-top: 0 !important;
+    width: 100%;
+    margin-left: 0.5% !important;
+    padding: .3em .8em .5em .2em !important;
+
+    .ui-dialog-buttonset {
+        float: none;
+    }
+}
+
+#settings-body-container {
+    padding-top: 5px;
+    margin-left: 210px;
+    width: 60%;
+    height: 84.5%;
+    margin-top: 10px;
+   // background-color: @color-gray-primary;
+}
+
+.ui-widget-overlay {
+    // background-color: @color-gray-header;
+}
+
+.ui-widget-content {
+    .btn-blue {
+        background-color: @color-blue-primary !important;
+        // border-radius: 0 !important;
+        border: 0 !important;
+        border-radius: 3px !important;
+
+        &:hover {
+            background-color: #1071AA !important;
+            border-radius: 3px !important;
+        }
+    }
+
+    .btn-lgrey {
+        background-color: #dcdcdc !important;
+        // border-radius: 0 !important;
+        border: 0 !important;
+        color: @color-blue-primary !important;
+        border-radius: 3px !important;
+
+        &:hover {
+            background-color: #CACACA !important;
+            border-radius: 3px !important;
+        }
+    }
+}
+
+#change-password-form {
+    height: 98%;
+}
+
+#change-password-form, #change-email-form, #settings-body-container .panel-body {
+    border: 1px solid #acacac;
+    margin-top: -5px;
+    padding-top: 10px;
+}
+
+.settings-tab-border {
+    border-top: 1px solid #acacac !important;
+    border-left: 1px solid #acacac !important;
+    border-bottom: 1px solid #acacac !important;
+    border-right: 0 !important;
+}
+
+#settings-body-container {
+    .panel-body {
+        background-color: #f7f7f7;
+    }
+}
+
+#cb-docs-in-new-tab, #cb-show-free-docs {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin: 0;
+    vertical-align: bottom;
+    position: relative;
+    top: -2px;
+    *overflow: hidden;
+}
+
+.ui-dialog {
+    padding: 0;
+    border-radius: 0;
+}
+
+.ui-widget-header {
+    background: none;
+    border-radius: 0;
+    color: white;
+    background-color: #148dd4 !important;
+    font-size: 0.8em;
+}
+
+/*.ui-dialog .ui-dialog-buttonpane {
+    border-top: 1px solid rgba(68, 68, 68, 0.3);
+}*/
+
+#languages-list .move-down span.f-blue:hover, #languages-list .move-up span.f-blue:hover {
+    color: @color-newblue-primary;
+}
+
+#languages-list .list-group-item:last-child .move-down span.f-blue, #languages-list .list-group-item:first-child .move-up span.f-blue {
+    color: @color-gray-dark !important;
+    cursor: default !important;
+}

@@ -1,0 +1,179 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+
+@Html.Partial("~/Views/Shared/_SearchBoxFormEnactmentModals.cshtml")
+
+<div class="display-none f-0-9" id="modal-choose-refered-act">
+    @* Used in ECHR *@
+    <div><a href="#" id="refered-act-convention-and-protocols" class="f-blue-important btn">Convention and protocols</a></div>
+    <div><a href="#" id="refered-act-court-rules" class="f-blue-important btn">Rules of the Court</a></div>
+    <div class="f-0-9 margin-top-20">
+        <fieldset>
+            <legend>ECTHR case law</legend>
+            <div class="left width-25">
+                <input type="text" id="echr-refered-act-applicant" class="width-70 input-blue" placeholder="@Resources.UI_Cases_Applicant" />
+            </div>
+            <div class="left width-25">
+                <input type="text" id="echr-refered-act-application-number" class="width-70 input-blue" placeholder="@Resources.UI_Cases_ApplicationNumber" />
+            </div>
+            <div class="left width-25">
+                <input type="text" id="echr-refered-act-ecli" class="width-70 input-blue" placeholder="ECLI" />
+            </div>
+            <div class="left width-25">
+                <button type="button" id="echr-refered-act-search" class="btn btn-blue btn-medium-wide f-white">
+                    <span class="fa fa-search"></span> @Resources.UI_Search
+                </button>
+            </div>
+            <div class="clearfix"></div>
+            <div id="refered-act-pager" class="margin-top-10"></div>
+            <div id="refered-act-search-result">
+                &nbsp;
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Shared/_SearchBoxFormMultiDictionaryModals.cshtml", new ViewDataDictionary { { "TabPrefix", "Cases_" } })
+
+<script>
+    $().ready(function () {
+        $('#echr-refered-act-search').on('click', function () {
+            referedActECHRSearch();
+
+            return false;
+        });
+
+        clearCasesFilters();
+
+        //TODO: Remake logic to a single JS function
+        $('#select-refered-act').change(function () {
+            var val = $(this).val(); // refered act type id
+            if (val === 0 || val === '0') {
+                // populating echr type
+                $('#Cases_ECHRReferedActType').val(0);
+                $('#Cases_ECHRReferedActType').trigger('change');
+                // clearing hidden for echr type title
+                $('#Cases_ReferedActTitle').val('');
+                // showing correct privison div
+                $('#cases-echr-refered-act-provision').removeClass('display-none');
+                $('#cases-echr-court-rules').addClass('display-none');
+                $('#cases-echr-hudoc-articles').addClass('display-none');
+                // clearing possibly populated values by the classifiers
+                if ($('#tbCases_HudocArticlesText').length) {
+                    clearTreeFilter('Cases_HudocArticles');
+                }
+
+                if ($('#tbCases_RulesOfTheCourtText').length) {
+                    clearTreeFilter('Cases_RulesOfTheCourt');
+                }
+            }
+            else if (val === 1 || val === '1') {
+                // loading correct provision template
+                $('#cases-echr-refered-act-provision').addClass('display-none');
+                $('#cases-echr-court-rules').addClass('display-none');
+                $('#cases-echr-hudoc-articles').removeClass('display-none');
+                // changing hidden for refered act type
+                $('#Cases_ECHRReferedActType').val(1);
+                $('#Cases_ECHRReferedActType').trigger('change');
+                // clearing doc lang id from type 3
+                $('#Cases_ReferedActECHRDocLangId').val('');
+                $('#Cases_ReferedActTitle').val('@Resources.UI_Cases_HudocArticles');
+
+                if ($('#tbCases_RulesOfTheCourtText').length) {
+                    clearTreeFilter('Cases_RulesOfTheCourt');
+                }
+            }
+            else if (val === 2 || val === '2') {
+                // loading correct provision template
+                $('#cases-echr-refered-act-provision').addClass('display-none');
+                $('#cases-echr-hudoc-articles').addClass('display-none');
+                $('#cases-echr-court-rules').removeClass('display-none');
+                // changing hidden for refered act type
+                $('#Cases_ECHRReferedActType').val(2);
+                $('#Cases_ECHRReferedActType').trigger('change');
+                // clearing doc lang id from type 3
+                $('#Cases_ReferedActECHRDocLangId').val('');
+                $('#Cases_ReferedActTitle').val('@Resources.UI_Cases_RulesOfTheCourt');
+
+                if ($('#tbCases_HudocArticlesText').length) {
+                    clearTreeFilter('Cases_HudocArticles');
+                }
+            }
+
+            return false;
+        });
+
+        // Refered act dialog
+        $('#link-choose-refered-act').click(function () {
+            $('#modal-choose-refered-act')
+                .attr('data-max-height', 480)
+                .dialog({
+                    dialogClass: 'dialog-settings fixed-dialog',
+                    autoOpen: true,
+                    resizable: false,
+                    height: 480, // height is calculated in fluidDialog, utitlity.js
+                    title: 'Choose refered act',
+                    width: 850,
+                    modal: true,
+                    draggable: true,
+                    position: { my: 'top', at: 'top+250' },
+                    open: function () {
+                        isAModalOpened = true;
+                        $('#refered-act-convention-and-protocols').blur();
+                    },
+                    close: function () {
+                        setTimeout(function () {
+                            isAModalOpened = false;
+                        }, 200);
+                    }
+                });
+        });
+
+        // Populating hudoc articles on convention and protocols click in refered act choosing
+        $('#refered-act-convention-and-protocols').click(function () {
+            $('#cases-echr-refered-act-provision').addClass('display-none');
+            $('#cases-echr-court-rules').addClass('display-none');
+            $('#cases-echr-hudoc-articles').removeClass('display-none');
+            $('#input-refered-act').val('Convention and protocols'); // TODO: Get translations
+            $('#modal-choose-refered-act').dialog('close');
+            $('#Cases_ECHRReferedActType').val(1);
+            $('#Cases_ECHRReferedActType').trigger('change');
+
+            // clearing doc lang id from type 3
+            $('#Cases_ReferedActECHRDocLangId').val('');
+            $('#Cases_ReferedActTitle').val('@Resources.UI_Cases_HudocArticles');
+
+            return false;
+        });
+
+        // Populating rules of court on court rules click in refered act choosing
+        $('#refered-act-court-rules').click(function () {
+            $('#cases-echr-refered-act-provision').addClass('display-none');
+            $('#cases-echr-hudoc-articles').addClass('display-none');
+            $('#cases-echr-court-rules').removeClass('display-none');
+            $('#input-refered-act').val('Rules of the Court'); //TODO: Get translations
+            $('#modal-choose-refered-act').dialog('close');
+            $('#Cases_ECHRReferedActType').val(2);
+            $('#Cases_ECHRReferedActType').trigger('change');
+
+            // clearing doc lang id from type 3
+            $('#Cases_ReferedActECHRDocLangId').val('');
+            $('#Cases_ReferedActTitle').val('@Resources.UI_Cases_RulesOfTheCourt');
+        });
+
+        // Binding enter press to inputs for refered act search
+        $('#echr-refered-act-applicant, #echr-refered-act-application-number, #echr-refered-act-ecli').keyup(function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                $('#echr-refered-act-search').trigger('click');
+            }
+        });
+
+        $('#link-choose-provision-index').on('click', function () {
+            showProvisionDlg(true);
+        });
+
+      
+    });
+</script>

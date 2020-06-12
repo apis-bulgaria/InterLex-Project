@@ -1,0 +1,125 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+@using System.Web.Configuration;
+
+@* Populating templates partial *@
+@Html.Partial("~/Views/Shared/_SearchBoxFormLawTemplates.cshtml", Model)
+
+<form id="formLaw" @{ if (Model.Law == null) { @: style="display: none;"
+                                          }}>
+    <div class="search-items-wrapper">
+        <div class="left width-50 text-left container-form" style="margin-top: -5px; margin-left: -5px;">
+            <label for="Law_OnlyInTitles">
+                @Html.CheckBoxFor(m => m.Law.OnlyInTitles, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                <span class="label-after-checkbox">@Resources.UI_SearchOnlyInTitles</span>
+            </label>
+            <label for="ExactMatch">
+                @Html.CheckBoxFor(m => m.ExactMatch, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                <span class="label-after-checkbox">@Resources.UI_SearchExactMatch</span>
+            </label>
+        </div>
+        @*@Html.Partial("~/Views/Shared/_SearchBoxFormShared.cshtml", Model)*@
+        @* Logicals *@
+        <div class="clearfix"></div>
+        @if (System.Web.Configuration.WebConfigurationManager.AppSettings["SolutionVersion"] == "project")
+        {
+            <div class="row">
+                <div class="left width-45 text-left container-form" style="margin-top: -10px; margin-left: -5px;">
+
+                    <label for="Law_TranslateSearchText">
+                        @Html.CheckBoxFor(m => m.Law.TranslateSearchText, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                        <span class="label-after-checkbox">@Resources.UI_TranslateSearchText</span>
+                    </label>
+
+                </div>
+                <div class="left width-35 text-right container-form">
+                    &nbsp;
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        }
+        <fieldset class="width-80 container-form" id="law-field-of-search-container">
+            <legend>@Resources.UI_SearchArea @*<span class="fa fa-info-circle f-blue icon-hint tooltip" title="@Resources.Hint_LegislationSearchArea"></span>*@</legend>
+            @* <div class="left width-50 text-center" style="margin-left: -5px;">
+                    <label for="Law_OnlyInActualActs">
+                        @Html.CheckBoxFor(m => m.Law.OnlyInActualActs, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                        <span class="label-after-checkbox">@Resources.UI_SearchOnlyInActualActs</span>
+                    </label>
+                </div>
+                <div class="left width-50 text-center container-form" style="margin-left: 2px;">
+                    <label for="Law_OnlyInBasicActs">
+                        @Html.CheckBoxFor(m => m.Law.OnlyInBasicActs, new { @style = "vertical-align: middle; margin-top: 1px;" })
+                        <span class="label-after-checkbox">@Resources.UI_SearchOnlyInBasicActs</span>
+                    </label>
+                </div>*@
+            <div class="left width-50">
+                <label for="Law.LegislationType">
+                    <input type="radio" data-prefix="law-eu-" name="Law.LegislationType" id="Law.LegislationType_EU" value="1" @((Model.Law == null || Model.Law.LegislationType == Interlex.BusinessLayer.Enums.LegislationType.EU ? "checked=checked" : "")) style="vertical-align: middle; margin-top: -2px;" />
+                    <span class="label-after-radio">@Resources.UI_EuLegislation</span>
+                </label>
+            </div>
+            <div class="left width-50">
+                <label for="Law.LegislationType">
+                    <input type="radio" data-prefix="law-national-" name="Law.LegislationType" id="Law.LegislationType_National" value="2" @((Model.Law != null && Model.Law.LegislationType == Interlex.BusinessLayer.Enums.LegislationType.National ? "checked=checked" : "")) style="vertical-align: middle;  margin-top: -2px;" />
+                    <span class="label-after-radio">@Resources.UI_NationalLegislation</span>
+                </label>
+            </div>
+            <div class="clearfix"></div>
+        </fieldset>
+        <div class="clearfix"></div>
+
+      
+        <div class="clearfix"></div>
+
+        @* EU *@
+        <div id="law-eu" class="law-type-container">
+            @Html.Partial("~/Views/Shared/_SearchBoxFormLawEU.cshtml")
+        </div>
+
+        @* National *@
+        <div id="law-national" class="display-none law-type-container">
+            @Html.Partial("~/Views/Shared/_SearchBoxFormLawNational.cshtml")
+        </div>
+
+        <div class="form-group adv-search-buttons">
+            <input type="button" class="btn btn-large btn-blue f-white f-bold" value="@Resources.UI_Search" onclick="DoSearch('tabLaw', false);">
+            <input type="button" class="btn btn-large btn-lgrey f-blue f-bold" value="@Resources.UI_Clear" onclick="clearAdvSearchFilters('tabLaw');">
+            <button class="btn btn-large btn-lgrey f-blue adv-search-close f-bold" type="button">@Resources.UI_Close_Lower</button>
+        </div>
+        <div id="adv-search-notifications-law" class="f-red">
+            &nbsp;
+        </div>
+    </div>
+</form>
+
+
+
+<script>
+    $().ready(function () {
+        clearLawFilters();
+    });
+
+    $('#law-date-type-select').change(function () {
+        $('#Law_LawDateType').val($(this).val());
+    });
+
+    $('#select-oj-series').change(function () {
+        $('#Law_OJSeries').val($(this).val());
+
+        console.log($('#Law_OJSeries').val());
+    });
+</script>
+
+<script>
+    //$('#link-choose-provision').trigger('click');
+    $().ready(function () {
+        // Populating original cases template
+        populateSearchTemplate('templates-law-', 'law-eu-');
+        
+        $('#Law_link-edit-multilingual-dictionary').on('click', function () {
+            $('#Law_tb-multilingual-dictionary').trigger('click');
+        });
+    });
+</script>

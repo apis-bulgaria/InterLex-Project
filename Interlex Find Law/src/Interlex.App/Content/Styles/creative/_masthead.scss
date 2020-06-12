@@ -1,0 +1,58 @@
+// Styling for the masthead
+header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 56px);
+    background-image: url('/Content/Images/gdpr2.jpg');
+    background-position: center center;
+    /* parallax start */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* parallax end */
+    /* Ignoring parallax for IE10+ */
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        background-attachment: inherit;
+        background-position: inherit;
+        background-repeat: inherit;
+        background-size: inherit;
+    }
+
+    @include background-cover;
+
+    hr {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-weight: 300;
+    }
+
+    @media (min-width: 768px) {
+        p {
+            font-size: 1.15rem;
+        }
+    }
+
+    @media (min-width: 992px) {
+        height: 100vh;
+        min-height: 650px;
+        padding-top: 0;
+        padding-bottom: 0;
+
+        h1 {
+            font-size: 3rem;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        h1 {
+            font-size: 4rem;
+        }
+    }
+}

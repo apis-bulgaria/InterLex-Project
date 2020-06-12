@@ -1,0 +1,95 @@
+﻿@using Interlex.BusinessLayer.Models;
+@model Interlex.BusinessLayer.Models.EuFins.Eurostat.Eurostat
+
+@using Interlex.App.Resources
+
+@*<h3 class="f-blue" style="margin-top: -6px;">Eurostat</h3>*@
+
+@foreach (var table in Model.Tables)
+{
+    if (table.Stats.Count > 0)
+    {
+        <table class="table-fins">
+            @for (int i = 0; i < table.Stats.Count; i++)
+            {
+                if (i == 0)
+                {
+                    <caption>
+                        @if (ViewBag.Page == "GDPCapitalPPS")
+                        {
+                            <div>@table.TableName</div>
+                        }
+                    
+                        <div id="finances-column-hider-container">
+                            <a id="col-show-all-fictive" class="f-blue visibility-hidden" href="#">
+                                @Resources.UI_Fins_All
+                            </a>
+                            @for (int j = 0; j < table.Stats[i].HicpValues.Count; j++)
+                            {
+                                if (j < table.Stats[i].HicpValues.Count - 5)
+                                {
+                                    <a class="col-show-hide-link cols-hidden f-grey" title="@Resources.UI_JS_Add" href="#" data-col-id="@j">
+                                        @table.Stats[i].HicpValues[j].TimePeriod
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="col-show-hide-link cols-visible f-blue" title="@Resources.UI_Remove" href="#" data-col-id="@j">
+                                        @table.Stats[i].HicpValues[j].TimePeriod
+                                    </a>
+                                }
+                            }
+                            <a id="col-show-all" class="f-blue" href="#">
+                                @Resources.UI_Fins_All
+                            </a>
+                        </div>
+                    </caption>
+
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+
+                            @for (int j = 0; j < table.Stats[i].HicpValues.Count; j++)
+                            {
+                                <th data-col-id="@j" style="@(j < table.Stats[i].HicpValues.Count - 5 ? "display: none;" : String.Empty)">
+                                    @table.Stats[i].HicpValues[j].TimePeriod
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                }
+
+                <tr>
+                    <td>@table.Stats[i].Country</td>
+
+                    @for (int j = 0; j < table.Stats[i].HicpValues.Count; j++)
+                    {
+                        <td data-col-id="@j" style="@(j < table.Stats[i].HicpValues.Count - 5 ? "display: none;" : String.Empty)">
+                            @Html.Raw(table.Stats[i].HicpValues[j].TableValue)
+                        </td>
+                    }
+                </tr>
+            }
+            @{ int colspan = table.Stats[0].HicpValues.Count + 1; }
+            <tfoot>
+               @* <tr>
+        <td colspan="@colspan" class="footnote" align="left">
+            <hr style="margin-top: 10;" align="left" width="100" size="1" noshade="">База данни на Евростат
+        </td>
+    </tr>
+    <tr><td colspan="@colspan" class="footnote" align="left"><a href="http://epp.eurostat.ec.europa.eu/tgm/table.do?tab=table&amp;init=1&amp;plugin=1&amp;language=en&amp;pcode=teicp000" title="teicp000" target="_balank">1.7. Общ ХИПЦ</a></td></tr>*@
+                <tr><td colspan="@colspan" class="footnote" align="left">@Resources.UI_fins_eurostat_notavailable</td></tr>
+                <tr><td colspan="@colspan" class="footnote" align="left">@Resources.UI_fins_eurostat_provisional</td></tr>
+                <tr><td colspan="@colspan" class="footnote" align="left">@Resources.UI_fins_eurostat_estimated</td></tr>
+                <tr><td colspan="@colspan" class="footnote" align="left">@Resources.UI_fins_eurostat_revised</td></tr>
+                <tr><td colspan="@colspan" class="footnote" align="left">@Resources.UI_fins_eurostat_differs</td></tr>
+                <tr>
+                    <td colspan="@colspan" class="footnote" align="left">
+                        @Resources.UI_Fins_LastExtraction - @Model.LastExtraction.ToString("dd.MM.yyyy")<br>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+                    }
+                }

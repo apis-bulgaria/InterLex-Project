@@ -1,0 +1,946 @@
+﻿@model EuroCases.App.ViewModels.Vat32006L0112
+@using Interlex.BusinessLayer.Models;
+@using Interlex.App.Resources;
+@using Interlex.BusinessLayer
+
+@* HACK: Fix all hacks for TFEU *@
+@* TODO: Rename all vat* to byArticles* *@
+
+@{
+    ViewBag.Title = "- " + Common.StripHTML(Model.Document.HtmlModel.Title.Value.ToString());
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section JavaScript
+{
+    @Scripts.Render("~/bundles/doc")
+}
+
+@section CSS
+{
+    @Styles.Render("~/Content/doc")
+}
+
+@if (ViewBag.DocError != null && ViewBag.DocError != "")
+{
+    <span class="f-blue text-center" style="margin-left: 40%;">@ViewBag.DocError</span>
+}
+else
+{
+    @Html.Partial("_DocTopBar", this.Model.Document)
+    <span class="chevron-doc-navigation-closed">
+        <span class="span-doc-navigation-closed">@Resources.UI_Navigation</span>
+    </span>
+    <div id="doc-view-top-holder" class="filters-container">
+        <div id="doc-view-top-holder-inner" style="width: 92%">
+            <div class="b-medium b-blue f-white" style="padding-left: 18px; font-weight: bold !important;">
+                @Resources.UI_Navigation
+                @* <span class="chevron-doc-navigation right" title="@Resources.Hint_NavigationHide"></span>*@
+                <span class="fa fa-arrow-circle-o-left right chevron-doc-navigation" title="@Resources.Hint_NavigationHide"></span>
+            </div>
+            <div id="doc-navigation-container">
+                <h3 class="doc-nav-category-title">
+                    @Resources.UI_Contents<span class="right chevron-doc-navigation-category f-blue relative f-0-7 margin-left-15">&#x25BC;</span>
+                </h3>
+                @*<div class="b-medium b-white f-blue f-bold" style="padding-left:12px;padding-bottom:3px; height: auto; padding-top: 3px; border: 1px solid #e0e0e0; border-left: 2px solid #148dd4">Lada</div>*@
+                <div style="padding-top: 0;">
+                    @*<div id="@string.Format("folder%_tree", hf.Id.ToString())"></div>*@
+                    <div id="doc-articles" style="padding-top: 0;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid main-content @Model.Document.HtmlModel.PublisherId">
+        <div id="doc-view-container" @if (!String.IsNullOrEmpty(ViewBag.IsForExport)) { @: style="width: 100%;margin-left: 0"
+                                                                                                                                                                                                                                                     } } data-langid="@Model.Document.LangId" data-docnumber="@Model.Document.DocNumber">
+
+            @if (this.Model.Document.HtmlModel.Title != null)
+            {
+                <div class="expanding-section docmenu-item" id="vat-doc-title">
+                    <div id="titleSec" class="semantic-section txt-align-center titleSec">
+                        @* V.O Related to bug: 2796 *@
+                        @{
+                            foreach (var titlePart in this.Model.Document.HtmlModel.Title.Value.Split(new String[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                <div>
+                                    <strong>@Html.Raw(titlePart)</strong>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                            }
+
+            <div id="path-to-document-part">
+                <ul class="eucs-breadcrumbs"></ul>
+            </div>
+
+            @if (this.Model.Document.HtmlModel.SubTitle != null && this.Model.Document.HtmlModel.SubTitle.Content != null && this.Model.Document.HtmlModel.SubTitle.Content.Any())
+            {
+                <div class="subTitleSec">
+                    @{
+                        foreach (var subTitlePart in this.Model.Document.HtmlModel.SubTitle.Content)
+                        {
+                            @Html.Raw(subTitlePart);
+                    }
+                    }
+                </div>
+                        }
+
+            <div id="article-text-holder">
+                <div class="expanding-section docmenu-item">
+                    <div class="semantic-header" onclick="showContent($('#articleChevr'),
+                                    '#articleSec',
+                                    'fa fa-compress',
+                                    'fa fa-expand',
+                                    'article')">
+                        <span id="articleSecHeader" class="docmenu-item-text" style="white-space: nowrap !important; overflow: hidden !important;  text-overflow: ellipsis; max-width: 90%; display:inline-block;"></span>
+                        <div class="right">
+                            <i id="articleChevr" class="fa fa-compress"></i>
+                        </div>
+                    </div>
+                    <div id="articleSec">
+                        <div class="semantic-section">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="vat-loading-bar" class="loading-bar">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-spinner"></i>
+                <div id="vat-loading-text" class="loading-text"></div>
+            </div>
+            <div id="article-links-holder"></div>
+        </div>
+        <div class="mobile-filters-show-button" data-page="act">
+            <span class="fa fa-tasks">
+            </span>
+        </div>
+
+        <script type="text/javascript">
+            showContent = function (obj, selector, visibleClass, hiddenClass, cookieKey) {
+                var el = $(selector);
+                if (el.css('display') === 'none') {
+                    el.slideDown(0);
+                    $(obj).removeClass(hiddenClass);
+                    $(obj).addClass(visibleClass);
+
+                    setCookie('section-opened-' + cookieKey, '1', 365);
+
+                    console.log(getCookie('section-opened-' + cookieKey));
+                }
+                else {
+                    el.slideUp(0);
+                    $(obj).removeClass(visibleClass);
+                    $(obj).addClass(hiddenClass);
+
+                    setCookie('section-opened-' + cookieKey, '0', 365);
+
+                    console.log(getCookie('section-opened-' + cookieKey));
+                }
+            }
+
+            showTabContent = function (obj, ev, selector, tabContentsClass, tabBtnsClass) {
+                var el = $(selector);
+                ev.stopPropagation();
+
+                var sibls = $(tabContentsClass);
+                for (var i = 0; i < sibls.length; i++) {
+                    $(sibls[i]).slideUp(0);
+                }
+
+                var chil = $(obj).parent().children(tabBtnsClass);
+                var btns = chil;//$(tabBtnsClass);
+                for (var i = 0; i < btns.length; i++) {
+                    $(btns[i]).removeClass('selected');
+                }
+
+                if (el.css('display') === 'none') {
+                    el.slideDown(0);
+                    el.css('display', 'block');
+                    //obj.className = 'chevron-blue2-down';
+                }
+                else {
+                    el.slideUp(0);
+                    el.css('display', 'none');
+                    //obj.className = 'chevron-blue2-right';
+                }
+
+                $(obj).addClass('selected');
+            }
+
+            $().ready(function () {
+                $('#top-bar-references-container').hide();
+                $('#top-bar-favourite-container').hide();
+                $('#top-bar-export-container').hide();
+                $.each($('#top-bar-doc-languages-container').find('a'), function () {
+                    var href = $(this).attr('href');
+                    var docLangId = href.split('/').reverse()[0];
+                    // HACK: Fix all hacks for TFEU
+                    var firstLinkPart = '/Doc/' + ('@(Model.Document.DocNumber)' === '32006L0112'? '32006L0112' : 'TFEU');
+                    $(this).attr('href', firstLinkPart + '?id=' + docLangId);
+                });
+
+                // Fancytree navigation and article loading
+                (function () {
+                    function generateUrlHash(node) {
+                        var currentNode = node,
+                            hash = '#/';
+
+                        while(currentNode.parent) { // The topmost parent(the tree root) is not of interest;
+                            hash += currentNode.getIndex() + '/'; // article num first, title num last
+                            currentNode = currentNode.parent;
+                        }
+
+                        return hash;
+                    }
+
+                    function findNodeByDataEid(node, eid) {
+                        var currentNode = node,
+                            len;
+
+                        if(node.data.eid === eid) {
+                            return node;
+                        }
+
+                        if(!node.children || node.children.length === 0) {
+                            if(node.data.eid === eid) {
+                                return node;
+                            }
+                        } else {
+                            len = node.children.length;
+                            for(var i = 0; i < len; i++) {
+                                var node = findNodeByDataEid(currentNode.children[i], eid);
+                                if(node) {
+                                    return node;
+                                }
+                            }
+                        }
+                    }
+
+                    function expandToTopMostParent(node) {
+                        if (!node) {
+                            return;
+                        }
+
+                        node.setExpanded(true).done(function () {
+                            expandToTopMostParent(node.parent);
+                        });
+                    }
+
+                    function loadVatPar(eid) {
+                        var rootNode = $('#doc-articles').fancytree('getTree').rootNode,
+                            openInNewTab = !!@((Session["UserData"] as UserData).OpenDocumentsInNewTab ? 1 : 0),
+                            wantedNode = findNodeByDataEid(rootNode, eid);
+
+                        if(openInNewTab) {
+                            var hash = generateUrlHash(wantedNode),
+                                urlWithQueryString = window.location.href.split('#')[0];
+
+                            window.open(urlWithQueryString + hash, '_blank');
+                        } else {
+                            expandToTopMostParent(wantedNode);
+                            loadArticle(wantedNode);
+                        }
+                    }
+
+                    function loadNormalDocument(href, eid) {
+                        var openInNewTab = !!@((Session["UserData"] as UserData).OpenDocumentsInNewTab ? 1 : 0);
+                        window.open(href + '#' + eid, openInNewTab? '_blank' : '_self');
+                    }
+
+                @*function loadDocumentPar($self, openInNewTab) {
+                    openInNewTab = !!@((Session["UserData"] as UserData).OpenDocumentsInNewTab ? 1 : 0);
+
+                    window.open('/Doc/Act/Id/' + $self.attr('data-doc-lang-id') + '#' + $self.attr('data-eid'),
+                                openInNewTab? '_blank' : '_self');
+                }*@
+
+                $(document).on('click', '#breadcrumbs-container-qtip .title-container-qtip', function () {
+                    var $this = $(this);
+
+                    if(parseInt($this.attr('data-open-vat'), 10) === 1) {
+                        loadVatPar($this.attr('data-eid'))
+                    } else {
+                        loadNormalDocument('/Doc/Act/Id/' + $this.attr('data-doc-lang-id'), $this.attr('data-eid'));
+                    }
+                });
+                    function initHighlight() {
+                        @{
+                        var openedDocsList = Session["opened_docs-" + Session["SelectedProductId"]] as HashSet<int>;
+                        openedDocsList.Add(Model.Document.DocLangId);
+                        Session["opened_docs-" + Session["SelectedProductId"]] = openedDocsList;
+                        }
+
+                        var searchedText = '@Model.Document.SearchedText';
+                        searchedText = searchedText.replace(/&quot;/g, '');
+
+                        //highlight after text search
+                        $('#searchInDocumentInput').val('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.Document.SearchedText))');
+                        $('#searchInDocumentInput').data('exactmatch', '@Model.Document.ExactMatch');
+                        //populating input box and removing quotes if they are used
+                        currentMatch = 0;
+                        matches = $('.highlight');
+                        resultCount = matches.length;
+
+                        if (resultCount > 0) {
+                            for (var i = 0, len = matches.length; i < len; i++) {
+                                var currentMatch = $(matches[i]);
+                                var curEl = currentMatch;
+                                curEl.addClass('highlight-memoryze');
+
+                                //reaching basic parent section container
+                                while (true) {
+                                    curEl = curEl.parent();
+                                    if (curEl.hasClass('expanding-section')) {
+                                        break;
+                                    }
+                                }
+
+                                //expand section content if not expanded
+                                var sectionContent = curEl.children('div').first();
+                                if (sectionContent.css('display') === 'none') {
+                                    sectionContent.show();
+                                }
+                            }
+
+                            //showNextMatch(0);
+                            showFirstMatch();
+                            // $('#span-matches-count-out').text(Resources.storage['UI_JS_Match']);
+                            $('#span-matches-count').text(Resources.storage['UI_JS_Match'] + ': ' + 1 + '/' + $('.highlight-memoryze').length);
+                        }
+                        else if (searchedText !== "" && searchedText !== null && searchedText !== undefined) {
+                            console.log(searchedText);
+                            // $('#span-matches-count').addClass('f-orange');
+                            $('#span-matches-count').text(Resources.storage['UI_JS_NoMatchesFound']);
+                            $('#span-matches-count').addClass('f-red');
+                        }
+
+                        var timedFunc = function (elId) {
+                            var oldCol = $(elId).css('color');
+                            var fontWeight = $(elId).css('font-weight');
+                            $(elId).css('color', 'red');
+                            $(elId).css('font-weight', 'bold');
+                            var tf = setTimeout(function () {
+                                console.log('Color return!');
+                                $(elId).css('color', oldCol);
+                                $(elId).css('font-weight', fontWeight);
+                                clearTimeout(tf);
+                            }, 2000);
+                        }
+
+                        var footNotes = $('.d-footnote').click(
+                            function () {
+                                var refersto = $(this).attr('refersto');
+                                $(refersto).ScrollTo();
+                                timedFunc(refersto);
+                            }
+                        );
+                    }
+
+                    function parseUrlForArticle() {
+                        var articlePath = window.location.hash;
+                        articlePath = articlePath.split('/').reverse();
+                        if(articlePath) {
+                            return articlePath.filter(function (value) {
+                                return !isNaN(parseInt(value));
+                            });
+                        }
+                    }
+
+                    function setUrlHash(node) {
+                        var hash = generateUrlHash(node);
+                        window.location.hash = hash;
+                    }
+
+                    function getNodeChildrenIds(nodes, arr) {
+                        var nodesLen = nodes.length,
+                            childNodes,
+                            childNodeslen,
+                            i,
+                            j;
+
+                        if(!nodes) {
+                            return;
+                        }
+
+                        for(j = 0; j < nodesLen; j++) {
+                            childNodes = nodes[j].children;
+
+                            if(childNodes) {
+                                childNodeslen = childNodes.length;
+                                for(i = 0; i < childNodeslen; i++) {
+                                    if(!childNodes[i].children || childNodes[i].children.length == 0)
+                                        arr.push(childNodes[i].data.id);
+                                }
+
+                                getNodeChildrenIds(childNodes, arr);
+                            }
+                        }
+                    }
+
+                    // returns promise
+                    function getParText(node) {
+                        var root,
+                            docParId,
+                            isArticle,
+                            $articleContainer,
+                            $articleLinksHolder;
+
+                        if(!node || !node.data) {
+                            root = $('#doc-articles').fancytree('getTree').rootNode;
+                            node = root.children[0];
+                            while(node.children) {
+                                node = node.children[0];
+                            }
+                        }
+
+                        docParId = node.data.id;
+                        setUrlHash(node);
+
+                        $articleContainer = $('#article-text-holder');
+                        $articleLinksHolder = $('#article-links-holder');
+
+                        $articleContainer
+                            .hide()
+                            .find('.semantic-section')
+                            .html('');
+
+                        $articleLinksHolder
+                            .html('')
+                            .hide();
+
+                        isArticle = !(node.children && node.children.length > 0);
+                        return $.ajax({
+                            url: appRootFolder + '/Doc/ParTextByDocParId',
+                            type: 'POST',
+                            data: {
+                                docLangId: @Model.Document.DocLangId,
+                                langIdFromDoc: @Model.Document.LangId,
+                                docParId: docParId,
+                                searchText: '@Model.Document.SearchedText',
+                                isArticle: isArticle
+                            },
+                        });
+                    }
+
+                    // returns promise
+                    function getRefDocsListArticle(node, docLangId, docParId) {
+                        var docParIds = [];
+                        if(node.children && node.children.length > 0) {
+                            getNodeChildrenIds([node], docParIds);
+                        } else {
+                            docParIds.push(node.data.id);
+                        }
+
+                        return $.ajax({
+                            url: appRootFolder + '/Doc/GetNewRefDocsListArticle',
+                            type: 'POST',
+                            data: {
+                                docLangId: docLangId,
+                                docParIds: docParIds,
+                                langId:'@Model.Document.LangId'
+                            }
+                        });
+                    }
+
+                    function scrollToNode(node) {
+                        var activeNode = node.tree.activeNode,
+                            scrollContainer = $('#doc-articles').parent(),
+                            nodeSpan;
+
+                        setUrlHash(node);
+                        if(activeNode) {
+                            activeNode.setActive(false);
+                        }
+
+                        node.setActive(true);
+                        nodeSpan = $(node.span);
+                        scrollContainer.scrollTop(nodeSpan.offset().top - scrollContainer.offset().top + scrollContainer.scrollTop());
+                    }
+
+                    function setPathToDocumentParts(node) {
+                        var breadcrumbsData = [],
+                            curr = node,
+                            breadCrumbsUl,
+                            len,
+                            i;
+
+                        breadCrumbsUl = $('#path-to-document-part').find('.eucs-breadcrumbs');
+                        breadCrumbsUl.html('');
+                        while(curr && curr.key != 'root_1') {
+                            breadcrumbsData.push({
+                                title: curr.title,
+                                eid: curr.data.eid,
+                            });
+
+                            curr = curr.parent;
+                            if(curr.key == 'root_1') {
+                                break;
+                            }
+                        }
+
+                        breadcrumbsData.reverse();
+                        len = breadcrumbsData.length;
+                        for(i = 0; i < len; i++) {
+                            var $titleSpan = $('<span></span>'),
+                                $contentSpan = $('<span class="content"></span>');
+
+                            $contentSpan.html(breadcrumbsData[i].title);
+                            $contentSpan.html($contentSpan.text()); // :)
+                            $titleSpan.attr('title', $contentSpan.text());
+                            $titleSpan.append($contentSpan);
+                            $titleSpan.attr('data-eid', breadcrumbsData[i].eid);
+                            $titleSpan.click(function () {
+                                loadNormalDocument('/Doc/Act/Id/' + @Model.Document.DocLangId, $(this).attr('data-eid'));
+                            });
+
+                            breadCrumbsUl.append($('<li></li>').html($titleSpan));
+                        }
+                    }
+
+                    function loadArticle(node, isClick) {
+                        setPathToDocumentParts(node);
+                        currentArticleEid = node.data.eid;
+
+                        $('.container-fluid.main-content').attr('data-current-doc-par-id', node.data.id);
+                        $('#vat-loading-text').html('@Resources.UI_LoadingContent');
+                        $loadingBar = $('#vat-loading-bar').show();
+
+                        getParText(node).then(function (artContentObj) {
+                            var header,
+                                firstPar,
+                                pars,
+                                isArticle = !(node.children && node.children.length > 0),
+                                $articleContainer = $('#article-text-holder'),
+                                $articleLinksHolder = $('#article-links-holder'),
+                                $loadingBar = $('#vat-loading-bar'),
+                                articleContent = artContentObj.articleContent,
+                                docParId = node.data.id;
+
+                            if(parseInt($('.container-fluid.main-content').attr('data-current-doc-par-id')) !== docParId) {
+                                return;
+                            }
+
+                            header = $($(articleContent)
+                                .find('.d-inconclusive.d-inline.d-num'))
+                                .html();
+
+                            pars = $(articleContent).find('.d-inconclusive.d-inline.d-p');
+                            for (var i = 0; i < pars.length; i++) {
+                                var content = $(pars[i]).html().trim();
+                                if (content && content != '') {
+                                    firstPar = content;
+                                    break;
+                                }
+                            }
+
+                            $articleContainer
+                                .find('.semantic-section')
+                                .html(articleContent);
+
+                            $articleContainer.
+                                find('#articleSecHeader')
+                                .html(header + ' - ' + firstPar);
+
+
+                            if($('#articleSec').css('display') != 'none' && (getCookie('section-opened-article') === '0' || !getCookie('section-opened-article'))) {
+                                showContent($('#articleChevr'), '#articleSec', 'fa fa-compress', 'fa fa-expand', 'article');
+                            }                          
+                            
+                            (function () {
+                                var docParId = node.data.id;
+                                if(isArticle) {
+                                    $.ajax({
+                                        url: appRootFolder + '/Doc/ArticlesCorrelation',
+                                        type: 'POST',
+                                        data: {
+                                            docParId: docParId,
+                                            langId: @Model.Document.LangId,
+                                        },
+                                    }).then(function (articlesCorrelationObj) {
+                                        if(parseInt($('.container-fluid.main-content').attr('data-current-doc-par-id')) !== docParId) {
+                                            return;
+                                        }
+
+                                        $articleContainer.find('.semantic-section').append(articlesCorrelationObj.articlesCorrelation);
+                                        $('#vat-loading-text').html('@Resources.UI_LoadingLinks');
+                                        loadRefDocLinks({
+                                            $articleContainer: $articleContainer,
+                                            $articleLinksHolder: $articleLinksHolder,
+                                            $loadingBar: $loadingBar,
+                                            articleContent: artContentObj.articleContent,
+                                            node: node
+                                        });
+                                    });
+                                } else {
+                                    $('#vat-loading-text').html('@Resources.UI_LoadingLinks');
+                                    loadRefDocLinks({
+                                        $articleContainer: $articleContainer,
+                                        $articleLinksHolder: $articleLinksHolder,
+                                        $loadingBar: $loadingBar,
+                                        articleContent: artContentObj.articleContent,
+                                        node: node
+                                    });
+                                }
+                            })();
+                        });
+
+                        //data - required:
+                        // $articleContainer
+                        // $articleLinksHolder
+                        // $loadingBar
+                        // articleContent
+                        // node
+                        function loadRefDocLinks(data) {
+                            var docParId = node.data.id;
+                            getRefDocsListArticle(data.node, @Model.Document.DocLangId, data.node.data.id)
+                                .then(function (refDocsHtml) {
+                                    if (parseInt($('.container-fluid.main-content').attr('data-current-doc-par-id')) !== docParId) {
+                                        return;
+                                    }
+
+                                    data['refDocsHtml'] = refDocsHtml;
+                                    setupRefDocLinks(data);
+                                });    
+                        }
+
+                        //data - required:
+                        // $articleContainer
+                        // $articleLinksHolder
+                        // $loadingBar
+                        // refDocsHtml
+                        // articleContent
+                        // node
+                        function setupRefDocLinks(data) {
+                            var rootNode,
+                                articleContent = data.articleContent;
+
+                            data.$articleLinksHolder.append(data.refDocsHtml);
+                            data.$articleLinksHolder.find('.other-article-referenced-coloured-span').each(function (i, el) {
+                                var $holderSpan = $(el);
+                                if ($(el).next().hasClass('other-article-referenced-white')) {
+                                    $holderSpan.find('.coloured-comma').css('background-color', 'white');
+                                }
+                            });
+
+                            data.$loadingBar.hide();
+                            data.$articleContainer.show();
+                            data.$articleLinksHolder.show();
+
+                            setupRefDocs();
+
+                            if(getCookie('section-opened-fins') === '0') {
+                                showContent($('#finsChevr'), '#finsSec', 'fa fa-compress', 'fa fa-expand', 'fins');
+                            }
+
+                            if(getCookie('section-opened-fins-new') === '0') {
+                                showContent($('#finsChevr-new'), '#finsSec-new', 'fa fa-compress', 'fa fa-expand', 'fins-new');
+                            }
+
+                            showContent($('#finsChevr-old'), '#finsSec-old', 'fa fa-compress', 'fa fa-expand', 'fins-old');
+
+                            if(getCookie('section-opened-eu') === '0') {
+                                showContent($('#euChevr'), '#euSec', 'fa fa-compress', 'fa fa-expand', 'eu');
+                            }
+
+                            if(getCookie('section-opened-eu-new') === '0') {
+                                showContent($('#euChevr-new'), '#euSec-new', 'fa fa-compress', 'fa fa-expand', 'eu-new');
+                            }
+
+                            showContent($('#euChevr-old'), '#euSec-old', 'fa fa-compress', 'fa fa-expand', 'eu-old');
+                            rootNode = $('#doc-articles').fancytree('getTree').rootNode;
+
+                            $('.vat-old-ref-docs').click(function () {
+                                var $this = $(this),
+                                    docsType = $this.attr('data-docs-type'),
+                                    hasContent = !!parseInt($this.attr('data-has-content')),
+                                    docParIds = [];
+
+
+                                if(data.node.children && data.node.children.length > 0) {
+                                    getNodeChildrenIds([data.node], docParIds);
+                                } else {
+                                    docParIds.push(data.node.data.id);
+                                }
+
+                                if(!hasContent) {
+                                    $('#ref-docs-loading-bar-' + docsType).show();
+                                    var docsTypeAjax = docsType.charAt(0).toUpperCase() + docsType.slice(1); // first letter to upper
+                                    $.ajax({
+                                        url: appRootFolder + '/Doc/GetOld' + docsTypeAjax + 'RefDocsListArticle',
+                                        type: 'POST',
+                                        data: {
+                                            docLangId: '@Model.Document.DocLangId',
+                                            docParIds: docParIds,
+                                            langId:'@Model.Document.LangId'
+                                        }
+                                    }).then(function (refDocsList) {
+                                        var withoutLineBrakes = refDocsList.replace(/(\r\n|\n|\r)/gm,"");
+                                        if(withoutLineBrakes && withoutLineBrakes.length > 0)  {
+                                            $this.parent().find('.content-container').html(refDocsList);
+                                            setupRefDocs('#' + docsType + 'Sec-old');
+                                        } else {
+                                            $this.parent().find('.content-container').html('@Resources.UI_JS_NoDocumentsFound');
+                                        }
+                                    });
+
+                                    $this.attr('data-has-content', 1);
+                                }
+                            });
+
+                            // parentSelector scope for jquery selector
+                            function setupRefDocs(parentSelector) {
+                                var arrowsSelector,
+                                    otherExpandingSecElements,
+                                    articlesSelector;
+
+                                if(parentSelector) {
+                                    otherExpandingSecElements = removeClassesBeforeUiBinding(parentSelector);
+                                    arrowsSelector = parentSelector + ' .toggle-doc-info-arrow';
+                                    articlesSelector = parentSelector + ' .article-link';
+                                } else {
+                                    arrowsSelector = '.toggle-doc-info-arrow';
+                                    articlesSelector = '.article-link';
+                                }
+
+                                globalDocumentUIBinding();
+                                prepairInlineLinks(@((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+                                addHints('doc-info-link', @Session["LanguageId"].ToString(), @((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+                                initHighlight();
+
+                                if(parentSelector) {
+                                    addClassesAfterUiBinding(otherExpandingSecElements);
+                                }
+
+                                $(articlesSelector).each(function () {
+                                    $(this).click(function (e) {
+                                        var $this = $(this);                                           
+
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        if($this.attr('data-article-order') == 1) {
+                                            loadVatPar($this.attr('data-eid'));
+                                        } else {
+                                            loadNormalDocument($this.attr('href'), $this.attr('data-eid'));                                    
+                                        }
+                                    });
+                                });
+
+                                $(arrowsSelector).each(function () {
+                                    var $toggleArrow = $(this),
+                                        $toggleText = $toggleArrow.siblings('.toggle-doc-info-text'),
+                                        $toggleDocInfo = $toggleArrow.parent(),
+                                        $keywordsTab = $toggleDocInfo.siblings('.doc-keywords'),
+                                        $summariesTab = $toggleDocInfo.siblings('.doc-summary'),
+                                        $urlContainer = $toggleDocInfo.siblings('.original-document-url-conatainer');
+
+                                    $toggleDocInfo.click(function () {
+                                        var $docItemContainer = $toggleDocInfo.parent();
+
+                                        if($keywordsTab.css('display') === 'none'
+                                            || $summariesTab.css('display') === 'none'
+                                            || $urlContainer.css('display') === 'none') {
+                                            showDocInfo();
+                                            $toggleText.html('@Resources.UI_ShowLess_Lower');
+                                            $toggleArrow.html('&#x25B2;'); // up arrow
+                                        } else {
+                                            hideDocInfo();
+                                            $toggleText.html('@Resources.UI_ShowMore_Lower');
+                                            $toggleArrow.html('&#x25BC;'); // down arrow
+                                            $docItemContainer
+                                                .siblings('.doc-left-border')
+                                                .css('height', $docItemContainer.css('height'));
+                                        }
+                                    });
+
+                                    hideDocInfo();
+
+                                    function showDocInfo() {
+                                        $keywordsTab.show();
+                                        $summariesTab.show();
+                                        $urlContainer.show();
+                                    }
+
+                                    function hideDocInfo() {
+                                        $keywordsTab.hide();
+                                        $summariesTab.hide();
+                                        $urlContainer.hide();
+                                    }
+                                });
+
+                                // returns elements for rebinding
+                                function removeClassesBeforeUiBinding(currentExpandingSecSelector) {
+                                    var $expandingSections = $('.vat-expanding-outer-content').not(currentExpandingSecSelector),
+                                        $keywords,
+                                        $keywordsShowMore,
+                                        $summariesShowMore,
+                                        $summaries;
+
+                                    $keywords = $expandingSections
+                                        .find('.doc-keywords')
+                                        .removeClass('doc-keywords');
+
+                                    $summaries = $expandingSections
+                                        .find('.doc-summary')
+                                        .removeClass('doc-summary');
+
+                                    $keywordsShowMore = $expandingSections
+                                        .find('.show-more-keywords-div')
+                                        .removeClass('show-more-keywords-div');
+
+                                    $summariesShowMore = $expandingSections
+                                        .find('.show-more-summary-div')
+                                        .removeClass('show-more-summary-div');
+
+                                    return {
+                                        $keywords: $keywords,
+                                        $summaries: $summaries,
+                                        $keywordsShowMore: $keywordsShowMore,
+                                        $summariesShowMore: $summariesShowMore
+                                    };
+                                }
+
+                                function addClassesAfterUiBinding(removedElements) {
+                                    removedElements.$keywords.addClass('doc-keywords');
+                                    removedElements.$summaries.addClass('doc-summary');
+
+                                    removedElements.$keywordsShowMore
+                                        .addClass('show-more-keywords-div')
+                                        .find('.show-more-keywords')
+                                        .click(showMoreKeywords);
+
+                                    removedElements.$summariesShowMore
+                                        .addClass('show-more-summary-div')
+                                        .find('.show-more-summary')
+                                        .click(showMoreSummary);
+                                }
+                            }
+
+                            if(!isClick) {
+                                setTimeout(function () {
+                                    scrollToNode(node);
+                                }, 10);
+                            }
+                        }
+                    }
+
+                    var currentArticleEid,
+                        nodeToOpen;
+                    $('#doc-articles').fancytree({
+                        extensions: ["persist"],
+                        persist: {
+                            //cookieId: "homeTree",
+                            //expandLazy: true, // true: recursively expand and load lazy nodes
+                            overrideSource: true,  // true: cookie takes precedence over `source` data attributes.
+                            store: "cookie",
+                            types: "active expanded focus selected"
+                        },
+                        source: {
+                            type: 'GET',
+                            dataType: 'json',
+                            children: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DocContents)),
+                            cache: true
+                        },
+                        init: function (event, data) {
+                            var openedArticlePath = parseUrlForArticle(),
+                                currentNode = data.tree.rootNode;
+
+                            if(openedArticlePath && openedArticlePath.length > 0) {
+                                var len = openedArticlePath.length;
+                                for(var i = 0; i < len; i++) {
+                                    currentNode = currentNode.children[openedArticlePath[i]];
+                                    if(i === len - 1) {
+                                        loadArticle(currentNode);
+                                    } else {
+                                        currentNode.setExpanded(true);
+                                    }
+                                }
+                            } else {
+                                var firstNode = data.tree.rootNode.children[0];
+                                while(firstNode.children) {
+                                    firstNode = firstNode.children[0];
+                                }
+
+                                loadArticle(firstNode);
+                            }
+                        },
+                        checkbox: false,
+                        clickFolderMode: 2,
+                        click: function (event, data) {
+                            var articleEid,
+                                element = data.node.span;
+                            if(data.targetType === "expander") {
+                                return;
+                            }
+
+                            articleEid = data.node.data.eid;
+                            if(currentArticleEid === articleEid) {
+                                return;
+                            }
+
+                            loadArticle(data.node, true);
+                        },
+                        renderNode: function (event, data) {
+                            var fancytreeTitleSpan = $(data.node.span).find('.fancytree-title');
+                            fancytreeTitleSpan.html(fancytreeTitleSpan.text());
+                            fancytreeTitleSpan.attr('title', fancytreeTitleSpan.text());
+                        },
+                        icons: false
+                    });
+                })();
+
+                // Navigation
+                if(getDeviceWidth() > 480) {
+                    $('#doc-view-top-holder').show();
+                }
+
+                $("#doc-navigation-container").accordion({
+                    collapsible: true,
+                    heightStyle: "fill",
+                    icons: false,
+                    animate: false
+                });
+
+                $("h3").focus(function () {
+                    $(this).removeClass("ui-state-focus");
+                });
+
+                $('.chevron-doc-navigation').click(function (e) {
+                    e.preventDefault();
+
+                    $("#doc-view-top-holder").animate({ width: 'toggle' }, 350);
+
+                    setTimeout(function () {
+                        $('#doc-view-container').animate({ 'width': '99%', 'margin-left': '1%' }, 350);
+                        $('#doc-view-top-bar').animate({ 'width': '100%', 'margin-left': '0' }, 350);
+                        $('.chevron-doc-navigation-closed').show();
+
+                        //$('#doc-view-container').css('width', '100%');
+                        // $('#doc-view-container').css('margin-left', '0');
+                        // $('#doc-view-top-bar').css('width', '100%');
+                        // $('#doc-view-top-bar').css('margin-left', '0');
+                    }, 1);
+                });
+
+                $('.chevron-doc-navigation-closed').click(function (e) {
+                    e.preventDefault();
+
+                    $("#doc-view-top-holder").animate({ width: 'toggle' }, 350);
+
+                    setTimeout(function () {
+                        $('#doc-view-container').animate({ 'width': '80%', 'margin-left': '20%' }, 350);
+                        $('#doc-view-top-bar').animate({ 'width': '80%', 'margin-left': '20%' }, 350);
+                        $('#chevron-doc-navigation-closed').hide();
+
+                        //$('#doc-view-container').css('width', '100%');
+                        // $('#doc-view-container').css('margin-left', '0');
+                        // $('#doc-view-top-bar').css('width', '100%');
+                        // $('#doc-view-top-bar').css('margin-left', '0');
+                    }, 1);
+                });
+
+                $('body').backToTop();
+            });
+        </script>
+    </div>
+    }

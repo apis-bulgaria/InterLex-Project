@@ -1,0 +1,108 @@
+﻿@model Interlex.BusinessLayer.Models.SearchResult
+
+@using Interlex.BusinessLayer.Models
+@using Interlex.BusinessLayer.Enums
+@using Interlex.App.Resources
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script>
+    console.log('SearchText: @Model.SearchBoxFilters.SearchText');
+    console.log('SearchTextMultiLingual: @Model.SearchBoxFilters.SearchTextMultiLingual');
+</script>
+
+<div class="container-fluid main-content">
+    <div>
+        <div class="filters-container">
+          @*  @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+            {
+                <div class="banner-container banner-container-box">
+                    <script type="text/javascript">
+                        AdPlatformZone = {
+                            id: "2f73fc142",
+                            format: "300x250"
+                        };
+                    </script>
+                    <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>
+                    <!-- /Httpool Block -->
+                </div>
+            }*@
+         
+            <div id="pAvaiableFilters">
+                <div class="b-medium b-orange f-white f-bold" style="border-radius: 3px;">@Resources.UI_AvailableFilters@*<span class="chevron-white-down-on-orange right"></span>*@</div>
+                <div id="pAvaiableFiltersBody">
+                    <h4 id="no-filters" style="display: none;">No avaiable filters</h4>
+                    <h4 id="filters-loading">@(Resources.UI_LoadingFilters)...</h4>
+                    @{
+                        foreach (int filterType in Model.GetAvailableFilterTypes())
+                        {
+                            <div id="filterTitle@(filterType)" class="filter" style="display:none"><b class="filter-title">@Res.GetResource(SearchResult.FilterTitleResKeys[filterType])</b></div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+       @* @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+        {
+            <div class="banner-container banner-container-box banner-container-mobile">
+                <!-- Httpool Block -->
+                <script type="text/javascript">
+                    AdPlatformZone = {
+                        id: "2f73fc142",
+                        format: "300x250"
+                    };
+                </script>
+                <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>
+                <!-- /Httpool Block -->
+            </div>
+        }*@
+
+
+        <div class="col-md-9" id="doc-list-container">
+            <div id="dSearchResult">
+                @Html.Partial("_SearchList", Model)
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mobile-filters-show-button" data-page="home"><span class="fa fa-filter"></span></div>
+<div class="mobile-filters-show-button" data-page="search-result"><span class="fa fa-filter"></span></div>
+<script type="text/javascript">
+    var searchType = '@Model.SearchType';
+    var searchId = @ViewContext.RouteData.Values["searchId"];
+
+    $().ready(function () {
+        var chosenFiltersPanel = $('#pChosenFilters');
+        if (chosenFiltersPanel.find('a').length <= 1) {
+            chosenFiltersPanel.hide();
+        }
+        else {
+            chosenFiltersPanel.show();
+        }
+
+        $('.filterItem').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: appRootFolder + '/Search/RemoveFilterClassifier/Search-'+searchId+'/'+$(this).parents('.type-id-holder').data('typeid')+'/'+$(this).data('id')
+            }).done(function() {
+                window.location.reload();
+            });
+        });
+
+        $('#btnRemoveAllFilters').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: appRootFolder + '/Search/RemoveAllFilterClassifiers/',
+                data: { searchId: searchId }
+            }).done(function() {
+                window.location.reload();
+            });
+        })
+
+        //$(window).trigger('resize');
+    });
+</script>

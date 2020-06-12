@@ -1,0 +1,29 @@
+﻿@model Language
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Models
+
+@* Model is current lang *@
+
+<div id="doc-view-top-bar" class="relative">
+    <div id="top-bar-doc-languages-container" class="left top-bar-section border-left-white-thin text-center border-right-white-thin padding-right-15" style="margin-left: 15px; padding-left: 15px;">
+        <div style="margin-top: -11px; height: 50%;">
+            <span class="f-black f-0-5 f-bold">@Resources.UI_Languages</span>
+        </div>
+
+        <div style="height: 50%; margin-top: 6px;">
+            @{
+                foreach (var lang in InterfaceLanguages.Languages.Where(l => l.IsInterfaceLang == true && l.Code != "es-ES").OrderBy(l => l.Id).ToList())
+                {
+                    if (lang.ShortCode != Model.ShortCode)
+                    {
+                        <a href="MachineTranslation?language=@lang.ShortCode" class="margin-top-10 f-0-7 f-bold" title="@lang.Text">@lang.ShortCode.ToUpper()</a>
+                    }
+                    else
+                    {
+                        <span class="margin-top-10 f-0-7 f-bold doc-top-bar-current-lang" title="@lang.Text">@lang.ShortCode.ToUpper()</span> @*doc-top-bar-current-lang*@
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>

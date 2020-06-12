@@ -1,0 +1,32 @@
+﻿@using Interlex.App.Helpers
+@using Interlex.App.Resources
+
+<fieldset class="width-80">
+    <legend>@Resources.UI_DocumentReference</legend>
+    <div class="left width-50" id="cases-national-parties"></div> @* Parties *@
+    <div class="left width-50" id="cases-national-natid-ecli"></div> @* NatId / ECLI *@
+    <div class="clearfix"></div>
+    <div class="left width-50" id="cases-national-jurisdictions"></div> @* Jurisdictions *@
+    <div class="left width-sb-dates-container sb-dates-container" id="cases-national-dates"></div> @* Dates *@
+    <div class="clearfix"></div>
+</fieldset>
+<div class="clearfix"></div>
+
+<fieldset class="width-80">
+    <legend>@Resources.UI_ReferedEUActProvision</legend>
+    <div class="left width-50" id="cases-national-enactment"></div> @* Enactment / Legal Act *@
+    <div class="left width-50" id="cases-national-provision"></div> @* Provision *@
+    <div class="clearfix"></div>
+</fieldset>
+<div class="clearfix"></div>
+
+<fieldset class="width-80">
+    <legend>@Resources.UI_Classifiers</legend>
+    <div class="left width-50" id="cases-national-eurovoc"></div> @* Eurovoc *@
+    <div class="left width-50" id="cases-national-subject-matter"></div> @* Subject matter *@
+    <div class="clearfix"></div>
+    <div class="left width-50" id="cases-national-directory-caselaw"></div> @* Directory caselaw *@
+    <div class="left width-50" id="cases-national-eurocases-classifier"></div> @* Eurocases classifier *@
+    <div class="clearfix"></div>
+    <div id="cases-national-directory-caselaw-show-full"></div> @* Checkbox for full directory caselaw (before/after Lisbon Treaty) *@
+</fieldset>

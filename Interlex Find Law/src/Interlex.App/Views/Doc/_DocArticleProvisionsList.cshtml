@@ -1,0 +1,61 @@
+﻿@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources
+
+@model List<PalProvision>
+
+<div class="width-100 article-provisions-list-header"><span class="fa fa-chain"></span> @Resources.UI_IncomingLinks</div>
+<div class="article-provisions-list-content">
+    @foreach (var palProvision in Model)
+    {
+        <a href="javascript:void(0);" target="_blank" class="inline-link-tipped" data-todocparid="@palProvision.ToDocParId" data-title="@palProvision.Title" data-linkids="@String.Join("-", palProvision.LinkIds)">@palProvision.Title</a>
+    
+    }
+</div>
+
+<script>
+    $('.inline-link-tipped').unbind();
+
+    $('.inline-link-tipped').click(function (e) {
+        e.preventDefault();
+        var linkIds = $(this).attr('data-linkids'),
+            subTitle = $(this).attr('data-title'),
+            toDocParId = $(this).attr('data-todocparid');
+        //console.log(subTitle);
+        //throw 'TEST exception';
+
+        var win = window.open('', '_blank');
+        window.oldOpen = window.open;
+        window.open = function (url) { // reassignment function
+            win.location = url;
+            window.open = oldOpen;
+            win.focus();
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: appRootFolder + '/Search/DocInLinks',
+            data: {
+                toDocLangId: '@ViewBag.ToDocLangId',
+                //toParId: '@ViewBag.ToParId',
+                toParId: toDocParId,
+                linkIdsString: linkIds,
+                subTitle: subTitle,
+                toParOriginal: '@ViewBag.EID',
+                toDocNumber: '@ViewBag.ToDocNumber'
+            },
+            success: function (data, textStatus) {
+                @if ((Session["UserData"] as Interlex.BusinessLayer.Models.UserData).OpenDocumentsInNewTab == true)
+                {
+                    @:window.open(data.url);
+                                }
+                else
+                {
+                    @:window.location.href = data.url;
+                    @:win.close();
+                                }
+            }
+        });
+
+        return false;
+    });
+</script>

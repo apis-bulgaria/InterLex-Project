@@ -1,0 +1,10 @@
+﻿@model Interlex.BusinessLayer.Models.PalSearch
+
+<ul id="list-enactment-choose" style="padding-left: 0;" class="f-0-8; text-center">
+    @{
+        foreach (var d in Model.Documents)
+        {
+            <li><a href="javascript:void(true)" onclick="palDoc(this,@d.DocLangId,'@d.DocNumber',@Model.IsIndexSearch.ToString().ToLower(), @int.Parse(Session["SelectedProductId"].ToString()))"><b>@d.DocNumber</b>:&nbsp;@d.Title</a></li>
+        }
+    }
+</ul>

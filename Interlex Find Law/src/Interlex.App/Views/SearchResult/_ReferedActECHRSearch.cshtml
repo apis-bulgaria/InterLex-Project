@@ -1,0 +1,13 @@
+﻿@model Interlex.BusinessLayer.Models.ReferedActECHRSearchModel
+
+<ul id="list-refered-act-choose" style="padding-left: 0;" class="f-0-8;">
+    @{
+        foreach (var d in Model.Documents)
+        {
+            <li>
+                <a href="javascript:void(true)" onclick="referedActECHRChoose(this,@d.DocLangId)" class="f-blue text-decoration-none refered-act-choose-item"><b>@d.DocNumber</b>:&nbsp;@d.Title</a>
+                <hr class="hr-grey" />
+            </li>
+        }
+    }
+</ul>

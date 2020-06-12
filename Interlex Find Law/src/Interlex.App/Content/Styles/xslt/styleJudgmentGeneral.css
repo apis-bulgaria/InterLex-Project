@@ -1,0 +1,64 @@
+﻿
+/* Start Style Classificator */
+
+div.classification-tree-group-div, div.classification-normal-group-div {
+    margin-left: 60px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+h4.classification-source-heading {
+    margin: 10px;
+}
+
+span.classification-normal-span {
+    display: block;
+}
+
+.classification-item {
+    margin: 5px;
+}
+
+/* End Style Classificator */
+
+.rubric-header {
+}
+
+/* Start Style OtherAnalysis */
+
+div.summary-div, div.legaldoctrine-div  {
+    font-style: italic;
+    margin: 5px;
+}
+
+div.source-group-bottom-part-div {
+    text-align:right;
+    font-size:20px;
+    font-weight:300;
+    margin-right:5px;
+}
+
+div.source-group-div {
+    border:1px solid black;
+    border-radius:2px;
+    margin:10px;
+}
+
+
+button.language-tab-button {
+    margin:5px;
+}
+
+/* End Style OtherAnalysis */
+
+
+/* Start Style Keywords */
+
+p.keyword {
+    margin:3px;
+}
+
+/* End Style Keyword */
+
+
+

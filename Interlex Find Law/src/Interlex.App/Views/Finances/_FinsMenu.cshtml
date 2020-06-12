@@ -1,0 +1,137 @@
+﻿@using Interlex.App.Resources
+@using Interlex.App.Helpers;
+
+<div class="width-20 left fixed" style="margin-left: 5px" id="menu-container">
+    <div class="filters-container" style="width: 100% !important;">
+        <div class="b-medium b-white f-blue f-bold fins-menu-block" data-toggle="currencies-menu-all">
+            <a class="a-blue-bold text-decoration-none" style="text-decoration: none;">@Resources.UI_FinancesExchangeRates</a>
+            <a class="fa @(Request.GetCookieValue("fins_menu_tab_toggled") == "currencies-menu-all" ? "fa-chevron-down" : "fa-chevron-right") right" style="margin-right: 5px;"></a>
+        </div>
+        <div id="currencies-menu-all" style="@(Request.GetCookieValue("fins_menu_tab_toggled") == "currencies-menu-all" ? "" : "display: none")" class="finances-menu-list-container">
+            <ul class="f-0-8 padding-left-15 finances-menu-list" id="currencies-sub-menu">
+                <li>
+                  <a data-stat="FinancesCurrency" href="/Finances/FinancesCurrencyECB" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_Fins_Ecb@*<img src="~/Content/Images/ecb_logo.png" title="@Resources.UI_Fins_Ecb" style="margin-bottom: -2px;" />*@</a>
+                </li>
+                <li>
+                    <a data-stat="FinancesCurrency" href="/Finances/FinancesCurrency" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_Fins_NationalBanks</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="b-medium b-white f-blue f-bold fins-menu-block" data-toggle="libor-menu-all">
+            <a class="a-blue-bold text-decoration-none" style="text-decoration: none;">@Resources.UI_FinancesLiborAll</a>
+            <a class="fa @(Request.GetCookieValue("fins_menu_tab_toggled") == "libor-menu-all" ? "fa-chevron-down" : "fa-chevron-right") right" style="margin-right: 5px;"></a>
+        </div>
+        <div id="libor-menu-all" style="@(Request.GetCookieValue("fins_menu_tab_toggled") == "libor-menu-all" ? "" : "display: none")" class="finances-menu-list-container">
+            <ul class="f-0-8 padding-left-15 finances-menu-list" id="finances-sub-menu">
+                <li>
+                    <a data-stat="Libor" href="/Finances/Libor" class="text-decoration-none f-grey f-bold a-libor a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinancesLibor</a>
+                  
+                </li>
+                <li>
+                    <a data-stat="Libor" href="/Finances/Euribor" class="text-decoration-none f-grey f-bold a-libor a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinancesEuribor</a>
+                </li>
+                @* <li>
+                        <a href="#" class="text-decoration-none f-grey f-bold a-libor" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinancesOLP</a>
+                    </li>*@
+            </ul>
+        </div>
+        <div class="b-medium b-white f-blue f-bold fins-menu-block"><a data-stat="StockIndex" href="/Finances/StockIndex" class="a-blue-bold f-blue-important text-decoration-none link-to-page" style="text-decoration: none;">@Resources.UI_FinancesStockIndices</a></div>
+        <div class="b-medium b-white f-blue f-bold fins-menu-block" data-toggle="stats-menu-all">
+            <a class="a-blue-bold text-decoration-none" style="text-decoration: none;">@Resources.UI_EuroStat</a>
+            <a class="fa @(Request.GetCookieValue("fins_menu_tab_toggled") == "stats-menu-all" ? "fa-chevron-down" : "fa-chevron-right") right" style="margin-right: 5px;"></a>
+        </div>
+        <div id="stats-menu-all" style="@(Request.GetCookieValue("fins_menu_tab_toggled") == "stats-menu-all" ? "" : "display: none")" class="finances-menu-list-container">
+            <ul class="f-0-8 padding-left-15" id="stats-sub-menu">
+                <li>
+                    <a data-stat="GDPCapitalPPS" href="/Finances/GDPCapitalPPS" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinsStatGDPCapitaPPS</a>
+                </li>
+                <li>
+                    <a data-stat="GDPCGT" href="/Finances/GDPCGT" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinsStatGDPCGT</a>
+                </li>
+                <li>
+                    <a data-stat="GrossDomesticProduct" href="/Finances/GrossDomesticProduct" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinsStatGrossDomesticProduct</a>
+                </li>
+                <li>
+                    <a data-stat="GovernmentGrossDebt" href="/Finances/GovernmentGrossDebt" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinsStatGovernmentGrossDebt</a>
+                </li>
+                <li>
+                    <a data-stat="HarmonizedIndicesConsumerPrices" href="/Finances/HarmonizedIndicesConsumerPrices" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinsStatHarmonizedIndicesConsumerPrices</a>
+                </li>
+                <li>
+                    <a data-stat="HarmonizedUnemploymentRateBySex" href="/Finances/HarmonizedUnemploymentRateBySex" class="text-decoration-none f-grey f-bold a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinsStatHarmonizedUnemploymentRateBySex</a>
+                </li>
+            </ul>
+        </div>
+
+        @*<div class="b-medium b-white f-blue f-bold fins-menu-block"><a  href="/Finances/Pragove" class="a-blue-bold f-blue-important text-decoration-none link-to-page" style="text-decoration: none;">@Resources.UI_FinancesPragove</a></div>*@
+        <div class="b-medium b-white f-blue f-bold fins-menu-block" data-toggle="tax-information-menu-all">
+            <a class="a-blue-bold text-decoration-none" style="text-decoration: none;">@Resources.UI_Finances_TaxInformation</a>
+            <a class="fa @(Request.GetCookieValue("fins_menu_tab_toggled") == "tax-information-menu-all" ? "fa-chevron-down" : "fa-chevron-right") right" style="margin-right: 5px;"></a>
+        </div>
+        <div id="tax-information-menu-all" style="@(Request.GetCookieValue("fins_menu_tab_toggled") == "tax-information-menu-all" ? "" : "display: none")" class="finances-menu-list-container">
+            <ul class="f-0-8 padding-left-15" id="finances-sub-menu">
+                <li>
+                    <a data-stat="TaxInformation" data-type="1" href="/Finances/TaxInformation/1" class="text-decoration-none f-grey f-bold a-libor a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FInances_TaxInformation_ReducedVatRates</a>
+                </li>
+                <li>
+                    <a data-stat="TaxInformation" data-type="2" href="/Finances/TaxInformation/2" class="text-decoration-none f-grey f-bold a-libor a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_Finances_TaxInformation_ZeroRate</a>
+                </li>
+                <li>
+                    <a data-stat="TaxInformation"  data-type="3" href="/Finances/TaxInformation/3" class="text-decoration-none f-grey f-bold a-libor a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_Finances_TaxInformation_EvolutionVat</a>
+                </li>
+                <li>
+                    <a data-stat="TaxInformation" data-type="4" href="/Finances/TaxInformation/4" class="text-decoration-none f-grey f-bold a-libor a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_Finances_TaxInformation_ParkingRate</a>
+                </li>
+                <li>
+                    <a data-stat="Pragove" href="/Finances/Pragove" class="text-decoration-none f-grey f-bold a-libor a-finances-stat" style="text-decoration: none;"><span class="fa fa-chevron-circle-right"></span> @Resources.UI_FinancesPragove</a>
+                </li>
+            </ul>
+        </div>
+    
+    </div>
+</div>
+
+<script>
+    $().ready(function () {
+        $('#menu-container .fins-menu-block').each(function () {
+            var $this = $(this),
+                toggleId = $this.attr('data-toggle');
+
+            $this.css('cursor', 'pointer');
+            if (toggleId) {
+                var $ul = $('#' + toggleId),
+                    $chevronEl = $this.find('.fa'),
+                    $allLists = $('.finances-menu-list-container'),
+                    $allIcons = $('.fins-menu-block .fa');
+
+                $this.click(function () {
+                    if ($ul.is(":visible")) {
+                        // Self collapse state
+                        $chevronEl.addClass('fa-chevron-right');
+                        $chevronEl.removeClass('fa-chevron-down');
+                        deleteCookie('fins_menu_tab_toggled');
+                        $ul.hide(200);
+                    } else {
+                        // Self expanding and defensive collapsing everything else
+                        $allIcons.addClass('fa-chevron-right');
+                        $allIcons.removeClass('fa-chevron-down');
+
+                        $chevronEl.addClass('fa-chevron-down');
+                        $chevronEl.removeClass('fa-chevron-right');
+
+                        setCookie('fins_menu_tab_toggled', toggleId, 30);
+
+                        $allLists.hide(200);
+                        $ul.show(200);
+                    }
+                });
+            } else {
+                var link = $this.find('.link-to-page').attr('href'); // or some id for every link
+                $this.click(function () {
+                    window.location = link;
+                });
+            }
+        });
+    });
+</script>

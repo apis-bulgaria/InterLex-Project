@@ -1,0 +1,358 @@
+﻿@model Interlex.BusinessLayer.Models.SearchResult
+
+@using Interlex.BusinessLayer.Models
+@using Interlex.BusinessLayer.Enums
+@using Interlex.App.Resources
+
+@if (@Model.ResultCount > 0)
+{
+
+    <div id="dSearchResultContainer" style="height: 100%; padding-top: 10px;">
+        <div class="f-blue-important" id="doc-source-span">
+
+            @{
+
+                if (Model.SearchSource == SearchSources.Classifier)
+                {
+                    @:&nbsp;@Resources.UI_SearchFor <b>"@(Model.SearchBoxFilters.ClassifierFilterTitle)"</b>
+                }
+                if (Model.SearchSource == SearchSources.InLinks)
+                {
+                    @:&nbsp;@Resources.UI_SearchFor: <b>@Html.Raw(Model.SearchBoxFilters.DocInLinks.Title)</b>
+                }
+                if (Model.SearchSource == SearchSources.HomePage)
+                {
+                    <ul class="eucs-breadcrumbs">
+                        <li>
+                            <a href="@Url.Action("Index", "Home")" title="@Resources.UI_Home"><span class="fa fa-home f-white"></span></a>
+                        </li>
+                        @{ var homeSearchTitlesSplitted = @Model.SearchBoxFilters.HomeSearch.Titles[Convert.ToInt32(Session["LanguageId"])].Split('/'); }
+                        @foreach (var title in homeSearchTitlesSplitted)
+                        {
+                            <li>
+                                <span title="@title">
+                                    <span class="content">
+                                        @title
+                                    </span>
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+        </div>
+
+
+        @if (Model.ClassifierFilters.Count != 0)
+        {
+            <div id="pChosenFilters">
+               
+                <div id="pChosenFiltersBody">
+                    <div class="filter-ul-holder selected-filters">
+                        <span>@Resources.UI_SelectedFilters :@*<span class="chevron-white-down-on-orange right"></span>*@</span>
+                      
+                        @foreach (var filterType in Model.ClassifierFilters)
+                        {
+                            foreach (ClassifierItem item in filterType.Value)
+                            {
+                                <span class="type-id-holder" data-typeid="@filterType.Key">
+
+                                    <span class="filter-selected-pill">@item.Name <a class="filterItem" href="javascript: void(true)" data-id="@item.Id"><span class="fa fa-times selected-filter-remove"></span></a></span>
+                                </span>
+                            }
+                        }
+                        <span class="remove-all-filters-li">
+                            <a href="javascript: void(true)" class="text-warning" id="btnRemoveAllFilters"><span class="fa fa-times-circle"></span> @Resources.UI_RemoveAllFilters</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="banner-container banner-container-wide">
+            <!-- Httpool Block -->
+            @*<script type="text/javascript">
+                AdPlatformZone = {
+                    id: "2f73fc142",
+                    format: "728x90"
+                };
+            </script>
+            <script type="text/javascript" src="http://relay-bg.ads.httpool.com"></script>*@
+            <!-- /Httpool Block -->
+        </div>
+
+        <div id="allDocsMenu">
+
+            <div class="clearfix"></div>
+            <div class="left search-span-information">
+
+                <div id="doc-results-count">
+
+                    @Model.ResultCount&nbsp;@Resources.UI_DocumentFound
+                    @if (Model.SearchType != SearchTypes.Simple)
+                    {
+                        <button class="btn btn-blue f-white btn-medium-wide btn-edit-search" style="display: inline; width: auto !important;" id="btn-edit-search">@Resources.UI_EditSearch</button>
+                    }
+
+                </div>
+            </div>
+
+            @*@Html.Partial("~/Views/Shared/_DocListButtons.cshtml")*@
+
+            @*  <div class="left">@{Html.RenderPartial("_DocListButtons");}</div>*@
+        </div>
+
+        <div id="doc-filter-pagination-container">
+            <div id="top_paging" class="paging left"></div>
+            @{
+                List<SelectListItem> lSortBy = null;
+
+                if (Model.HasRelSort == true)
+                {
+                    lSortBy = new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = Resources.UI_Alpaberical, Value = "title", Selected=(Model.SortBy == "title")},
+                        new SelectListItem { Text = Resources.UI_Relevance, Value = "rel", Selected=(Model.SortBy == "rel")},
+                        new SelectListItem { Text = Resources.UI_DocumentDate, Value = "date", Selected=(Model.SortBy == "date")}
+                    };
+                }
+                else
+                {
+                    lSortBy = new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = Resources.UI_Alpaberical, Value = "title", Selected=(Model.SortBy == "title")},
+                        new SelectListItem { Text = Resources.UI_DocumentDate, Value = "date", Selected=(Model.SortBy == "date")}
+                    };
+
+                }
+
+                @*<div id="top-go-to-page" class="left go-to-page">
+                    <span class="f-blue f-0-7">@Resources.UI_Page_Lower: </span>
+                    <input type="number" min="1" max="@Model.PagesCount" class="input-borderless f-blue" id="go-to-page-input-top" />
+                    <a href="#" onclick="goToExactPage('top', @Model.PagesCount)" class="btn go-exact-page" id="go-exact-page-link-top"><img src="~/Content/Images/go-exact-page.png" alt="Go To Page" /></a>
+                </div>*@
+
+                <div class="right choose-sort-field" id="@(Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() != "sysdemo" ? "holder-search-result-right" : String.Empty)">
+                    @*@if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() != "sysdemo")
+                    {
+                        <label id="label-show-only-documents-with-links" for="cb-show-only-documents-with-links" class="unselectable left f-0-7 cursor-pointer" style="margin-right: 15px;">
+                            <input id="cb-show-only-documents-with-links" type="checkbox" class="cursor-pointer" @(!(Model.SearchBoxFilters.ShowFreeDocuments.HasValue && Model.SearchBoxFilters.ShowFreeDocuments.Value) ? "checked" : String.Empty) />
+                            <span class="cursor-pointer unselectable" style="display:inline-block; margin-top: -6px; vertical-align: middle; margin-left: -3px;">@Resources.UI_FreeDocsTrigger_Show</span>
+                        </label>
+                    }*@
+
+
+                    @Html.DropDownList("sort", lSortBy,
+                new
+                {
+                    @class = "left search-list-dropdown-filter"
+                })
+
+                    <a href="javascript:changeSortDir();" id="sort_dir" class="left" data-dir="@Model.SortDir">
+                        @if (Model.SortDir == "asc")
+                        {
+                            <span id="chevron-sort" class="chevron-sort-up"></span>
+                        }
+                        else
+                        {
+                            <span id="chevron-sort" class="chevron-sort-down"></span>
+                        }
+                    </a>
+
+
+                </div>
+
+
+            }
+            <div class="clearfix"></div>
+        </div>
+        <div id="doc_list" class="left" style="overflow-y: auto; overflow-x: hidden; min-height: 800px;">
+        </div>
+        <div class="clearfix">
+            <div>
+                &nbsp;
+            </div>
+            <hr class="hr-grey" style="margin-top: -22px;" />
+            <div id="bottom_paging" style="height: 25px; overflow-y: hidden;" class="paging left"></div>
+            @*<div id="bottom-go-to-page" class="left go-to-page">
+                <span class="f-blue f-0-7">@Resources.UI_Page_Lower: </span>
+                <input type="number" min="1" max="@Model.PagesCount" class="input-borderless f-blue" id="go-to-page-input-bottom" />
+                <a href="#" onclick="goToExactPage('bottom', @Model.PagesCount)" class="btn go-exact-page" id="go-exact-page-link-bottom"><img src="~/Content/Images/go-exact-page.png" alt="Go To Page" /></a>
+            </div>*@
+            <hr class="hr-grey margin-top-40" />
+        </div>
+    </div>
+}
+else
+{
+    <div id="dSearchResultContainer" style="height: 100%; padding-top: 10px;">
+        <div id="allDocsMenu">
+            <div class="left search-span-information">
+                <div class="f-blue-important" id="doc-source-span">
+                    @{
+                        if (Model.SearchSource == SearchSources.Classifier)
+                        {
+                            @:Result for "@(ClassificationService.ClassificatorService.Current.GetTreeByGuid(Model.SearchBoxFilters.ClassifierFilter.ToString()).LanguageVariantsWithHints[Session["LanguageId"].ToString()].Title)"
+                        }
+                        if (Model.SearchSource == SearchSources.InLinks)
+                        {
+                            @Model.SearchBoxFilters.DocInLinks.Title
+                        }
+                    }
+                </div>
+                <div id="doc-results-count" style="font-size: 1em;">
+                    @Resources.UI_JS_NoDocumentsFound
+                    @if (Model.SearchType != SearchTypes.Simple)
+                    {
+                        <button class="btn btn-blue f-white btn-large-wide btn-edit-search" style="display: inline;" id="btn-edit-search">@Resources.UI_EditSearch</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $('#btn-export').click(function(){
+        if ($('#btn-export-select').css('display') === 'none') {
+            $('#btn-export-select').show();
+        }
+        else {
+            $('#btn-export-select').hide();
+        }
+    });
+
+    $('#go-to-page-input-top').on('keyup', function(e) {
+        if (e.which == 13) {
+            $('#go-exact-page-link-top').trigger('click');
+        }
+    });
+
+    $('#go-to-page-input-bottom').on('keyup', function(e) {
+        if (e.which == 13) {
+            $('#go-exact-page-link-bottom').trigger('click');
+        }
+    });
+
+    $('.btn-edit-search').click(function() {
+        loadMySearch(-1, false, false, 'just_a_string', parseInt('@Model.SiteSearchId'));
+    });
+
+    var searchType = '@Model.SearchType';
+
+    $().ready(function () {
+
+
+        @if (Model.SearchType != SearchTypes.Simple)
+            {
+             @: $('#SearchText').val('');
+                    }
+
+        pagesCount = @Model.PagesCount;
+        @*paginationOptions.count = pagesCount;
+        paginationOptions.start = @Model.CurrentPage;*@
+
+        $('.search-list-dropdown-filter').selectmenu({
+            width: 122,
+            change: function(event, ui){
+                var selected = $(this).val();
+
+                if (selected === 'date') {
+                    $('#sort_dir').data('dir', 'desc');
+                    $('#chevron-sort').addClass('chevron-sort-down');
+                    $('#chevron-sort').removeClass('chevron-sort-up');
+                }
+
+                if (selected === 'title') {
+                    $('#sort_dir').data('dir', 'asc');
+                    $('#chevron-sort').addClass('chevron-sort-up');
+                    $('#chevron-sort').removeClass('chevron-sort-down');
+                }
+
+                if (selected === 'rel') {
+                    $('#sort_dir').data('dir', 'asc');
+                    $('#chevron-sort').addClass('chevron-sort-up');
+                    $('#chevron-sort').removeClass('chevron-sort-down');
+                }
+
+                goToPage(1);
+            },
+            select: function(event, ui){
+                $('#sort-button').removeClass('ui-state-focus');
+            },
+            close: function(event, ui){
+                $('#sort-button').removeClass('ui-state-focus');
+            }
+        });
+
+        if(pagesCount == 0) {
+            $("#top_paging, #bottom_paging").hide();
+            $('#filters-loading').hide();
+            // $('#btnAdvSearch').trigger('click');
+        }
+        else
+        {
+            if (pagesCount === 1) {
+                $('#top_paging, #bottom_paging').hide();//, #top-go-to-page, #bottom-go-to-page
+            }
+            else {
+                if (pagesCount > 1 && pagesCount < 12) {
+                    //$('.jPag-control-back').hide();
+                    //$('.jPag-control-front').hide();
+                    //$('#top-go-to-page, #bottom-go-to-page').hide();
+                }
+
+                //$("#top_paging, #bottom_paging").paginate(paginationOptions);
+
+                $('#top_paging, #bottom_paging').pagination({
+                    currentPage: @Model.CurrentPage,
+                    items: @Model.ResultCount,
+                    itemsOnPage: @Model.PageSize,
+                    cssStyle: 'light-theme',
+                    prevText: '<',
+                    nextText: '>',
+                    selectOnClick: true,
+                    onPageClick: function (pageNumber) {
+                        goToPage(pageNumber);
+                    }
+                });
+            }
+        }
+
+        if (pagesCount > 0) {
+            $('#sort').change(function(){
+                goToPage(1);
+            });
+
+            ReSearch(@Model.CurrentPage, true);
+        }
+
+        $('.eucs-breadcrumbs li a').hover(function () {
+            $(this).find('.fa').addClass('f-blue');
+            $(this).find('.fa').removeClass('f-white');
+        }, function () {
+            $(this).find('.fa').addClass('f-white');
+            $(this).find('.fa').removeClass('f-blue');
+        });
+
+        //$('#cb-show-only-documents-with-links').on('click', function () {
+        //    $.ajax({
+        //        method: 'POST',
+        //        url: '/Search/ChangeLinkedDocumentsOnlyState',
+        //        data: {
+        //            searchId: searchId,
+        //            state: $(this).prop('checked')
+        //        }
+        //    }).done(function (response) {
+        //        if (response.result === 'Redirect') {
+        //            window.location.href = response.url;
+        //        }
+        //        else {
+        //            console.log(response);
+        //        }
+        //    });
+        //});
+
+    });
+
+
+</script>

@@ -1,0 +1,7 @@
+﻿@model Interlex.BusinessLayer.Enums.FunctionalityTypes
+
+@using Interlex.App.Resources
+
+<div class="margin-top-15 f-0-9">
+    @Html.Raw(Resources.UI_FeatureDocDesc1.Replace("{langId}", Session["LanguageId"].ToString()))
+</div>

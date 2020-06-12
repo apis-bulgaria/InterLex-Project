@@ -1,0 +1,604 @@
+﻿@*
+    Generator: MvcHelper
+    GeneratePrettyNames : true
+*@
+
+@using Interlex.BusinessLayer.Models
+@using AkomaNtosoXml.Xslt.Core.Classes.Providers
+@using AkomaNtosoXml.Xslt.Core.Classes.Model
+@using System.Configuration
+@using System.Text
+@using Interlex.App.Helpers
+@using Interlex.BusinessLayer.Models
+@using Interlex.BusinessLayer.Helpers
+@using System.Web.Mvc.Html
+
+@helper DisplayTitle(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    if (document.HtmlModel.Title != null)
+    {
+        <div class="docmenu-item">
+            <div id="titleSec" class="semantic-section txt-align-center titleSec">
+                @* V.O Related to bug: 2796 *@
+                @{
+                    foreach (var titlePart in document.HtmlModel.Title.Value.Split(new String[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <div>
+                            <strong>@Html.Raw(titlePart)</strong>
+                        </div>
+                    }
+                }
+            </div>
+        </div>  }
+}
+
+@helper DisplayActInForceInfo(Document document, System.Web.Mvc.HtmlHelper<Document> Html, int interfaceLanguageId)
+{
+    if (document.HtmlModel.ActInForceInfo.State != ActInForceState.None)
+    {
+        <div id="actInForceInfo" class="ignore-semantic-header">
+            <span class="fa fa-circle @document.HtmlModel.ActInForceInfo.State"></span>
+            <span>
+                @Html.Raw(document.HtmlModel.ActInForceInfo.StateText)
+                @if (String.IsNullOrEmpty(document.HtmlModel.ActInForceInfo.AdditionalText) == false)
+                {
+                    @Html.Raw(", " + document.HtmlModel.ActInForceInfo.AdditionalText)
+                }
+                @if (String.IsNullOrEmpty(document.HtmlModel.ActInForceInfo.RelatedCelex) == false && document.HtmlModel.ActInForceInfo.State == ActInForceState.Repealed)
+                {
+                    var celex = document.HtmlModel.ActInForceInfo.RelatedCelex;
+                    var href = String.Concat(WebAppHelper.AppRootFolder + "/Doc/Act/LastCons/", interfaceLanguageId, "/", celex);
+
+                    @Html.Raw("; " + document.HtmlModel.Rubric["XsltRepealedBy"] + " ")
+                    @Html.Raw(String.Concat("<a class='d-apis d-inline d-ref type-celex inline_link' href='", href, "'", " target='_blank' data-dn='", celex, "'", ">", celex, "</a>"))
+                }
+            </span>
+        </div>
+    }
+}
+
+@helper DispalyEuFinsSubTitle(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    if (document.HtmlModel.EuFinsSubTitle != null && document.HtmlModel.EuFinsSubTitle.Content != null && document.HtmlModel.EuFinsSubTitle.Content.Any())
+    {
+        <div class="euFinssubTitleSec">
+            @{
+                foreach (var subTitlePart in document.HtmlModel.SubTitle.Content)
+                {
+                    @Html.Raw(subTitlePart)
+                }
+            }
+        </div>}
+}
+            }
+
+@helper DisplaySubTitle(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    if (document.HtmlModel.SubTitle != null && document.HtmlModel.SubTitle.Content != null && document.HtmlModel.SubTitle.Content.Any())
+    {
+        <div class="subTitleSec">
+            @{
+                foreach (var subTitlePart in document.HtmlModel.SubTitle.Content)
+                {
+                    @Html.Raw(subTitlePart)
+                }
+            }
+        </div>}
+}
+
+@helper DisplayMetaSourceIfAny(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    // databse name which name starts with 'webtestest'
+    bool isTestEnviournment = ConfigurationManager.ConnectionStrings["ConnPG"].DatabaseName().StartsWith("webtest", StringComparison.OrdinalIgnoreCase);
+    // if the host is test website
+    isTestEnviournment |= HttpContext.Current.Request.Url.AbsoluteUri.StartsWith("http://web.eucases.eu/", StringComparison.OrdinalIgnoreCase);
+    // if the host is local
+    isTestEnviournment |= HttpContext.Current.Request.Url.AbsoluteUri.StartsWith("http://localhost", StringComparison.OrdinalIgnoreCase);
+
+    // if the database is test, show the metadata source [spacial case for eurlex documents]
+    // only the eurlex documents contains such property
+    if (isTestEnviournment)
+    {
+        @ActHelper.DisplayMetaType(document)
+    }
+}
+
+
+@helper DisplayMetaType(Document document)
+{
+    if (!String.IsNullOrEmpty(document.HtmlModel.MetaType))
+    {
+        <div style="margin:10px">
+            <div><span>MetadataSource:</span><span id="metaType"> @document.HtmlModel.MetaType</span></div>
+        </div>
+    }
+}
+
+@helper DisplayPublicationReferences(Document document, System.Web.Mvc.HtmlHelper<Document> Html, int interfaceLanguage)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.PublicationReferences,
+    Html: Html,
+    chevronId: "publChevr",
+    fragmentId: "publSec",
+    cookieKeyPart: "publRef",
+    interfaceLanguage: interfaceLanguage,
+    displayActInForceInfo: true);
+}
+
+@helper DisplayLanguageFormats(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.LanguageFormats,
+    Html: Html,
+    chevronId: "langformChevr",
+    fragmentId: "langformSec",
+    cookieKeyPart: "langForm");
+}
+
+@helper DisplayKeywordsAndConcepts(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.KeywordsAndConcepts,
+    Html: Html,
+    chevronId: "keywordAndConceptChevr",
+    fragmentId: "keywordAndConceptSec",
+    cookieKeyPart: "keywordsAndConcept");
+}
+
+@helper DisplayEconomicalBackgroud(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.EconomicalBackgroud,
+    Html: Html,
+    chevronId: "economicalBackgroundChevr",
+    fragmentId: "economicalBackgroundSec",
+    cookieKeyPart: "economicalBackgroud");
+}
+
+@helper DisplayApplication(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.Application,
+    Html: Html,
+    chevronId: "applicationChevr",
+    fragmentId: "applicationSec",
+    cookieKeyPart: "application");
+}
+
+@helper DisplayKeywords(Document document, System.Web.Mvc.HtmlHelper<Document> Html, String interfaceLanguageShortCode)
+{
+    @ActHelper.DisplaySourceExpandingRubric(
+    fragment: document.HtmlModel.Keywords,
+    Html: Html,
+    chevronId: "keywordsChevr",
+    fragmentId: "keywordsSec",
+    cookieKeyPart: "keywords",
+    sourceBasePart: "keyword",
+    interfaceLanguageShortCode: interfaceLanguageShortCode,
+    isFins: document.IsEuFins());
+}
+
+
+@helper DisplayDecisionOfTheCourt(Document document, System.Web.Mvc.HtmlHelper<Document> Html, String interfaceLanguageShortCode)
+{
+    @ActHelper.DisplaySourceExpandingRubric(
+    fragment: document.HtmlModel.DecisionOfTheCourt,
+    Html: Html,
+    chevronId: "decisionOfTheCourtChevr",
+    fragmentId: "decisionOfTheCourtSec",
+    cookieKeyPart: "decisionOfTheCourt",
+    sourceBasePart: "decisionOfTheCourt",
+    interfaceLanguageShortCode: interfaceLanguageShortCode,
+    isFins: document.IsEuFins());
+}
+
+
+@helper DisplayAbstract(Document document, System.Web.Mvc.HtmlHelper<Document> Html, String interfaceLanguageShortCode)
+{
+    @ActHelper.DisplaySourceExpandingRubric(
+    fragment: document.HtmlModel.Abstract,
+    Html: Html,
+    chevronId: "abstractChevr",
+    fragmentId: "abstractSec",
+    cookieKeyPart: "abstract",
+    sourceBasePart: "abstract",
+    interfaceLanguageShortCode: interfaceLanguageShortCode,
+    isFins: document.IsEuFins());
+}
+
+@helper DisplaySummaries(Document document, System.Web.Mvc.HtmlHelper<Document> Html, String interfaceLanguageShortCode)
+{
+    @ActHelper.DisplaySourceExpandingRubric(
+    fragment: document.HtmlModel.Summaries,
+    Html: Html,
+    chevronId: "summaryChevr",
+    fragmentId: "summarySec",
+    cookieKeyPart: "summary",
+    sourceBasePart: "summary",
+    interfaceLanguageShortCode: interfaceLanguageShortCode,
+    isFins: document.IsEuFins());
+}
+
+@helper DisplayCuriaSummaries(Document document, System.Web.Mvc.HtmlHelper<Document> Html, String interfaceLanguageShortCode)
+{
+    @ActHelper.DisplaySourceExpandingRubric(
+    fragment: document.HtmlModel.CuriaSummary,
+    Html: Html,
+    chevronId: "summaryCuriaChevr",
+    fragmentId: "summaryCuriaSec",
+    cookieKeyPart: "summaryCuria",
+    sourceBasePart: "summaryCuria",
+    interfaceLanguageShortCode: interfaceLanguageShortCode,
+    isFins: document.IsEuFins());
+}
+
+@helper DisplayIconomicalScope(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayNonExpandingRubric(
+    fragment: document.HtmlModel.EconomicalRange,
+    Html: Html,
+    fragmentId: "economical-range");
+}
+
+@helper DisplayPressRelease(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.PressRelease,
+    Html: Html,
+    chevronId: "pressrelChevr",
+    fragmentId: "pressrelSec",
+    cookieKeyPart: "pressRel");
+}
+
+@helper DisplayInterlexBiblNotice(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.BibliographicNoticeInterlex,
+    Html: Html,
+    chevronId: "interlexBiblioChevr",
+    fragmentId: "interlexBiblioSec",
+    cookieKeyPart: "interlexBiblio");
+}
+
+@helper DisplayBiblNotice(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.BibliographicNotice,
+    Html: Html,
+    chevronId: "biblioChevr",
+    fragmentId: "biblioSec",
+    cookieKeyPart: "biblio");
+}
+
+@helper DisplayDocumentContent(Document document, System.Web.Mvc.HtmlHelper<Document> Html)
+{
+    @ActHelper.DisplayBasicExpandingRubric(
+    document: document,
+    fragmentFunc: doc => doc.HtmlModel.Body,
+    Html: Html,
+    chevronId: "textChevr",
+    fragmentId: "textSec",
+    cookieKeyPart: "text");
+}
+
+
+@helper DisplayNonExpandingRubric(Fragment<FragmentParts> fragment,
+                            System.Web.Mvc.HtmlHelper<Document> Html,
+                            String fragmentId)
+{
+    if (fragment != null && fragment.Content != null && fragment.Content.Any())
+    {
+        String sectionHeaderId = fragmentId + "Header";
+
+        <div class="@fragmentId-container docmenu-item">
+            <div class="semantic-header">
+                <span id="@sectionHeaderId" class="docmenu-item-text">@fragment.Rubric</span>
+            </div>
+            <div id="@fragmentId">
+                <div class="semantic-section">
+
+                    @foreach (var item in fragment.Content)
+                    {
+                        @Html.Raw(item);
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@helper DisplayBasicExpandingRubric(Document document,
+                            Func<Document, Fragment<FragmentParts>> fragmentFunc,
+                            System.Web.Mvc.HtmlHelper<Document> Html,
+                            String chevronId,
+                            String fragmentId,
+                            String cookieKeyPart,
+                            bool displayActInForceInfo = false,
+                            int interfaceLanguage = 4)
+{
+
+    var fragment = fragmentFunc(document);
+    var isFragmentWithContent = fragment != null && fragment.Content != null && fragment.Content.Any();
+    isFragmentWithContent = isFragmentWithContent || (fragment != null && document.HtmlModel.ActInForceInfo.State != ActInForceState.None);
+    var asHeaderFragment = fragment as HeadedFragment<FragmentParts>;
+    var isHeaderFragmentWithHeader = asHeaderFragment != null && asHeaderFragment.Header != null && asHeaderFragment.Header.Any();
+    if (isFragmentWithContent || isHeaderFragmentWithHeader)
+    {
+        String extendedDisplay = fragment.Content.Count > 0
+                                    ? "display:block;"
+                                    : "display:none;";
+
+        String chevronDirRef = "down";
+        String collapse_expand_icon = "fa fa-compress";
+        String cookieKey = "section-opened-" + cookieKeyPart;
+        HttpCookie expandedCookie = Request.Cookies[cookieKey];
+
+        bool isExpanded = extendedDisplay == "display:block;";
+        isExpanded &= expandedCookie != null;
+        isExpanded = isExpanded && expandedCookie.Value == "1";
+        if (!isExpanded && expandedCookie != null)
+        {
+            extendedDisplay = "display:none;";
+            chevronDirRef = "right";
+            collapse_expand_icon = "fa fa-expand";
+        }
+
+        String chevronSelector = "#" + chevronId;
+        String fragmentSelector = "#" + fragmentId;
+        String sectionHeaderId = fragmentId + "Header";
+        String sectionHeaderTextId = fragmentId + "HeaderTxt";
+        List<String> additionalHeaders = new List<string>();
+
+        if (fragment is HeadedFragment<FragmentParts>)
+        {
+            additionalHeaders.AddRange(((HeadedFragment<FragmentParts>)fragment).Header);
+        }
+        <div class="expanding-section docmenu-item">
+            <div class="semantic-header"
+                 onclick="showContent($('@chevronSelector'),
+                                        '@fragmentSelector',
+                                        'fa fa-compress',
+                                        'fa fa-expand',
+                                        '@cookieKeyPart')">
+                <span id="@sectionHeaderId" class="docmenu-item-text">@fragment.Rubric</span>
+                @*<span id="@chevronId" class="chevron-blue2-@chevronDirRef right"></span>*@
+                <div class="right"><i id="@chevronId" class="@collapse_expand_icon"></i></div>
+            </div>
+
+            @if (displayActInForceInfo)
+            {
+                @DisplayActInForceInfo(document, Html, interfaceLanguage)
+            }
+
+            @foreach (var additionalHeader in additionalHeaders)
+            {
+                <div id="@sectionHeaderTextId" class="ignore-semantic-header"> @additionalHeader </div>
+            }
+
+            <div id="@fragmentId" style="@extendedDisplay">
+                @if (fragment.Content != null && fragment.Content.Any())
+                {
+                    <div class="semantic-section">
+                        @foreach (var item in fragment.Content)
+                        {
+                            @Html.Raw(item)
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+
+@helper DisplaySourceExpandingRubric(Fragment<List<SourceFragment>> fragment,
+                            System.Web.Mvc.HtmlHelper<Document> Html,
+                            String chevronId,
+                            String fragmentId,
+                            String cookieKeyPart,
+                            String sourceBasePart,
+                            String interfaceLanguageShortCode,
+                            bool isFins)
+{
+    if (fragment != null)
+    {
+        var sources = fragment.Content;
+        var source = sources.First().Source;
+        String extendedDisplay = "display:block;";
+        String chevronDirRef = "down";
+        String collapse_expand_icon = "fa fa-compress";
+
+        String cookieKey = "section-opened-" + cookieKeyPart;
+        HttpCookie expandedCookie = Request.Cookies[cookieKey];
+
+        bool isExpanded = extendedDisplay == "display:block;";
+        isExpanded &= expandedCookie != null;
+        isExpanded = isExpanded && expandedCookie.Value == "1";
+        if (!isExpanded && expandedCookie != null)
+        {
+            extendedDisplay = "display:none;";
+            chevronDirRef = "right";
+            collapse_expand_icon = "fa fa-expand";
+        }
+
+        String chevronSelector = "#" + chevronId;
+        String fragmentSelector = "#" + fragmentId;
+        String sectionHeaderId = fragmentId + "Header";
+        String langClass = "lang-" + sourceBasePart;
+        String langBtnClass = "btn-lang-" + sourceBasePart;
+
+        Func<String, String> sourceTabIdProvider =
+            currentSource => sourceBasePart + currentSource;
+
+        Func<String, String> selectedSourceClassProvider =
+            currentSource => currentSource == source ? " selected" : String.Empty;
+
+        <div class="expanding-section docmenu-item">
+            <div class="semantic-header"
+                 onclick="showContent($('@chevronSelector'),
+                                        '@fragmentSelector',
+                                        'fa fa-compress',
+                                        'fa fa-expand',
+                                        '@cookieKeyPart')">
+                <span id="@sectionHeaderId" class="docmenu-item-text">@fragment.Rubric</span>
+
+                <div class="right">
+                    @if (!isFins)
+                    {
+                        <div class="heading langs-tab blockList left">
+                            @foreach (var currentSource in sources)
+                            {
+                                <span onclick="showTabContent(this,
+                                 event,
+                                 '@Html.Raw(sourceTabIdProvider(currentSource.GetHtmlFriendlySource()).ToCssId())',
+                                 '@langClass.ToCssClass()',
+                                 '@langBtnClass.ToCssClass()')"
+                                      class="btn btn-lang @langBtnClass @selectedSourceClassProvider(currentSource.GetHtmlFriendlySource())"
+                                      hint="@currentSource.Hint">@Html.Raw(currentSource.Source)</span>
+                                }
+                        </div>
+                    }
+                    <i id="@chevronId" class="@collapse_expand_icon margin-left-10"></i>
+                </div>
+
+            </div>
+            <div id="@fragmentId" style="@extendedDisplay">
+                @if (fragment.Content != null && fragment.Content.Any())
+                {
+                    String priorityLang = String.Empty;
+
+                    Func<String, String, String> languageTabIdProvider =
+                        (src, lang) => sourceBasePart + "Lang" + src + lang;
+
+                    Func<String, String> languageTabClassProvider =
+                        src => "lang-" + sourceBasePart + "Lang" + src;
+
+                    Func<String, String> selectedLanugageClassProvider = lang => lang.Equals(priorityLang, StringComparison.OrdinalIgnoreCase) ? " selected" : String.Empty;
+
+                    String langaugeTabBtnClass = "btn-lang-" + sourceBasePart + "Lang";
+
+                    <div class="semantic-section">
+                        @foreach (var currentSource in fragment.Content)
+                        {
+                            String tabDisplayStyle = "display:none;";
+                            if (source == currentSource.Source)
+                            {
+                                tabDisplayStyle = "dispaly:block";
+                            }
+
+                            LanguageFragment langFrangment = currentSource.LanguageGroups.FirstWithLangauge(interfaceLanguageShortCode);
+                            if (langFrangment != null)
+                            {
+                                priorityLang = langFrangment.Language.Value;
+                            }
+
+                            if (String.IsNullOrEmpty(priorityLang))
+                            {
+                                priorityLang = currentSource.LanguageGroups.First().Language.Value;
+                            }
+
+                            <div id="@sourceTabIdProvider(currentSource.GetHtmlFriendlySource())" class="@langClass" style="@tabDisplayStyle">
+                                @{
+                                    bool toHideLanuage = currentSource.LanguageGroups.Count == 1;
+                                    toHideLanuage &= currentSource.LanguageGroups.FirstWithLangauge(interfaceLanguageShortCode) != null;
+
+                                    if (!toHideLanuage)
+                                    {
+                                        <div class="langs-tab">
+                                            @foreach (var currentLanguage in currentSource.LanguageGroups.OrderBy(x => x.Language.Value))
+                                            {
+                                                <span onclick="showTabContent(this,
+                                                    event,
+                                                    '@Html.Raw(languageTabIdProvider(currentSource.GetHtmlFriendlySource(), currentLanguage.Language.Value).ToCssId())',
+                                                    '@Html.Raw(languageTabClassProvider(currentSource.GetHtmlFriendlySource()).ToCssClass())',
+                                                    '@langaugeTabBtnClass.ToCssClass()')"
+                                                      class="@langaugeTabBtnClass @selectedLanugageClassProvider(currentLanguage.Language.Value)">@currentLanguage.Language.Value</span>
+                                                }
+                                        </div>
+                                    }
+
+                                    var languageGroups = currentSource.LanguageGroups.OrderBy(x => x.Language.Value).ToList();
+                                    var lastLanguageGroup = languageGroups.LastOrDefault();
+                                    var hasAnyShown = false;
+                                    foreach (var currentLanguage in languageGroups)
+                                    {
+                                        tabDisplayStyle = "display:none";
+                                        if (currentLanguage.Language.Value.Equals(priorityLang, StringComparison.OrdinalIgnoreCase) || (hasAnyShown == false && Object.ReferenceEquals(currentLanguage, lastLanguageGroup) ))
+                                        {
+                                            tabDisplayStyle = "display:block";
+                                            hasAnyShown = true;
+                                        }
+
+                                        <div id="@Html.Raw(languageTabIdProvider(currentSource.GetHtmlFriendlySource(), currentLanguage.Language.Value))"
+                                             class="@Html.Raw(languageTabClassProvider(currentSource.GetHtmlFriendlySource()))"
+                                             style="@tabDisplayStyle">
+                                            @foreach (var langaugeContent in currentLanguage)
+                                            {
+                                                @Html.Raw(langaugeContent)
+                                            }
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        }
+
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+
+
+@helper DisplayPeriodInformation(IEnumerable<IGrouping<int, DocumentInfoForPeriod>> periods, YearMonth startPeriod, YearMonth endPeriod, System.Web.Mvc.HtmlHelper<DocumentsForPeriod> Html)
+{
+    foreach (var periodGroup in periods)
+    {
+        // changes the chevron direction depending on the expanded section
+        var chevronClass = "fa fa-chevron-right";
+        if (periodGroup.Key == startPeriod.Year || periodGroup.Key == endPeriod.Year)
+        {
+            chevronClass = "fa fa-chevron-down";
+        }
+
+        <div class="period-wrapper">
+            <div class="b-medium b-white f-blue f-bold period-container">
+                @{ var headerLinkCaption = new StringBuilder().Append(periodGroup.Key).Append(" ").Append("(").Append(periodGroup.Select(x => x.Count).Sum()).Append(")").ToString(); }
+                @Html.ActionLink(headerLinkCaption, "PeriodForYear", "DocumentsForPeriod", new { year = @periodGroup.Key }, null)
+                <span class="@chevronClass period-container-chevron"></span>
+            </div>
+            <div id="period_year_@periodGroup.Key">
+                <ul class="period-list">
+                    @{
+                        foreach (var periodInfo in periodGroup)
+                        {
+                            var subItemLinkCaption = new StringBuilder().Append(periodInfo.Period.Month.ToString()).Append(" ").Append("(").Append(periodInfo.Count).Append(")").ToString();
+                            var expandClass = String.Empty;
+
+                            // if the period is current selected then expand
+                            if (periodInfo.Period.InByYear(startPeriod, endPeriod))
+                            {
+                                expandClass = " expanded";
+
+                            }
+
+                            <li class="period-list-item @expandClass">
+                                @Html.ActionLink(subItemLinkCaption, "PeriodForYearAndMonth", "DocumentsForPeriod", new { year = periodInfo.Period.Year, month = (int)periodInfo.Period.Month }, null)
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}

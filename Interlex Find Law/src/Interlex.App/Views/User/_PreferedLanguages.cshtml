@@ -1,0 +1,147 @@
+﻿@model IEnumerable<Interlex.BusinessLayer.Models.LanguagePreferences.PrefStruct>
+@using Interlex.App.Resources
+<div id="settings-body-container">
+    <div class="panel-body">
+        <table id="languages-list">
+            @{
+                var langNumber = 1;
+            }
+
+            @foreach (var pref in @Model)
+            {
+                <tr class="list-group-item" data-lang="@(pref.lang.Code)" data-lang-id="@(pref.lang.Id)" data-lang-text="@(pref.lang.Text)">
+                    <td style="width: 1%">@langNumber</td>
+                    <td style="width: 5%"><img src="~/Content/Images/flags/@(pref.lang.ShortCode.ToLower()).png" style="border: 1px solid white;" /></td>
+                    <td style="width: 29%"><span>@(pref.lang.Text)</span></td>
+                    <td style="width: 1%">
+                        <a href="" class="move-down">
+                            <span class="right f-blue">&#x25BC;</span>
+                        </a>
+                    </td>
+                    <td style="width: 1%">
+                        <a href="" class="move-up">
+                            <span class="right f-blue">&#x25B2;</span>
+                        </a>
+                    </td>
+                </tr>
+
+                langNumber += 1;
+            }
+        </table>
+        <div id="language-save-result" class="f-bold f-grey inline absolute f-0-8" style="right: 15px;">
+        </div>
+        <button class="btn-large btn f-white f-bold btn-blue" id="prefered-languages-save" style="font-size: 0.8em; margin-top: 44px; margin-left: 20px;">@Resources.UI_Save</button>
+    </div>
+
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#languages-list li:first').addClass('first-language');
+        $('#languages-list li').last().addClass('last-language');
+        refreshArrows();
+    });
+
+    $(".move-up").click(function (e) {
+        e.preventDefault();
+
+        var $current = $(this).closest('tr');
+        var currentFirstTdId = $current.children().first().text();
+        var $previous = $current.prev('tr');
+        var previousFirstTdId = $previous.children().first().text();
+
+        if (previousFirstTdId != "") {
+            $current.children().first().text(previousFirstTdId);
+        }
+
+        $previous.children().first().text(currentFirstTdId);
+
+        if ($previous.length !== 0) {
+            $current.insertBefore($previous);
+
+            if ($current.hasClass('last-language')) {
+                $current.removeClass('last-language');
+                $previous.addClass('last-language');
+            }
+
+            if ($previous.hasClass('first-language')) {
+                $previous.removeClass('first-language');
+                $current.addClass('first-language');
+            }
+
+            refreshArrows();
+        }
+
+        return false;
+    });
+
+    $(".move-down").click(function (e) {
+        e.preventDefault();
+        var $current = $(this).closest('tr')
+        var currentFirstTdId = $current.children().first().text();
+        var $next = $current.next('tr');
+        var nextFirstTdId = $next.children().first().text();
+
+        if (nextFirstTdId != "") {
+            $current.children().first().text(nextFirstTdId);
+        }
+
+        $next.children().first().text(currentFirstTdId);
+
+        if ($next.length !== 0) {
+            $current.insertAfter($next);
+
+            if ($current.hasClass('first-language')) {
+                $current.removeClass('first-language');
+                $next.addClass('first-language');
+            }
+
+            if ($next.hasClass('last-language')) {
+                $next.removeClass('last-language');
+                $current.addClass('last-language');
+            }
+
+            refreshArrows();
+        }
+
+        return false;
+    });
+
+    function refreshArrows() {
+        $('.move-up').show();
+        $('.move-down').show();
+        $('.first-language').find('.move-up').hide();
+        $('.last-language').find('.move-down').hide();
+    }
+
+    $('#prefered-languages-save').click(function (e) {
+        e.preventDefault();
+
+        var languagesList = $('#languages-list');
+
+        var listToSend = [];
+
+        languagesList.find('tr').each(function (i) {
+            var id = $(this).data('lang-id');
+
+            listToSend.push(id);
+        })
+
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("PreferedLanguages", "User"))",
+            traditional: true,
+            data: { model: listToSend }
+        })
+  .done(function (data) {
+      $('#language-save-result').html(data);
+      setTimeout(function () {
+          $('#language-save-result').fadeOut(1500, function () {
+              $('#language-save-result').html('');
+              $('#language-save-result').show();
+          });
+      }, 3000);
+  });
+    });
+</script>

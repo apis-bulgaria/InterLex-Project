@@ -1,0 +1,390 @@
+﻿@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources
+@using Interlex.App.Controllers
+
+<div id="doc-view-top-bar" class="relative">
+    <a id="top-bar-nav-left" class="absolute" href="javascript:void(0);">
+        <span class="fa fa-arrow-circle-left f-blue  f-1-5"></span>
+    </a>
+    <a id="top-bar-nav-right" class="absolute" href="javascript:void(0);">
+        <span class="fa fa-arrow-circle-right f-blue f-1-5"></span>
+    </a>
+
+    <div class="inner-holder">
+        <div id="mobile-top-bar-elements" class="right top-bar-section border-left-white-thin text-center padding-right-5">
+            <div style="height: 50%; margin-top: -11px;">
+                <span class="f-black f-0-5 f-bold">Още</span>
+            </div>
+
+            <div style="height: 50%; margin-top: 6px;">
+        <a href="javascript:void(0)" id="mobile-top-bar-elements-expand" data-expanded="0">
+           @* <img src="~/Content/Images/icon-search-in-document.png" />*@
+            <span class="fa fa-plus-circle f-1-3" id="mobile-top-bar-elements-expand-icon"></span>
+          @*  <span class="fa @(Session["local-search-" + Model.DocLangId] == null ? "fa-chevron-down" : "fa-chevron-up") f-0-6-important" style="margin-left: -5px; vertical-align: middle; margin-top: -10px;" id="search-in-document-button-expand-chevron"></span>*@
+        </a>
+    </div>
+        </div>
+
+        <div id="search-in-document-container-nav" class="right top-bar-section border-left-white-thin text-center padding-right-10 padding-left-10">
+            <div style="height: 50%; margin-top: -11px;">
+                <span class="f-black f-0-5 f-bold" id="search-in-document-label">@(Request.Browser.IsMobileDevice ? Resources.UI_SearchInDocumentShort : @Resources.UI_SearchInDocument)</span>
+            </div>
+
+            <div style="height: 50%; margin-top: 6px;">
+                <a href="javascript:void(0)" id="search-in-document-button-expand">
+                    <img src="~/Content/Images/icon-search-in-document.png" />
+                    <span class="fa @(Session["local-search-" + Model.DocLangId] == null ? "fa-chevron-down" : "fa-chevron-up") f-0-6-important" style="margin-left: -5px; vertical-align: middle; margin-top: -10px;" id="search-in-document-button-expand-chevron"></span>
+                </a>
+            </div>
+        </div>
+
+        <div id="search-in-document-container" class="top-bar-section right absolute" style="@(Session["local-search-" + Model.DocLangId] == null ? "display:none;" : String.Empty)">
+            <span id="span-matches-count" class="f-0-8 f-italic f-bold" style="margin-top: -10px;">
+                &nbsp;
+            </span>
+            <div id="search-in-document-input-container" class="inline">
+                <input type="text" id="searchInDocumentInput" style="vertical-align:bottom;" placeholder="@Resources.UI_SearchInDocument" class="margin-left-20" />
+                <a href="javascript:void(0);" id="search-in-document-find-button"><img src="~/Content/Images/in-doc-search-icon.png" alt="Search in document" /></a>
+            </div>
+
+            <a href="#" id="first-match" class="search-nav"><img src="~/Content/Images/in-doc-search-first.png" title="@Resources.Hint_FirstMatch" alt="@Resources.Hint_FirstMatch" /></a>
+            <a href="#" id="prev-match" class="search-nav"><img src="~/Content/Images/in-doc-search-prev.png" title="@Resources.Hint_PrevMatch" alt="@Resources.Hint_PrevMatch" /></a>
+            <a href="#" id="next-match" class="search-nav"><img src="~/Content/Images/in-doc-search-next.png" title="@Resources.Hint_NextMatch" alt="@Resources.Hint_NextMatch" /></a>
+            <a href="#" id="last-match" class="search-nav"><img src="~/Content/Images/in-doc-search-last.png" title="@Resources.Hint_LastMatch" alt="@Resources.Hint_LastMatch" /></a>
+            <a href="#" id="toggle-highlight" class="search-nav"><img src="~/Content/Images/icon-pencil.png" title="@Resources.Hint_HideHighlight" alt="@Resources.Hint_HideHighlight" /></a>
+        </div>
+
+        <div id="top-bar-favourite-container" class="left top-bar-section">
+            @if (Model.UserDocId == String.Empty || String.IsNullOrEmpty(Model.UserDocId))
+            {
+                <span data-itemid="@Model.DocLangId" data-itemtitle="@Model.Title" class="star aFavouriteDoc in-doc-favourite-link" title="@Resources.UI_JS_MyDocumentsAdd"></span>
+            }
+            else
+            {
+                <span data-itemid="@Model.DocLangId" data-itemtitle="@Model.Title" class="star-yellow aFavouriteDocRemove in-doc-favourite-link" title="@Resources.UI_JS_MyDocumentsRemove"></span>
+            }
+        </div>
+
+        <div id="top-bar-doc-languages-container" class="left top-bar-section border-left-white-thin text-center border-right-white-thin padding-right-15" style="margin-left: 15px; padding-left: 15px;">
+            <div style="margin-top: -11px; height: 50%;">
+                <span class="f-black f-0-5 f-bold">@Resources.UI_Languages</span>
+            </div>
+
+            <div style="height: 50%; margin-top: 6px;">
+                @{
+                    var languageModel = InterfaceLanguages.GetLanguageById(Model.LangId);
+                    foreach (var lang in Model.DocLangs)
+                    {
+                        Language l = InterfaceLanguages.GetLanguageByShortCode(lang.Value);
+                        if (lang.Value != languageModel.ShortCode)
+                        {
+                            var siteSearchId = (ViewBag.SiteSearchId != null)?ViewBag.SiteSearchId.ToString():"";
+                            <a href="~/Doc/CourtAct/@lang.Key/@siteSearchId" class="margin-top-10 f-0-7 f-bold" title="@l.Text">@lang.Value.ToUpper()</a>
+                        }
+                        else
+                        {
+                            <span class="margin-top-10 f-0-7 f-bold doc-top-bar-current-lang" title="@l.Text">@lang.Value.ToUpper()</span> @*doc-top-bar-current-lang*@
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <div id="top-bar-references-container" class="left top-bar-section text-center border-right-white-thin padding-right-15" style="margin-left: 0; padding-left: 15px;">
+            <div style="margin-top: -11px; height: 50%;">
+                <span class="f-black f-0-5 f-bold">@Resources.UI_TopBarLinks</span>
+            </div>
+            <div style="height: 50%; margin-top: 1px;">
+                @if (Model.HasInLinks)
+            {
+                    <a href="~/Search/DocInLinks/@(Model.LangId)/@(Model.BaseDocLangId)" id="top-bar-all-references-link" title="@Resources.UI_IncomingLinks" target="_blank"><img src="~/Content/Images/icon-file-reference.png" style="margin-bottom: -5px;" /></a>
+                }
+                else
+                {
+                    <a href="javascript:void(0);" id="top-bar-all-references-link" title="@Resources.UI_No_IncomingLinks" target="_blank" onclick="return false;"><img src="~/Content/Images/icon-file-reference-gray.png" style="margin-bottom: -5px;" /></a>
+                }
+            </div>
+        </div>
+
+        @*<div id="top-bar-machine-translation-container" class="left top-bar-section text-center padding-right-15 padding-left-15" style="margin-left: 0;">
+            <div style="margin-top: -11px; height: 50%;">
+                <span class="f-black f-0-5 f-bold">@Resources.UI_TopBarMachineTranslation</span>
+            </div>
+            <div style="height: 50%; margin-top: 1px;">
+                <a href="~/MachineTranslation?language=@( ((DocController)this.ViewContext.Controller).GetLangShortCodeMT() )" id="top-bar-machine-translation" title="@Resources.UI_TopBarMachineTranslationHint" target="_blank"><img src="~/Content/Images/icon-machine-translation.png" style="margin-bottom: -5px;" /></a>
+            </div>
+        </div>*@
+
+        <div id="top-bar-export-container" class="left margin-left-5 top-bar-section text-center">
+            <div style="height: 50%; margin-top: -11px;">
+                <span class="f-black f-0-5 f-bold">@Resources.UI_ExportTo</span>
+            </div>
+
+            <div style="height: 50%; margin-top: 6px;">
+                <a href="~/Export/ExportMultiDocs?type=rtf&idsString=@Model.DocLangId" id="rtf-export" class="margin-left-5 export-clear"><img src="~/Content/Images/export-rtf-logo-new.png" title="rtf"></a>
+                <a href="~/Export/ExportMultiDocs?type=pdf&idsString=@Model.DocLangId" id="pdf-export" style="margin-top: 1px;" class="export-clear"><img src="~/Content/Images/export-pdf-logo-new.png" title="pdf" /></a>
+            </div>
+        </div>
+
+        <div id="top-bar-print-container" class="left margin-left-15 top-bar-section border-left-white-thin border-right-white-thin text-center">
+            <div style="height: 50%; margin-top: -11px;">
+                <span class="f-black f-0-5 f-bold">@Resources.UI_Print</span>
+            </div>
+            <div style="height: 50%; margin-top: 6px;">
+                <a href="#" onclick="printDiv('doc-view-container')">
+                    <img src="~/Content/Images/print.png" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="top-mobile-navigation-container" class="top-bar-section right absolute" style="display: none;">
+    @* BONUS NAVIGATION ELEMENTS GO HERE *@
+    @* TODO: Revisit - move with js OR have some kind of copy ~~ moving with js atm *@
+</div>
+
+<script>
+    $().ready(function () {
+        $('#first-match').click(function (e) {
+            e.preventDefault();
+
+            showFirstMatch();
+        });
+
+        $('#prev-match').click(function (e) {
+            e.preventDefault();
+
+            showNextMatch(-1);
+        });
+
+        $('#next-match').click(function (e) {
+            e.preventDefault();
+
+            showNextMatch(1);
+        });
+
+        $('#last-match').click(function (e) {
+            e.preventDefault();
+
+            showLastMatch();
+        });
+
+        $('.aFavouriteDoc').click(favouriteDocAddClick);
+        $('.aFavouriteDocRemove').click(favouriteDocRemoveClick);
+
+        $('#toggle-highlight').click(function (e) {
+            e.preventDefault();
+            var highlightedItems = $('.highlight-memoryze');
+
+            if ($('#first-match').hasClass('not-active-link') === false) {
+                //disabling highlight
+                $('#first-match, #prev-match, #next-match, #last-match').addClass('not-active-link');
+                $('#first-match img, #prev-match img, #next-match img, #last-match img').css('opacity', '0.5');
+
+                highlightedItems.each(function () {
+                    $(this).removeClass('highlight');
+                });
+
+                $('.matchborder-memoryze').removeClass('matchborder');
+
+                $('#span-matches-count').hide(200);
+            }
+            else {
+                //enabling highlight
+                $('#first-match, #prev-match, #next-match, #last-match').removeClass('not-active-link');
+                $('#first-match img, #prev-match img, #next-match img, #last-match img').css('opacity', '1.0');
+
+                highlightedItems.each(function () {
+                    $(this).addClass('highlight');
+                });
+
+                $('.matchborder-memoryze').addClass('matchborder');
+
+                $('#span-matches-count').show(200);
+            }
+        })
+
+        $('#search-in-document-find-button').click(function () {
+            var siteSearchIdFromUrl = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+            $.ajax({
+                url: appRootFolder + '/Search/SetLocalSearchText',
+                data: {
+                    siteSearchId: siteSearchIdFromUrl,
+                    searchText: $('#searchInDocumentInput').val(),
+                    exactMatch: $('#searchInDocumentInput').data('exactmatch'),
+                    docLangId: '@Model.DocLangId'
+                },
+                traditional: true,
+                method: 'POST'
+            }).done(function (response) {
+                if (response === "OK") {
+                    location.reload();
+                }
+            });
+        });
+
+        $('#search-in-document-button-expand').on('click', function () {
+            var $searchInDocumentContainer = $('#search-in-document-container');
+            if ($searchInDocumentContainer.css('display') === 'none') {
+                $searchInDocumentContainer.slideDown(200);
+                $searchInDocumentContainer.css('opacity', 1);
+                $('#search-in-document-button-expand-chevron').addClass('fa-chevron-up');
+                $('#search-in-document-button-expand-chevron').removeClass('fa-chevron-down');
+            }
+            else {
+                $searchInDocumentContainer.slideUp(200);
+                $searchInDocumentContainer.css('opacity', 0.5);
+                $('#search-in-document-button-expand-chevron').addClass('fa-chevron-down');
+                $('#search-in-document-button-expand-chevron').removeClass('fa-chevron-up');
+            }
+
+            return false;
+        });
+
+        $('#search-in-document-container').hover(function () {
+            $(this).css('opacity', 1);
+        }, function () {
+            $(this).css('opacity', 0.5);
+        });
+
+        $('#searchInDocumentInput').on('keydown', function () {
+            $('#search-in-document-container').css('opacity', 1);
+        });
+
+        var intervalId;
+        currentLeftPos = 20;
+        var innerTopBarElement = $('#doc-view-top-bar .inner-holder');
+
+        var topBarNavArrowLeft = document.getElementById('top-bar-nav-left'),
+            topBarNavArrowRight = document.getElementById('top-bar-nav-right');
+
+        topBarNavArrowLeft.addEventListener('touchstart', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            intervalId = setInterval(function () {
+                currentLeftPos = innerTopBarElement.css('left').replace('px', '');
+                if (parseInt(currentLeftPos) < 20) {
+                    innerTopBarElement.css('left', parseInt(currentLeftPos) + 1 + 'px');
+                }
+            }, 10);
+        }, false);
+
+        topBarNavArrowLeft.addEventListener('touchend', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            clearInterval(intervalId);
+        });
+
+        topBarNavArrowRight.addEventListener('touchstart', function (e) {
+            var innerHolderWidth = $('#doc-view-top-bar .inner-holder').width(),
+                currentWidth = $(window).width(),
+                additionalLeft = currentWidth > 480 ? 20 : 0; // give more scroll for tablets, because "Search in document" text gets covered
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            intervalId = setInterval(function () {
+                currentLeftPos = innerTopBarElement.css('left').replace('px', '');
+                if (parseInt(currentLeftPos) > (currentWidth - innerHolderWidth) - additionalLeft) {
+                    innerTopBarElement.css('left', parseInt(currentLeftPos) - 1 + 'px');
+                }
+
+            }, 10);
+        }, false);
+
+        topBarNavArrowRight.addEventListener('touchend', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            clearInterval(intervalId);
+        });
+
+        if ($(window).width() <= 800) {
+            var $searchInDocContainer = $('#search-in-document-container'),
+                $searchInDocContainerClone = $searchInDocContainer.clone(true);
+
+            $searchInDocContainer.remove();
+            $searchInDocContainerClone.insertAfter('#doc-view-top-bar');
+        }
+
+        var $elementsToMove = $('#top-bar-export-container, #top-bar-print-container,'
+                                    + '#top-bar-machine-translation-container, #top-bar-favourite-container');
+
+        $(window).resize(function () {
+            var $searchInDocContainer = $('#search-in-document-container'),
+                $searchInDocContainerClone,
+                $topMobileNavContainer = $('#top-mobile-navigation-container'),
+                isExpanded;
+
+            if ($(this).width() <= 800) {
+                if ($searchInDocContainer.prev().attr('id') !== 'doc-view-top-bar') {
+                    $searchInDocContainerClone = $searchInDocContainer.clone(true);
+
+                    $searchInDocContainer.remove();
+                    $searchInDocContainerClone.insertAfter('#doc-view-top-bar');
+                }
+            } else {
+                if ($searchInDocContainer.prev().attr('id') === 'doc-view-top-bar') {
+                    $searchInDocContainerClone = $searchInDocContainer.clone(true);
+
+                    $searchInDocContainer.remove();
+                    $searchInDocContainerClone.insertBefore('#search-in-document-container-nav');
+                }
+
+                isExpanded = !!parseInt($('#mobile-top-bar-elements-expand').attr('data-expanded'));
+                if (isExpanded) {
+                    $('#mobile-top-bar-elements-expand').trigger('click');
+                }
+            }
+
+            if ($(this).width() <= 480) {
+                $('#search-in-document-label').text('@Resources.UI_SearchInDocumentShort');
+            }
+            else {
+                $('#search-in-document-label').text('@Resources.UI_SearchInDocument');
+            }
+        });
+
+        $('#mobile-top-bar-elements-expand').on('click', function () {
+            var expanded = parseInt($(this).attr('data-expanded')),
+                expandIcon = $('#mobile-top-bar-elements-expand-icon'),
+                $topMobileNavContainer = $('#top-mobile-navigation-container');
+
+            if (expanded === 0) { // expand
+                $(this).attr('data-expanded', 1);
+                expandIcon.addClass('fa-minus-circle');
+                expandIcon.removeClass('fa-plus-circle');
+
+                // hiding local search panel if shown
+                if ($('#search-in-document-container').css('display') === 'block') {
+                    $('#search-in-document-container').css('display', 'none');
+                    $('#search-in-document-button-expand-chevron').addClass('fa-chevron-down');
+                    $('#search-in-document-button-expand-chevron').removeClass('fa-chevron-up');
+                }
+
+                // populate top-mobile-navigation-container
+                // !! appendTo acts as a move operation NOT like a copy
+                $elementsToMove.appendTo($topMobileNavContainer);
+                $topMobileNavContainer.slideDown(200);
+            }
+            else if (expanded === 1) { // collapse
+                $(this).attr('data-expanded', 0);
+                expandIcon.addClass('fa-plus-circle');
+                expandIcon.removeClass('fa-minus-circle');
+
+                // repopulate 
+                $topMobileNavContainer.slideUp(200);
+
+                $elementsToMove.appendTo($('#doc-view-top-bar .inner-holder'));
+            }
+            else {
+                throw 'Mobile top bar elements invalid expand data attribute';
+            }
+
+            return false;
+        });
+    });
+</script>

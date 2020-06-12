@@ -1,0 +1,175 @@
+﻿@model Interlex.BusinessLayer.Models.HomeData
+
+@using Interlex.BusinessLayer.Models;
+@using Interlex.App.Resources
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script type="text/javascript">
+
+    $().ready(function () {
+
+        addHints('doc-info-link', @Session["LanguageId"].ToString(), @((((UserData)Session["UserData"]).OpenDocumentsInNewTab).ToString().ToLower()));
+    });
+
+</script>
+
+<div class="container-fluid main-content">
+    <div>
+        <div class="filters-container">
+            <div>
+                @{
+                    foreach (HomeFolder hf in Model.Folders)
+                    {
+                        //break-word
+                        <div class="b-medium b-white f-blue f-bold" style="padding-left:12px;padding-bottom:3px; height: auto; padding-top: 3px; border: 1px solid #e0e0e0; border-left: 2px solid #148dd4">@hf.Name</div>
+                        <div style="padding-top: 0;">
+                            @*<div id="@string.Format("folder%_tree", hf.Id.ToString())"></div>*@
+                            <div id="folder@(hf.Id.ToString())_tree" style="padding-top: 0; margin-top: -5px;"></div>
+                            <script>
+                                $('#folder@(hf.Id.ToString())_tree').fancytree(
+            {
+                extensions: ["persist"],
+                persist: {
+                    //cookieId: "homeTree",
+                    //expandLazy: true, // true: recursively expand and load lazy nodes
+                    overrideSource: true,  // true: cookie takes precedence over `source` data attributes.
+                    store: "cookie",
+                    types: "active expanded focus"
+                },
+                source:
+                     {
+                         type: 'GET',
+                         dataType: 'json',
+                         children: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(hf.Folders)),
+                         cache: true
+                     },
+                checkbox: false,
+                clickFolderMode: 2,
+                click: function (event, data) {
+                    //console.log(data.node.data.query);
+                    if (data.targetType == 'title') {
+                        if (data.node.data.query == '') {
+                            data.node.toggleSelected();
+                            data.node.toggleExpanded();
+                        }
+                        else
+                        {
+                            window.location.href = '/Search/HomeSearch/' + data.node.data.id;
+                        }
+                    }
+                },
+                icons: false
+            }
+    );
+
+                            </script>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div id="boxes-holder">
+
+                <div class="grid-stack grid-stack-2">
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        <div class="grid-stack-item"
+                             data-gs-x="@(i % 2 == 0 ? 0 : 1)" data-gs-y="@(i * 4)"
+                             data-gs-width="1" data-gs-height="4">
+                            <div class="grid-stack-item-content">
+                                <span>@i</span>
+                                <i class="fa fa-times right remove-widget" title="@Resources.UI_Remove"></i>
+                            </div>
+                        </div>
+                    }
+                </div>
+            
+            @*<div class="grid-stack grid-stack-2">
+                <div class="grid-stack-item"
+                     data-gs-x="0" data-gs-y="0"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">ONE</div>
+                </div>
+                <div class="grid-stack-item"
+                     data-gs-x="1" data-gs-y="0"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">NEIN</div>
+                </div>
+                <div class="grid-stack-item"
+                     data-gs-x="0" data-gs-y="4"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">TWO</div>
+                </div>
+                <div class="grid-stack-item"
+                     data-gs-x="1" data-gs-y="4"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">THREE</div>
+                </div>
+                <div class="grid-stack-item"
+                     data-gs-x="0" data-gs-y="8"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">FOUR</div>
+                </div>
+                <div class="grid-stack-item"
+                     data-gs-x="1" data-gs-y="8"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">FIVE</div>
+                </div>
+                <div class="grid-stack-item"
+                     data-gs-x="0" data-gs-y="12"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">ZIX</div>
+                </div>
+                <div class="grid-stack-item"
+                     data-gs-x="1" data-gs-y="12"
+                     data-gs-width="1" data-gs-height="4">
+                    <div class="grid-stack-item-content">SEVAN</div>
+                </div>
+            </div>*@
+        </div>
+        <div id="mobile-indicator"></div>
+    </div>
+</div>
+
+<script>
+    globalDocumentUIBinding();
+
+    $().ready(function(){
+        highlightMenu('home');
+    });
+
+    $(function () {
+        var grid, options= {
+            cellHeight: 80,
+            verticalMargin: 10,
+            disableResize: true,
+            width: 2,
+        };
+
+        //$(window).resize(function () {
+        //    configureGridstackMovability();
+        //});
+
+        grid = $('.grid-stack').gridstack(options).data('gridstack');
+//        configureGridstackMovability();
+
+        $('.remove-widget')
+            .click(function (e) {
+                var elToRemove = $(this).parents('.grid-stack-item');
+                grid.removeWidget(elToRemove, true);
+            })
+            .tooltipster();
+               
+        
+        function configureGridstackMovability() {
+            if($('#mobile-indicator').is(':visible')) {
+                grid.movable('.grid-stack-item', false);
+            } else {
+                grid.movable('.grid-stack-item', true);
+            }
+        }
+    });
+</script>

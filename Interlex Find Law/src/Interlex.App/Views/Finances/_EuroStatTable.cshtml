@@ -1,0 +1,53 @@
+﻿@using Interlex.App.Resources
+
+<div>
+    <div class="col-md-12" id="tableDiv">
+        <table id="example" class="display table-fins" style="width:100%;border:s-0; text-align: center;"></table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            "url": '/Finances/Data/GetEuroStatTable',
+            "success": function (json) {
+
+
+                var tablehideShowLinks;
+                var tableHeaders;
+                var cnt = 0;
+                for (var key in json.data[0]) {
+                    tableHeaders += "<th>" + key + "</th>";
+                    tablehideShowLinks += '<a class="toggle-vis" data-column="' + cnt + '">' + key + '</a>&nbsp;';
+                    cnt++;
+                }
+
+                var tableData;
+                $.each(json.data, function (i, val) {
+                    tableData += '<tr>';
+                    $.each(val, function (i, col) {
+                        tableData += '<td>' + col + '</td>';
+                    });
+                    tableData += '</tr>';
+                });
+
+                $("#tableDiv").empty();
+                $("#tableDiv").append('<div>Toggle column: ' + tablehideShowLinks + '</div>');
+                $("#tableDiv").append('<table id="displayTable" class="display" cellspacing="0" width="100%;border:s-0; text-align: center;"><thead><tr>' + tableHeaders + '</tr></thead><tbody>' + tableData + '</tbody></table>');
+
+                var table = $('#displayTable').DataTable({ "paging": false });
+
+                $('a.toggle-vis').on('click', function (e) {
+                    e.preventDefault();
+
+                    // Get the column API object
+                    var column = table.column($(this).attr('data-column'));
+
+                    // Toggle the visibility
+                    column.visible(!column.visible());
+                });
+            },
+            "dataType": "json"
+        });
+    });
+</script>

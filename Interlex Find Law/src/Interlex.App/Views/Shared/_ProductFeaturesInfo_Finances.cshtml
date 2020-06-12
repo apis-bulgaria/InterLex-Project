@@ -1,0 +1,70 @@
+﻿
+@model EuroCases.App.ViewModels.ProductFeaturesInfo
+@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Enums
+
+@{
+    if (ViewBag.UseLayout == true)
+    {
+        Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    }
+}
+
+@{
+    if (Model.Document != null && Model.FunctionalityType == FunctionalityTypes.DocumentOpen)
+    {
+
+        @section CSS
+        {
+            @Styles.Render("~/Content/doc")
+        }
+
+        if (ViewBag.DocError != null && ViewBag.DocError != "")
+        {
+            <div class="f-blue text-center" style="padding-top:40px;">@ViewBag.DocError</div>
+        }
+        else
+        {
+            @Html.Partial("~/Views/Doc/_DocFeaturesInfo.cshtml", Model.Document);
+        }
+    }
+    else
+    {
+        ViewBag.Title = Resources.UI_NotAvaiableFeature;
+    }
+}
+
+<br class="mobile-hidden" /><br class="mobile-hidden" />
+<div class="width-40" id="wrapper-product-features">
+    <div class="padding-10 text-center">
+        <h3 class="f-white">@Resources.UI_NotAvaiableFeature</h3>
+        <div>
+            @Html.Raw(Resources.UI_Fins_FullFeaturesMessage)
+        </div>
+    </div>
+</div>
+<div id="wrapper-product-features-btn-container" class="width-40 text-center">
+    <button type="button" class="btn btn-prs-orange-shadowed f-white f-bold f-shadowed-black" style="font-size: 1.0em; border: 1px solid white !important;" id="btn-free-trial">@Resources.UI_Trial_Long<br /><span class="f-0-6 right">@Resources.UI_Trial_Long_line2</span></button>
+    @*<button type="button" class="btn btn-prs-orange-shadowed f-white f-bold" style="font-size: 1.0em; border: 1px solid white !important;" id="btn-buy-now">@Resources.UI_BuyNow</button>*@
+</div>
+<div class="width-45 margin-top-10 f-blue text-center" id="wrapper-product-features-contact-container">
+    <span class="f-0-8">
+        <span class="f-bold-italic">@Resources.UI_ContactUs:</span>
+        @Html.Raw(Resources.UI_ContactUsInformation)
+    </span>
+    <div class="clearfix"></div>
+</div>
+
+<script>
+    $().ready(function () {
+        $('#btn-free-trial').on('click', function () {
+            var win = window.open('http://eurocases.eu/en/GetDemo/2');
+            win.focus();
+        });
+
+        $('#btn-buy-now').on('click', function () {
+            var win = window.open('http://eurocases.eu/en/BuyProduct/2');
+            win.focus();
+        });
+    });
+</script>

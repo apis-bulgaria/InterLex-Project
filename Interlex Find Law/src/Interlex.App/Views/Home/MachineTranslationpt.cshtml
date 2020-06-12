@@ -1,0 +1,1354 @@
+﻿@model Language
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Resources;
+
+@{
+    ViewBag.Title = "Machine translation";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@section JavaScript
+{
+    @Scripts.Render("~/bundles/doc")
+    @Scripts.Render("~/bundles/MtJS")
+}
+
+@section CSS
+{
+    @Styles.Render("~/Content/doc")
+    @Styles.Render("~/Content/MtCSS")
+}
+<div class="mobile-filters-show-button" id="mobile-filters-show-button-act" data-page="act"><span class="fa fa-tasks"></span></div>
+<span class="chevron-doc-navigation-closed">
+    <span class="span-doc-navigation-closed">@Resources.UI_Navigation</span>
+</span>
+<div id="doc-view-top-holder" class="filters-container" style="">
+    <div id="doc-view-top-holder-inner">
+        <div class="b-medium b-blue f-white" style="padding-left: 18px; font-weight: bold !important;">
+            @Resources.UI_Navigation
+            @* <span class="chevron-doc-navigation right" title="@Resources.Hint_NavigationHide"></span>*@
+            <span class="fa fa-arrow-circle-o-left right chevron-doc-navigation" title="@Resources.Hint_NavigationHide"></span>
+        </div>
+        <div id="doc-navigation-container">
+            <h3 class="doc-nav-category-title">
+                @Resources.UI_Contents<span class="right chevron-doc-navigation-category f-blue relative f-0-7 margin-left-15">&#x25BC;</span>
+            </h3>
+            @*<div class="b-medium b-white f-blue f-bold" style="padding-left:12px;padding-bottom:3px; height: auto; padding-top: 3px; border: 1px solid #e0e0e0; border-left: 2px solid #148dd4">Lada</div>*@
+            <div style="padding-top: 0;">
+                @*<div id="@string.Format("folder%_tree", hf.Id.ToString())"></div>*@
+                <div id="mt-nav" style="padding-top: 0; margin-top: -5px;">
+                    <ol type="I" class="level-one">
+                        <li>
+                            <span class="menu-element">
+                                <a data-target="guidelines-registering">
+                                    Instruções para o registo e uso do serviço MT@EC da Comissão Europeia
+                                </a>
+                            </span>
+                            <ol type="A" class="level-two">
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="registration">
+                                            Registo
+                                        </a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="mtec-service">
+                                            Uso do serviço MT@CE
+                                        </a>
+                                    </span>
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            <span class="menu-element">
+                                <a data-target="guidelines-free-mt">
+                                    Manual para o uso do serviço gratuito de tradução automática
+                                </a>
+                            </span>
+                            <ol type="A" class="level-two">
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="text-translation">
+                                            Tradução de texto
+                                        </a>
+                                    </span>
+                                    <ol type="1" class="level-three">
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="translation-web-interface">
+                                                    Tradução do texto na página Web do fornecedor
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="translation-integrated-functions">
+                                                    Tradução de texto marcado com funções integradas no navegador do usuário
+                                                </a>
+                                            </span>
+                                        </li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="webpage-translation">
+                                            Tradução de páginas Web
+                                        </a>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="menu-element">
+                                        <a data-target="document-translation">
+                                            Tradução de Documentos
+                                        </a>
+                                    </span>
+                                    <ol type="1" class="level-three">
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="file-translation">
+                                                    Tradução de ficheiro
+                                                </a>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="menu-element">
+                                                <a data-target="opened-document-translation">
+                                                    Tradução de documento aberto
+                                                </a>
+                                            </span>
+                                        </li>
+                                    </ol>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_MachineTranslationTopBar", Model)
+
+<div class=WordSection1>
+
+    <p class=MsoNormal align=center style='margin-bottom:6.0pt;text-align:center;
+line-height:normal'>
+        <b>
+            <span lang=PT style='font-size:18.0pt'>
+                Traduzir
+                Decis&otilde;es Judiciais de EuroCases por meio da Tradu&ccedil;&atilde;o
+                Autom&aacute;tica
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>&nbsp;</span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            A tradu&ccedil;&atilde;o autom&aacute;tica pode ajud&aacute;-lo a
+            compreender superficialmente o significado geral do texto de um documento. A
+            esse fim, pode usar v&aacute;rios servi&ccedil;os on-line gratuitos
+            gra&ccedil;as aos quais receber&aacute; rapidamente em texto bruto
+            tradu&ccedil;&otilde;es autom&aacute;ticas das decis&otilde;es em EuroCases:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT>
+            1.<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Se trabalha 1<b>
+                numa institui&ccedil;&atilde;o ou
+                ag&ecirc;ncia da UE
+            </b>, ou 2) <b>
+                na administra&ccedil;&atilde;o de um Estado
+                membro da UE
+            </b>, pode registar-se e usar
+        </span><a href="http://ec.europa.eu/dgs/translation/translationresources/machine_translation/index_en.htm">
+            <span lang=PT>o servi&ccedil;o de tradu&ccedil;&atilde;o autom&aacute;tica MT@EC</span>
+        </a><u>
+            <span lang=PT style='color:blue'></span>
+        </u><span lang=PT>
+            da Comiss&atilde;o
+            Europeia. Elе prop&otilde;e tradu&ccedil;&otilde;es entre 552 pares de
+            l&iacute;nguas cobrindo todas as 24 l&iacute;nguas oficiais da UE.
+            Recomendamos-lhe fortemente o uso desse servi&ccedil;o porque ele fornece uma
+            qualidade significativamente melhor de tradu&ccedil;&atilde;o de textos
+            jur&iacute;dicos.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'>
+        <span class=apple-converted-space>
+            <span lang=PT style='line-height:107%;color:black'>
+                2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </span>
+        </span><span class=apple-converted-space>
+            <span lang=PT style='color:black;background:white'>
+                Nos
+                restantes casos, poder&aacute; aproveitar os seguintes servi&ccedil;os
+                gratuitos de tradu&ccedil;&atilde;o autom&aacute;tica:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <span lang=PT style='font-family:
+Symbol'>
+                ·<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </span><a href="https://translate.google.com/">
+            <span lang=PT
+                  style='background:white'>Google Tradutor</span>
+        </a>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <span lang=PT style='font-family:
+Symbol'>
+                ·<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </span><a href="http://www.bing.com/translator/">
+            <span lang=PT
+                  style='background:white'>Microsoft Bing Translator</span>
+        </a><span lang=PT
+                  style='color:black;background:white'></span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span class=MsoHyperlink>
+            <span lang=PT style='font-family:Symbol;
+color:windowtext;text-decoration:none'>
+                ·<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </span><a href="http://www.systranet.com/translate/">
+            <span lang=PT style='background:white'>SYSTRANet</span>
+        </a>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:71.7pt;margin-bottom:.0001pt;text-indent:-17.85pt;line-height:
+normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span class=apple-converted-space>
+            <span lang=PT style='color:
+black;background:white'>Outros servi&ccedil;os (tais como</span>
+        </span><a href="http://www.online-translator.com/">
+            <span class=apple-converted-space>
+                <span lang=PT style='background:white'>PROMPT</span>
+            </span>
+        </a><span class=apple-converted-space>
+            <span lang=PT style='color:black;background:white'>
+                ,
+            </span>
+        </span><a href="https://en.wikipedia.org/wiki/Yandex.Translate">
+            <span class=apple-converted-space><span lang=PT style='background:white'>Yandex.Translate</span></span>
+        </a><span class=apple-converted-space>
+            <span lang=PT style='color:black;background:white'>
+                ,
+            </span>
+        </span><a href="http://www.worldlingo.com/">
+            <span class=apple-converted-space><span lang=PT style='background:white'>WorldLingo</span></span>
+        </a><span class=apple-converted-space>
+            <span lang=PT style='color:black;background:white'>
+                ,
+            </span>
+        </span><a href="https://www.freetranslation.com/">
+            <span class=apple-converted-space><span lang=PT style='background:white'>SDL</span></span>
+        </a><span class=apple-converted-space>
+            <span lang=PT style='color:black;background:white'>
+                ,
+                etc.).
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-left:18.0pt'>
+        <b>
+            <span lang=PT
+                  style='font-size:16.0pt;line-height:107%;color:black;background:white'>&nbsp;</span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-36.0pt;
+line-height:normal' id="guidelines-registering">
+        <b>
+            <span lang=PT style='font-size:16.0pt'>
+                I.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:16.0pt'>
+                Instru&ccedil;&otilde;es
+                para o registo e uso do servi&ccedil;o MT@EC da Comiss&atilde;o Europeia
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><b><i><span lang=PT style='font-size:14.0pt'>&nbsp;</span></i></b></p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:70.9pt;text-indent:-1.0cm;line-height:normal' id="registration">
+        <b>
+            <i>
+                <span lang=PT style='font-size:14.0pt'>
+                    A.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b><i><span lang=PT style='font-size:14.0pt'>Registo</span></i></b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            Para usar o servi&ccedil;o MT@CE dever&aacute; ter primeiro o assim chamado
+        </span><a href="https://webgate.ec.europa.eu/cas/"><span lang=PT>EU Login</span></a><span lang=PT>
+            criado pelo Servi&ccedil;o de Autentica&ccedil;&atilde;o da
+            Comiss&atilde;o Europeia<span style='color:black;background:white'>.</span>
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Os funcion&aacute;rios que trabalham nas <b>
+                institui&ccedil;&otilde;es
+                ou ag&ecirc;ncias da UE
+            </b> podem usar o
+        </span><a href="http://ec.europa.eu/dgs/translation/translationresources/machine_translation/index_en.htm">
+            <span lang=PT>servi&ccedil;o MT@EC</span>
+        </a><span lang=PT>
+            atrav&eacute;s do seu
+                EU Login.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Os funcion&aacute;rios que trabalha na <b>
+                administra&ccedil;&atilde;o
+                p&uacute;blica de um Estado-membro da UE
+            </b> t&ecirc;m de executar os seguintes
+            passos:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>
+        <span lang=PT style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;
+            </span>
+        </span><a href="https://webgate.ec.europa.eu/cas/">
+            <span lang=PT>
+                Crie o
+                seu pr&oacute;prio EU Login e senha (<b>
+                    usando apenas o seu e-mail
+                    profissional) na seguinte p&aacute;gina:
+                </b>
+            </span><span style='color:windowtext;
+text-decoration:none'><b><u><span lang=PT style='color:blue'>https://webgate.ec.europa.eu/cas/</span></u></b></span><b>
+                <span lang=PT style='color:windowtext;text-decoration:none'>. Leia este</span>
+            </b><span style='color:windowtext;text-decoration:none'>
+                <b>
+                    <u>
+                        <span lang=PT
+                              style='color:blue'>guia</span>
+                    </u>
+                </b>
+            </span><b>
+                <span lang=PT style='color:
+windowtext;text-decoration:none'>
+                    de instru&ccedil;&otilde;es sobre como criar
+                    um EU Login ou veja este
+                </span>
+            </b><span style='color:windowtext;
+text-decoration:none'><b><u><span lang=PT style='color:blue'>v&iacute;deo</span></u></b></span><b>
+                <span lang=PT style='color:windowtext;text-decoration:none'>no YouTube.</span>
+            </b>
+        </a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>
+        <span lang=PT style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Envie um e-mail &agrave;
+            Dire&ccedil;&atilde;o-Geral da Tradu&ccedil;&atilde;o ao endere&ccedil;o
+        </span><a href="mailto:DGT-MT@ec.europa.eu"><span lang=PT>DGT-MT@ec.europa.eu</span></a><span lang=PT>
+            para os informar que j&aacute; tem um EU Login. Especifique em que
+            consiste o seu trabalho e qual &eacute; a autoridade administrativa para que
+            trabalha. Inclua no final do texto do e-mail a sua assinatura completa - os
+            nomes, fun&ccedil;&atilde;o, institui&ccedil;&atilde;o, departamento,
+            endere&ccedil;o para contatos.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>
+        <span lang=PT style='font-family:"Courier New"'>
+            o<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            A Dire&ccedil;&atilde;o-Geral da
+            Tradu&ccedil;&atilde;o ir&aacute; criar o seu registo para o servi&ccedil;o
+            MT@EC e ir&aacute; notific&aacute;-lo.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT style='font-size:10.0pt'>&nbsp;</span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal;page-break-after:avoid' id="mtec-service">
+        <b>
+            <i>
+                <span lang=PT
+                      style='font-size:14.0pt'>
+                    B.<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b>
+            <i>
+                <span lang=PT style='font-size:14.0pt'>
+                    Uso do
+                    servi&ccedil;o MT@CE
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoNormal>
+        <span lang=PT style='color:black;background:white'>
+            Para
+            utilizar o servi&ccedil;o
+        </span><span lang=PT>
+            MT@EC<span style='color:black;
+background:white'>, introduza o seguinte endere&ccedil;o no seu navegador:</span>
+        </span><a href="https://webgate.ec.europa.eu/mtatec">
+            <span lang=PT style='background:
+white'>https://webgate.ec.europa.eu/mtatec</span>
+        </a><span lang=PT
+                  style='color:black;background:white'>
+            . Depois entre com o seu nome de
+            usu&aacute;rio e a senha do seu EU Login. Uma vez localizado no site do
+            servi&ccedil;o, pode escolher entre dois tipos de tradu&ccedil;&atilde;o em
+            fun&ccedil;&atilde;o das suas necessidades:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><i><span lang=PT>Tradu&ccedil;&atilde;o de Texto</span></i><span lang=PT>
+            – Na barra do menu, clique em <b><i>Tradu&ccedil;&atilde;o de Texto</i></b><i>
+                .
+                Em seguida, digite ou copie e cole um trecho de texto (at&eacute; 4000
+                caracteres). Em seguida, selecione o idioma de que est&aacute; a traduzir e o
+                idioma para o qual pretende traduzir. Finalmente, clique sobre o bot&atilde;o <b>Traduzir</b>.
+            </i>
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span class=apple-converted-space>
+            <span style='background:white'>
+                <img border=0
+                     width=651 height=367 id="Picture 9"
+                     src="~/Content/Images/machine-translation/pt/1.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-left:35.7pt;text-indent:-17.85pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol;color:black'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><i><span lang=PT>Tradu&ccedil;&atilde;o de Documentos</span></i><span lang=PT>
+            – Na barra do menu, clique em <b>Tradu&ccedil;&atilde;o de Documentos</b>.
+            Em seguida, selecione o idioma de que est&aacute; a traduzir, assim como o
+            idioma (ou os idiomas) para o qual pretende traduzir (o servi&ccedil;o permite
+            tradu&ccedil;&atilde;o em v&aacute;rias l&iacute;nguas). Especifique o formato
+            de sa&iacute;da do documento (o mesmo que o da fonte, tmx ou xliff). Carregue
+            um ou mais ficheiros com documentos (at&eacute; pode ser simultaneamente) e
+            clique no bot&atilde;o <b>Traduzir</b>. S&atilde;o aceites pelo servi&ccedil;o
+            os seguintes formatos de ficheiros: doc (х), xls (x), ppt (х), odt, rtf, txt,
+            html, tmx, xliff, pdf. O servi&ccedil;o mant&eacute;m a
+            formata&ccedil;&atilde;o do documento original (com excep&ccedil;&atilde;o do
+            pdf caso em que o ficheiro &eacute; transformado em docx).
+        </span>
+    </p>
+
+    <p class=MsoNormal style='line-height:normal'>
+        <span class=apple-converted-space>
+            <span style='color:black;background:white'>
+                <img border=0 width=655 height=367 id="Picture 10"
+                     src="~/Content/Images/machine-translation/pt/2.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span lang=PT>
+            Uma descri&ccedil;&atilde;o em ingl&ecirc;s do
+            servi&ccedil;o MT@CE e das suas caracter&iacute;sticas mais importantes
+            &eacute; publicada na p&aacute;gina internet da Dire&ccedil;&atilde;o-Geral da
+            Tradu&ccedil;&atilde;o:
+        </span><a href="http://ec.europa.eu/isa/documents/mt-ec-service-description_en.pdf">
+            <span lang=PT>http://ec.europa.eu/isa/documents/mt-ec-service-description_en.pdf</span>
+        </a><span lang=PT>.</span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span lang=PT
+                          style='color:black;background:white'>Guia de uso:</span>
+                </i>
+            </b>
+        </span><span class=apple-converted-space>
+            <span lang=PT style='color:black;background:white'>
+                Para
+                obter mais informa&ccedil;&otilde;es sobre a funcionalidade do servi&ccedil;o e
+                o seu modo de funcionar, consulte a
+            </span>
+        </span><a href="https://webgate.ec.europa.eu/mtatec/html/help_bg.htm">
+            <span class=apple-converted-space>
+                <span lang=PT style='background:white'>
+                    Assist&ecirc;ncia
+                    MT@EC
+                </span>
+            </span>
+        </a><span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                (apenas os utilizadores registados
+                t&ecirc;m acesso).
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:18.0pt;margin-right:0cm;margin-bottom:
+18.0pt;margin-left:36.0pt;text-align:justify;text-indent:-36.0pt;line-height:
+normal' id="guidelines-free-mt">
+        <b>
+            <span lang=PT style='font-size:16.0pt'>
+                II.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <i>
+                <span lang=PT style='font-size:16.0pt'>
+                    Manual para o
+                    uso do servi&ccedil;o gratuito de tradu&ccedil;&atilde;o autom&aacute;tica
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+18.0pt;margin-left:2.0cm;text-align:justify;text-indent:-21.25pt;line-height:
+normal' id="text-translation">
+        <b>
+            <span lang=PT style='font-size:14.0pt'>
+                A.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:14.0pt'>
+                Tradu&ccedil;&atilde;o
+                de texto
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:54.0pt;text-align:justify;text-indent:-18.0pt;
+line-height:normal' id="translation-web-interface">
+        <b>
+            <span lang=PT style='font-size:12.0pt'>
+                1)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:12.0pt'>
+                Tradu&ccedil;&atilde;o do texto na
+                p&aacute;gina Web do fornecedor
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;text-align:justify;line-height:
+normal'>
+        <span lang=PT>
+            Google, Microsoft e SYSTRAN oferecem interfaces Web
+            simples que permitem aos usu&aacute;rios traduzir trechos de texto de um idioma
+            para outro. A tradu&ccedil;&atilde;o &eacute; feita em tr&ecirc;s etapas (iguais
+            para todos os tr&ecirc;s fornecedores):
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:71.4pt;text-align:justify;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Digite ou cole o texto que ir&aacute; traduzir no
+            campo de texto &agrave; esquerda.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:71.4pt;text-align:justify;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Selecione os idiomas atrav&eacute;s dos menus suspensos
+            – o idioma de que est&aacute; a traduzir e o idioma para a qual se traduz.
+            Google e Microsoft proporcionam a op&ccedil;&atilde;o de reconhecimento
+            autom&aacute;tico do idioma do texto original.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:71.4pt;text-align:justify;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Clique no bot&atilde;o Traduzir. A
+            tradu&ccedil;&atilde;o aparece no campo de texto &agrave; direita.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;text-align:justify;line-height:
+normal'>
+        <span lang=PT>
+            Nas p&aacute;ginas a seguir s&atilde;o demonstrados as
+            interfaces para tradu&ccedil;&atilde;o autom&aacute;tica dos tr&ecirc;s
+            fornecedores:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <b>
+            <i>
+                <span lang=PT>
+                    a)<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b><i><span lang=PT>Google Tradutor</span></i></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <span lang=PT>Endere&ccedil;o Web: </span><a href="https://translate.google.com/"><span lang=PT>https://translate.google.com/</span></a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>Tradu&ccedil;&atilde;o a partir de: 103 idiomas</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <img border=0 width=599 height=338 id="Picture 15"
+             src="~/Content/Images/machine-translation/pt/3.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span lang=PT style='color:
+black;background:white'>Guia de uso:</span>
+                </i>
+            </b>
+        </span><span class=apple-converted-space><span lang=PT> </span></span><a href="https://support.google.com/translate/#googtrans">
+            <span class=apple-converted-space><span lang=PT>https://support.google.com/translate/#googtrans</span></span>
+        </a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal;
+page-break-after:avoid'>
+        <b>
+            <i>
+                <span lang=PT>
+                    b)<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b><i><span lang=PT>Microsoft Bing Tradutor</span></i></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle>
+        <span lang=PT>Endere&ccedil;o Web: </span><a href="http://www.bing.com/translator/"><span lang=PT>http://www.bing.com/translator/</span></a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <span lang=PT>
+            Volume m&aacute;ximo do texto a traduzir: 5000 caracteres
+            (com espa&ccedil;os)
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>Tradu&ccedil;&atilde;o a partir de: 52 idiomas</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <img border=0 width=597 height=338 id="Picture 16"
+             src="~/Content/Images/machine-translation/pt/4.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle>
+        <span lang=PT style='font-size:10.0pt;
+line-height:107%'>&nbsp;</span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;text-indent:
+-18.0pt;line-height:normal'>
+        <b>
+            <i>
+                <span lang=PT>
+                    c)<span style='font:7.0pt "Times New Roman"'>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                </span>
+            </i>
+        </b><b><i><span lang=PT>SYSTRANet</span></i></b>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <span lang=PT>Endere&ccedil;o Web: </span><a href="http://www.systranet.com/translate"><span lang=PT>http://www.systranet.com/translate</span></a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle>
+        <span lang=PT>
+            Volume m&aacute;ximo do texto
+            a traduzir: 1,000 palavras
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>Tradu&ccedil;&atilde;o a partir de: 15 idiomas</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><b><span lang=PT>&nbsp;</span></b></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <img border=0 width=601 height=339 id="Picture 3"
+             src="~/Content/Images/machine-translation/pt/5.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'>
+        <span class=apple-converted-space>
+            <b>
+                <i>
+                    <span lang=PT style='color:
+black;background:white'>Guia de uso:</span>
+                </i>
+            </b>
+        </span><span class=apple-converted-space><span lang=PT> </span></span><a href="http://www.systransoft.com/translation-support/online-services/systranet/user-guide/">
+            <span class=apple-converted-space><span lang=PT>http://www.systransoft.com/translation-support/online-services/systranet/user-guide/</span></span>
+        </a>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;line-height:
+normal'><span lang=PT style='font-size:12.0pt'>&nbsp;</span></p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:54.0pt;text-align:justify;text-indent:-18.0pt;
+line-height:normal' id="translation-integrated-functions">
+        <b>
+            <span lang=PT style='font-size:12.0pt'>
+                2)<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:12.0pt'>
+                Tradu&ccedil;&atilde;o de texto marcado com
+                fun&ccedil;&otilde;es integradas no navegador do usu&aacute;rio
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            Google Tradutor &eacute; acess&iacute;vel atrav&eacute;s de aditamentos
+            em alguns navegadores que podem usar a m&aacute;quina de
+            tradu&ccedil;&otilde;es. Por exemplo, v&aacute;rios
+        </span><a href="https://addons.mozilla.org/en-US/firefox/search/?q=google+translate&amp;appver=&amp;platform=">
+            <span lang=PT>aditamentos para Firefox</span>
+        </a><span lang=PT>
+            usam os
+            servi&ccedil;os do Google Tradutor. Por regra, eles d&atilde;o acesso ao
+            servi&ccedil;o por meio do bot&atilde;o direito do rato. Em suplemento, alguns
+            deles proporcionam ainda a tradu&ccedil;&atilde;o da p&aacute;gina Web
+            correntemente aberta numa nova janela. O navegador Chrome integra plenamente em
+            si o servi&ccedil;o Google Tradutor assegurando a tradu&ccedil;&atilde;o
+            autom&aacute;tica da p&aacute;gina Web na mesma janela (veja o Cap&iacute;tulo B
+            abaixo).
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            No Internet Explorer 10 poder&aacute; usar o Bing Tradutor que se
+            encontra instalado por padr&atilde;o. Ele permite aos usu&aacute;rios traduzir
+            partes marcadas do texto por meio de comando com o bot&atilde;o direito do rato.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=647 height=364 id="Picture 1"
+             src="~/Content/Images/machine-translation/pt/6.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:2.0cm;text-align:justify;line-height:normal'>
+        <b>
+            <span lang=PT style='font-size:14.0pt'>&nbsp;</span>
+        </b>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:6.0pt;margin-left:39.3pt;text-align:justify;text-indent:-18.0pt;
+line-height:normal' id="webpage-translation">
+        <b>
+            <span lang=PT style='font-size:14.0pt'>
+                B.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:14.0pt'>Tradu&ccedil;&atilde;o de p&aacute;ginas Web</span>
+        </b>
+    </p>
+
+    <p class=MsoNormal>
+        <span lang=PT>
+            Google Tradutor, Microsoft Bing Tradutor e
+            SYSTRANet prop&otilde;em tamb&eacute;m diferentes variantes para a
+            tradu&ccedil;&atilde;o autom&aacute;tica de p&aacute;ginas Web.
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span lang=PT>
+            Contudo, nesta etapa s&oacute; &eacute; o
+            navegador Google Chrome que o poder&aacute; ajudar a traduzir automaticamente
+            as decis&otilde;es judiciais que se encontram abertas no quadro da interface de
+            EuroCases, porque este &eacute; o &uacute;nico navegador que oferece uma
+            fun&ccedil;&atilde;o permitindo aos usu&aacute;rios traduzir uma p&aacute;gina Web
+            correntemente aberta na mesma janela. Cada vez que abrir uma p&aacute;gina
+            escrita em idioma que n&atilde;o compreende, poder&aacute; usar a
+            fun&ccedil;&atilde;o de tradu&ccedil;&atilde;o autom&aacute;tica de Chrome a
+            fim de traduzir esta p&aacute;gina ao clicar sobre o bot&atilde;o <b>Traduzir</b>
+            no canto esquerdo da faixa de endere&ccedil;o, na parte superior da
+            p&aacute;gina:
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='font-size:10.0pt;line-height:107%'>
+            <img border=0 width=649 height=364 id="Picture 17"
+                 src="~/Content/Images/machine-translation/pt/7.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span lang=PT>
+            Todas as outras solu&ccedil;&otilde;es acima
+            mencionadas abrem a p&aacute;gina que dever&aacute; ser traduzida numa nova
+            janela, mas isso n&atilde;o &eacute; aplic&aacute;vel com EuroCases porque
+            nesse caso o sistema requer uma autoriza&ccedil;&atilde;o do acesso que
+            prejudica a tradu&ccedil;&atilde;o.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:2.0cm;text-align:justify;text-indent:-21.25pt;line-height:
+normal' id="document-translation">
+        <b>
+            <span lang=PT style='font-size:14.0pt'>
+                C.<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:14.0pt'>
+                Tradu&ccedil;&atilde;o
+                de Documentos
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            Poder&aacute; exportar o teor de qualquer documento (decis&atilde;o
+            judicial) para EuroCases em ficheiro RTF ou PDF e traduzi-lo atrav&eacute;s do
+            respetivo servi&ccedil;o de tradu&ccedil;&atilde;o autom&aacute;tica. &Eacute;
+            poss&iacute;vel faz&ecirc;-lo de duas maneiras:
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Ao carregar o ficheiro do documento no servidor do fornecedor,
+            ou
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpMiddle style='margin-bottom:6.0pt;text-indent:
+-18.0pt;line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Ao requerer &agrave; respetiva
+            aplica&ccedil;&atilde;o de edi&ccedil;&atilde;o proporcionada pelo fornecedor
+            de servi&ccedil;os que traduza o documento aberto pelo usu&aacute;rio.
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:18.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal' id="file-translation">
+        <b>
+            <span lang=PT style='font-size:12.0pt'>
+                1)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:12.0pt'>
+                Tradu&ccedil;&atilde;o
+                de ficheiro
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            Os servi&ccedil;os Google Translate e SYSTRANet permitem ao
+            usu&aacute;rios traduzir ficheiros em formatos diferentes, inclusive rtf e pdf
+            que s&atilde;o os dois formatos de ficheiros usados para a
+            exporta&ccedil;&atilde;o de documentos para EuroCases.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            Para traduzir um ficheiro por meio de Google Tradutor, clique sobre a
+            liga&ccedil;&atilde;o <b>Traduzir documento</b> e em seguida no bot&atilde;o <b>
+                Selecionar
+                ficheiro
+            </b> para carregar o ficheiro:
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span style='font-size:10.0pt'>
+            <img border=0 width=652 height=368 id="Picture 20"
+                 src="~/Content/Images/machine-translation/pt/8.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=652 height=365 id="Picture 24"
+             src="~/Content/Images/machine-translation/pt/9.jpg">
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            O teor do documento traduzido aparecer&aacute; numa nova janela do
+            navegador:
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span style='font-size:12.0pt'>
+            <img border=0 width=649 height=366 id="Picture 26"
+                 src="~/Content/Images/machine-translation/pt/10.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            Para traduzir um ficheiro por meio do SYSTRANet, primeiro dever&aacute;
+        </span><a href="http://www.systran.net/accounts/signup?loc_lang=en&amp;">
+            <span lang=PT>registar-se para o servi&ccedil;o</span>
+        </a><span lang=PT>
+            . SYSTRANet permite-lhe
+            traduzir documentos em formatos de texto do Microsoft Office (doc, docx), assim
+            como rtf, html, htm, e ficheiros txt. Para traduzir um ficheiro atrav&eacute;s
+            do SYSTRANet:
+        </span>
+    </p>
+
+    <p class=MsoListParagraph style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Clique sobre o cap&iacute;tulo <b>File</b> do menu
+            e em seguida sobre o bot&atilde;o <b>Choose file</b> (&quot;Selecionar ficheiro&quot;)
+            para indicar a partir do seu computador qual o ficheiro que pretende traduzir.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=651 height=367 id="Picture 23"
+             src="~/Content/Images/machine-translation/pt/11.jpg">
+    </p>
+
+    <p class=MsoListParagraphCxSpFirst style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Selecione o par de idiomas usando os menus suspensos:
+            selecione o idioma de origem (o idioma de que est&aacute; a traduzir) e o
+            idioma alvo (para o qual ir&aacute; traduzir) e em seguida clique sobre o
+            bot&atilde;o <b>Translate</b> (&quot;Traduzir&quot;) para iniciar a
+            tradu&ccedil;&atilde;o.
+        </span>
+    </p>
+
+    <p class=MsoListParagraphCxSpLast style='margin-bottom:6.0pt;text-indent:-18.0pt;
+line-height:normal'>
+        <span lang=PT style='font-size:10.0pt;font-family:Symbol'>
+            ·<span style='font:7.0pt "Times New Roman"'>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+        </span><span lang=PT>
+            Descarregue o ficheiro traduzido quando estiver
+            pronto ou consulte o seu correio eletr&oacute;nico para verificar se ele
+            n&atilde;o foi enviado para o seu e-mail.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <img border=0 width=651 height=367 id="Picture 25"
+             src="~/Content/Images/machine-translation/pt/12.jpg">
+    </p>
+
+    <p class=MsoListParagraph style='margin-top:18.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:35.7pt;text-indent:-17.85pt;line-height:normal' id="opened-document-translation">
+        <b>
+            <span lang=PT style='font-size:12.0pt'>
+                2)<span style='font:7.0pt "Times New Roman"'>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+            </span>
+        </b><b>
+            <span lang=PT style='font-size:12.0pt'>
+                Tradu&ccedil;&atilde;o
+                de documento aberto
+            </span>
+        </b>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>
+        <span lang=PT>
+            Pode abrir em Microsoft Word ou Google Disco uma decis&atilde;o
+            judicial exportada a partir de EuroCases em formato rtf e requerer em seguida
+            que a respetiva aplica&ccedil;&atilde;o traduza o documento aberto.
+        </span>
+    </p>
+
+    <p class=MsoNormal style='margin-bottom:6.0pt;text-indent:36.0pt;line-height:
+normal'>
+        <b>
+            <i>
+                <span lang=PT>
+                    а) Tradu&ccedil;&atilde;o de documento aberto em MS
+                    Word
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                Clique sobre a divis&atilde;o <b>
+                    Revisar
+                    (Review)
+                </b> na faixa da parte superior do ecr&atilde;, em seguida selecione o
+                bot&atilde;o <b>Traduzir (Translate)</b> e afinal selecione <b>
+                    Traduzir
+                    Documento (Translate Document)
+                </b>. Ir&aacute; aparecer uma janela com uma
+                notifica&ccedil;&atilde;o para o informar que o referido documento ser&aacute;
+                enviado &agrave; Microsoft Bing Tradutor:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='line-height:
+107%;color:black;background:white'>
+                <img border=0 width=655 height=368
+                     id="Picture 11" src="~/Content/Images/machine-translation/pt/13.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                Clique em <b>Sim</b> <b>(Yes) </b>para
+                enviar o texto via internet. O teor do documento traduzido ser&aacute; aberto numa
+                nova janela no seu navegador:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span style='line-height:107%'>
+            <img border=0 width=657
+                 height=370 id="Picture 12"
+                 src="~/Content/Images/machine-translation/pt/14.jpg">
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                A tradu&ccedil;&atilde;o no formato MS
+                Word faz-se a partir do idioma original para o idioma selecionado por entre as
+                op&ccedil;&otilde;es de idiomas dadas. Poder&aacute; mudar de op&ccedil;&atilde;o
+                ao clicar sobre <b>
+                    Selecionar idioma da tradu&ccedil;&atilde;o (Choose
+                    Translation Language)
+                </b> a partir do bot&atilde;o <b>Traduzir</b>:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='font-size:
+12.0pt;line-height:107%;color:black;background:white'>
+                <img border=0 width=651
+                     height=367 id="Picture 13"
+                     src="~/Content/Images/machine-translation/pt/15.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                Al&eacute;m disso, poder&aacute; traduzir
+                ume parte do texto do documento aberto ao marcar um fragmento determinado e
+                selecionar <b>Traduzir texto marcado</b> a partir do bot&atilde;o <b>Traduzir</b>.
+                O texto traduzido aparecer&aacute; num painel &agrave; direita do documento
+                aberto e assim o poder&aacute; copiar ou colar sobre o texto marcado.
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                Para mais informa&ccedil;&atilde;o, assim
+                que para ver um curto v&iacute;deo sobre as fun&ccedil;&otilde;es de
+                tradu&ccedil;&atilde;o em MS Word, consulte:
+            </span>
+        </span><a href="https://www.microsoft.com/en-us/translator/word.aspx">
+            <span class=apple-converted-space><span lang=PT style='background:white'>https://www.microsoft.com/en-us/translator/word.aspx</span></span>
+        </a><span class=apple-converted-space><span lang=PT style='color:black;background:white'>.</span></span>
+    </p>
+
+    <p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:6.0pt;
+margin-left:18.0pt;line-height:normal'>
+        <b>
+            <i>
+                <span lang=PT>
+                    b) Tradu&ccedil;&atilde;o
+                    de documento aberto em Google Disco
+                </span>
+            </i>
+        </b>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                Clique sobre o menu <b>Ferramentas</b> na
+                parte superior do ecr&atilde; e em seguida selecione <b>Traduzir documento</b>:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='font-size:
+12.0pt;line-height:107%;color:black;background:white'>
+                <img border=0 width=652
+                     height=368 id="Picture 27"
+                     src="~/Content/Images/machine-translation/pt/16.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                Aparecer&aacute; uma nova janela em que
+                dever&aacute; selecionar o idioma para o qual pretende traduzir o documento. Em
+                seguida clique sobre o bot&atilde;o <b>Traduzir</b>:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span style='font-size:
+12.0pt;line-height:107%;color:black;background:white'>
+                <img border=0 width=652
+                     height=368 id="Picture 28"
+                     src="~/Content/Images/machine-translation/pt/17.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>
+                O Google Disco abrir&aacute; uma &quot;c&oacute;pia
+                traduzida&quot; do documento original numa nova janela do navegador:
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=Heading2Char>
+            <span style='font-size:18.0pt;
+line-height:107%;color:black;background:white'>
+                <img border=0 width=653
+                     height=368 id="Picture 18"
+                     src="~/Content/Images/machine-translation/pt/18.jpg">
+            </span>
+        </span>
+    </p>
+
+    <p class=MsoNormal>
+        <span class=apple-converted-space>
+            <span lang=PT
+                  style='color:black;background:white'>&nbsp;</span>
+        </span>
+    </p>
+
+</div>

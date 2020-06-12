@@ -1,0 +1,967 @@
+﻿@using Interlex.App.Resources
+@using Interlex.BusinessLayer.Models
+@using Interlex.App.Helpers
+@using Interlex.BusinessLayer;
+<header class="header-main">
+    <nav id="navbar-default">
+        @if (true)
+        {
+
+
+
+            <div id="secSearchLeft" class="left">
+                <a href="#" id="top-mobile-navigation-trigger" class="desktop-hidden">
+                    <span class="fa fa-bars"></span>
+                </a>
+                <a href="~/" class="relative" id="top-logo">
+                    <div class="logo-main-eu"></div>
+                    @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username == "sysdemo")
+                    {
+                        <span class="logo-free-tour @(Request.Browser.Browser == "InternetExplorer" ? "ie" : String.Empty) @(Request.Browser.Browser == "Firefox" ? "firefox" : String.Empty)">
+                            @*@Resources.UI_FreeTour.CapitalizeFirstLetter()*@
+                        </span>
+                    }
+                </a>
+                <a href="#" id="top-mobile-search-trigger" class="desktop-hidden">
+                    <span class="fa fa-search"></span>
+                </a>
+            </div>
+
+
+
+
+            <ul class="left horizontal mobile-context-menu" id="navbar-ul">
+                @*@if (System.Configuration.ConfigurationManager.AppSettings["SolutionVersion"] == "product" && System.Configuration.ConfigurationManager.AppSettings["ShowProductsMenu"] == "1"
+                    && ((Session["UserData"] as UserData).Products.Where(p => p.IsActive.HasValue && p.IsActive == true).ToList().Count > 1))
+                                {
+                                    <li id="list-element-product-change" class="padding-7 relative f-italic f-bold" style="font-size: 1.1em; background-color: #efefee;">
+                                        <a href="#" id="link-product-change" style="color: #148dd4 !important; padding-top: 0px !important;">
+                                            @{
+                                                var selectedProductAsInt = 1;
+                                                //var selectedProduct = Request.Cookies["SelectedProductId"];
+                                                var selProduct = Session["SelectedProductId"];
+                                                if (selProduct != null && selProduct.ToString() != "")
+                                                {
+                                                    selectedProductAsInt = int.Parse(selProduct.ToString());
+
+                                                    <span>@((Session["ProductsList"] as List<Product>).Where(p => p.ProductId == selectedProductAsInt).Select(p => p.ProductName).FirstOrDefault())</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>@((Session["ProductsList"] as List<Product>).Select(p => p.ProductName).FirstOrDefault())</span>
+                                                }
+                                            }
+                                            <span class="fa fa-chevron-down"></span>
+                                        </a>
+                                    </li>
+                                                }*@
+
+                <li class="padding-7 mobile-hidden">
+                    <a href="~/" id="nav-link-home">
+                        @*<span class="fa fa-home margin-right-2 span-navigation" title="@Resources.UI_Home"></span>*@
+                        <span class="span-navigation-label">@Resources.UI_Home</span>
+                    </a>
+                </li>
+                @{
+                    // v.o [2017.02.03] added tab for new documents for eurofins. the new document tab will show new documents
+                    // per month manner depending the date of the original eurlex document
+                    if (this.Session.IsCurrentProductEuFins())
+                    {
+                        <li class="padding-7">
+                            <a href="~/DocumentsForPeriod/Index" id="nav-link-new-documents">
+                                <span class="fa fa-file-text-o margin-right-2 span-navigation" title="@Resources.UI_Fins_NewDocuments"></span>
+                                <span class="span-navigation-label">@Resources.UI_Fins_NewDocuments</span>
+                            </a>
+                        </li>
+                    }
+                }
+
+                @if (Session["UserData"] != null)
+                {
+                    <li class="padding-7">
+                        <a href="~/RecentDocuments/Index" id="nav-link-recent-documents">
+                            @*<span class="fa fa-history margin-right-2 span-navigation" title="@Resources.UI_RecentDocuments_Upper"></span>*@
+                            <span class="span-navigation-label span-navigation-label-registered">@Resources.UI_RecentDocuments_Upper</span>
+                        </a>
+                    </li>
+
+                    <li class="padding-7">
+                        <a href="~/User/MyDocuments" id="nav-link-my-documents">
+                            @*<span class="fa fa-star margin-right-2 span-navigation" title="@Resources.UI_JS_MyDocuments"></span>*@
+                            <span class="span-navigation-label span-navigation-label-registered">@Resources.UI_JS_MyDocuments</span>
+                        </a>
+                    </li>
+
+                    <li class="padding-7">
+                        <a href="~/User/MySearches" id="nav-link-my-searches">
+                            @*<span class="fa fa-search margin-right-2 span-navigation" title="@Resources.UI_MySearches_Upper"></span>*@
+                            <span class="span-navigation-label span-navigation-label-registered">@Resources.UI_MySearches_Upper</span>
+                        </a>
+                    </li>
+                }
+
+                @if (int.Parse(Session["SelectedProductId"].ToString()) == 2) //EuroFins
+                {
+                    <li class="padding-7">
+                        <a href="~/Finances/FinancesCurrencyECB" id="nav-link-finances">
+                            @*<span class="fa fa-money margin-right-2 span-navigation" title="@Resources.UI_Finances"></span>*@
+                            <span class="span-navigation-label">@Resources.UI_Finances</span>
+                        </a>
+                    </li>
+                }
+
+                @*<li class="padding-7 relative clearfix-mobile" style="border-right: none;">
+                        <div id="help-container" class="arrow_box_left">
+                            @if (Convert.ToInt32(Session["SelectedProductId"]) == 1)
+                            {
+                                <div class="padding-left-5"><a href="~/Content/Pdf/EuroCases_User_Manual_EN.pdf" target="_blank"><img src="~/Content/Images/flags/en.png" /> USER MANUAL<span class="f-orange f-bold">(PDF 2.09MB)</span></a></div>
+                                <div class="padding-left-5"><a href="~/Content/Pdf/EuroCases_User_Manual_FR.pdf" target="_blank"><img src="~/Content/Images/flags/fr.png" /> MANUEL DE L'UTILISATEUR<span class="f-orange f-bold">(PDF 2.40MB)</span></a></div>
+                                <div class="padding-left-5"><a href="~/Content/Pdf/EuroCases_User_Manual_DE.pdf" target="_blank"><img src="~/Content/Images/flags/de.png" /> BENUTZERHANDBUCH<span class="f-orange f-bold">(PDF 2.24MB)</span></a></div>
+                                <div class="padding-left-5"><a href="~/Content/Pdf/EuroCases_User_Manual_BG.pdf" target="_blank"><img src="~/Content/Images/flags/bg.png" /> РЪКОВОДСТВО ЗА ПОТРЕБИТЕЛЯ<span class="f-orange f-bold">(PDF 2.53MB)</span></a></div>
+                            }
+                            else if (Convert.ToInt32(Session["SelectedProductId"]) == 2)
+                            {
+                                <div class="padding-left-5"><a href="~/Content/Pdf/TaxAndFinancialStandards_User_Manual_EN.pdf" target="_blank"><img src="~/Content/Images/flags/en.png" /> USER MANUAL<span class="f-orange f-bold">(PDF 4.01MB)</span></a></div>
+                                <div class="padding-left-5"><a href="~/Content/Pdf/TaxAndFinancialStandards_User_Manual_BG.pdf" target="_blank"><img src="~/Content/Images/flags/bg.png" /> РЪКОВОДСТВО ЗА ПОТРЕБИТЕЛЯ<span class="f-orange f-bold">(PDF 4.04MB)</span></a></div>
+                            }
+
+                            <hr />
+                            <div style="text-align: right !important; padding-right: 5px;"><a href="https://get.adobe.com/reader/" target="_blank"><i class="fa fa-download"></i> Adobe Reader</a></div>
+                        </div>
+                        <a href="#" id="nav-link-help"><span class="fa fa-question-circle margin-right-2 span-navigation" title="@Resources.UI_Help"></span> <span class="span-navigation-label">@Resources.UI_Help</span></a>
+                    </li>*@
+                @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() != "sysdemo")
+                {
+
+                    <li class="padding-7 relative desktop-hidden" id="li-user-mobile">
+                        <a href="javascript:void(0);" id="nav-link-user-mobile">
+                            @*<span class="fa fa-user margin-right-2 span-navigation"></span>*@
+                            <span class="span-navigation-label">@Resources.UI_User</span>
+                        </a>
+                    </li>
+                }
+
+                @*@if (Session["UserData"] != null && (Session["UserData"] as UserData).Products.Count(p => p.IsActive == true) > 1)
+                    {
+
+                        <li style="height: auto !important;" class="padding-7 relative desktop-hidden" id="li-product-change-mobile">
+                            <span class="span-navigation-label"><span onclick="changeSelectedProduct('1')"><span class="fa fa-circle@(Convert.ToInt32(Session["SelectedProductId"]) != 1 ? "-o" : String.Empty)"></span> EuroCases</span><br /> <span onclick="changeSelectedProduct('2')"><span class="fa fa-circle@(Convert.ToInt32(Session["SelectedProductId"]) != 2 ? "-o" : String.Empty)"></span> Tax & Financial Standards</span></span>
+                        </li>
+                    }*@
+
+                <li class="padding-7 relative desktop-hidden" id="mobile-container-languages">
+                    <a href="#" id="nav-link-mobile-languages">
+                        @{
+                            var currentLangObj = InterfaceLanguages.GetLanguageById(Convert.ToInt32(Session["LanguageId"]));
+                            @*<script>
+                                    $(document).ready(function () {
+                                        $('body').addClass('lang-' + '@currentLangObj.ShortCode');
+                                    });
+                                </script>*@
+                        }
+                        <img src="~/Content/Images/flags/@(currentLangObj.ShortCode).png" />
+                        <span class="span-navigation-label">@currentLangObj.Text</span>
+                        <span class="fa fa-chevron-down f-1-3 right"></span>
+                    </a>
+                </li>
+                <li class="padding-7 relative desktop-hidden clearfix-mobile text-center" id="mobile-container-products" style="border-top: 1px solid white !important;">
+                    @if (Session["ProductsList"] != null)
+                    {
+                        foreach (var product in Session["ProductsList"] as List<Product>)
+                        {
+                            <div class="product-holder padding-left-5 padding-right-5" style="display: inline-block">
+                                @if (product.ProductId == Convert.ToInt32(Session["SelectedProductId"]))
+                                {
+                                    <span class="fa fa-square"></span> @product.ProductName
+                                }
+                                else
+                                {
+                                    <a href="javascript:changeSelectedProduct('@product.ProductId');"><span class="fa fa-square-o"></span> @product.ProductName</a>
+                                }
+                            </div>
+                        }
+                    }
+
+                    <div class="clearfix-mobile"></div>
+                </li>
+            </ul>
+        }
+
+        <ul class="right horizontal">
+            @*@if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+                {
+                    <li class="padding-7" id="li-main-site"><a href="http://eurocases.eu" target="_blank">@Resources.UI_BuyNow</a></li>
+                    @*   <li class="padding-7" id="li-about-free-tour"><a href="javascript:void(0);">@Resources.UI_AboutFreeTour</a></li>
+                }
+                else if (Session["UserData"] != null)
+                {
+                    @*   <li class="padding-7 relative" id="li-document-type-trigger">
+                        <a href="javascript:void(0);" id="nav-link-document-type-trigger">@*<span class="fa fa-gavel  margin-right-2 span-navigation"></span> <span class="span-navigation-label">
+                                    @(Request.Cookies["include_free_cases_docs"] != null && Request.Cookies["include_free_cases_docs"].Value != null && int.Parse(Request.Cookies["include_free_cases_docs"].Value) == 1 ? Resources.UI_FreeDocsTrigger_Hide : Resources.UI_FreeDocsTrigger_Show )
+
+                                    </span></a>
+                    </li>
+                }*@
+            @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() == "sysdemo")
+            {
+                <li class="li-chevron padding-7">@Html.ActionLink(Resources.UI_Registration, "Registration", "Login")</li>
+                <li class="li-chevron padding-7">
+                    <a href="~/Login/Logout/1">@System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Resources.UI_Login_Upper.ToLower())</a>
+                </li>
+            }
+
+            <li class="li-chevron padding-7">@Html.Action("LanguageMenu", "ContextMenus")</li>
+            @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() != "sysdemo")
+            {
+                <li class="li-chevron padding-7">@Html.Action("UserMenu", "ContextMenus")</li>
+            }
+        </ul>
+
+        @*@if (Session["UserData"] != null)
+                {
+            <div id="container-product-change" class="arrow_box_left" style="display: none;">
+                @{
+                    // var productsList = Session["ProductsList"] as List<Product>;
+                    var productsList = (Session["UserData"] as UserData).Products.Where(p => p.IsActive.HasValue && p.IsActive == true).ToList();
+                int selectedProductId = 1;
+                // var selectedProduct = Request.Cookies["SelectedProductId"];
+                var selectedProduct = Session["SelectedProductId"];
+                    if (selectedProduct != null && selectedProduct.ToString() != "")
+                    {
+                        selectedProductId = int.Parse(selectedProduct.ToString());
+            }
+                    foreach (var item in productsList)
+                    {
+                        if (item.ProductId == selectedProductId)
+                        {
+                            continue;
+                        }
+
+                        <div style="display: block;">
+                            <a href="javascript: changeSelectedProduct('@item.ProductId')">
+                                @if (item.IsActive == true)
+            {
+                                    <span>@item.ProductName</span>
+                                }
+                                else
+                                {
+                                    <span class="f-lgrey">@item.ProductName</span>
+                                }
+                            </a>
+                        </div>
+                    }
+
+                }
+
+            </div>
+                    }*@
+        @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username.ToLower() != "sysdemo")
+        {
+            <div id="user-details" class="arrow_box mobile-context-menu">
+                <div class="text-left margin-top-10">
+                    <span class="f-bold">
+                        @Resources.UI_Username_Upper.ToLower().CapitalizeFirstLetter():
+                    </span>
+                    @(((UserData)Session["UserData"]).Username)
+                </div>
+                <div class="text-left margin-top-10">
+                    <span class="f-bold">
+                        @Resources.UI_Password_Upper.ToLower().CapitalizeFirstLetter():
+                    </span>
+                    ******
+                    <button class="btn btn-blue f-white btn-medium-wide" type="button" id="btn-change-password-direct">
+                        @Resources.UI_ChangePassword
+                    </button>
+                </div>
+
+                @*<div class="text-left f-bold margin-top-10">
+                            @(((Interlex.BusinessLayer.Models.UserData)Session["UserData"]).Fullname) <span class="f-blue">
+                                @{
+                                    switch (((Interlex.BusinessLayer.Models.UserData)Session["UserData"]).UserTypeId)
+                                    {
+                                        case 1: @("- " + Resources.UI_Administrator); break;
+                                    case 3: @("- " + Resources.UI_Seller); break;
+                                case 4: @("- " + Resources.UI_DemoUser); break;
+                            case 5: @("- " + Resources.UI_LocalUser); break;
+                    }
+                                }
+                            </span>
+                        </div>*@
+                @*<div class="margin-top-10 text-left">
+                        <span class="f-bold">@Resources.UI_Client:</span> @(((Interlex.BusinessLayer.Models.UserData)Session["UserData"]).ClientName)
+                    </div>*@
+                @*<div class="text-center margin-top-10">
+                        @if (((Interlex.BusinessLayer.Models.UserData)Session["UserData"]).Products.Count == 0)
+                        {
+                            <div class="f-grey">@Resources.UI_NoProducts</div>
+                        }
+                        else
+                        {
+                            <table class="text-left" id="header-table-products" style="border-spacing: 0px; padding-left: 0; width:100%;">
+                                <thead class="f-blue">
+                                    <tr>
+                                        <th style="border-bottom: 1px solid #B8B8B8; width: 70%;">@Resources.UI_Product</th>
+                                        <th style="border-bottom: 1px solid #B8B8B8; width: 30%;">@Resources.UI_ValidTo</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in ((Interlex.BusinessLayer.Models.UserData)Session["UserData"]).Products)
+                                    {
+                                        <tr>
+                                            <td>@item.ProductName <span class="f-blue">@(item.Demo == true ? "(" + Resources.UI_Trial + ")" : "")</span></td>
+                                            <td>@item.EndDate.Value.ToString("dd.MM.yyyy")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>*@
+                <div class="margin-top-20 text-center">
+                    <button type="button" id="settings" class="btn btn-medium-wide btn-blue f-white" role="menuitem" onclick="settingsClick(this)"><span class="fa fa-cogs"></span> @Resources.UI_Settings</button>
+                    <button type="button" role="menuitem" class="btn btn-medium-wide btn-lgrey f-blue" id="button-logout"><span class="fa fa-sign-out"></span> @Resources.UI_Logout_Upper</button>
+                </div>
+            </div>
+        }
+
+
+        <div class="clearfix"></div>
+    </nav>
+
+    <div style="height:35px;" id="nav-delimiter"></div>
+    @if (Session["UserData"] != null)
+    {
+        <div class="display-none" id="mobile-languages-modal">
+            <table id="nav-link-mobile-langs-container">
+                @{
+                    var currentLangObj = InterfaceLanguages.GetLanguageById(Convert.ToInt32(Session["LanguageId"]));
+                    int langCounter = 0;
+                }
+                @foreach (var lang in InterfaceLanguages.Languages.Where(l => l.IsInterfaceLang == true).ToList())
+                {
+                    if (langCounter % 3 == 0)
+                    {
+                        @:<tr>
+                        }
+
+                        <td onclick="changeLang('@lang.Code')" class="@(lang.Id == currentLangObj.Id ? "current" : String.Empty)">
+                            <a href="javascript:void(0);">
+                                <img src="~/Content/Images/flags/@(lang.ShortCode).png" />
+                                <span class="span-navigation-label">@lang.Text</span>
+                            </a>
+                        </td>
+
+                        if (langCounter % 3 == 2)
+                        {
+                        @:</tr>
+                    }
+
+                    langCounter++;
+                }
+            </table>
+        </div>
+    }
+
+    @if (Session["UserData"] != null)
+    {
+        Html.RenderAction("Show", "SearchBox");
+    }
+</header>
+
+@if (Session["UserData"] != null)
+{
+    <script>
+        $('#btn-change-password-direct').on('click', function () {
+            settingsClick(this);
+            $('#settings-password').trigger('click');
+        });
+
+        function changeSelectedProduct(id, refresh) {
+            eraseCookie("SelectedProductId");
+            setCookie("SelectedProductId", id, 365);
+
+            if (refresh !== false) {
+                window.location.href = "/";
+            }
+        }
+
+        $('#nav-link-help').click(function (e) {
+            e.preventDefault();
+
+            if ($('#help-container').is(':visible')) {
+                $('#help-container').hide();
+            }
+            else {
+                if (getDeviceWidth() <= 480) {
+                    // TODO: do stuff for help showing in mobile ;[
+                   // $('#navbar-default').hide();
+                }
+
+                $('#help-container').show();
+
+                if ($('#language-menu').is(':visible')) {
+                    $('#language-menu').hide();
+                }
+
+                if ($('#user-details').is(':visible')) {
+                    $('#user-details').hide();
+                }
+
+                if ($('#container-product-change').is(':visible')) {
+                    $('#container-product-change').hide();
+                }
+            }
+        });
+
+        $('#link-product-change').click(function (e) {
+            if ($('#container-product-change').is(':visible')) {
+                $('#container-product-change').hide();
+            }
+            else {
+                $('#container-product-change').show();
+
+                if ($('#language-menu').is(':visible')) {
+                    $('#language-menu').hide();
+                }
+
+                if ($('#user-details').is(':visible')) {
+                    $('#user-details').hide();
+                }
+
+                if ($('#help-container').is(':visible')) {
+                    $('#help-container').hide();
+                }
+            }
+        });
+
+        function settingsClick(e) {
+            $("#settings-popup")
+                .dialog({
+                    dialogClass: 'dialog-settings fixed-dialog settings-popup-dialog',
+                    autoOpen: true,
+                    resizable: false,
+                    height: 380,
+                    title: '<span class="fa fa-cogs"></span> @Resources.UI_Settings',
+                    width: 'auto',
+                    maxWidth: 560,
+                    defaultWidth: 560,
+                    modal: true,
+                    draggable: true,
+                    fluid: true,
+                    position: { my: 'top', at: 'top+250' },
+                    open: function () {
+                        $('.ui-widget-overlay').addClass('settings-overlay');
+                        isAModalOpened = true;
+                    },
+                    close: function () {
+                        $('#change-password-result').html('&nbsp;')
+                        $('.ui-widget-overlay').removeClass("settings-overlay");
+                        setTimeout(function () {
+                            isAModalOpened = false;
+                        }, 200);
+                    }
+                });
+
+            $('#user-details').hide();
+        }
+
+        $('#button-logout').click(function (e) {
+            e.preventDefault();
+
+            window.location.href = appRootFolder + "/Login/Logout";
+        });
+
+        function setSearchBorders(visible) {
+            if (visible) {
+                $('#secSearchRight').addClass('adv-search-border-top');
+                $('.secAdvSearchRight').addClass('adv-search-border-bottom');
+            }
+            else {
+                $('#secSearchRight').removeClass('adv-search-border-top');
+                $('.secAdvSearchRight').removeClass('adv-search-border-bottom');
+            }
+        }
+
+        $('#secAdvSearch').hide();
+
+        $('#formCases').keyup(function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                DoSearch('tabCases');
+            }
+        });
+
+        $('#formLaw').keyup(function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                DoSearch('tabLaw');
+            }
+        });
+
+        function hideDocSpecificContent() {
+            if ($('#doc-view-top-bar').length) {
+                $('#doc-view-top-bar').hide();
+            }
+
+            if ($('#doc-view-top-holder').length) {
+                $('#doc-view-top-holder').hide();
+            }
+
+            if ($('#doc-view-container').length) {
+                $('#doc-view-container').hide();
+            }
+        }
+
+        function showDocSpecificContent(showDocNav) {
+            if ($('#doc-view-top-bar').length) {
+                $('#doc-view-top-bar').show();
+            }
+
+            if ($('#doc-view-top-holder').length && showDocNav) {
+                $('#doc-view-top-holder').show();
+            }
+
+            if ($('#doc-view-container').length) {
+                $('#doc-view-container').show();
+            }
+        }
+
+        $('#btnAdvSearch').click(function (e) {
+            e.preventDefault();
+
+            $('#btnAdvSearch').trigger('blur');
+
+            var focused = $(':focus'),
+                showDocNav = false;
+            if (!(focused.hasClass('clearable') || focused.hasClass('clearable-classifier') || focused.hasClass('clearable-enactment') || focused.hasClass('clearable-provision'))) {
+                if ($('#secAdvSearch').is(":visible")) {
+                    $('#btnAdvSearch').html('@Resources.UI_AdvancedSearch <span class="fa fa-chevron-down"></span>');
+                    $('#secAdvSearch').hide();
+                    $('#btn-search-icon').show();
+                    $('#secSearch').css('border-bottom', '1px solid rgba(203,203,203,0.4)');
+                    $('#secAdvSearch').css('border-bottom', '0');
+                    $('#secSearchRight').css('background-color', 'transparent');
+
+                    $('#secSearch').css('position', 'fixed');
+                 //   $('.body-container').css('min-height', '600px');
+                    $('.body-container').css('margin-top', '60px');
+
+                    setSearchBorders(false);
+
+                    $('.tooltipster-shadow').css('display', 'block');
+                  //  $('footer').removeClass('footer-fixed');
+                    if ($('#simple-search-mobile').css('display') === 'none') {
+                        $('.container-fluid.main-content').show();
+
+                        if ($('#mobile-filters-show-button-act').hasClass('filters-shown') || $(window).width() > 800) {
+                            showDocNav = true;
+                        }
+
+                        showDocSpecificContent(showDocNav);
+                    }
+                } else {
+                    $('#btnAdvSearch').html('@Resources.UI_QuickSearch <span class="fa fa-chevron-up"></span>');
+                    $('#btn-search-icon').hide();
+                    $('#secAdvSearch').show();
+
+                    if ($('.chevron-doc-navigation-closed').css('display') !== 'none') {
+                        $('.chevron-doc-navigation-closed').trigger('click');
+                    }
+
+                    $('#secSearch').css('border-bottom', '0');
+                    $('#secAdvSearch').css('border-bottom', '1px solid rgba(203,203,203,0.4)');
+                    $('#secAdvSearchRight').css('border-top', '10px solid #f7f7f7');
+                    $('#secSearchRight').css('background-color', '#f3faff');
+
+                    if ($('.chevron-doc-navigation-closed').length) {
+                        $('.chevron-doc-navigation-closed').hide();
+                    }
+
+                    $('#secSearch').css('position', 'relative');
+
+                //    $('.body-container').css('min-height', '0px');
+
+                    if ($('#doc-view-top-bar').length) {
+                        $('.body-container').css('margin-top', '6%');
+                    } else {
+                        $('.body-container').css('margin-top', '5px');
+                    }
+
+                    setSearchBorders(true);
+
+                    $('.tooltipster-shadow').css('display', 'none');
+
+                    $("html, body").animate({ scrollTop: 0 }, "fast");
+                  //  $('footer').addClass('footer-fixed');
+                    if ($('#simple-search-mobile').css('display') === 'none') {
+                        $('.container-fluid.main-content').hide();
+                        hideDocSpecificContent();
+                    }
+
+                    var searchTextVal = $('#SearchText').val();
+
+                    if (searchTextVal !== undefined && searchTextVal !== null && searchTextVal !== '') {
+                        $('#SearchText').focus();
+                    }
+                }
+            }
+        });
+
+        // Closing menus on out of menu click
+        $('html').click(function () {
+            $('#language-menu').hide();
+            $('#user-details').hide();
+            $('#law-date-type-dropdown').hide();
+            $('#help-container').hide();
+            $('#container-product-change').hide();
+
+            if (getDeviceWidth() <= 480 && $('#navbar-default').css('display') === 'block') {
+                $('#top-mobile-navigation-trigger').trigger('click');
+            }
+        });
+
+        $('.dropdown-menu, .dropdown, #user-details, #help-container, #nav-link-help, #link-product-change, #container-product-change, #navbar-default').click(function (event) {
+            event.stopPropagation();
+        });
+
+        // Closing advanced search on escape press
+        $(document).keyup(function (e) {
+            if (e.keyCode === 27) {
+                var someOpen = false;
+                var allDialogs = $('.ui-dialog');
+                allDialogs.each(function () {
+                    if ($(this).css('display') !== 'none') {
+                        someOpen = true;
+                        return false;
+                    }
+                });
+
+                if ($('#secAdvSearch').is(":visible") && someOpen === false && isAModalOpened === false) {
+                    $('#btnAdvSearch').trigger('click');
+                }
+            }
+        });
+
+        $().ready(function () {
+            $('#top-mobile-navigation-trigger').on('click', function () {
+                $('.mobile-context-menu:not(#navbar-ul)').hide();
+                var navBar = $('#navbar-default');
+                if (navBar.css('display') === 'none') {
+                    // navBar.show(200);
+                    navBar.show();
+                    $('#navbar-ul').slideDown(300);
+                }
+                else {
+                    // navBar.hide(200);
+                    $('#navbar-ul').slideUp(300);
+                    setTimeout(function () {
+                        navBar.hide();
+                    }, 300);
+                }
+
+                return false;
+            });
+
+            $('#top-mobile-search-trigger').on('click', function (e, keepAdvSearch) {
+                var simpleSearchMobile = $('#simple-search-mobile'),
+                    showDocNav = false,
+                    height;
+                if (simpleSearchMobile.css('display') === 'none') {
+
+                    $('.container-fluid.main-content').hide();
+                    height = $(window).height() - ($('#simple-search-mobile').height() + $('footer').height() + 120);
+                    $('.body-container').css('min-height', height + 'px');
+                    simpleSearchMobile.show();
+                    window.scrollTo(0, 0);
+                    hideDocSpecificContent();
+                } else {
+                    simpleSearchMobile.hide();
+                    if ($('#secAdvSearch').css('display') !== 'none' && !keepAdvSearch) {
+                        $('#btn-adv-search-mobile').trigger('click');
+                    }
+
+                    $('.body-container').css('min-height', '800px');
+                    if (!keepAdvSearch) {
+                        $('.container-fluid.main-content').show();
+                        if ($('#mobile-filters-show-button-act').hasClass('filters-shown')) {
+                            showDocNav = true;
+                        }
+
+                        showDocSpecificContent(showDocNav);
+                    }
+                }
+
+                return false;
+            });
+
+            $('.mobile-filters-show-button').on('click', function () {
+                var page = $(this).attr('data-page');
+                var filtersContainer = $('.filters-container');
+                if (filtersContainer.css('display') === 'none') {
+                    $(this).addClass('f-orange-important');
+                    $(this).addClass('filters-shown');
+
+                    if (getDeviceWidth() <= 480) {
+                        // hiding navigations and search forms
+                        $('.mobile-context-menu').hide();
+                        if ($('#simple-search-mobile').css('display') !== 'none') {
+                            $('#top-mobile-search-trigger').trigger('click');
+                        }
+                    }
+
+                    if (page === 'recent-documents') {
+                        $('#recent-docs-container').hide();
+                        $('#doc-filter-pagination-container').hide();
+                    }
+                    else if (page === 'my-documents') {
+                        //     $('#doc-filter-pagination-container').hide();
+                        //     $('#my-documents-list-container').hide();
+                    }
+                    else if (page === 'search-result') {
+                        $('#dSearchResultContainer').hide();
+                        $('.body-demo .banner-container-mobile').hide();
+                    }
+                    else if (page === 'my-searches') {
+                        $('.my-searches-table-container').hide();
+                    }
+                    else if (page === 'act') {
+                        //  $('#doc-view-container').hide();
+                        //  $('#doc-view-top-bar').hide();
+                      //  $('.body-demo .banner-container-mobile').hide();
+                    }
+                    else if (page === 'home') {
+                        $('#list_container').hide();
+                        $('#index-right-container').hide();
+                        $('.body-demo .banner-container-mobile').hide();
+                    }
+
+                    $('.page-main-title').hide();
+
+                    if (page !== 'act') {
+                        filtersContainer.show("slide", { direction: "left" }, 500);
+                    }
+                    else {
+                        filtersContainer.show();
+                    }
+
+                    window.scrollTo(0, 0);
+                }
+                else {
+                    $(this).removeClass('f-orange-important');
+                    $(this).removeClass('filters-shown');
+
+                    if (page !== 'act') {
+                        filtersContainer.hide("slide", { direction: "left" }, 500);
+                    }
+                    else {
+                        filtersContainer.hide();
+                    }
+
+                    setTimeout(function () {
+                        if (page === 'recent-documents') {
+                            $('#recent-docs-container').show();
+                            $('#doc-filter-pagination-container').show();
+                        }
+                        else if (page === 'my-documents') {
+                            //  $('#doc-filter-pagination-container').show();
+                            //  $('#my-documents-list-container').show();
+                        }
+                        else if (page === 'search-result') {
+                            $('#dSearchResultContainer').show();
+                            $('.body-demo .banner-container-mobile').show();
+                        }
+                        else if (page === 'my-searches') {
+                            $('.my-searches-table-container').show();
+                        }
+                        else if (page === 'act') {
+                            // $('#doc-view-container').show();
+                            // $('#doc-view-top-bar').show();
+                            //$('.body-demo .banner-container-mobile').show();
+                        }
+                        else if (page === 'home') {
+                            $('#list_container').show();
+                            $('#index-right-container').show()
+                            $('.body-demo .banner-container-mobile').show();
+                        }
+
+                        $('.page-main-title').show();
+                    }, 500);
+                }
+            });
+
+            $('#nav-link-mobile-languages').on('click', function () {
+                return false;
+            });
+
+            $('#li-user-mobile').on('click', function () {
+                $('.mobile-context-menu:not(#user-details)').hide();
+                var userDetailsDiv = $('#user-details');
+                var navBar = $('#navbar-default');
+                if (userDetailsDiv.css('display') === 'none') {
+                    navBar.show();
+                    userDetailsDiv.slideDown(300);
+                }
+                else {
+                    userDetailsDiv.slideUp(300);
+                    setTimeout(function () {
+                        navBar.hide();
+                    }, 300);
+                }
+
+                return false;
+            });
+
+            // dev
+            $('#mobile-container-languages, #nav-link-mobile-languages').on('click', function () {
+                $('#mobile-languages-modal').dialog({
+                    dialogClass: 'fixed-dialog',
+                    autoOpen: true,
+                    resizable: false,
+                    // height: 380,
+                    title: '<span class="fa fa-language"></span> @Resources.UI_Language',
+                    width: 'auto',
+                    maxWidth: 300,
+                    defaultWidth: 300,
+                    modal: true,
+                    draggable: true,
+                    fluid: true,
+                    position: { my: 'top', at: 'top+250' },
+                    open: function () {
+                        isAModalOpened = true;
+                        $('.mobile-context-menu').hide();
+                    },
+                    close: function () {
+                        setTimeout(function () {
+                            isAModalOpened = false;
+                        }, 200);
+                    }
+                });
+            });
+
+            $('#btn-adv-search-mobile').click(function () {
+                var nestedChevron = $(this).find('.fa');
+
+                if ($('#secAdvSearch').css('display') === 'none') {
+                    $('#btn-do-search-mobile').hide();
+                    $('.body-container').css('min-height', '0');
+                    $('#change-adv-search-type').show();
+
+                    nestedChevron.addClass('fa-chevron-up');
+                    nestedChevron.removeClass('fa-chevron-down');
+                } else {
+                    $('#btn-do-search-mobile').show();
+                    var height = $(window).height() - ($('#simple-search-mobile').height() + $('footer').height() + 120);
+                    $('.body-container').css('min-height', height + 'px');
+                    $('#change-adv-search-type').hide();
+
+                    nestedChevron.addClass('fa-chevron-down');
+                    nestedChevron.removeClass('fa-chevron-up');
+                }
+
+                $('#btnAdvSearch').trigger('click');
+            });
+
+            $('#search-text-mobile').on('change keydown keyup', function (e) {
+                var key = e.which;
+                if (key == 13)  // the enter key code
+                {
+                    $('#SearchForm').submit();
+                    return false;
+                }
+
+                $('#SearchText').val($(this).val());
+            });
+
+            $('#SearchText').on('change keydown keyup', function (e) {
+                $('#search-text-mobile').val($(this).val());
+            });
+
+            $('#nav-link-document-type-trigger').on('click', function () {
+                var FD_COOKIE = 'include_free_cases_docs',
+                    curCookie = getCookie(FD_COOKIE),
+                    firstPathAfterSlash = window.location.pathname.replace(/^\/([^\/]*).*$/, '$1');
+
+                !curCookie || curCookie === '0' ? setCookie(FD_COOKIE, '1', 365) : setCookie(FD_COOKIE, '0', 365);
+
+                firstPathAfterSlash === 'Search' ? window.location.href = '/' : window.location.reload();
+            });
+
+
+            $(window).resize(function () {
+                // RESIZE FOR MOBILE SIMPLE SEARCH
+                var keepAdvSearch;
+                keepAdvSearch = $('#secAdvSearch').css('display') !== 'none';
+                if ($(this).width() > 480) {
+                    if ($('#simple-search-mobile').css('display') !== 'none') {
+                        $('#top-mobile-search-trigger').trigger('click', keepAdvSearch);
+                    }
+                } else {
+                    if (keepAdvSearch && $('#simple-search-mobile').css('display') === 'none') {
+                        $('#top-mobile-search-trigger').trigger('click');
+                    }
+
+                    if (keepAdvSearch) {
+                        $('#change-adv-search-type').show();
+                    } else {
+                        $('#change-adv-search-type').hide();
+                    }
+                }
+
+                // RESIZE FOR NAVIGATION
+                var curPage = $('.mobile-filters-show-button').attr('data-page');
+                if ($(this).width() > 480) {
+                    $('#navbar-default').show();
+                    $('#navbar-ul').show();
+
+                    if ($('#secAdvSearch').css('display') === 'none') {
+                        $('.filters-container').show();
+                    }
+
+                    $('.page-main-title').show();
+
+                    if (curPage === 'recent-documents') {
+                        $('#recent-docs-container').show();
+                        $('#doc-filter-pagination-container').show();
+                    }
+                    else if (curPage === 'search-result') {
+                        $('#dSearchResultContainer').show();
+                    }
+                    else if (curPage === 'my-searches') {
+                        $('.my-searches-table-container').show();
+                    }
+                    else if (curPage === 'home') {
+                        $('#list_container').show();
+                        $('#index-right-container').show();
+                    }
+
+                    $('#navbar-ul').show();
+                }
+                else {
+                    $('#navbar-default').hide();
+                    $('#navbar-ul').hide();
+
+                    if ($('.mobile-filters-show-button').hasClass('filters-shown')) {
+                        if (curPage === 'recent-documents') {
+                            $('#recent-docs-container').hide();
+                            $('#doc-filter-pagination-container').hide();
+                        }
+                        else if (curPage === 'search-result') {
+                            $('#dSearchResultContainer').hide();
+                        }
+                        else if (curPage === 'my-searches') {
+                            $('.my-searches-table-container').hide();
+                        }
+                        else if (curPage === 'home') {
+                            $('#list_container').hide();
+                            $('#index-right-container').hide();
+                        }
+                    }
+                    else {
+                        $('.filters-container').hide();
+                    }
+                }
+            });
+        });
+    </script>
+}
+

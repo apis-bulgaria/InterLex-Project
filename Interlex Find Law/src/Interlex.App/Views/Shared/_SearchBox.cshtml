@@ -1,0 +1,706 @@
+﻿@model Interlex.BusinessLayer.Models.SearchBox
+
+@using Interlex.App.Helpers
+@using Interlex.App.Resources
+@using System.Web.Configuration;
+@using Interlex.BusinessLayer;
+@using Interlex.BusinessLayer.Models;
+
+    <section id="secSearch">
+
+
+
+
+        @*<div id="secSearchLeft" class="left">
+            <a href="#" id="top-mobile-navigation-trigger" class="desktop-hidden">
+                <span class="fa fa-bars"></span>
+            </a>
+            <a href="~/" class="relative" id="top-logo">
+                <div class="logo-main-eu"></div>
+                @if (Session["UserData"] != null && (Session["UserData"] as UserData).Username == "sysdemo")
+                {
+                    <span class="logo-free-tour @(Request.Browser.Browser == "InternetExplorer" ? "ie" : String.Empty) @(Request.Browser.Browser == "Firefox" ? "firefox" : String.Empty)">
+                        @Resources.UI_FreeTour.CapitalizeFirstLetter()
+                    </span>
+                }
+            </a>
+            <a href="#" id="top-mobile-search-trigger" class="desktop-hidden">
+                <span class="fa fa-search"></span>
+            </a>
+        </div>*@
+
+
+   
+
+        <div id="secSearchRight" >
+            <div class="left">
+                <form id="SearchForm" action="~/Search/List" method="get" class="form-inline" role="form" autocomplete="off">
+                    <div class="search-styled">
+                        @if (Convert.ToInt32(Session["SelectedProductId"]) == 1)
+                        {
+                            <a href="#" id="multi-dict-main-trigger" title="@Resources.UI_MultilingualDictionary">
+                                <span class="fa fa-book f-1-0"></span>
+                            </a>
+                        }
+                        <span class="fa fa-question-circle f-0-8 f-blue" id="search-hint-mark"></span>
+                        @Html.TextBoxFor(m => m.SearchText, new { @class = "form-control", @type = "text", @placeholder = @Resources.UI_SearchEuAndNationalLegislation, @id = "SearchText" })
+                        <a id="btn-search-icon" href="#" onclick="javascript: $('#SearchForm').submit(); return false;"><div class="search-icon"></div></a>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    @Html.HiddenFor(m => m.MultiDict.LogicalType)
+                    @Html.HiddenFor(m => m.MultiDict.Text)
+                    @Html.HiddenFor(m => m.MultiDict.SelectedIds)
+                    @Html.HiddenFor(m => m.MultiDict.SearchText)
+                    @Html.HiddenFor(m => m.MultiDict.SelectedQueryTexts)
+                </form>
+            </div>
+            <button id="btnAdvSearch" class="btn left"><span id="btn-adv-search-label">@Resources.UI_AdvancedSearch</span> <span class="fa fa-chevron-down"></span></button>
+
+        </div>
+
+        <div class="clearfix"></div>
+    </section>
+<section id="simple-search-mobile" class="desktop-hidden">
+    <form id="simple-search-form-mobile" action="~/Search/List" method="get" class="form-inline" role="form" autocomplete="off">
+        <div class="search-styled">
+            @if (Convert.ToInt32(Session["SelectedProductId"]) == 1)
+            {
+                <a href="#" id="multi-dict-main-trigger" title="@Resources.UI_MultilingualDictionary"><span class="fa fa-book f-1-0"></span></a>
+            }
+            <span class="fa fa-question-circle f-0-8 f-blue" id="search-hint-mark"></span>
+            @Html.TextBoxFor(m => m.SearchText, new { @class = "form-control", @type = "search", @placeholder = @Resources.UI_SearchEuAndNationalLegislation, @id = "search-text-mobile" })
+            <a href="#" id="btn-do-search-mobile" onclick="javascript: $('#SearchForm').submit(); return false;"><div class="search-icon"></div></a>
+            <div class="clearfix"></div>
+        </div>
+    </form>
+    <button id="btn-adv-search-mobile" class="btn left">@Resources.UI_AdvancedSearch <span class="fa fa-chevron-down"></span></button>
+</section>
+<section id="secAdvSearch">
+
+    <section class="secAdvSearchLeft">
+        <ul class="dropdown">
+            @if (int.Parse(Session["SelectedProductId"].ToString()) == 1)
+            {
+                <li><a href="#" class="cases-expand-link"><span id="span-cases" class="list-item">@Resources.UI_Caselaw</span></a></li>
+                <li><a href="#" class="legislation-expand-link"><span id="span-legislation" class="list-item">@(WebConfigurationManager.AppSettings["SolutionVersion"] == "product" ? Resources.UI_EuLegislation : Resources.UI_Legislation)</span></a></li>
+            }
+        </ul>
+    </section>
+        
+    <section class="secAdvSearchRight">
+        @if (int.Parse(Session["SelectedProductId"].ToString()) == 1)
+        {
+            <div id="change-adv-search-type" class="desktop-hidden">
+                <button class="cases-expand-link-mobile cases-expand-link adv-search-type-clicked btn btn-large f-bold">
+                    <span class="span-cases-mobile list-item">
+                        @Resources.UI_Caselaw
+                    </span>
+                </button>
+                <button class="legislation-expand-link-mobile legislation-expand-link btn btn-large f-bold">
+                    <span class="span-legislation-mobile list-item">
+                        @(WebConfigurationManager.AppSettings["SolutionVersion"] == "product" ? Resources.UI_EuLegislation : Resources.UI_Legislation)
+                    </span>
+                </button>
+            </div>
+        }
+        @if (int.Parse(Session["SelectedProductId"].ToString()) == 1)
+        {
+            @Html.Partial("~/Views/Shared/_SearchBoxFormCases.cshtml", Model)
+            @Html.Partial("~/Views/Shared/_SearchBoxFormLaw.cshtml", Model)
+        }
+        else if (int.Parse(Session["SelectedProductId"].ToString()) == 2)
+        {
+            @Html.Partial("~/Views/Shared/_SearchBoxFormFinances.cshtml", Model)
+        }
+    </section>
+
+
+    <div class="clearfix"></div>
+</section>
+<div class="clearfix"></div>
+
+
+<script>
+    @if (Model.Law == null)
+    {
+		 @: $('#span-cases').addClass('adv-search-border-left');
+                                                 @: $('#span-cases').addClass('lblue_adv_search');
+                                                 @: $('#span-cases').addClass('f-blue');
+                                                 @: $('#span-legislation').addClass('f-black');
+                                        	}
+    else
+    {
+        @: $('#span-legislation').addClass('adv-search-border-left');
+                                                @: $('#span-legislation').addClass('lblue_adv_search');
+                                                @: $('#span-legislation').addClass('f-blue');
+                                                @: $('#span-cases').addClass('f-black');
+                                        	}
+
+    $('.cases-expand-link').click(function () {
+        $('#formLaw').hide();
+        $('#formCases').show();
+        $('#span-legislation').removeClass('lblue_adv_search');
+        $('#span-legislation').removeClass('adv-search-border-left');
+        $('#span-legislation').removeClass('f-blue');
+        $('#span-legislation').addClass('f-black');
+        $("#span-cases").removeClass('f-black');
+        $('#span-cases').addClass('lblue_adv_search');
+        $('#span-cases').addClass('f-blue');
+        $('#span-cases').addClass('adv-search-border-left');
+        lastOpenedTab = 'cases';
+        $('.legislation-expand-link-mobile').removeClass('adv-search-type-clicked')
+        $('.cases-expand-link-mobile').addClass('adv-search-type-clicked');
+    });
+
+    $('.legislation-expand-link').click(function () {
+        $('#formCases').hide();
+        $('#formLaw').show();
+        $('#span-cases').removeClass('lblue_adv_search');
+        $('#span-cases').removeClass('adv-search-border-left');
+        $('#span-cases').removeClass('f-blue');
+        $('#span-cases').addClass('f-black');
+        $("#span-legislation").removeClass('f-black');
+        $('#span-legislation').addClass('lblue_adv_search');
+        $('#span-legislation').addClass('f-blue');
+        $('#span-legislation').addClass('adv-search-border-left');
+        lastOpenedTab = 'legislation';
+        $('.cases-expand-link-mobile').removeClass('adv-search-type-clicked')
+        $('.legislation-expand-link-mobile').addClass('adv-search-type-clicked');
+    });
+
+
+    $("#Cases_DateFrom").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: "+0D",
+        dateFormat: "dd/mm/yy",
+        yearRange: '1980:',
+        minDate: new Date(1980, 0, 0),
+    });
+    $("#Cases_DateFrom").datepicker("option", "showAnim", "slideDown");
+    @if (Model.Cases != null && Model.Cases.DateFrom != null && Model.Cases.DateFrom != default(DateTime))
+    {
+        var computedDateArray = Model.Cases.DateFrom.Value.ToShortDateString().Split(' ')[0].Split('.');
+        if (computedDateArray.Length == 1)
+        {
+            computedDateArray = Model.Cases.DateFrom.Value.ToShortDateString().Split(' ')[0].Split('/');
+        }
+        if (computedDateArray[0].Length == 1)
+        {
+            computedDateArray[0] = "0" + computedDateArray[0];
+        }
+        if (computedDateArray[1].Length == 1)
+        {
+            computedDateArray[1] = "0" + computedDateArray[1];
+        }
+        var computedDate = computedDateArray[0] + "/" + computedDateArray[1] + "/" + computedDateArray[2];
+        @: $('#Cases_DateFrom').val('@computedDate');
+         }
+    $("#Cases_DateTo").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: "+0D",
+        dateFormat: "dd/mm/yy",
+        yearRange: '1980:',
+        minDate: new Date(1980, 0, 0),
+    });
+    $("#Cases_DateTo").datepicker("option", "showAnim", "slideDown");
+    @if (Model.Cases != null && Model.Cases.DateTo != null && Model.Cases.DateTo != default(DateTime))
+    {
+        var computedDateArray = Model.Cases.DateTo.Value.ToShortDateString().Split(' ')[0].Split('.');
+        if (computedDateArray.Length == 1)
+        {
+            computedDateArray = Model.Cases.DateTo.Value.ToShortDateString().Split(' ')[0].Split('/');
+        }
+        if (computedDateArray[0].Length == 1)
+        {
+            computedDateArray[0] = "0" + computedDateArray[0];
+        }
+        if (computedDateArray[1].Length == 1)
+        {
+            computedDateArray[1] = "0" + computedDateArray[1];
+        }
+        var computedDate = computedDateArray[0] + "/" + computedDateArray[1] + "/" + computedDateArray[2];
+        @: $('#Cases_DateTo').val('@computedDate');
+         }
+    $("#Law_DateFrom").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: "+0D",
+        dateFormat: "dd/mm/yy",
+        yearRange: '1980:',
+        minDate: new Date(1980, 0, 0),
+    });
+    $("#Law_DateFrom").datepicker("option", "showAnim", "slideDown");
+    @if (Model.Law != null && Model.Law.DateFrom != null && Model.Law.DateFrom != default(DateTime))
+    {
+        var computedDateArray = Model.Law.DateFrom.Value.ToShortDateString().Split(' ')[0].Split('.');
+        if (computedDateArray.Length == 1)
+        {
+            computedDateArray = Model.Law.DateFrom.Value.ToShortDateString().Split(' ')[0].Split('/');
+        }
+        if (computedDateArray[0].Length == 1)
+        {
+            computedDateArray[0] = "0" + computedDateArray[0];
+        }
+        if (computedDateArray[1].Length == 1)
+        {
+            computedDateArray[1] = "0" + computedDateArray[1];
+        }
+        var computedDate = computedDateArray[0] + "/" + computedDateArray[1] + "/" + computedDateArray[2];
+        @: $('#Law_DateFrom').val('@computedDate');
+        }
+    $("#Law_DateTo").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: "+0D",
+        dateFormat: "dd/mm/yy",
+        yearRange: '1980:',
+        minDate: new Date(1980, 0, 0),
+    });
+    $("#Law_DateTo").datepicker("option", "showAnim", "slideDown");
+    @if (Model.Law != null && Model.Law.DateTo != null && Model.Law.DateTo != default(DateTime))
+    {
+        var computedDateArray = Model.Law.DateTo.Value.ToShortDateString().Split(' ')[0].Split('.');
+        if (computedDateArray.Length == 1)
+        {
+            computedDateArray = Model.Law.DateTo.Value.ToShortDateString().Split(' ')[0].Split('/');
+        }
+        if (computedDateArray[0].Length == 1)
+        {
+            computedDateArray[0] = "0" + computedDateArray[0];
+        }
+        if (computedDateArray[1].Length == 1)
+        {
+            computedDateArray[1] = "0" + computedDateArray[1];
+        }
+        var computedDate = computedDateArray[0] + "/" + computedDateArray[1] + "/" + computedDateArray[2];
+        @: $('#Law_DateTo').val('@computedDate');
+        }
+    $("#Finances_DateFrom").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: "+0D",
+        dateFormat: "dd/mm/yy",
+        yearRange: '1980:',
+        minDate: new Date(1980, 0, 0),
+    });
+    $("#Finances_DateFrom").datepicker("option", "showAnim", "slideDown");
+    @if (Model.Finances != null && Model.Finances.DateFrom != null && Model.Finances.DateFrom != default(DateTime))
+    {
+        var computedDateArray = Model.Finances.DateFrom.Value.ToShortDateString().Split(' ')[0].Split('.');
+        if (computedDateArray.Length == 1)
+        {
+            computedDateArray = Model.Finances.DateFrom.Value.ToShortDateString().Split(' ')[0].Split('/');
+        }
+        if (computedDateArray[0].Length == 1)
+        {
+            computedDateArray[0] = "0" + computedDateArray[0];
+        }
+        if (computedDateArray[1].Length == 1)
+        {
+            computedDateArray[1] = "0" + computedDateArray[1];
+        }
+        var computedDate = computedDateArray[0] + "/" + computedDateArray[1] + "/" + computedDateArray[2];
+        @: $('#Finances_DateFrom').val('@computedDate');
+        }
+    $("#Finances_DateTo").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: "+0D",
+        dateFormat: "dd/mm/yy",
+        yearRange: '1980:',
+        minDate: new Date(1980, 0, 0),
+    });
+    $("#Finances_DateTo").datepicker("option", "showAnim", "slideDown");
+    @if (Model.Finances != null && Model.Finances.DateTo != null && Model.Finances.DateTo != default(DateTime))
+    {
+        var computedDateArray = Model.Finances.DateTo.Value.ToShortDateString().Split(' ')[0].Split('.');
+        if (computedDateArray.Length == 1)
+        {
+            computedDateArray = Model.Finances.DateTo.Value.ToShortDateString().Split(' ')[0].Split('/');
+        }
+        if (computedDateArray[0].Length == 1)
+        {
+            computedDateArray[0] = "0" + computedDateArray[0];
+        }
+        if (computedDateArray[1].Length == 1)
+        {
+            computedDateArray[1] = "0" + computedDateArray[1];
+        }
+        var computedDate = computedDateArray[0] + "/" + computedDateArray[1] + "/" + computedDateArray[2];
+        @: $('#Finances_DateTo').val('@computedDate');
+        }
+    $(function () {
+        $('.clearable').euClear(); // simple field
+        $('.clearable-classifier').euClear({ // simple classifier
+            top: '4px',
+            type: 'classifier'
+        });
+        $('.clearable-enactment').euClear({ // enactment
+            top: '4px',
+            type: 'enactment',
+            productId: @int.Parse(Session["SelectedProductId"].ToString()),
+        });
+        $('.clearable-provision').euClear({ // provision (NOT for ECHR)
+            top: '4px',
+            type: 'provision',
+            productId: @int.Parse(Session["SelectedProductId"].ToString()),
+        });
+        $('#input-refered-act').euClear({ // refered act (only for ECHR)
+            top: '4px',
+            type: 'refered-act-echr'
+        });
+        $('#tb-multilingual-dictionary').euClear({ // Multilingual dictionary
+            top: '4px',
+            type: 'multilingual-dictionary'
+        });
+        $('#Cases_EnactmentText_Index').euClear({
+            top: '4px',
+            type: 'enactment-index'
+        });
+        $('#Cases_ProvisionText_Index').euClear({
+            top: '4px',
+            type: 'provision-index'
+        });
+    });
+    $.widget("custom.catcomplete", $.ui.autocomplete, {
+        _create: function () {
+            this._super();
+            this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
+        },
+        _renderMenu: function (ul, items) {
+            var that = this,
+              currentCategory = "";
+            $.each(items, function (index, item) {
+                var li;
+                if (item.category != currentCategory) {
+                    ul.append("<li class='ui-autocomplete-category f-blue f-bold f-0-7'>" + item.category + "</li>");
+                    currentCategory = item.category;
+                }
+                li = that._renderItemData(ul, item);
+                if (item.category) {
+                    li.attr("aria-label", item.category + " : " + item.label);
+                }
+            });
+        }
+    });
+</script>
+<script>
+    $(function () {
+        $('.label-after-radio').click(function(){
+            $(this).prev().trigger('click');
+        });
+        $(document).ready(function () {
+            @if (Model.Law != null)
+            {
+                //  @: $('#span-legislation').trigger('click');
+                                                            @: $('#select-oj-series option[value="@((int)Model.Law.OJSeries)"]').prop('selected', true);
+                                                                                                                                                                                                                        @: $('#Law_OJSeries').val(@((int)Model.Law.OJSeries));
+                                                                                                                                                                                                                                    	}
+
+            @if (Model.Law != null)
+            {
+		 @: $('#law-date-type-select option[value="@((int)Model.Law.LawDateType)"]').prop('selected', true);
+                                                                                                                                                                                     @: $('#Law_LawDateType').val(@((int)Model.Law.LawDateType));
+                                                                                                                                                                                                	}
+
+            $('#SearchForm').trigger('reset');
+
+            $('.btn-edit-search-field:not(.btn-edit-search-field-classifier)').click(function (e) {
+                e.preventDefault();
+
+                var classifierInput = $(e.target).parent().children().first();
+
+                classifierInput.trigger('focus');
+                classifierInput.trigger('click');
+            });
+
+            //enabling DateTo input if a memoryzed search is made by period (doesn't need to have some dates inputed)
+            var shouldEnableCasesPeriod = @((Model.Cases != null && Model.Cases.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Period) ? "true" : "false");
+            if (shouldEnableCasesPeriod === true) {
+                $('#Cases_DateTo').prop('disabled', false);
+            }
+            $('input[name="Cases.DatePeriodType"]').click(function () {
+                if ($(this).is(':checked')) {
+                    var type = $(this).val();
+                    if (type == "period") {
+                        if ($('#Cases_DateTo').is(':disabled')) {
+                            $('#Cases_DateTo').prop('disabled', false);
+                        }
+                    }
+                    else {
+                        if ($('#Cases_DateTo').is(':disabled') === false) {
+                            $('#Cases_DateTo').prop('disabled', 'disabled');
+                        }
+                    }
+                }
+            });
+            var shouldEnableLawPeriod = @((Model.Law != null && Model.Law.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Period) ? "true" : "false");
+            if (shouldEnableLawPeriod === true) {
+                $('#Law_DateTo').prop('disabled', false);
+            }
+            $('input[name="Law.DatePeriodType"]').click(function () {
+                if ($(this).is(':checked')) {
+                    var type = $(this).val();
+                    if (type == "period") {
+                        if ($('#Law_DateTo').is(':disabled')) {
+                            $('#Law_DateTo').prop('disabled', false);
+                        }
+                    }
+                    else {
+                        if ($('#Law_DateTo').is(':disabled') === false) {
+                            $('#Law_DateTo').prop('disabled', 'disabled');
+                        }
+                    }
+                }
+            });
+            var shouldEnableFinancesPeriod = @((Model.Finances != null && Model.Finances.DatePeriodType == Interlex.BusinessLayer.Enums.DatePeriodType.Period) ? "true" : "false");
+            if (shouldEnableFinancesPeriod === true) {
+                $('#Finances_DateTo').prop('disabled', false);
+            }
+
+            $('input[name="Finances.DatePeriodType"]').click(function () {
+                if ($(this).is(':checked')) {
+                    var type = $(this).val();
+                    if (type == "period") {
+                        if ($('#Finances_DateTo').is(':disabled')) {
+                            $('#Finances_DateTo').prop('disabled', false);
+                        }
+                    }
+                    else {
+                        if ($('#Finances_DateTo').is(':disabled') === false) {
+                            $('#Finances_DateTo').prop('disabled', 'disabled');
+                        }
+                    }
+                }
+            });
+            // refreshing boxes for CaseLawType
+            $('input[name="Cases.CaseLawType"]').change(function () {
+                clearTreeFilter('Cases_EuroCases');
+                try {
+                    $('#Cases_EuroCases_Tree').fancytree('destroy');
+                } catch (e) {
+                    // tree not initialized
+                }
+                $('#tbCases_EuroCasesText').val('');
+                $('#tbCases_EuroCasesText').trigger('keyup');
+                if ($(this).is(':checked')) {
+                    $(this).attr('checked', 'checked');
+                    $('input[name="Cases.CaseLawType"]:not(:checked)').removeAttr('checked');
+                    if ($(this).val() === 1 || $(this).val() === '1') {
+                        $('.eu-specific').show();
+                    }
+                    else {
+                        $('#Cases_DocumentType').val('');
+                        $('#Cases_ProcedureType').val('');
+                        $('#Cases_GeneralLawyer').val('');
+                        $('#Cases_JudgeRapporteur').val('');
+                    }
+                    if ($(this).val() === '0' || $(this).val() === 0) {
+                        $('#container-cases-ecli').text('@Resources.UI_NumbersAll');
+                    }
+                    else if ($(this).val() === '1' || $(this).val() === 1) {
+                        $('#container-cases-ecli').text('@Resources.UI_NumbersEU');
+                    }
+                    else if ($(this).val() === '2' || $(this).val() === 2) {
+                        $('#container-cases-ecli').text('@Resources.UI_NumbersNational');
+                    }
+                    else if ($(this).val() === '3' || $(this).val() === 3) {
+                        $('#container-cases-ecli').text('@Resources.UI_NumbersECHR');
+                    }
+                    var curPrefix = $(this).data('prefix'), divToShow;
+                    populateSearchTemplate('templates-cases-', curPrefix);
+
+                    $('.cases-type-container').addClass('display-none');
+                    divToShow = curPrefix.slice(0, -1);
+                    $('#' + divToShow).removeClass('display-none');
+                }
+
+                if ($(this).attr('id') === 'Cases.CaseLawType_ECHR'
+                    || $(this).attr('id') === 'Cases.CaseLawType_EU') {
+                    try {
+                        $('#Cases_DocumentTypes_Tree').fancytree('destroy');
+                    } catch (e) {
+                        // tree not initialized
+                    }
+                }
+            });
+
+              // refreshing boxes for LegislationType
+            $('input[name="Law.LegislationType"]').change(function () {
+                try {
+                    $('#Law_DocumentTypes_Tree').fancytree('destroy');
+                } catch (e) {
+                    // tree not initialized
+                }
+                
+                $('#tbLaw_DocumentTypesText').val('');
+                $('#tbLaw_DocumentTypesText').trigger('keyup');
+
+                if ($(this).is(':checked')) {
+                    $(this).attr('checked', 'checked');
+                    $('input[name="Law.LegislationType"]:not(:checked)').removeAttr('checked');
+
+                    if ($(this).val() === 2 || $(this).val() === '2') {
+                        $('#Law_DirectoryLegislation').val('');
+                        $('#Law_Eurovoc').val('');
+                        $('#Law_SubjectMatter').val('');
+                    }
+                    
+                    if ($(this).val() === '1' || $(this).val() === 1) {
+                        $('#label-natid-eli-text').text('@Resources.UI_NatIdOrEli');
+                    }
+                    else if ($(this).val() === '2' || $(this).val() === 2) {
+                        $('#label-natid-eli-text').text('ELI');
+                    }
+
+                    var curPrefix = $(this).data('prefix'), divToShow;
+                    populateSearchTemplate('templates-law-', curPrefix);
+
+                    $('.law-type-container').addClass('display-none');
+                    divToShow = curPrefix.slice(0, -1);
+                    $('#' + divToShow).removeClass('display-none');
+                }
+            });
+
+        });
+        var searchSource = [];
+        $("#SearchText").catcomplete({
+            autoFocus: false,
+            source: searchSource,
+            open: function (event, ui) {
+                var searchBoxWidth = $('.search-styled').width();
+
+                $('ul.ui-autocomplete').width(searchBoxWidth);
+            }
+        });
+        $('#SearchText').keyup(function () {
+            if ($('#SearchText').val() != '') {
+                $.ajax({
+                    url: '@Url.Action("UserSearches", "SearchBox")',
+                    type: "POST",
+                    data: { like: $('#SearchText').val() },
+                    traditional: true,
+                    success: function (result) {
+                        searchSource = [];
+
+                        $.ajax({
+                            url: '@Url.Action("CommonSearches", "SearchBox")',
+                            type: "POST",
+                            data: { like: $('#SearchText').val() },
+                            traditional: true,
+                            success: function (answer) {
+                                for (var entry in answer) {
+                                    var currentObj =
+                                        {
+                                            label: answer[entry],
+                                            category: "@Resources.UI_CommonSearches"
+                                        };
+
+                                    if ($.type(currentObj.label) === "string") {
+                                        searchSource.push(currentObj);
+                                    }
+                                }
+                            }
+                        });
+
+                        @if ((Session["UserData"] as UserData).Username.ToLower() != "sysdemo")
+                        {
+                            @:for (var entry in result) {
+                                                                                                                @:                            var currentObj =
+                                                                                                            @:{
+                                                                                                                          @:          label: result[entry],
+                                                                                                                            @:        category:
+                                                                                                                              @:  "@Resources.UI_YourSearches"
+                                                                                                                               @: }
+                                                                                                               @: if ($.type(currentObj.label) === "string") {
+                                                                                                                            @:    searchSource.push(currentObj);
+                                                                                                                           @: }
+                                                                                                            @:}
+                                                                                                }
+
+
+                        searchSource = searchSource.unique();
+
+                        $('#SearchText').catcomplete('option', 'source', searchSource);
+                    }
+                });
+            }
+        });
+        $('#SearchForm').submit(function (event) {
+            event.preventDefault();
+            if ($('#secAdvSearch').css('display') === 'none') {
+                DoSearch('simple', false);
+            }
+            else {
+                if ($('#formFinances').css('display') !== 'none') {
+                    DoSearch('tabFinances', false);
+                }
+                else if ($('#formCases').css('display') === 'none') {
+                    DoSearch('tabLaw', false);
+                }
+                else {
+                    DoSearch('tabCases', false);
+                }
+            }
+        });
+
+        $('.adv-search-close').click(function (e) {
+            e.preventDefault();
+            $('#btnAdvSearch').trigger('click');
+        });
+    });
+</script>
+
+@if ((Session["UserData"] != null && (Session["UserData"] as UserData).Username == "sysdemo"))
+{
+    <script>
+        $('.logo-main-eu').tooltipster({
+            theme: 'tooltipster-light',
+            contentAsHTML: true,
+            interactive: true,
+            position: 'bottom',
+            theme: 'tooltipster-shadow',
+            trigger: 'custom',
+            offsetY: -26,
+            offsetX: 31,
+            delay: 1
+        });
+    </script>
+}
+<script>
+    $().ready(function () {
+        $('.tooltip').tooltipster({
+            theme: 'tooltipster-light',
+            contentAsHTML: true,
+            interactive: true
+        });
+
+        $('.container-form').hover(function () {
+            $(this).find('.icon-hint').css('visibility', 'visible');
+        }, function () {
+            $(this).find('.icon-hint').css('visibility', 'hidden');
+        });
+
+        selectedMultiDictIds = {};
+        selectedQueryTexts = {};
+        deleteCookie('selectedMultiDictIds');
+
+        addCheckAllButton(['#Cases_CourtsFolders_Tree']); // Select all for search folders
+        $('#Cases_DirectoryCaseLawFull').click(function () {
+            try {
+                $('#Cases_DirectoryCaseLaw_Tree').fancytree('destroy');
+            } catch (e) {
+                // tree not initialized
+            }
+        });
+
+        $('#Cases_DateFrom, #Cases_DateTo, #Law_DateFrom, #Law_DateTo').on('focus', function() {
+            if (getDeviceWidth() < 720) { // TODO: Get more appropriate dimensions
+                $(this).blur();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,107 @@
+﻿@model Interlex.BusinessLayer.Models.CheckTreeView
+
+@using Interlex.App.Resources
+@using Interlex.App.Helpers
+
+<input type="text" id="@string.Format("tb{0}Text", Html.IdFor(model => model))" readonly="readonly" class="left width-70 clearable-classifier" style="cursor: pointer;" />
+<span class="btn fa fa-pencil-square-o left btn-edit-search-field btn-edit-search-field-classifier" id="@string.Format("b{0}Choose", Html.IdFor(model => model))"></span>
+<span class="fa-stack eucs-clear eucs-clear-Classifier" data-element="@string.Format("tb{0}Text", Html.IdFor(model => model))" id="@string.Format("{0}_ClearLink", Html.IdFor(model => model))">
+    <i class="fa fa-square-o fa-stack-2x"></i><i class="fa fa-times fa-stack-1x"></i>
+</span>
+
+@*<a href="javascript:void();" id="@string.Format("b{0}Clear", Html.IdFor(model => model))" class="btn-clear classifier-clear-link"><span class="x-grey"></span></a>*@
+<!--
+<div style="display: inline; float: right;">
+   <a href="javascript:void();" id="@string.Format("b{0}Choose", Html.IdFor(model => model))" class="btn btn-small btn-blue"><span class="icon-qm"></span></a>
+
+</div>-->
+@*<input type="button" id="@string.Format("b{0}Clear", Html.IdFor(model => model))" value="X" />*@
+@Html.HiddenFor(m => m.SelectedIds, new { @class = "check_tree_ids" })
+@Html.HiddenFor(m => m.KeyPaths, new { @class = "check_tree_keypaths" })
+
+<div id="@string.Format("div{0}", Html.IdFor(model => model))" title="@Html.NameFor(model => model).ToString().Replace(".", " - ")">
+    <div id="@Html.IdFor(model => model)_Container">
+        <div id="@Html.IdFor(model => model)_Tree"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#@string.Format("div{0}", Html.IdFor(model => model))')
+            .attr('data-max-height', 450)
+            .dialog({
+                create: function (event, ui) {
+                    var widget = $(this).dialog("widget");
+                 //   $(".ui-dialog-titlebar-close span", widget).removeClass("ui-icon-closethick").addClass("modal-close");
+                },
+                @* open: function (event, ui) {
+                    $("body").css({ overflow: 'hidden' });
+                },
+                beforeClose: function (event, ui) {
+                    $("body").css({ overflow: 'inherit' });
+                },*@
+                autoOpen: false,
+                title: '@{
+                    if(System.Web.Configuration.WebConfigurationManager.AppSettings["SolutionVersion"] == "project" && Html.IdFor(model => model).ToString() == "Cases_EuroCases"){
+                        @Resources.UI_EUCases
+                    }
+                    else
+                    {
+                        @Html.Raw(Res.GetResource("UI_"+Html.IdFor(model => model).ToString()).Replace("'", "\\'"))
+                    }
+                    }',
+                modal: true,
+                width: 'auto',
+                maxWidth: 400,
+                defaultWidth: 400,
+                fluid: true,
+                height: 450, // height is calculated in fluidDialog, utitlity.js
+                buttons: [
+                    { text: 'OK', click: function () { OnTreeOK('@Html.IdFor(model => model)'); }, class: 'btn-large btn-blue f-white f-bold' },
+                    { text: '@Resources.UI_Cancel.CapitalizeFirstLetter()', click: function () { $('#@string.Format("div{0}", Html.IdFor(model => model))').dialog('close'); }, class: 'btn-large btn-lgrey f-blue f-bold' },
+                   @* { text: 'test', click: function () { $("#@Html.IdFor(model => model)_Tree").fancytree("getRootNode").fixSelection3FromEndNodes(); }, class: 'btn btn-gray' }*@
+                ],
+                dialogClass: 'tree-dialog fixed-dialog',
+                open: function () {
+                    isAModalOpened = true;
+                },
+                close: function () {
+                    setTimeout(function () {
+                        isAModalOpened = false;
+                    }, 200);
+                }
+            });
+
+        $('@string.Format("#b{0}Choose", Html.IdFor(model => model)), @string.Format("#tb{0}Text", Html.IdFor(model => model))').click(function () {
+
+            $('#@string.Format("div{0}", Html.IdFor(model => model))').dialog('open');
+            keyPaths = null;
+            @*@if(Model.SelectedIds != ""){
+
+            @:keyPaths =  @Html.Raw(String.Format("['{0}'];", String.Join("', '", Model.KeyPaths)))
+            }*@
+            if ($('#@string.Format("{0}", Html.IdFor(model => model.KeyPaths))').val() != '') {
+                keyPaths = $('#@string.Format("{0}", Html.IdFor(model => model.KeyPaths))').val().split('|');
+            }
+
+            selectedIds = $('#@string.Format("{0}", Html.IdFor(model => model.SelectedIds))').val();
+            //alert(selectedIds);
+            GetTree('@Html.IdFor(model => model)', searchId, keyPaths, selectedIds);
+
+            $('.classifier-no-docs').on('click', function (event) {
+                event.preventDefault();
+            });
+
+            return false;
+        });
+
+        $('@string.Format("#b{0}Clear", Html.IdFor(model => model))').click(function () {
+            clearTreeFilter('@Html.IdFor(model => model)');
+            return false;
+        });
+
+        @if (Model != null){
+            @:setFilterDataToForm('@Html.IdFor(model => model)', '@Html.Raw(String.Join("|", Model.TitlePaths))', '|');
+                                                                                        }
+    });
+</script>
