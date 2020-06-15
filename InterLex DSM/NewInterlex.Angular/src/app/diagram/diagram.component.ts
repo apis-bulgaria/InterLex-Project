@@ -20,6 +20,7 @@ import {LangChangeEvent, TranslateService} from "@ngx-translate/core";
 import {UtilityService} from "../core/services/utility.service";
 import {AlertService} from "../core/services/alert.service";
 
+// This component is an implementation of the Scenario Generation Tool
 @Component({
   selector: 'app-diagram',
   templateUrl: './diagram.component.html',
@@ -388,6 +389,8 @@ export class DiagramComponent implements OnInit, AfterViewInit, OnDestroy {
     this.http.saveEdge(this.data);
     this.callback(this.data);
   }
+
+
 
   addConditional() {
     if (this.conditionalConnection) {

@@ -64,7 +64,7 @@
 
 <p-dialog header="{{'DIAGRAM.EDIT.NODE' | translate}}" [(visible)]="showEditNode" [modal]="true"
           [contentStyle]="{'overflow' : 'visible'}"
-          [style]="{width: '800px'}" [closable]="false">
+          [style]="{width: '1000px'}" [closable]="false">
   <div class="p-grid">
     <div class="p-col">
       <label for="language" translate>DIAGRAM.EDIT.LANGUAGE</label>
@@ -85,6 +85,12 @@
       <label for="hidden" translate>DIAGRAM.EDIT.HIDE</label>
       <div>
         <p-inputSwitch id="hidden" [(ngModel)]="nodeForEdit.isHidden"></p-inputSwitch>
+      </div>
+    </div>
+    <div class="p-col">
+      <label for="report" translate>DIAGRAM.EDIT.REPORT</label>
+      <div>
+        <p-checkbox id="report" [(ngModel)]="nodeForEdit.isReport" binary="true"></p-checkbox>
       </div>
     </div>
     <div class="p-col">
@@ -110,10 +116,21 @@
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{'DIAGRAM.EDIT.TEXTNAVIGATOR' | translate}}">
-      <label for="navigator" translate="">DIAGRAM.EDIT.TEXTNAVIGATOR</label>
+      <label for="navigator" translate>DIAGRAM.EDIT.TEXTNAVIGATOR</label>
       <div>
         <input id="navigator" type="text" pInputText [(ngModel)]="nodeForEdit.translations[currentLang].textNavigator"
                [size]="80"/>
+      </div>
+      <br>
+      <label for="basis" translate>DIAGRAM.EDIT.LEGALBASIS</label>
+      <div>
+        <input id="basis" type="text" pInputText [(ngModel)]="nodeForEdit.translations[currentLang].legalBasis"
+               [size]="80"/>
+      </div>
+      <br>
+      <label for="reportDisplay" translate>DIAGRAM.EDIT.REPORTDISPLAY</label>
+      <div>
+        <textarea id="reportDisplay" pInputTextarea [cols]="80" [(ngModel)]="nodeForEdit.translations[currentLang].reportDisplay"></textarea>
       </div>
     </p-tabPanel>
     <p-tabPanel header="{{'DIAGRAM.EDIT.CONTENT' | translate}}">
@@ -132,7 +149,7 @@
     </p-tabPanel>
     <p-tabPanel header="{{'DIAGRAM.EDIT.LINKSKEYWORDS' | translate}}">
       <div>
-        <p translate="">DIAGRAM.EDIT.KEYWORDS</p>
+        <p translate>DIAGRAM.EDIT.KEYWORDS</p>
         <div
           *ngFor="let keyword of nodeForEdit.translations[currentLang].keywords; let i = index; trackBy:trackByIndex">
           <input type="text" [(ngModel)]="nodeForEdit.translations[currentLang].keywords[i]" pInputText

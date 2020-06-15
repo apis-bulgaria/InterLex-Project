@@ -8,7 +8,7 @@ import {
   ILink,
   ILinkType,
   TranslateFields,
-  IReference, ILinkRequest, MyData, IGraphData
+  IReference, ILinkRequest, MyData, IGraphData, ReportPair, Conclusion, Report
 } from "../models/common.models";
 import {ActivatedRoute} from "@angular/router";
 import {HttpService} from "../core/services/http.service";
@@ -19,6 +19,9 @@ import {UtilityService} from "../core/services/utility.service";
 import {AlertService} from "../core/services/alert.service";
 import {OverlayPanel} from "primeng/overlaypanel";
 import {Subscription} from "rxjs";
+import {MenuItem} from 'primeng/api';
+
+declare var $: any;
 
 @Component({
   selector: 'app-presentation',
@@ -26,7 +29,6 @@ import {Subscription} from "rxjs";
   styleUrls: ['./presentation.component.scss']
 })
 export class PresentationComponent implements OnInit, OnDestroy {
-
 
   constructor(private storage: StorageService, private route: ActivatedRoute, private http: HttpService,
               private translateService: TranslateService, public authService: AuthService,
@@ -48,11 +50,15 @@ export class PresentationComponent implements OnInit, OnDestroy {
   selectedOptionId: string;
   id: string;
   title: string;
-
+  reports: Report[] = [];
+  conclusionType:string;
   displayComment: boolean = false;
   commentStr = '';
   displayReference: boolean = false;
   editedLinks: ILink[];
+
+  showReport: boolean = false;
+  exportItems: MenuItem[];
 
   linkTypes: ILinkType[];
   selectedLinkType: ILinkType;
@@ -63,14 +69,35 @@ export class PresentationComponent implements OnInit, OnDestroy {
   subscriptions: Subscription = new Subscription();
   loggedIn: boolean;
   limitedAdmin: boolean;
-  isOfficialPresentation: boolean;
+  isOfficialPresentation: boolean; // view for clients, meaning noone is logged in
   officialMainDiagramId = '91407d41-adfe-421b-bc59-91cb1b5cace5'; // default id for "cases" route path - this is mastergraph id!
   officialApplicableLawId = 'f515a2ea-7179-46b5-84dc-a029fa6b7d34'; // this is concrete graph id NOT mastergraph
   officialJurisdictionId = '2e39d873-a22b-4f9d-b17b-b67ce05f709c'; //  this is concrete graph id NOT mastergraph
-  jurMainNodeId = '1f5208e0-d6cf-4e6a-aaa0-8ee64983f491'; // maybe move those nodes to secondary diagram and remove from Main because those hardcoded ids are brittle af - ask Boycho!
+  jurMainNodeId = '1f5208e0-d6cf-4e6a-aaa0-8ee64983f491'; // this and one below not needed for now, but leaving just in case
   lawMainNodeId = 'dab9bc73-4ac6-4441-8b3e-ceffcc786096';
+  italianResJur: any;
+  italianResLaw: any;
 
   ngOnInit() {
+
+    this.exportItems = [
+      {
+        label: 'pdf',
+        // icon: 'pi pi-refresh',
+        command: () => {
+          this.exportReport('pdf');
+        }
+      },
+      {
+        label: 'rtf',
+        // icon: 'pi pi-times',
+        command: () => {
+          this.exportReport('rtf');
+
+        }
+      }
+    ];
+
     this.currentLang = this.translateService.currentLang || 'en';
     this.translateService.onLangChange.subscribe((x: LangChangeEvent) => {
       this.handleTranslationChange(x);
@@ -251,9 +278,27 @@ export class PresentationComponent implements OnInit, OnDestroy {
     const id = this.findNextNodeId(this.selectedNode);
     this.selectNode(id);
     this.histNodesChanged++;
-    console.log(this.selectedNode);
+    if (this.limitedAdmin) {
+      this.callItalianApi();
+    }
+    // console.log(this.selectedNode);
     // console.log(this.nodesHistory);
     // this.focusNetwork();
+  }
+
+
+  // here is the connection with the Reasoner Module implemented by the Italian partners
+  private callItalianApi() {
+    const ids = this.nodesHistory.map(x => x.id.toString());
+    this.http.getItalianApiResults(ids).subscribe(res => {
+      if (res) {
+        this.italianResLaw = res.law ? JSON.parse(res.law) : null;
+        this.italianResJur = res.law ? JSON.parse(res.jur) : null;
+      } else {
+        this.italianResLaw = this.italianResJur = null;
+      }
+      console.log(res);
+    });
   }
 
   private findNextNodeId(node: MyNode) { // errors if incorrect ending with non endNode - no next edge
@@ -295,6 +340,9 @@ export class PresentationComponent implements OnInit, OnDestroy {
       const nextId = this.findNextNodeId(nextNode);
       nextNode = this.data.nodes.get(nextId);
       this.saveNodeInHistory(nextNode);
+    }
+    if (nextNode.isReport) {
+      this.createReport();
     }
     this.setSelectedNode(nextNode);
     this.nextButtonDisabled = this.selectedNode.group === 'endNode';
@@ -430,7 +478,6 @@ export class PresentationComponent implements OnInit, OnDestroy {
     this.findStartNode();
   }
 
-
   showDialogComment() {
     this.commentStr = this.selectedNode.translations[this.currentLang].content;
     this.displayComment = true;
@@ -511,13 +558,45 @@ export class PresentationComponent implements OnInit, OnDestroy {
     if (this.selectedNode) { // don't put this in upper if
       this.checkForMultiRadioOptions();
     }
+
+    if (this.selectedNode && this.selectedNode.isReport) {
+      this.createReport(); // if on report node needed to translate the report
+    }
+
   }
 
   getLinkHint(autolink: IReference, op: OverlayPanel, event) {
     const url = autolink.hintUrl;
     this.http.getText(url).subscribe(html => {
+      const $that = this;
       this.linkHint = html;
-      op.show(event);
+
+      $(event.target).qtip({
+        style: {
+          classes: 'qtip-light qtip-shadow qtip-rounded'
+        },
+        overwrite: false, // Make sure another tooltip can't overwrite this one without it being explicitly destroyed
+        content: $that.linkHint,
+        position: {
+          at: 'bottom center', // Position the tooltip above the link
+          my: 'top center',
+          viewport: $(window), // Keep the tooltip on-screen at all times
+          effect: false // Disable positioning animation,
+        },
+        show: {
+          solo: true, // Only show one tooltip at a time
+          delay: 100,
+          ready: true,
+          when: false
+        },
+        hide: {
+          when: {event: 'mouseout unfocus'},
+          fixed: true,
+          delay: 300
+        }
+      });
+
+      //  op.show(event);
     });
   }
 
@@ -537,9 +616,118 @@ export class PresentationComponent implements OnInit, OnDestroy {
     const url = target.dataset['apisHintUrl']; // alternative to upper
     if (url) {
       this.http.getText(url).subscribe(html => {
+        const $that = this;
         this.linkHint = html;
-        op.show(ev);
+
+        $(target).qtip({
+          style: {
+            classes: 'qtip-light qtip-shadow qtip-rounded'
+          },
+          overwrite: false, // Make sure another tooltip can't overwrite this one without it being explicitly destroyed
+          content: $that.linkHint,
+          position: {
+            at: 'bottom center', // Position the tooltip above the link
+            my: 'top center',
+            viewport: $(window), // Keep the tooltip on-screen at all times
+            effect: false // Disable positioning animation,
+          },
+          show: {
+            solo: true, // Only show one tooltip at a time
+            delay: 100,
+            ready: true,
+            when: false
+          },
+          hide: {
+            when: {event: 'mouseout unfocus'},
+            fixed: true,
+            delay: 300
+          }
+        });
+
+        //  op.show(ev);
       });
     }
+  }
+
+  private createReport() {
+    const doubleReport = this.nodesHistory.filter(x => x.isReport).length > 1;
+    const indexRef = {index: 1};
+    if (doubleReport) {
+      const firstReportIndex = this.nodesHistory.findIndex(x => x.isReport);
+      const firstHistory = this.nodesHistory.slice(2, firstReportIndex + 1);
+      const firstRep = this.getSingleReport(firstHistory, indexRef);
+      const secondHistory = this.nodesHistory.slice(firstReportIndex + 1);
+      const secondRep = this.getSingleReport(secondHistory, indexRef);
+      this.reports = [firstRep, secondRep];
+    } else {
+      const history = this.nodesHistory.slice(2); // removing the initial branch selection question and answer
+      const rep = this.getSingleReport(history, indexRef);
+      this.reports = [rep];
+    }
+  }
+
+  private getSingleReport(nodes: MyNode[], indexRef: { index: number }): Report {
+    const qaPairs = [];
+    for (let i = 0; i < nodes.length - 2; i++) {
+      const currentNodeVisible = !nodes[i].isHidden; // question
+      const nextNodeHidden = nodes[i + 1].isHidden; // answer, this doesn't work in some cases
+      if (currentNodeVisible && nextNodeHidden) {
+        qaPairs.push({
+          index: indexRef.index,
+          question: nodes[i].translations[this.currentLang].title,
+          answer: nodes[i + 1].translations[this.currentLang].reportDisplay || nodes[i + 1].translations[this.currentLang].title
+        });
+        indexRef.index++;
+      }
+    }
+    const reportNode = nodes[nodes.length - 1];
+    const translation = reportNode.translations[this.currentLang];
+    const conclusion = {
+      title: translation.titleFormat || translation.title,
+      legalBasis: translation.legalBasis,
+      reportDisplay: translation.reportDisplay
+    };
+    const conclusionType = this.determineTypeOfConclusion(translation.title);
+    this.conclusionType = conclusionType;
+    const report: Report = {
+      pairs: qaPairs,
+      conclusion: conclusion,
+      aboutCaseTranslation: this.translateService.instant('SOLVE.OVERVIEW'),
+      caseReportTranslation: this.translateService.instant('SOLVE.CASEREPORT'),
+      legalBasisTranslation: this.translateService.instant('SOLVE.LEGALBASIS'),
+      conclusionTranslation: this.translateService.instant(conclusionType) // this will be based on component level field
+    };
+    return report;
+  }
+
+  private determineTypeOfConclusion(title: string): string {  // very bad but no additional info available
+    const lower = title.toLowerCase();
+    if (lower.includes('applicab') || lower.includes('приложим') || lower.includes('прилага')) {
+      return 'SOLVE.CONCLUSIONLAW';
+    } else {
+      return 'SOLVE.CONCLUSIONJUR';
+    }
+  }
+
+  showCaseReport() {
+    this.showReport = true;
+
+  }
+
+// FIX THIS IN API TO TAKE ARRAY AND FOREACH ITEMS IN HTML CREATION
+  private exportReport(type: 'pdf' | 'rtf') {
+    this.http.exportReport(type, this.reports).subscribe(response => {
+      let dataType = response.body.type;
+      let binaryData = [];
+      binaryData.push(response.body);
+      let downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, {type: dataType}));
+      downloadLink.download = `Report.${type}`;
+      // if (filename)
+      //   downloadLink.setAttribute('download', filename);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      downloadLink.remove();
+    });
   }
 }

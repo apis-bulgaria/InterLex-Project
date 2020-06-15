@@ -11,21 +11,46 @@ label {
 .float-right {
   float: right;
 }
+.question_footer{
+      display: flex;
+    justify-content: space-between;
+}
 
-.card-height {
-  height: 230px;
-  padding: 1em 0.5em;
+::ng-deep .eurocases-hint-wrapper {
+  td {
+    vertical-align: top;
+  }
 
-  .card_box {
-    overflow-y: auto;
-    max-height: 230px;
-    margin-left: 5px;
+  p {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+}
 
-    .question_title {
-      font-size: 16px;
-      font-weight: bold;
-      color: #707070;
-    }
+.green-conclusion{
+  padding: 7px 20px;
+  background: #D0F0C0;
+}
+
+::ng-deep .card-height {
+    height: 230px;
+    padding: 0.5em;
+    .card_box {
+      overflow-y: auto;
+      max-height: 230px;
+      margin-left: 5px;
+
+      .question_title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #707070;
+      }
+
+      div > h2 {
+        font-size: 18px !important;
+        font-weight: bold;
+        color: #707070;
+      }
   }
 
   .option_answer {
@@ -39,16 +64,11 @@ label {
 
 ::ng-deep .references_box {
   margin-top: 15px;
-
   .reference_list {
-
     .ui-card {
       height: 255px;
-
-
       .ui-card-body {
         max-height: 250px;
-
         .ui-card-content {
           max-height: 245px;
           height: 230px;
@@ -61,20 +81,16 @@ label {
 }
 
 ::ng-deep .comments_box {
-  //height: 650px;
-
-    .comment_text{
-    .ui-card{
+   .comment_text {
+    .ui-card {
       height: 624px;
 
       .ui-card-body {
-        // overflow-y: auto;
         max-height: 624px;
 
         .ui-card-title {
           margin-bottom: 0;
         }
-
         .ui-card-content {
           overflow-y: auto;
           height: 595px;
@@ -100,12 +116,21 @@ label {
   width: 90px;
 }
 
-::ng-deep .ref_dialog_box {
+.reportDialog {
+    width: 50vw;
+}
 
+@media screen and (max-width: 40em) {
+    .reportDialog {
+        width: 75vw;
+    }
+}
+
+
+::ng-deep .ref_dialog_box {
   .ui-dialog .ui-dialog-footer {
     padding: .5em !important;
   }
-
   .dialog-div {
     margin: 0.5em 0;
 
@@ -124,3 +149,72 @@ label {
 ::ng-deep .ui-label-disabled {
   color: darkgray;
 }
+
+::ng-deep .report_dialog{
+  .ui-dialog{
+     border: 2px solid #3F51B5 !important;
+     box-sizing: border-box;
+     width: 700px;
+
+    .ui-dialog-titlebar {
+      border: 1px solid #3F51B5 !important;
+      background-color: #3F51B5 !important;
+      color: #FAFAFA !important;
+      padding: 5px 5px 5px 20px !important;
+      font-size: 18px;
+      text-align: center;
+      font-weight: 700;
+    }
+    .ui-dialog-titlebar-icon span {
+      display: block;
+      margin: 0;
+      font-size: 20px;
+      color: #FAFAFA !important;
+    }
+    .ui-dialog-titlebar .ui-dialog-titlebar-icon {
+      margin-left: 0 !important;
+    }
+
+    .ui-dialog-content {
+        background-color: #ffffff;
+        color: #333333;
+        border: 0 none;
+        padding: 0 !important;
+        overflow-y: auto;
+        max-height:500px;
+
+      .ui-card {
+        border: 0 none;
+        box-shadow: none;
+        .ui-card-title {
+          background-color: #e6f3ff;
+          border: 1px solid #acd6fb;
+          color: #4B6485;
+          border-radius: 0 !important;
+          text-align: center;
+          font-size: 1em;
+          padding: .25em;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .export-btn{
+    margin: 15px;
+    justify-content: center;
+    display: flex !important;
+  .ui-splitbutton{
+    .ui-button{
+      border: 1px solid #3F51B5 !important;
+      background-color: #3F51B5 !important;
+      color: #FAFAFA !important;
+    }
+  }
+  .ui-splitbutton.ui-buttonset .ui-menu {
+    width: 115px;
+    min-width: 100%;
+    position: static;
+  }
+}
+

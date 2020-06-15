@@ -12,9 +12,14 @@
     "FACTS": "Tell us about your case",
     "COMMENTS": "Comments it",
     "REFERENCE": "References it",
+    "REPORT": "Report",
+    "CONCLUSION": "Conclusion",
     "NEXT": "Next it",
     "PREV": "Previous it",
-    "NAVIGATOR": "Text navigator it"
+    "NAVIGATOR": "Text navigator it",
+    "CASEREPORT": "Case Report",
+    "OVERVIEW": "About the case",
+    "LEGALBASIS": "Legal Basis"
   },
   "MASTER": {
     "CREATE": "Create master graph it",
@@ -41,8 +46,11 @@
       "NODE": "Edit node",
       "LANGUAGE": "Language",
       "HIDE": "Hide for navigation",
+      "REPORT": "Report",
       "FORMATTITLE": "Formatted title",
       "TEXTNAVIGATOR": "Text navigator",
+      "LEGALBASIS": "Legal basis",
+      "REPORTDISPLAY": "Report text",
       "CONTENT": "Content",
       "CONTENTLINKED": "Linked Content",
       "LINKSKEYWORDS": "Links/Keywords",

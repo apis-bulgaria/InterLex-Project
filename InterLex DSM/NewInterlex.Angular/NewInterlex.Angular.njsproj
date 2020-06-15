@@ -85,6 +85,8 @@
     <Content Include="src\assets\img\jigsawsLeft.svg" />
     <Content Include="src\assets\img\jigsawsRight.svg" />
     <Content Include="src\assets\it.png" />
+    <Content Include="src\assets\js\jquery-2.2.4.min.js" />
+    <Content Include="src\assets\js\jquery.qtip.min.js" />
     <Content Include="src\environments\environment.portal.ts" />
     <Content Include="src\styles.scss" />
     <Content Include="tsconfig.json" />
@@ -152,6 +154,7 @@
     <Folder Include="src\app\core\alert\" />
     <Folder Include="src\app\core\interceptors\" />
     <Folder Include="src\app\core\pipes\" />
+    <Folder Include="src\app\core\progress\" />
     <Folder Include="src\app\core\services\" />
     <Folder Include="src\app\admin\create-master\" />
     <Folder Include="src\app\diagram\" />
@@ -164,6 +167,7 @@
     <Folder Include="src\assets\" />
     <Folder Include="src\assets\i18n\" />
     <Folder Include="src\assets\img\" />
+    <Folder Include="src\assets\js\" />
     <Folder Include="src\environments\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />

@@ -134,6 +134,7 @@ export interface MyNode extends Node {
   group?: NodeTypes;
   language?: ILanguage;
   isHidden?: boolean;
+  isReport?: boolean;
   // textNavigator?: string;
   // titleFormat?: string;
   // content?: string;
@@ -153,6 +154,8 @@ export class TranslateFields {
   content?: string;
   linkedContent?: string;
   textNavigator?: string;
+  legalBasis?: string;
+  reportDisplay?: string;
   keywords: string[] = [];
   links: ILink[] = [];
   autoLinks: IReference[];
@@ -186,6 +189,27 @@ export class CustomData implements Data {
 export interface ExportModel {
   name: string;
   data: MyData;
+}
+
+export interface ReportPair {
+  index: number;
+  question: string;
+  answer: string;
+}
+
+export interface Conclusion {
+  title: string;
+  reportDisplay: string;
+  legalBasis: string;
+}
+
+export interface Report {
+  pairs: ReportPair[];
+  conclusion: Conclusion;
+  caseReportTranslation: string;
+  aboutCaseTranslation:string;
+  conclusionTranslation:string;
+  legalBasisTranslation:string;
 }
 
 export interface MyData {

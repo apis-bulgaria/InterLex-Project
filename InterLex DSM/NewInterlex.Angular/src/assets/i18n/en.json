@@ -10,11 +10,18 @@
   },
   "SOLVE": {
     "FACTS": "Tell us about your case",
+    "CONCLUSIONLAW": "Conclusion on Applicable Law",
+    "CONCLUSIONJUR": "Conclusion on Jurisdiction",
     "COMMENTS": "Comments",
+    "REPORT": "Report",
+    "CONCLUSION": "Conclusion",
     "REFERENCE": "References",
     "NEXT": "Next",
     "PREV": "Previous",
-    "NAVIGATOR": "Text navigator"
+    "NAVIGATOR": "Text navigator",
+    "CASEREPORT": "Case Report",
+    "OVERVIEW":"About the case",
+    "LEGALBASIS":"Legal Basis"
   },
   "MASTER": {
     "CREATE": "Create master graph",
@@ -41,8 +48,11 @@
       "NODE": "Edit node",
       "LANGUAGE": "Language",
       "HIDE": "Hide for navigation",
+      "REPORT": "Report",
       "FORMATTITLE": "Formatted title",
       "TEXTNAVIGATOR": "Text navigator",
+      "LEGALBASIS": "Legal basis",
+      "REPORTDISPLAY": "Report text",
       "CONTENT": "Content",
       "CONTENTLINKED": "Linked Content",
       "LINKSKEYWORDS": "Links/Keywords",

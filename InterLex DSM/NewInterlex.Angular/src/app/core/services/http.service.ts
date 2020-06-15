@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {environment} from 'src/environments/environment';
 import {Edge} from "vis";
 import {
@@ -8,9 +8,10 @@ import {
   ICreateResponse, IGetAllResponse, IGraphData, ILinkRequest, ILinksTexts,
   IMasterDetailModel,
   IMetaInfoResponse,
-  MyNode
+  MyNode, Report
 } from "../../models/common.models";
 import {forkJoin, Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class HttpService {
   }
 
   getMetaInfo(): Observable<IMetaInfoResponse> {
-    return this.http.get<IMetaInfoResponse>(this.apiUrl + 'Graph/GetMeta');
+    return this.http.get<IMetaInfoResponse>(this.apiUrl + 'Graph/GetMeta')
+      .pipe(map(x => ({...x, languages: x.languages.filter(z => z.shortLang !== 'it')}))); // if italian translation arrives remove this
   }
 
   saveNode(node: MyNode) {
@@ -76,5 +78,14 @@ export class HttpService {
 
   getText(url: string): Observable<string> {
     return this.http.get(url, {responseType: "text"});
+  }
+
+  getItalianApiResults(ids: string[]) : Observable<any> {
+    const idQuery = ids.map(x => 'id=' + x).join('&');
+    return this.http.get(this.apiUrl + 'Reroute/GetPrologJson?' + idQuery); // to avoid CORS issues, we go through out own api
+  }
+
+  exportReport(type: "pdf" | "rtf", report: Report[]): Observable<HttpResponse<Blob>> {
+    return this.http.post(this.apiUrl + `Graph/ExportReport${type}`, report, {responseType: "blob", observe: "response"} );
   }
 }

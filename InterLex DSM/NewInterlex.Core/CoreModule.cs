@@ -21,6 +21,7 @@ namespace NewInterlex.Core
             builder.RegisterType<SaveGraphDataUseCase>().As<ISaveGraphDataUseCase>().InstancePerLifetimeScope();
             builder.RegisterType<MasterGraphGetAllUseCase>().As<IMasterGraphGetAll>().InstancePerLifetimeScope();
             builder.RegisterType<InsertLinksUseCase>().As<IInsertLinksUseCase>().InstancePerLifetimeScope();
+            builder.RegisterType<ExportReportUseCase>().As<IExportReportUseCase>().InstancePerLifetimeScope();
         }
     }
 }

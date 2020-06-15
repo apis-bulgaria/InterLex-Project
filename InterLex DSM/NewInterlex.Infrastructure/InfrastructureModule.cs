@@ -29,6 +29,7 @@ namespace NewInterlex.Infrastructure
             builder.RegisterType<JwtFactory>().As<IJwtFactory>().SingleInstance()
                 .FindConstructorsWith(new InternalConstructorFinder());
             builder.RegisterType<LinkInsertService>().As<ILinkInsertService>().SingleInstance();
+            builder.RegisterType<HtmlConverter>().As<IHtmlConverter>().SingleInstance();
             builder.RegisterType<JwtTokenHandler>().As<IJwtTokenHandler>().SingleInstance()
                 .FindConstructorsWith(new InternalConstructorFinder());
             builder.RegisterType<TokenFactory>().As<ITokenFactory>().SingleInstance();

@@ -2,10 +2,11 @@ namespace NewInterlex.Api.Controllers
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using Core.Dto.UseCaseRequests;
-    using Core.Entities;
+    using Core.Enumerations;
     using Core.Interfaces.UseCases;
     using Infrastructure.Helpers;
     using Infrastructure.Identity;
@@ -25,11 +26,13 @@ namespace NewInterlex.Api.Controllers
         private readonly ISaveGraphDataUseCase saveGraphDataUseCase;
         private readonly IInsertLinksUseCase insertLinksUseCase;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IExportReportUseCase exportReportUseCase;
 
 
         public GraphController(IGetMetaInfoUseCase getMetaInfoUseCase, ISaveGraphUseCase saveGraphUseCase,
-            IGetGraphUseCase getGraphUseCase, ISaveGraphDataUseCase saveGraphDataUseCase, IInsertLinksUseCase insertLinksUseCase,
-            UserManager<ApplicationUser> userManager)
+            IGetGraphUseCase getGraphUseCase, ISaveGraphDataUseCase saveGraphDataUseCase,
+            IInsertLinksUseCase insertLinksUseCase,
+            UserManager<ApplicationUser> userManager, IExportReportUseCase exportReportUseCase)
         {
             this.getMetaInfoUseCase = getMetaInfoUseCase;
             this.saveGraphUseCase = saveGraphUseCase;
@@ -37,6 +40,7 @@ namespace NewInterlex.Api.Controllers
             this.saveGraphDataUseCase = saveGraphDataUseCase;
             this.insertLinksUseCase = insertLinksUseCase;
             this.userManager = userManager;
+            this.exportReportUseCase = exportReportUseCase;
         }
 
 
@@ -61,6 +65,58 @@ namespace NewInterlex.Api.Controllers
             return response;
         }
 
+        [HttpPost("ExportReportpdf")]
+        public async Task<ActionResult> ExportReportpdf([FromBody] ReportRequest[] request)
+        {
+            var ucRequest = new UcExportReportRequestComposite
+            {
+                Reports = request.Select(r =>
+                {
+                    var concl = r.Conclusion;
+                    var pairs = r.Pairs;
+                    var req = new UcExportReportRequest
+                    {
+                        Conclusion = new Conclusion(concl.Title, concl.ReportDisplay, concl.LegalBasis),
+                        Pairs = pairs.Select(x => new ReportPair(x.Index, x.Question, x.Answer)).ToArray(),
+                        ConclusionTranslation = r.ConclusionTranslation,
+                        AboutCaseTranslation = r.AboutCaseTranslation,
+                        CaseReportTranslation = r.CaseReportTranslation,
+                        LegalBasisTranslation = r.LegalBasisTranslation
+                    };
+                    return req;
+                }).ToArray(),
+                ExportType = HtmlExportTypes.Pdf,
+            };
+            var result = await this.exportReportUseCase.Handle(ucRequest);
+            return this.File(result.FileContent, "application/pdf");
+        }
+
+        [HttpPost("ExportReportrtf")]
+        public async Task<ActionResult> ExportReportrtf([FromBody] ReportRequest[] request)
+        {
+            var ucRequest = new UcExportReportRequestComposite
+            {
+                Reports = request.Select(r =>
+                {
+                    var concl = r.Conclusion;
+                    var pairs = r.Pairs;
+                    var req = new UcExportReportRequest
+                    {
+                        Conclusion = new Conclusion(concl.Title, concl.ReportDisplay, concl.LegalBasis),
+                        Pairs = pairs.Select(x => new ReportPair(x.Index, x.Question, x.Answer)).ToArray(),
+                        ConclusionTranslation = r.ConclusionTranslation,
+                        AboutCaseTranslation = r.AboutCaseTranslation,
+                        CaseReportTranslation = r.CaseReportTranslation,
+                        LegalBasisTranslation = r.LegalBasisTranslation
+                    };
+                    return req;
+                }).ToArray(),
+                ExportType = HtmlExportTypes.Rtf,
+            };
+            var result = await this.exportReportUseCase.Handle(ucRequest);
+            return this.File(result.FileContent, "application/rtf");
+        }
+
         [HttpPost("SaveGraphData/{id}")]
         public async Task<ActionResult> SaveGraphData([FromRoute] Guid id, [FromBody] SaveGraphDataRequest request)
         {
@@ -72,17 +128,18 @@ namespace NewInterlex.Api.Controllers
             };
             return response;
         }
-        
+
         [HttpPost("InsertLinks/{id}")]
         public async Task<ActionResult> InsertLinks([FromRoute] Guid id
 //            , [FromBody] SaveGraphDataRequest request
-            )
+        )
         {
             string content;
             using (var reader = new StreamReader(this.Request.Body))
             {
                 content = await reader.ReadToEndAsync();
             }
+
             var ucRequest = new UcInsertLinksRequest(id, content);
             var result = await this.insertLinksUseCase.Handle(ucRequest);
             var response = new JsonContentResult
@@ -92,7 +149,7 @@ namespace NewInterlex.Api.Controllers
             };
             return response;
         }
-        
+
         [HttpGet("GetGraph/{guid}")]
         public async Task<ActionResult> GetGraph([FromRoute] Guid guid)
         {

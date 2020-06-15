@@ -18,10 +18,11 @@ import {
   InputSwitchModule,
   InputTextModule, KeyFilterModule, PanelModule, RadioButtonModule,
   TabViewModule,
-  MessageService, ProgressBarModule, OverlayPanelModule
+  MessageService, ProgressBarModule, OverlayPanelModule, InputTextareaModule
 } from "primeng/primeng";
 import { TableModule } from "primeng/table";
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { SplitButtonModule } from 'primeng/splitbutton';
 //pipes
 import { GraphTypePipe } from './core/pipes/graph-type.pipe';
 import { MasterCategoryPipe } from "./core/pipes/master-category.pipe";
@@ -40,6 +41,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { HomeComponent } from './core/home/home.component';
 import { FooterComponent } from './core/footer/footer.component';
+
 
 import { AlertComponent } from './core/alert/alert.component';
 
@@ -92,6 +94,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogModule,
     DropdownModule,
     InputTextModule,
+    InputTextareaModule,
     InputSwitchModule,
     TabViewModule,
     EditorModule,
@@ -105,6 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableModule,
     ToggleButtonModule,
     ToastModule,
+    SplitButtonModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
