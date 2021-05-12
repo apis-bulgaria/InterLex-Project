@@ -24,7 +24,7 @@
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@types/vis": "^4.21.18",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "core-js": "^2.6.9",
     "primeflex": "^1.0.0-rc.1",
     "primeicons": "^1.0.0",
